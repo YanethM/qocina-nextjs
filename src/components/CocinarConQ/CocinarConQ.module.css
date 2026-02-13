@@ -1,0 +1,72 @@
+.cocinarConQ {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  line-height: 0;
+}
+
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  line-height: 0;
+}
+
+.mainImage {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.waveTop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  line-height: 0;
+  z-index: 1;
+}
+
+.contentWrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  max-width: 1200px;
+  padding: 0 20px;
+  pointer-events: auto;
+}
+
+.logoWrapper {
+  flex-shrink: 0;
+}
+
+.logo {
+  width: auto;
+  height: auto;
+  max-width: 300px;
+}
+
+.textWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  color: #fff;
+}
+
+.description {
+  font-size: 18px;
+  line-height: 1.6;
+  margin: 0;
+  color: #fff;
+  max-width: 500px;
+}
+
+.cocinarConQ img {
+  display: block;
+  width: 100%;
+  height: auto;
+}

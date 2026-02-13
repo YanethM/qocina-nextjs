@@ -1,0 +1,3 @@
+modifica el tamaño únicamente de los cards de la sección recetas del home:
+cada card debe tener: width 424 - height 613. los 3 cards que se visualizan deben ocupar un ancho total de 1320
+adicionalmente si el card es el amarillo, el texto del titulo y la descripcion debe quedar negro

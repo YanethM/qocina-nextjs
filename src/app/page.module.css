@@ -1,141 +1,646 @@
-.page {
-  --background: #fafafa;
-  --foreground: #fff;
-
-  --text-primary: #000;
-  --text-secondary: #666;
-
-  --button-primary-hover: #383838;
-  --button-secondary-hover: #f2f2f2;
-  --button-secondary-border: #ebebeb;
-
+/* Hero Section */
+.hero {
+  position: relative;
+  min-height: 600px;
   display: flex;
-  min-height: 100vh;
   align-items: center;
   justify-content: center;
-  font-family: var(--font-geist-sans);
-  background-color: var(--background);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+                    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23888" width="1200" height="600"/></svg>');
+  background-size: cover;
+  background-position: center;
+  padding: 4rem 1.5rem;
+  overflow: hidden;
 }
 
-.main {
-  display: flex;
-  min-height: 100vh;
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3));
+}
+
+.heroContent {
+  position: relative;
+  max-width: var(--max-width);
   width: 100%;
-  max-width: 800px;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-  background-color: var(--foreground);
-  padding: 120px 60px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  z-index: 1;
 }
 
-.intro {
+.heroText {
+  background: rgba(0, 0, 0, 0.85);
+  padding: 3rem;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.heroTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 2rem;
+  line-height: 1.3;
+}
+
+.heroBtn {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  background-color: #FDB913;
+  color: #000;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  transition: transform 0.2s;
+  text-transform: capitalize;
+}
+
+.heroBtn:hover {
+  transform: scale(1.05);
+}
+
+.heroImage {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.heroSlogan {
+  text-align: right;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  color: #fff;
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 0.9;
+  text-transform: uppercase;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
+  gap: 0.2rem;
+}
+
+.heroSloganText {
+  display: block;
+}
+
+.heroQ {
+  font-size: 5rem;
+  font-style: italic;
+}
+
+/* Beneficios Section */
+.beneficios {
+  padding: 4rem 1.5rem;
+  background-color: #fff;
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.beneficiosText {
+  max-width: 900px;
+  margin: 0 auto 3rem;
+  text-align: center;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--color-text);
+}
+
+.beneficiosText strong {
+  font-weight: 700;
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2.5rem;
+  margin-bottom: 3rem;
+}
+
+.badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 140px;
+}
+
+.badgeIcon {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+  filter: brightness(0) saturate(100%) invert(47%) sepia(26%) saturate(1158%) hue-rotate(45deg) brightness(96%) contrast(89%);
+}
+
+.badgeTitle {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #7B9F3B;
+  line-height: 1.3;
+}
+
+.beneficiosCta {
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+/* Productos Destacados */
+.productosDestacados {
+  padding: 4rem 1.5rem;
+  background-color: #f5f5f5;
+}
+
+.productosTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 3rem;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.productosGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.productoCard {
+  border-radius: 30px;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.productoCard.green { background-color: #7B9F3B; }
+.productoCard.yellow { background-color: #F5A623; }
+.productoCard.red { background-color: #D84242; }
+
+.productoImageWrapper {
+  width: 100%;
+  max-width: 250px;
+  height: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.productoNombre {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.productoPrecio {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.productoSlogan {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+.productoDescripcion {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  opacity: 0.95;
+}
+
+.addToCartBtn {
+  padding: 0.9rem 2.5rem;
+  background-color: #fff;
+  color: #000;
+  border: none;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.addToCartBtn:hover { transform: scale(1.05); }
+.yellow .addToCartBtn { background-color: #000; color: #fff; }
+
+/* =============================================
+   AMAZON BANNER
+   ============================================= */
+.amazonBanner {
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0;
+  line-height: 0;
+}
+
+.amazonBanner img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+/* =============================================
+   COCINAR CON Q
+   ============================================= */
+.cocinarConQ {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  line-height: 0;
+}
+
+.cocinarConQ img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* =============================================
+   RECETAS DESTACADAS
+   ============================================= */
+.recetasSection {
+  padding: 60px 24px;
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+.recetasSectionTitle {
+  text-align: center;
+  font-size: 2.8rem;
+  font-weight: 900;
+  margin: 0 0 48px;
+  text-underline-offset: 8px;
+  text-decoration-thickness: 3px;
+  color: #1a1a1a;
+}
+
+.recetasGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
 }
 
-.intro h1 {
-  max-width: 320px;
-  font-size: 40px;
-  font-weight: 600;
-  line-height: 48px;
-  letter-spacing: -2.4px;
-  text-wrap: balance;
-  color: var(--text-primary);
-}
-
-.intro p {
-  max-width: 440px;
-  font-size: 18px;
-  line-height: 32px;
-  text-wrap: balance;
-  color: var(--text-secondary);
-}
-
-.intro a {
-  font-weight: 500;
-  color: var(--text-primary);
-}
-
-.ctas {
+/* Card */
+.recetaCard {
   display: flex;
-  flex-direction: row;
-  width: 100%;
-  max-width: 440px;
-  gap: 16px;
-  font-size: 14px;
+  flex-direction: column;
+  border-radius: 16px;
+  overflow: hidden;
+  text-decoration: none;
+  color: #fff;
+  background-color: #fff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 424px;
+  height: 613px;
 }
 
-.ctas a {
+.recetaCard:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
+}
+
+/* Card Image */
+.recetaCardImage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
+.recetaCardImage img {
+  transition: transform 0.4s ease;
+}
+
+.recetaCard:hover .recetaCardImage img {
+  transform: scale(1.05);
+}
+
+/* Wave PNG - se superpone entre la imagen y el body */
+.recetaWave {
+  position: relative;
+  margin-top: -30px;
+  z-index: 2;
+  line-height: 0;
+}
+
+.recetaWaveImg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Card Body */
+.recetaCardBody {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex-grow: 1;
+  text-align: center;
+  margin-top: -1px;
+}
+
+.recetaCardTitle {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.recetaCardDescription {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  margin: 0;
+  opacity: 0.92;
+}
+
+/* Estilos para card amarillo */
+.recetaCard[data-color="amarillo"] .recetaCardTitle,
+.recetaCard[data-color="amarillo"] .recetaCardDescription {
+  color: #000;
+}
+
+/* CTA Button */
+.recetaCardCta {
+  margin-top: auto;
+  padding-top: 12px;
+}
+
+.recetaCtaButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 32px;
+  border-radius: 999px;
+  background-color: #fff;
+  color: #1a1a1a;
+  font-weight: 700;
+  font-size: 16px;
+  transition: background-color 0.2s ease;
+}
+
+.recetaCard:hover .recetaCtaButton {
+  background-color: #f5f5f5;
+}
+
+.recetaCtaArrow {
+  font-size: 1.15rem;
+  transition: transform 0.2s ease;
+}
+
+.recetaCard:hover .recetaCtaArrow {
+  transform: translateX(4px);
+}
+
+/* Ver todas */
+.recetasVerTodas {
   display: flex;
   justify-content: center;
+  margin-top: 48px;
+}
+
+.verTodasBtn {
+  display: inline-flex;
   align-items: center;
-  height: 40px;
-  padding: 0 16px;
-  border-radius: 128px;
-  border: 1px solid transparent;
-  transition: 0.2s;
-  cursor: pointer;
-  width: fit-content;
-  font-weight: 500;
-}
-
-a.primary {
-  background: var(--text-primary);
-  color: var(--background);
   gap: 8px;
+  padding: 14px 36px;
+  border-radius: 999px;
+  background-color: #1a1a1a;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
-a.secondary {
-  border-color: var(--button-secondary-border);
+.verTodasBtn:hover {
+  transform: translateY(-2px);
+  background-color: #333;
 }
 
-/* Enable hover only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
-  a.primary:hover {
-    background: var(--button-primary-hover);
-    border-color: transparent;
-  }
-
-  a.secondary:hover {
-    background: var(--button-secondary-hover);
-    border-color: transparent;
-  }
+/* Sections genéricas */
+.section {
+  padding: 4rem 1.5rem;
+  max-width: var(--max-width);
+  margin: 0 auto;
 }
 
-@media (max-width: 600px) {
-  .main {
-    padding: 48px 24px;
-  }
-
-  .intro {
-    gap: 16px;
-  }
-
-  .intro h1 {
-    font-size: 32px;
-    line-height: 40px;
-    letter-spacing: -1.92px;
-  }
+.sectionAlt {
+  padding: 4rem 1.5rem;
+  background-color: var(--color-bg-alt);
 }
 
-@media (prefers-color-scheme: dark) {
-  .logo {
-    filter: invert();
+.sectionAlt > div {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.sectionTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.sectionSubtitle {
+  text-align: center;
+  color: var(--color-text-light);
+  margin-bottom: 3rem;
+  font-size: 1.05rem;
+}
+
+/* Testimonios */
+.testimonios {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.testimonio {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid var(--color-border);
+}
+
+.testimonioContent {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--color-text-light);
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+.testimonioAuthor {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.testimonioCargo {
+  font-size: 0.8rem;
+  color: var(--color-text-light);
+}
+
+/* Newsletter Section */
+.newsletter {
+  background: #000;
+  padding: 0;
+  position: relative;
+}
+
+.newsletter::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  background: 
+    radial-gradient(circle at 25px 0, transparent 25px, #000 25px),
+    radial-gradient(circle at 75px 0, transparent 25px, #000 25px);
+  background-size: 50px 50px;
+  background-position: 0 0, 25px 0;
+}
+
+.newsletter::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  background: 
+    radial-gradient(circle at 25px 50px, transparent 25px, #000 25px),
+    radial-gradient(circle at 75px 50px, transparent 25px, #000 25px);
+  background-size: 50px 50px;
+  background-position: 0 0, 25px 0;
+}
+
+.newsletterContent {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 5rem 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.newsletterText {
+  color: #fff;
+}
+
+.newsletterTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+  font-style: italic;
+}
+
+.newsletterSubtitle {
+  font-size: 1rem;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.newsletterForm {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.newsletterInput {
+  flex: 1;
+  padding: 1rem 1.5rem;
+  border: none;
+  border-radius: 30px;
+  font-size: 1rem;
+  outline: none;
+}
+
+.newsletterBtn {
+  padding: 1rem 2.5rem;
+  background-color: #FDB913;
+  color: #000;
+  border: none;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+  white-space: nowrap;
+}
+
+.newsletterBtn:hover {
+  transform: scale(1.05);
+}
+
+/* =============================================
+   RESPONSIVE
+   ============================================= */
+@media (max-width: 968px) {
+  .heroContent { grid-template-columns: 1fr; gap: 2rem; }
+  .heroSlogan { text-align: center; font-size: 2.5rem; }
+  .heroQ { font-size: 4rem; }
+  .heroTitle { font-size: 2rem; }
+  .newsletterContent { grid-template-columns: 1fr; gap: 2rem; }
+  .productosGrid { grid-template-columns: 1fr; }
+  .productosTitle { font-size: 1.8rem; }
+  .beneficiosCta { font-size: 1.8rem; }
+  .recetasGrid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .heroTitle { font-size: 1.5rem; }
+  .heroText { padding: 2rem; }
+  .heroSlogan { font-size: 2rem; }
+  .heroQ { font-size: 3rem; }
+  .sectionTitle { font-size: 1.5rem; }
+  .badges { gap: 1.5rem; }
+  .newsletterTitle { font-size: 1.8rem; }
+  .newsletterForm { flex-direction: column; }
+  .newsletterInput, .newsletterBtn { width: 100%; }
+  .productosTitle { font-size: 1.5rem; }
+  .beneficiosCta { font-size: 1.5rem; }
+  .productoNombre { font-size: 1.4rem; }
+  .productoPrecio { font-size: 1.6rem; }
+}
+
+@media (max-width: 640px) {
+  .recetasGrid {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+    margin: 0 auto;
   }
+  .recetasSectionTitle { font-size: 2.2rem; }
+}
 
-  .page {
-    --background: #000;
-    --foreground: #000;
-
-    --text-primary: #ededed;
-    --text-secondary: #999;
-
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #1a1a1a;
-    --button-secondary-border: #1a1a1a;
-  }
+@media (max-width: 480px) {
+  .heroSlogan { font-size: 1.5rem; }
+  .heroQ { font-size: 2.5rem; }
+  .newsletterContent { padding: 3rem 1.5rem; }
+  .beneficiosText { font-size: 1rem; }
 }

@@ -1,0 +1,46 @@
+.button {
+  display: inline-block;
+  padding: 1.5rem 2.5rem;
+  font-weight: 700;
+  font-size: 16px;
+  border-radius: 100px;
+  text-decoration: none;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
+  width: fit-content;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+}
+
+.primary {
+  background-color: #ce171c;
+  color: #fff;
+}
+
+.primary:hover {
+  background-color: #a71318;
+}
+
+.secondary {
+  background-color: #000;
+  color: #fff;
+}
+
+.secondary:hover {
+  background-color: #333;
+}
+
+.yellow {
+  background-color: #f4a910;
+  color: #000;
+}
+
+.yellow:hover {
+  background-color: #e59d0a;
+}

@@ -1,0 +1,92 @@
+.page {
+  min-height: 60vh;
+}
+
+.notFound {
+  text-align: center;
+  padding: 6rem 1.5rem;
+}
+
+.notFound h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.notFound p {
+  color: var(--color-text-light);
+}
+
+.hero {
+  position: relative;
+  min-height: 400px;
+  display: flex;
+  align-items: flex-end;
+  background-color: var(--color-bg-alt);
+}
+
+.heroOverlay {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 3rem 1.5rem;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+  color: #fff;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  max-width: var(--max-width);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.description {
+  font-size: 1.1rem;
+  max-width: var(--max-width);
+  margin: 0 auto 1rem;
+  opacity: 0.9;
+}
+
+.meta {
+  display: flex;
+  gap: 1.5rem;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+.section {
+  margin-bottom: 2.5rem;
+}
+
+.section h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--color-primary);
+}
+
+.section div {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--color-text);
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 1.75rem;
+  }
+
+  .hero {
+    min-height: 300px;
+  }
+}
