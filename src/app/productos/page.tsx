@@ -25,7 +25,7 @@ export default async function ProductosPage() {
   const categorias = categoriasRes?.data ?? [];
 
   // Mapeo de colores de fondo para las cards basado en el tipo de producto
-  const getCardColor = (nombre) => {
+  const getCardColor = (nombre: string) => {
     if (nombre.toLowerCase().includes('verde')) return styles.cardGreen;
     if (nombre.toLowerCase().includes('amarillo')) return styles.cardYellow;
     if (nombre.toLowerCase().includes('roja')) return styles.cardRed;
@@ -34,7 +34,7 @@ export default async function ProductosPage() {
   };
 
   // Formateador de precio según moneda
-  const formatPrice = (precio, moneda) => {
+  const formatPrice = (precio: number, moneda: string) => {
     if (moneda === 'PEN') {
       return `S/ ${precio.toFixed(2)}`;
     }
@@ -73,7 +73,7 @@ export default async function ProductosPage() {
                 {producto.imagen && (
                   <Image
                     src={getStrapiImageUrl(producto.imagen.url)}
-                    alt={producto.imagen.alternativeText || producto.nombre}
+                    alt={producto.imagen.alternativeText ?? producto.nombre}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     style={{ objectFit: "cover" }}

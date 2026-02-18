@@ -90,46 +90,7 @@
   font-style: italic;
 }
 
-/* Beneficios Section */
-.beneficios {
-  padding: 4rem 0.5rem;
-  background-color: #fff;
-  max-width: 1500px;
-  margin: 0 auto;
-}
-
-/* Wave de fondo para el texto de beneficios */
-.beneficiosWaveWrapper {
-  position: relative;
-  width: 100%;
-  margin-bottom: 3rem;
-}
-
-.beneficiosWave {
-  line-height: 0;
-  overflow: hidden;
-}
-
-.beneficiosWaveImg {
-  display: block;
-  width: 100%;
-  height: 466px;
-  object-fit: fill;
-}
-
-.beneficiosTextOverlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 24px;
-}
-
-.beneficiosTextOverlay p {
+.beneficiosText {
   max-width: 1100px;
   text-align: center;
   font-size: 28px;
@@ -138,49 +99,23 @@
   margin: 0;
 }
 
-.beneficiosTextOverlay strong {
+.beneficiosText strong {
   font-weight: 700;
 }
 
-.badges {
+/* Cards Hardcodeadas */
+.cardsWrapper {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-  gap: 2.5rem;
-  margin-bottom: 3rem;
+  padding: 1.5rem 1rem;
+  max-width: 1500px;
+  margin: 0 auto;
 }
 
-.badge {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  max-width: 140px;
-}
-
-.badgeIcon {
-  width: 80px;
-  height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 0.5rem;
-  filter: brightness(0) saturate(100%) invert(47%) sepia(26%) saturate(1158%)
-    hue-rotate(45deg) brightness(96%) contrast(89%);
-}
-
-.badgeTitle {
-  font-weight: 600;
-  font-size: 0.85rem;
-  color: #7b9f3b;
-  line-height: 1.3;
-}
-
-.beneficiosCta {
-  font-size: 2.5rem;
-  font-weight: 700;
-  text-align: center;
-  margin-top: 2rem;
+.cardsImage {
+  width: 100%;
+  height: auto;
+  max-width: 1500px;
 }
 
 /* Productos Destacados */
@@ -321,177 +256,6 @@
   display: block;
   width: 100%;
   height: auto;
-}
-
-/* =============================================
-   RECETAS DESTACADAS
-   ============================================= */
-.recetasSection {
-  padding: 60px 8px;
-  max-width: 1320px;
-  margin: 0 auto;
-}
-
-.recetasSectionTitle {
-  text-align: center;
-  font-size: 2.8rem;
-  font-weight: 700;
-  margin: 0 0 48px;
-  text-underline-offset: 8px;
-  text-decoration-thickness: 3px;
-  color: #1a1a1a;
-}
-
-.recetasGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-}
-
-/* Card */
-.recetaCard {
-  display: flex;
-  flex-direction: column;
-  border-radius: 16px;
-  overflow: hidden;
-  text-decoration: none;
-  color: #fff;
-  background-color: #fff;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
-  width: 424px;
-  height: 613px;
-}
-
-.recetaCard:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
-}
-
-/* Card Image */
-.recetaCardImage {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
-}
-
-.recetaCardImage img {
-  transition: transform 0.4s ease;
-}
-
-.recetaCard:hover .recetaCardImage img {
-  transform: scale(1.05);
-}
-
-/* Wave PNG - se superpone entre la imagen y el body */
-.recetaWave {
-  position: relative;
-  margin-top: -40px;
-  z-index: 2;
-  line-height: 0;
-}
-
-.recetaWaveImg {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-/* Card Body */
-.recetaCardBody {
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  flex-grow: 1;
-  text-align: center;
-  margin-top: -1px;
-}
-
-.recetaCardTitle {
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 1.2;
-  margin: 0;
-}
-
-.recetaCardDescription {
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 1.5;
-  margin: 0;
-  opacity: 0.92;
-}
-
-/* Estilos para card amarillo */
-.recetaCard[data-color="amarillo"] .recetaCardTitle,
-.recetaCard[data-color="amarillo"] .recetaCardDescription {
-  color: #000;
-}
-
-/* CTA Button */
-.recetaCardCta {
-  margin-top: auto;
-  padding-top: 12px;
-}
-
-.recetaCtaButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  width: 100%;
-  padding: 12px 32px;
-  border-radius: 999px;
-  background-color: #fff;
-  color: #1a1a1a;
-  font-weight: 700;
-  font-size: 16px;
-  transition: background-color 0.2s ease;
-}
-
-.recetaCard:hover .recetaCtaButton {
-  background-color: #f5f5f5;
-}
-
-.recetaCtaArrow {
-  font-size: 1.15rem;
-  transition: transform 0.2s ease;
-}
-
-.recetaCard:hover .recetaCtaArrow {
-  transform: translateX(4px);
-}
-
-/* Ver todas */
-.recetasVerTodas {
-  display: flex;
-  justify-content: center;
-  margin-top: 48px;
-}
-
-.verTodasBtn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 14px 36px;
-  border-radius: 999px;
-  background-color: #1a1a1a;
-  color: #fff;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 1rem;
-  transition:
-    transform 0.2s ease,
-    background-color 0.2s ease;
-}
-
-.verTodasBtn:hover {
-  transform: translateY(-2px);
-  background-color: #333;
 }
 
 /* Sections genéricas */
@@ -684,12 +448,6 @@
   .productosTitle {
     font-size: 1.8rem;
   }
-  .beneficiosCta {
-    font-size: 1.8rem;
-  }
-  .recetasGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
 
 @media (max-width: 768px) {
@@ -708,9 +466,6 @@
   .sectionTitle {
     font-size: 1.5rem;
   }
-  .badges {
-    gap: 1.5rem;
-  }
   .newsletterTitle {
     font-size: 1.8rem;
   }
@@ -724,14 +479,17 @@
   .productosTitle {
     font-size: 1.5rem;
   }
-  .beneficiosCta {
-    font-size: 1.5rem;
-  }
   .productoNombre {
     font-size: 1.4rem;
   }
   .productoPrecio {
     font-size: 1.6rem;
+  }
+
+  /* Beneficios texto mobile */
+  .beneficiosText {
+    font-size: 15px;
+    line-height: 1.6;
   }
 
   /* Amazon Banner: intercambio web → mobile */
@@ -746,32 +504,6 @@
   }
 }
 
-@media (max-width: 640px) {
-  .recetasGrid {
-    grid-template-columns: 1fr;
-    max-width: 100%;
-    margin: 0 auto;
-  }
-
-  .recetasSectionTitle {
-    font-size: 2.2rem;
-  }
-
-  /* Card: quitar dimensiones fijas para que el contenido fluya */
-  .recetaCard {
-    width: 100%;
-    height: auto;
-  }
-
-  .recetaCardDescription {
-    font-size: 14px;
-    line-height: 1.6;
-    overflow: visible;
-    display: block;
-    -webkit-line-clamp: unset;
-    line-clamp: unset;
-  }
-}
 
 @media (max-width: 480px) {
   .heroSlogan {
@@ -782,8 +514,5 @@
   }
   .newsletterContent {
     padding: 3rem 1.5rem;
-  }
-  .beneficiosText {
-    font-size: 1rem;
   }
 }

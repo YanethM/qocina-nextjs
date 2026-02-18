@@ -1,0 +1,116 @@
+/* ===== Keyframes para el marquee ===== */
+@keyframes badgesMarquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* ===== Section ===== */
+.section {
+  padding: 4rem 0.5rem;
+  background-color: #fff;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+/* ===== Desktop: grid estático ===== */
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2.5rem;
+}
+
+.badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 140px;
+}
+
+.badgeIcon {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  margin-bottom: 0.5rem;
+}
+
+.badgeTitle {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #7b9f3b;
+  line-height: 1.3;
+}
+
+/* ===== Mobile: marquee (oculto en desktop) ===== */
+.marqueeWrapper {
+  display: none;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 640px) {
+  .section {
+    padding: 2.5rem 0;
+    overflow: hidden;
+  }
+
+  /* Ocultar grid, mostrar marquee */
+  .badges {
+    display: none;
+  }
+
+  .marqueeWrapper {
+    display: block;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  /* Track base: fila única centrada para ≤3 badges */
+  .marqueeTrack {
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;
+    gap: 12px;
+    padding: 0.5rem 0;
+  }
+
+  /* Track animado: infinito */
+  .marqueeAnimated {
+    justify-content: flex-start;
+    animation: badgesMarquee 14s linear infinite;
+  }
+
+  .marqueeAnimated:hover {
+    animation-play-state: paused;
+  }
+
+  /* Cada item: (viewport - 2 gaps) / 3 → exactamente 3 en una fila */
+  .marqueeItem {
+    flex: 0 0 calc((100vw - 24px) / 3);
+    min-width: 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Badge más compacto en mobile */
+  .marqueeItem .badge {
+    max-width: none;
+    width: 100%;
+    padding: 0 4px;
+  }
+
+  .marqueeItem .badgeIcon {
+    width: 72px;
+    height: 72px;
+    margin-bottom: 6px;
+  }
+
+  .marqueeItem .badgeTitle {
+    font-size: 11px;
+    line-height: 1.2;
+  }
+}

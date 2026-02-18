@@ -18,7 +18,7 @@ import type {
   ProcesoProduccion,
 } from "@/types";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:1337";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://ec2-23-23-186-243.compute-1.amazonaws.com:1337";
 
 async function fetchAPI<T>(path: string, params?: Record<string, string>): Promise<T> {
   const url = new URL(path, API_URL);

@@ -1,20 +1,10 @@
-import Image from "next/image";
+import WaveSection from "@/components/WaveSection/WaveSection";
 import styles from "./Subscribe.module.css";
 
 export default function Subscribe() {
   return (
     <section className={styles.section}>
-      {/* Onda superior */}
-      <div className={styles.waveTop}>
-        <img
-          src="/images/web/home/wave_subscribe.png"
-          alt=""
-          className={styles.waveImg}
-        />
-      </div>
-
-      {/* Contenido */}
-      <div className={styles.body}>
+      <WaveSection>
         <div className={styles.container}>
           <div className={styles.textSide}>
             <h2 className={styles.title}>
@@ -39,7 +29,7 @@ export default function Subscribe() {
             </form>
           </div>
         </div>
-      </div>
+      </WaveSection>
     </section>
   );
 }

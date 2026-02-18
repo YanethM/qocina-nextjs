@@ -118,8 +118,57 @@
   display: inline-block;
 }
 
-.addToCartBtn:hover { 
-  transform: scale(1.05); 
+.addToCartBtn:hover {
+  transform: scale(1.05);
+}
+
+/* Carrusel mobile (oculto en desktop) */
+.carousel {
+  display: none;
+}
+
+.track {
+  display: flex;
+  gap: 12px;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.slide {
+  flex: 0 0 calc(100% - 44px); /* 44px = peek del siguiente card */
+  min-width: 0;
+}
+
+.slide .card {
+  width: 100%;
+  height: auto;
+}
+
+.dotsRow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+  padding: 4px 0;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.2);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition:
+    width 0.3s ease,
+    background-color 0.3s ease;
+}
+
+.dotActive {
+  background: #1a1a1a;
+  width: 24px;
 }
 
 /* Responsive */
@@ -164,8 +213,23 @@
 }
 
 @media (max-width: 640px) {
+  .section {
+    padding: 2.5rem 0 2.5rem 16px; /* padding-left para el primer card */
+  }
+
+  .title {
+    padding: 0 16px;
+    margin-bottom: 2rem;
+  }
+
+  /* Ocultar grid, mostrar carrusel */
   .grid {
-    grid-template-columns: 1fr;
+    display: none;
+  }
+
+  .carousel {
+    display: block;
+    overflow: hidden;
   }
 
   .nombre {

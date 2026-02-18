@@ -171,38 +171,108 @@
 }
 
 @media (max-width: 768px) {
+  .footer {
+    padding: 40px 24px 0;
+    align-items: center;
+    text-align: center;
+    gap: 0;
+  }
+
+  /* Row 1: Logo + Nav */
   .topRow {
     flex-direction: column;
-    gap: 1.5rem;
+    align-items: center;
     height: auto;
-    align-items: flex-start;
+    gap: 28px;
+    width: 100%;
+    padding-bottom: 28px;
   }
 
   .navCart {
     flex-direction: column;
-    gap: 1rem;
-    align-items: flex-start;
+    align-items: center;
+    gap: 0;
+    width: 100%;
   }
 
   .nav {
-    flex-wrap: wrap;
-    gap: 1rem;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    width: 100%;
   }
 
+  .nav a {
+    display: block;
+    width: 100%;
+    padding: 14px 0;
+    font-size: 15px;
+    text-align: center;
+    border-bottom: 0.5px solid #ebebeb;
+  }
+
+  .nav a:last-child {
+    border-bottom: none;
+  }
+
+  /* Carrito oculto en footer mobile (ya está en el header) */
+  .cartIcon {
+    display: none;
+  }
+
+  /* Row 2: Social + Payment */
   .middleRow {
     flex-direction: column;
-    gap: 1.5rem;
-    align-items: flex-start;
+    align-items: center;
+    gap: 20px;
+    padding: 28px 0;
+    width: 100%;
+    border-top: 0.5px solid #ebebeb;
   }
 
+  .socialIcons {
+    gap: 1.75rem;
+  }
+
+  .socialIcons a {
+    width: 44px;
+    height: 44px;
+    justify-content: center;
+  }
+
+  .paymentSection {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .secureText {
+    font-size: 11px;
+  }
+
+  /* Row 3: Copyright + Policy */
   .bottomRow {
     flex-direction: column;
-    gap: 1rem;
-    align-items: flex-start;
+    align-items: center;
+    gap: 16px;
+    text-align: center;
+    width: 100%;
+    padding: 20px 0;
+  }
+
+  .copyright {
+    font-size: 0.8rem;
+    order: 2;
   }
 
   .policyLinks {
     flex-direction: column;
-    gap: 0.75rem;
+    align-items: center;
+    gap: 12px;
+    order: 1;
+  }
+
+  .policyLinks a {
+    font-size: 13px;
   }
 }

@@ -87,14 +87,16 @@ export interface Producto {
 }
 
 export interface Receta {
-  color_card: any;
+  color_card: string;
   id: number;
   documentId: string;
   titulo: string;
   slug: string;
   descripcion: string;
+  descripcion_corta: string | null;
   contenido: string | null;
   imagen: StrapiImage | null;
+  imagen_principal: StrapiImage | null;
   tiempo: string | null;
   porciones: string | null;
   dificultad: string | null;
