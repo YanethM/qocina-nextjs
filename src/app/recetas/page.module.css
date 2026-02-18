@@ -84,7 +84,7 @@
 }
 
 /* ===== ONDA / WAVE =====
-   Coloca Vector_87.png en: public/images/home/wave.png
+   Coloca Vector_87.png en: public/images/web/home/wave.png
    El div toma backgroundColor dinámico (inline style)
    y el PNG actúa como máscara CSS recortando la forma.
 */
@@ -95,8 +95,8 @@
   width: 100%;
   height: 40px;
   z-index: 2;
-  -webkit-mask-image: url("/images/home/wave.png");
-  mask-image: url("/images/home/wave.png");
+  -webkit-mask-image: url("/images/web/home/wave.png");
+  mask-image: url("/images/web/home/wave.png");
   -webkit-mask-size: 100% 100%;
   mask-size: 100% 100%;
   -webkit-mask-repeat: no-repeat;

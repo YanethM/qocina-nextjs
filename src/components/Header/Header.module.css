@@ -1,52 +1,260 @@
+/* ===========================
+   Header base
+   =========================== */
 .header {
   position: sticky;
   top: 0;
   z-index: 100;
-  background-color: #fff;
-  border-bottom: 1px solid #eaeaea;
+  background-color: #000000;
+  padding: 0;
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 1500px;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 8px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 70px;
+  height: 80px;
 }
 
-.logo {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #c0392b;
-  text-decoration: none;
+/* ===========================
+   Logo
+   =========================== */
+.logoWrapper {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.logoImage {
+  width: 161.64px;
+  height: 63.64px;
+  opacity: 1;
+}
+
+/* ===========================
+   Desktop: nav + carrito
+   =========================== */
+.rightGroup {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 48px;
+  gap: 2.5rem;
+  opacity: 1;
 }
 
 .nav {
   display: flex;
-  gap: 2rem;
   align-items: center;
+  gap: 2.5rem;
 }
 
 .navLink {
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: #333;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 150%;
+  letter-spacing: 0%;
+  color: #ffffff;
   text-decoration: none;
-  transition: color 0.2s;
+  transition: opacity 0.2s ease;
+  white-space: nowrap;
 }
 
 .navLink:hover {
-  color: #c0392b;
+  opacity: 0.7;
+}
+
+/* ===========================
+   Carrito
+   =========================== */
+.cartWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+.cartWrapper:hover {
+  opacity: 0.7;
+}
+
+.cartIcon {
+  width: 48px;
+  height: 48px;
+}
+
+/* ===========================
+   Mobile: carrito + hamburguesa
+   Oculto en desktop
+   =========================== */
+.mobileActions {
+  display: none;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ===========================
+   Hamburger button
+   =========================== */
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.hamburger:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.line {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background-color: #ffffff;
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Animación X al abrir */
+.lineTop {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.lineMid {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.lineBot {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ===========================
+   Mobile menu drawer
+   =========================== */
+.mobileMenu {
+  position: fixed;
+  top: 70px; /* altura del header en mobile */
+  left: 0;
+  right: 0;
+  background-color: #000000;
+  z-index: 99;
+  transform: translateY(-8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mobileMenuOpen {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mobileNav {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 0 24px;
+}
+
+.mobileNavLink {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 16px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.mobileNavLink:last-child {
+  border-bottom: none;
+}
+
+.mobileNavLink:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* ===========================
+   Overlay (toque fuera = cierra)
+   =========================== */
+.overlay {
+  position: fixed;
+  inset: 0;
+  top: 70px;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 98;
+  backdrop-filter: blur(2px);
+}
+
+/* ===========================
+   Responsive
+   =========================== */
+@media (max-width: 1024px) {
+  .container {
+    padding: 0 2rem;
+  }
+
+  .nav {
+    gap: 1.5rem;
+  }
+
+  .rightGroup {
+    gap: 1.5rem;
+  }
 }
 
 @media (max-width: 768px) {
-  .nav {
-    gap: 1rem;
+  .container {
+    padding: 0 1rem;
+    height: 70px;
   }
 
-  .navLink {
-    font-size: 0.85rem;
+  .logoImage {
+    width: 120px;
+    height: auto;
+  }
+
+  /* Ocultar nav desktop */
+  .rightGroup {
+    display: none;
+  }
+
+  /* Mostrar acciones mobile */
+  .mobileActions {
+    display: flex;
+  }
+
+  .cartIcon {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 16px;
+  }
+
+  .logoImage {
+    width: 100px;
+    height: auto;
   }
 }

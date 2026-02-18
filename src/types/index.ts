@@ -71,8 +71,15 @@ export interface Producto {
   documentId: string;
   nombre: string;
   slug: string;
-  descripcion: string;
-  contenido: string | null;
+  descripcion_corta: string;
+  descripcion_larga: string | null;
+  presentacion: string | null;
+  rinde: string | null;
+  precio: number;
+  precio_moneda: string;
+  stock: number;
+  disponible: boolean;
+  sku: string | null;
   imagen: StrapiImage | null;
   galeria: StrapiImage[] | null;
   categoria: Categoria | null;

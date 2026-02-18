@@ -3,6 +3,7 @@ import Image from "next/image";
 import styles from "./page.module.css";
 import Subscribe from "@/components/Subscribe/Subscribe";
 import Testimonios from "@/components/Testimonios/Testimonios";
+import Productos from "@/components/Productos/Productos";
 import CocinarConQ from "@/components/CocinarConQ/CocinarConQ";
 import NuestroSecreto from "@/components/NuestroSecreto/NuestroSecreto";
 import {
@@ -20,9 +21,9 @@ const COLOR_MAP: Record<string, string> = {
 };
 
 const WAVE_MAP: Record<string, string> = {
-  rojo: "/images/home/wave_red.png",
-  verde: "/images/home/wave_green.png",
-  amarillo: "/images/home/wave_yellow.png",
+  rojo: "/images/web/home/wave_red.png",
+  verde: "/images/web/home/wave_green.png",
+  amarillo: "/images/web/home/wave_yellow.png",
 };
 
 export default async function Home() {
@@ -47,7 +48,8 @@ export default async function Home() {
         <div className={styles.heroContent}>
           <div className={styles.heroText}>
             <h1 className={styles.heroTitle}>
-              Prueba las bases culinarias con el toQue de sabor de Gastón Acurio.
+              Prueba las bases culinarias con el toQue de sabor de Gastón
+              Acurio.
             </h1>
             <Link href="/productos" className={styles.heroBtn}>
               Explorar productos
@@ -57,7 +59,9 @@ export default async function Home() {
             <div className={styles.heroSlogan}>
               <span className={styles.heroSloganText}>ATRÉVETE</span>
               <span className={styles.heroSloganText}>A QOCINAR</span>
-              <span className={styles.heroSloganText}>CON &quot;<span className={styles.heroQ}>Q</span>&quot;</span>
+              <span className={styles.heroSloganText}>
+                CON &quot;<span className={styles.heroQ}>Q</span>&quot;
+              </span>
             </div>
           </div>
         </div>
@@ -66,13 +70,25 @@ export default async function Home() {
       {/* Badges / Beneficios */}
       {badges.length > 0 && (
         <section className={styles.beneficios}>
-          <div className={styles.beneficiosText}>
-            <p>
-              Nuestras <strong>Bases Culinarias</strong> son sofritos listos, elaborados con vegetales frescos
-              100% naturales. Inspiradas en las recetas de madres y abuelas son preparadas
-              artesanalmente con el toque de sabor de <strong>Gastón Acurio</strong>; para que cocines en
-              casa <strong>como un experto</strong> platos deliciosos, sanos y en menos tiempo.
-            </p>
+          {/* Texto con wave de fondo */}
+          <div className={styles.beneficiosWaveWrapper}>
+            <div className={styles.beneficiosWave}>
+              <img
+                src="/images/web/home/wave_subscribe.png"
+                alt=""
+                className={styles.beneficiosWaveImg}
+              />
+            </div>
+            <div className={styles.beneficiosTextOverlay}>
+              <p>
+                Nuestras <strong>Bases Culinarias</strong> son sofritos listos,
+                elaborados con vegetales frescos 100% naturales. Inspiradas en las
+                recetas de madres y abuelas son preparadas artesanalmente con el
+                toque de sabor de <strong>Gastón Acurio</strong>; para que cocines
+                en casa <strong>como un experto</strong> platos deliciosos, sanos
+                y en menos tiempo.
+              </p>
+            </div>
           </div>
           <div className={styles.badges}>
             {badges.map((badge) => (
@@ -91,48 +107,11 @@ export default async function Home() {
               </div>
             ))}
           </div>
-          <h2 className={styles.beneficiosCta}>¡Atrévete hoy a disfrutar de la Q&apos;ocina con Q!</h2>
         </section>
       )}
 
       {/* Productos Destacados */}
-      <section className={styles.productosDestacados}>
-        <h2 className={styles.productosTitle}>¡Atrévete hoy a disfrutar de la Q&apos;ocina con Q!</h2>
-        <div className={styles.productosGrid}>
-          {productos.map((producto, index) => {
-            const colors = ['green', 'yellow', 'red'];
-            const colorClass = colors[index % 3];
-            return (
-              <div key={producto.id} className={`${styles.productoCard} ${styles[colorClass]}`}>
-                <div className={styles.productoImageWrapper}>
-                  {producto.imagen && (
-                    <Image
-                      src={getStrapiImageUrl(producto.imagen.url)}
-                      alt={producto.imagen.alternativeText || producto.nombre}
-                      width={300}
-                      height={400}
-                      style={{ objectFit: "contain" }}
-                    />
-                  )}
-                </div>
-                <h3 className={styles.productoNombre}>{producto.nombre}</h3>
-                <p className={styles.productoPrecio}>40.000 COP</p>
-                <p className={styles.productoSlogan}>
-                  {colorClass === 'green' && '¡La más norteña!'}
-                  {colorClass === 'yellow' && '¡La más atrevida!'}
-                  {colorClass === 'red' && '¡La más versátil!'}
-                </p>
-                <p className={styles.productoDescripcion}>
-                  {producto.descripcion}
-                </p>
-                <button className={styles.addToCartBtn}>
-                  Añadir al carrito
-                </button>
-              </div>
-            );
-          })}
-        </div>
-      </section>
+      <Productos productos={productos} />
 
       {/* Nuestro Secreto */}
       <NuestroSecreto />
@@ -140,14 +119,22 @@ export default async function Home() {
       {/* Cocinar con Q */}
       <CocinarConQ />
 
-      {/* Amazon Web Banner */}
+      {/* Amazon Banner */}
       <section className={styles.amazonBanner}>
         <Image
-          src="/images/home/amazon_web.png"
+          src="/images/web/home/amazon_web.png"
           alt="Disponible en Amazon"
           width={1920}
           height={400}
-          style={{ width: '100%', height: 'auto' }}
+          className={styles.amazonWeb}
+          priority={false}
+        />
+        <Image
+          src="/images/mobile/amazon/amazon.svg"
+          alt="Disponible en Amazon"
+          width={390}
+          height={400}
+          className={styles.amazonMobile}
           priority={false}
         />
       </section>
@@ -159,20 +146,23 @@ export default async function Home() {
           <div className={styles.recetasGrid}>
             {recetas.map((receta) => {
               const cardColor = COLOR_MAP[receta.color_card] || "#CE171C";
-              const waveSrc = WAVE_MAP[receta.color_card] || "/images/home/wave_red.png";
+              const waveSrc =
+                WAVE_MAP[receta.color_card] || "/images/web/home/wave_red.png";
 
               return (
                 <Link
                   key={receta.id}
                   href={`/recetas/${receta.documentId}`}
                   className={styles.recetaCard}
-                  data-color={receta.color_card}
-                >
+                  data-color={receta.color_card}>
                   <div className={styles.recetaCardImage}>
-                    {receta.imagen && (
+                    {receta.imagen_principal && (
                       <Image
-                        src={getStrapiImageUrl(receta.imagen.url)}
-                        alt={receta.imagen.alternativeText || receta.titulo}
+                        src={getStrapiImageUrl(receta.imagen_principal.url)}
+                        alt={
+                          receta.imagen_principal.alternativeText ||
+                          receta.titulo
+                        }
                         fill
                         style={{ objectFit: "cover" }}
                       />
@@ -182,14 +172,13 @@ export default async function Home() {
                   <div className={styles.recetaWave}>
                     <img
                       src={waveSrc}
-                      alt=""
+                      alt="Imagen de la receta"
                       className={styles.recetaWaveImg}
                     />
                   </div>
                   <div
                     className={styles.recetaCardBody}
-                    style={{ backgroundColor: cardColor }}
-                  >
+                    style={{ backgroundColor: cardColor }}>
                     <h3 className={styles.recetaCardTitle}>{receta.titulo}</h3>
                     <p className={styles.recetaCardDescription}>
                       {receta.descripcion_corta}
@@ -198,7 +187,7 @@ export default async function Home() {
                       <span className={styles.recetaCtaButton}>
                         Ver receta{" "}
                         <Image
-                          src="/images/home/arrow_right.png"
+                          src="/images/web/home/arrow_right.png"
                           alt=""
                           width={25}
                           height={25}
@@ -215,7 +204,7 @@ export default async function Home() {
             <Link href="/recetas" className={styles.verTodasBtn}>
               Ver todas{" "}
               <Image
-                src="/images/home/white_arrow_right.png"
+                src="/images/web/home/white_arrow_right.png"
                 alt=""
                 width={20}
                 height={20}

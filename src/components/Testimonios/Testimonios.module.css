@@ -1,161 +1,360 @@
-.sectionAlt {
-  padding: 4rem 1.5rem;
+/* Testimonios.module.css */
+
+.section {
+  width: 100%;
+  position: relative;
+  background: #fff;
   overflow: hidden;
 }
 
-.sectionAlt > div {
-  max-width: var(--max-width);
-  margin: 0 auto;
-}
-
+/* ============================
+   Titulo (fuera del background)
+   ============================ */
 .sectionTitle {
-  font-family: var(--font-handwritten, 'Permanent Marker', cursive);
-  font-size: 2.8rem;
-  font-weight: 700;
+  font-family: var(--font-palmer), cursive;
+  font-size: 176px;
+  line-height: 50%;
+  letter-spacing: 0%;
   text-align: center;
-  margin-bottom: 2.5rem;
+  font-weight: 400;
+  color: #000000;
+  margin: 0;
+  padding: 0px 24px 48px;
   text-transform: uppercase;
 }
 
-.testimoniosWrapper {
+/* ============================
+   Contenedor con fondo
+   ============================ */
+.backgroundWrapper {
   position: relative;
-  padding-bottom: 120px;
-}
-
-/* Onda verde: rompe el max-width para ocupar 100vw */
-.waveBottom {
-  position: absolute;
-  bottom: -50px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100vw;
-  height: 55%;          /* controla cuánto sube la onda */
-  line-height: 0;
-  z-index: 1;
-  pointer-events: none;
-}
-
-.waveImage {
   width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: fill;      /* llena el contenedor sin recortar */
+  /* 253 (row1) + 24 (gap) + 253 (row2) + 48 (padding-bottom grid) = 578px */
+  min-height: 578px;
+  overflow: visible;
+  z-index: 3;
 }
 
-/* Onda blanca: solo 50% de la altura de la verde */
-.waveWhite {
+/* ============================
+   Fondo de la sección (imagen onda verde)
+   Debe iniciar en el 70% del card de la segunda fila:
+   - Row 2 starts: 253 + 24 = 277px
+   - 70% de 253px = ~177px dentro de la row 2
+   - Total: 277 + 177 = 454px desde el top del grid
+   ============================ */
+.backgroundImage {
   position: absolute;
-  bottom: 0;
+  top: 454px;
   left: 0;
   width: 100%;
-  height: 50%;
-  object-position: bottom;
-  z-index: 2;
-  pointer-events: none;
-}
-
-.testimonios {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 1.5rem;
-  position: relative;
-  z-index: 2;
-}
-
-.testimonio:nth-child(1) { grid-column: 1 / 3; }
-.testimonio:nth-child(2) { grid-column: 3 / 5; }
-.testimonio:nth-child(3) { grid-column: 2 / 4; }
-.testimonio:nth-child(4) { grid-column: 4 / 6; }
-
-/* Card interno: dos columnas (texto | foto) */
-.testimonio {
-  position: relative;
-  border-radius: 16px;
+  z-index: 1;
   overflow: hidden;
-  min-height: 253px;
 }
 
-.cardBackgroundImage {
+.backgroundImg {
+  width: 100%;
+  height: auto;
+  display: block;
   object-fit: cover;
-  z-index: 0;
+  object-position: top center;
 }
 
-.cardImage {
-  position: absolute;
-  inset: 0;
+/* ============================
+   Grid wrapper sobre el fondo
+   ============================ */
+.gridWrapper {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px 0px;
+  display: flex;
+  justify-content: center;
+}
+
+/* ============================
+   Wave al final de la sección
+   Ajustamos el margin-top para conectar
+   suavemente con el backgroundImage que termina
+   en 454px + altura de testimonials.png
+   ============================ */
+.waveWrapper {
+  position: relative;
+  width: 100%;
+  /* Subir la sección de olas para que quede pegada al fondo verde */
+  margin-top: -280px;
+  z-index: 2;
+}
+
+.waveTestimonial {
+  width: 100%;
+  display: block;
+  position: relative;
   z-index: 1;
 }
 
-.cardImage img {
+.wavesWhite {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
   display: block;
-  opacity: 0.3;
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  z-index: 2;
 }
 
-.cardText {
+/* ============================
+   Grid 2x2
+   ============================ */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 424px);
+  gap: 24px;
+  justify-content: center;
+  margin: 0 auto;
+  position: relative;
+  padding-bottom: 110px;
+}
+
+/* ============================
+   Card
+   ============================ */
+.card {
+  position: relative;
+  width: 424px;
+  height: 253px;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+}
+
+/* Segunda fila desplazada 232px a la derecha */
+.card:nth-child(n+3) {
+  transform: translateX(232px);
+}
+
+/* Foto de fondo que ocupa todo el card */
+.cardBg {
   position: absolute;
   top: 0;
   left: 0;
-
-  z-index: 2;
-  width: 50%;
+  width: 100%;
   height: 100%;
+  z-index: 0;
+  overflow: hidden;
+}
 
-  background: rgba(237, 237, 237, 0.34);
+.cardBgImage {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
 
-  backdrop-filter: blur(24.4px);
-  -webkit-backdrop-filter: blur(24.4px);
-
+/* Texto con blur - lado izquierdo */
+.cardText {
+  position: relative;
+  width: 240px;
+  height: 253px;
+  padding: 20px 24px;
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  will-change: backdrop-filter;
+  transform: translateZ(0);
+  border-top-left-radius: 24px;
+  border-bottom-left-radius: 24px;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 1.25rem;
-  border-right: 1px solid rgba(255,255,255,.3);
-  box-shadow: 0 8px 32px rgba(0,0,0,.12);
+  box-sizing: border-box;
+  border-right: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(8px);
+}
+
+/* Fallback para navegadores sin backdrop-filter */
+@supports not ((backdrop-filter: blur(16px)) or (-webkit-backdrop-filter: blur(16px))) {
+  .cardText {
+    background: rgba(255, 255, 255, 0.85);
+  }
 }
 
 .stars {
-  color: #FDB913;
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
-  letter-spacing: 2px;
+  display: flex;
+  gap: 4px;
+  margin-bottom: 8px;
 }
 
-.testimonioAuthor {
-  font-family: var(--font-handwritten, 'Permanent Marker', cursive);
-  font-weight: 700;
-  font-size: 1.3rem;
+.starFilled {
+  color: #de9a0f;
+  font-size: 16px;
+}
+
+.starEmpty {
+  color: #ccc;
+  font-size: 16px;
+}
+
+.author {
+  font-family: var(--font-palmer), cursive;
+  font-weight: 400;
+  font-size: 64px;
+  line-height: 0.6;
+  letter-spacing: 0%;
+  margin-bottom: 8px;
+  color: #000;
   text-transform: uppercase;
-  margin-bottom: 0.5rem;
 }
 
-.testimonioContent {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 13px;
-  line-height: 1.4;
+.content {
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
+  letter-spacing: 0%;
   color: #000000;
   margin: 0;
-  text-align: left;
   display: -webkit-box;
-  -webkit-line-clamp: 6;
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-/* Responsive */
+/* Espacio derecho para la foto */
+.cardRight {
+  width: 192px;
+  height: 253px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Placeholder */
+.cardPlaceholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.initials {
+  font-family: "Permanent Marker", cursive;
+  font-size: 3rem;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* ============================
+   Responsive
+   ============================ */
+@media (max-width: 968px) {
+  .sectionTitle {
+    font-size: 80px;
+    margin-bottom: 40px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    justify-items: center;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 424px;
+  }
+
+  /* Reset transform en mobile */
+  .card:nth-child(n+3) {
+    transform: translateX(0);
+  }
+
+  /* Ajustar inicio del fondo verde para mobile (1 columna) */
+  .backgroundImage {
+    /* row1 (253) + gap(20) + 70% row2 (177) = 450px */
+    top: 450px;
+  }
+
+  .waveWrapper {
+    margin-top: -180px;
+  }
+}
+
 @media (max-width: 768px) {
   .sectionTitle {
-    font-size: 1.8rem;
+    font-size: 60px;
+    margin-bottom: 30px;
   }
 
-  .testimonios {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
+  .card {
+    height: auto;
+    min-height: 220px;
+    flex-direction: column;
   }
 
-  .testimonio:nth-child(n) {
-    grid-column: auto;
+  .cardText {
+    width: 100%;
+    height: auto;
+    min-height: auto;
+    border-radius: 24px 24px 0 0;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 20px;
+  }
+
+  .cardRight {
+    width: 100%;
+    height: 160px;
+  }
+
+  .author {
+    font-size: 28px;
+  }
+
+  /* Descripción: legible y sin corte */
+  .content {
+    font-size: 14px;
+    line-height: 1.6;
+    -webkit-line-clamp: unset;
+    line-clamp: unset;
+    overflow: visible;
+    display: block;
+  }
+
+  .backgroundImage {
+    top: 420px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sectionTitle {
+    font-size: 48px;
+    margin-bottom: 24px;
+  }
+
+  .cardText {
+    padding: 16px;
+  }
+
+  .author {
+    font-size: 24px;
+  }
+
+  .content {
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .cardRight {
+    height: 140px;
+  }
+
+  .backgroundImage {
+    top: 380px;
   }
 }

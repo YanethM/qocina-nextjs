@@ -1,13 +1,31 @@
 import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  weight: ["400", "700"],
+const montserrat = localFont({
+  src: [
+    {
+      path: "./fonts/Montserrat-VariableFont_wght.ttf",
+      style: "normal",
+    },
+    {
+      path: "./fonts/Montserrat-Italic-VariableFont_wght.ttf",
+      style: "italic",
+    },
+  ],
   variable: "--font-montserrat",
+  display: "swap",
+});
+
+const palmer = localFont({
+  src: [
+    {
+      path: "./fonts/PalmerLakePrint-Regular.ttf",
+    },
+  ],
+  variable: "--font-palmer",
   display: "swap",
 });
 
@@ -24,7 +42,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className={montserrat.className}>
+      <body className={`${montserrat.variable} ${palmer.variable}`}>
         <Header />
         <main>{children}</main>
         <Footer />

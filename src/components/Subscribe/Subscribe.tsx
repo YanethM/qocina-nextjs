@@ -7,7 +7,7 @@ export default function Subscribe() {
       {/* Onda superior */}
       <div className={styles.waveTop}>
         <img
-          src="/images/home/wave_subscribe.png"
+          src="/images/web/home/wave_subscribe.png"
           alt=""
           className={styles.waveImg}
         />

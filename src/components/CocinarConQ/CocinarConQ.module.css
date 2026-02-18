@@ -11,12 +11,27 @@
   line-height: 0;
 }
 
+/* ===========================
+   Imagen desktop
+   =========================== */
 .mainImage {
   display: block;
   width: 100%;
   height: auto;
 }
 
+/* ===========================
+   Imagen mobile (oculta en desktop)
+   =========================== */
+.mainImageMobile {
+  display: none;
+  width: 100%;
+  height: auto;
+}
+
+/* ===========================
+   Wave overlay (desktop)
+   =========================== */
 .waveTop {
   position: absolute;
   top: 0;
@@ -26,6 +41,9 @@
   z-index: 1;
 }
 
+/* ===========================
+   Contenido sobre la wave
+   =========================== */
 .contentWrapper {
   position: absolute;
   top: 50%;
@@ -36,6 +54,7 @@
   align-items: center;
   gap: 40px;
   max-width: 1200px;
+  width: 100%;
   padding: 0 20px;
   pointer-events: auto;
 }
@@ -58,15 +77,28 @@
 }
 
 .description {
-  font-size: 18px;
+  font-size: 24px;
   line-height: 1.6;
   margin: 0;
   color: #fff;
-  max-width: 500px;
+  max-width: 400px;
 }
 
-.cocinarConQ img {
-  display: block;
-  width: 100%;
-  height: auto;
+/* ===========================
+   Responsive mobile
+   =========================== */
+@media (max-width: 768px) {
+  /* Ocultar imagen desktop y mostrar mobile */
+  .mainImage {
+    display: none;
+  }
+
+  .mainImageMobile {
+    display: block;
+  }
+
+  /* Ocultar overlay (la imagen mobile ya tiene el contenido) */
+  .waveTop {
+    display: none;
+  }
 }

@@ -7,17 +7,24 @@ export default function CocinarConQ() {
     <section className={styles.cocinarConQ}>
       <div className={styles.imageWrapper}>
         <Image
-          src="/images/home/home_cocinar_con_q.png"
+          src="/images/web/home/home_cocinar_con_q.png"
           alt="Cocinar con Q'ocina"
           width={1920}
           height={400}
-          style={{ width: '100%', height: 'auto' }}
-          priority={false}
           className={styles.mainImage}
+          priority={false}
+        />
+        <Image
+          src="/images/mobile/cocinar/cocinar_con_q.png"
+          alt="Cocinar con Q'ocina"
+          width={390}
+          height={500}
+          className={styles.mainImageMobile}
+          priority={false}
         />
         <div className={styles.waveTop}>
           <Image
-            src="/images/home/wave_cocinar_con_q.png"
+            src="/images/web/home/wave_cocinar_con_q.png"
             alt=""
             width={1920}
             height={200}
@@ -27,7 +34,7 @@ export default function CocinarConQ() {
           <div className={styles.contentWrapper}>
             <div className={styles.logoWrapper}>
               <Image
-                src="/images/home/logo_cocinar_con_q.png"
+                src="/images/web/home/logo_cocinar_con_q.png"
                 alt="Cocinar con Q"
                 width={400}
                 height={200}

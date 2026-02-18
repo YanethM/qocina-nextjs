@@ -1,0 +1,183 @@
+.section {
+  padding: 4rem 0.5rem;
+  background-color: #f5f5f5;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 3rem;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.card {
+  border-radius: 30px;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* Colores específicos de los cards */
+.cardGreen { 
+  background: #6A892C;
+  color: #ffffff;
+}
+
+.cardYellow { 
+  background: #F4A910;
+  color: #000000;
+}
+
+.cardRed { 
+  background: #CE171C;
+  color: #ffffff;
+}
+
+.cardDefault { 
+  background: #555;
+  color: #ffffff;
+}
+
+.imageWrapper {
+  width: 100%;
+  max-width: 250px;
+  height: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+/* Título (nombre) - Montserrat Bold 29px */
+.nombre {
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+  font-size: 29px;
+  line-height: 120%;
+  letter-spacing: 0%;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+/* Precio - Montserrat Regular 32px */
+.precio {
+  font-family: Montserrat, sans-serif;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 120%;
+  letter-spacing: 0%;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+/* Descripción - Montserrat Bold 18px */
+.descripcion {
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 140%;
+  letter-spacing: 0%;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  opacity: 0.95;
+}
+
+.addToCartBtn {
+  padding: 0.9rem 2.5rem;
+  background-color: #fff;
+  color: #000;
+  border: none;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.addToCartBtn:hover { 
+  transform: scale(1.05); 
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .grid { 
+    grid-template-columns: repeat(2, 1fr); 
+  }
+  
+  .title { 
+    font-size: 1.8rem; 
+  }
+  
+  .nombre {
+    font-size: 26px;
+  }
+  
+  .precio {
+    font-size: 28px;
+  }
+  
+  .descripcion {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .title { 
+    font-size: 1.5rem; 
+  }
+  
+  .nombre { 
+    font-size: 24px; 
+  }
+  
+  .precio { 
+    font-size: 26px; 
+  }
+  
+  .descripcion {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .nombre {
+    font-size: 22px;
+  }
+
+  .precio {
+    font-size: 24px;
+  }
+
+  .descripcion {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+}
