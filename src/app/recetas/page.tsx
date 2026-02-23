@@ -1,8 +1,9 @@
 import Image from "next/image";
-import { getRecetasPage, getTestimonios } from "@/lib/api";
+import { getRecetasPage, getTestimonios, getRecetas } from "@/lib/api";
 import styles from "./page.module.css";
 import BasesCulinarias from "@/components/BasesCulinarias/BasesCulinarias";
 import Testimonios from "@/components/Testimonios/Testimonios";
+import ListaRecetas from "@/components/ListaRecetas/ListaRecetas";
 
 export const metadata = {
   title: "Recetas - Q'ocina",
@@ -10,12 +11,14 @@ export const metadata = {
 };
 
 export default async function RecetasPage() {
-  const [, testimoniosRes] = await Promise.all([
+  const [, testimoniosRes, recetasRes] = await Promise.all([
     getRecetasPage().catch(() => null),
     getTestimonios().catch(() => null),
+    getRecetas().catch(() => null),
   ]);
 
   const testimonios = testimoniosRes?.data ?? [];
+  const recetas = recetasRes?.data ?? [];
 
   return (
     <div className={styles.page}>
@@ -29,7 +32,9 @@ export default async function RecetasPage() {
           priority
         />
       </section>
+
       <BasesCulinarias />
+      <ListaRecetas recetas={recetas} />
       <Testimonios testimonios={testimonios} />
     </div>
   );

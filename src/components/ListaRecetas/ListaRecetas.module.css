@@ -1,0 +1,223 @@
+/* ── ListaRecetas Section ── */
+.section {
+  padding: 72px 60px 80px;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+/* ── Header ── */
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 40px;
+  margin-bottom: 48px;
+}
+
+.headerLeft {
+  flex: 0 0 auto;
+  max-width: 440px;
+}
+
+.title {
+  font-family: Montserrat, sans-serif;
+  font-weight: 800;
+  font-size: 48px;
+  line-height: 1.1;
+  color: #1a1a1a;
+  margin: 0 0 16px;
+}
+
+.subtitle {
+  font-family: Montserrat, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #444;
+  margin: 0;
+  max-width: 380px;
+}
+
+/* ── Filters ── */
+.filters {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  padding-top: 8px;
+}
+
+/* ── Dropdown ── */
+.dropdown {
+  position: relative;
+}
+
+.dropdownTrigger {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  border: 1.5px solid #1a1a1a;
+  border-radius: 999px;
+  background: #fff;
+  font-family: Montserrat, sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: #1a1a1a;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s ease, border-color 0.2s ease;
+  min-width: 170px;
+  justify-content: space-between;
+}
+
+.dropdownTrigger:hover,
+.dropdownTrigger.open {
+  background: #f9f9f9;
+}
+
+.chevron {
+  transition: transform 0.25s ease;
+  flex-shrink: 0;
+}
+
+.chevronUp {
+  transform: rotate(180deg);
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  min-width: 100%;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+  z-index: 100;
+  animation: fadeDown 0.18s ease;
+}
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.dropdownItem {
+  padding: 12px 20px;
+  font-family: Montserrat, sans-serif;
+  font-size: 15px;
+  color: #1a1a1a;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.dropdownItem:last-child {
+  border-bottom: none;
+}
+
+.dropdownItem:hover {
+  background: #f5f5f5;
+}
+
+.dropdownItem.active {
+  font-weight: 700;
+}
+
+.clearItem {
+  color: #888;
+  font-style: italic;
+}
+
+/* ── Grid ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+/* ── Empty state ── */
+.empty {
+  text-align: center;
+  padding: 60px 0;
+  font-family: Montserrat, sans-serif;
+  font-size: 18px;
+  color: #888;
+}
+
+/* ── Load More ── */
+.loadMore {
+  display: flex;
+  justify-content: center;
+  margin-top: 56px;
+}
+
+.loadMoreBtn {
+  padding: 16px 44px;
+  border: 2px solid #1a1a1a;
+  border-radius: 999px;
+  background: transparent;
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: #1a1a1a;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.loadMoreBtn:hover {
+  background: #1a1a1a;
+  color: #fff;
+  transform: scale(1.03);
+}
+
+/* ── Responsive ── */
+@media (max-width: 1100px) {
+  .section {
+    padding: 60px 40px 72px;
+  }
+  .title {
+    font-size: 38px;
+  }
+}
+
+@media (max-width: 900px) {
+  .header {
+    flex-direction: column;
+    gap: 28px;
+  }
+  .filters {
+    justify-content: flex-start;
+  }
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .title {
+    font-size: 32px;
+  }
+}
+
+@media (max-width: 640px) {
+  .section {
+    padding: 48px 20px 60px;
+  }
+  .title {
+    font-size: 28px;
+  }
+  .grid {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  .filters {
+    gap: 10px;
+  }
+  .dropdownTrigger {
+    min-width: 140px;
+    font-size: 14px;
+    padding: 10px 16px;
+  }
+}
