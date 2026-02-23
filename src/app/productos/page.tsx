@@ -1,118 +1,106 @@
 import Link from "next/link";
 import Image from "next/image";
-import {
-  getProductos,
-  getProductosPage,
-  getCategorias,
-  getStrapiImageUrl,
-} from "@/lib/api";
+import { getProductos, getProductosPage, getStrapiImageUrl } from "@/lib/api";
 import styles from "./page.module.css";
+import ProductosNuestroSecreto from "@/components/ProductosNuestroSecreto/ProductosNuestroSecreto";
 
 export const metadata = {
   title: "Productos - Q'ocina",
   description: "Explora nuestra variedad de productos artesanales",
 };
 
+const CARD_COLORS = [styles.cardGreen, styles.cardYellow, styles.cardRed];
+
+function formatPrice(precio: number, moneda: string): string {
+  if (moneda === "PEN") return `S/ ${precio.toFixed(2)}`;
+  return `${precio.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ".")} COP`;
+}
+
 export default async function ProductosPage() {
-  const [pageRes, productosRes, categoriasRes] = await Promise.all([
+  const [, productosRes] = await Promise.all([
     getProductosPage().catch(() => null),
     getProductos().catch(() => null),
-    getCategorias().catch(() => null),
   ]);
 
-  const pageData = pageRes?.data;
   const productos = productosRes?.data ?? [];
-  const categorias = categoriasRes?.data ?? [];
-
-  // Mapeo de colores de fondo para las cards basado en el tipo de producto
-  const getCardColor = (nombre: string) => {
-    if (nombre.toLowerCase().includes('verde')) return styles.cardGreen;
-    if (nombre.toLowerCase().includes('amarillo')) return styles.cardYellow;
-    if (nombre.toLowerCase().includes('roja')) return styles.cardRed;
-    if (nombre.toLowerCase().includes('chupe')) return styles.cardBlue;
-    return styles.cardDefault;
-  };
-
-  // Formateador de precio según moneda
-  const formatPrice = (precio: number, moneda: string) => {
-    if (moneda === 'PEN') {
-      return `S/ ${precio.toFixed(2)}`;
-    }
-    return `$${precio.toFixed(2)} USD`;
-  };
 
   return (
     <div className={styles.page}>
       <section className={styles.hero}>
-        <h1 className={styles.title}>
-          {pageData?.titulo || "Nuestros Productos"}
-        </h1>
-        <p className={styles.subtitle}>
-          {pageData?.descripcion ||
-            "Explora nuestra variedad de productos artesanales"}
-        </p>
+        <Image
+          src="/images/web/products/container.svg"
+          alt="Productos Q'ocina"
+          fill
+          className={styles.heroImage}
+          style={{ objectFit: "cover" }}
+          priority
+        />
       </section>
 
-      {categorias.length > 0 && (
-        <section className={styles.categories}>
-          <div className={styles.categoryList}>
-            {categorias.map((cat) => (
-              <button key={cat.id} className={styles.categoryTag}>
-                {cat.nombre}
-              </button>
-            ))}
-          </div>
-        </section>
-      )}
-
       <section className={styles.content}>
+        <h2 className={styles.sectionTitle}>
+          ¡Atrévete hoy a disfrutar de la Q&apos;ocina con Q!
+        </h2>
         <div className={styles.grid}>
-          {productos.map((producto) => (
-            <div key={producto.id} className={`${styles.card} ${getCardColor(producto.nombre)}`}>
-              <div className={styles.cardImage}>
-                {producto.imagen && (
-                  <Image
-                    src={getStrapiImageUrl(producto.imagen.url)}
-                    alt={producto.imagen.alternativeText ?? producto.nombre}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    style={{ objectFit: "cover" }}
-                  />
-                )}
-                {producto.descripcion_corta && (
-                  <span className={styles.cardBadge}>
-                    {producto.descripcion_corta.split('!')[0] + '!'}
-                  </span>
-                )}
-              </div>
-              
-              <div className={styles.cardBody}>
-                <h3 className={styles.cardTitle}>{producto.nombre}</h3>
-                
-                <p className={styles.cardPrice}>
-                  {formatPrice(producto.precio, producto.precio_moneda)}
-                </p>
-                
-                <p className={styles.cardDescription}>
-                  {producto.descripcion_corta || producto.descripcion_larga?.split('\n')[0]}
-                </p>
-                
-                <div className={styles.cardFooter}>
-                  <span className={styles.cardMeta}>
-                    {producto.presentacion} • {producto.rinde}
-                  </span>
-                  
-                  <Link 
+          {productos.map((producto, index) => {
+            const colorClass = CARD_COLORS[index % 3];
+            const imagenUrl = producto.imagen_principal
+              ? getStrapiImageUrl(producto.imagen_principal.url)
+              : null;
+
+            return (
+              <div key={producto.id} className={`${styles.card} ${colorClass}`}>
+                <div className={styles.cardImageWrapper}>
+                  {imagenUrl && (
+                    <Image
+                      src={imagenUrl}
+                      alt={
+                        producto.imagen_principal?.alternativeText ??
+                        producto.nombre
+                      }
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className={styles.cardImage}
+                      style={{ objectFit: "contain" }}
+                    />
+                  )}
+                </div>
+
+                <div className={styles.cardBody}>
+                  <h3 className={styles.cardTitle}>{producto.nombre}</h3>
+                  <p className={styles.cardPrice}>
+                    {formatPrice(producto.precio, producto.precio_moneda)}
+                  </p>
+                  {producto.presentacion && (
+                    <p className={styles.cardPresentacion}>
+                      {producto.presentacion}
+                    </p>
+                  )}
+                  <p className={styles.cardDescription}>
+                    {producto.descripcion_corta}
+                  </p>
+                  <Link
                     href={`/productos/${producto.documentId}`}
-                    className={styles.cardButton}
-                  >
+                    className={styles.cardButton}>
                     Añadir al carrito
                   </Link>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
+      </section>
+
+      <ProductosNuestroSecreto />
+
+      <section className={styles.paraQuien}>
+        <Image
+          src="/images/web/products/para_quien.svg"
+          alt="¿Para quién es Q'ocina?"
+          width={1440}
+          height={900}
+          style={{ width: "100%", height: "auto" }}
+        />
       </section>
     </div>
   );

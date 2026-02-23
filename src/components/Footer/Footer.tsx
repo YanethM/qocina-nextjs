@@ -42,6 +42,7 @@ export default function Footer() {
             width={200}
             height={60}
             className={styles.paymentBadge}
+            style={{ height: "auto" }}
           />
           <Image
             src="/images/web/footer/verified-by-visa.png"
@@ -49,6 +50,7 @@ export default function Footer() {
             width={200}
             height={60}
             className={styles.paymentBadge}
+            style={{ height: "auto" }}
           />
         </div>
         <div className={styles.socialIcons}>
@@ -62,6 +64,7 @@ export default function Footer() {
               alt="TikTok"
               width={28}
               height={28}
+              style={{ height: "auto" }}
             />
           </a>
           <a
@@ -74,6 +77,7 @@ export default function Footer() {
               alt="YouTube"
               width={28}
               height={28}
+              style={{ height: "auto" }}
             />
           </a>
           <a
@@ -86,6 +90,7 @@ export default function Footer() {
               alt="Facebook"
               width={28}
               height={28}
+              style={{ height: "auto" }}
             />
           </a>
           <a
@@ -98,6 +103,7 @@ export default function Footer() {
               alt="WhatsApp"
               width={28}
               height={28}
+              style={{ height: "auto" }}
             />
           </a>
           <a
@@ -110,6 +116,7 @@ export default function Footer() {
               alt="Instagram"
               width={28}
               height={28}
+              style={{ height: "auto" }}
             />
           </a>
         </div>

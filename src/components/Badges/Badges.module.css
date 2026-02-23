@@ -24,6 +24,15 @@
   gap: 2.5rem;
 }
 
+.badgesSection {
+  padding: 2rem 0.5rem; /* Reducido el padding */
+  background-color: #ffffff; /* Fondo blanco explícito */
+  max-width: 1320px; /* Mismo ancho que el contenedor padre */
+  margin: 0 auto;
+  width: 100%;
+  border-radius: 0; /* Sin bordes redondeados */
+}
+
 .badge {
   display: flex;
   flex-direction: column;

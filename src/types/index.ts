@@ -80,7 +80,7 @@ export interface Producto {
   stock: number;
   disponible: boolean;
   sku: string | null;
-  imagen: StrapiImage | null;
+  imagen_principal: StrapiImage | null;
   galeria: StrapiImage[] | null;
   categoria: Categoria | null;
   badges: Badge[] | null;
@@ -200,4 +200,23 @@ export interface ProcesoProduccion {
   contenido: string | null;
   pasos: string | null;
   imagen: StrapiImage | null;
+}
+
+export interface HeroSlide {
+  id: number;
+  titulo: string;
+  imagen: StrapiImage | null;
+  imagen_mobile: StrapiImage | null;
+  cta: {
+    id: number;
+    texto: string;
+    url: string;
+    nueva_ventana: boolean;
+  } | null;
+}
+
+export interface HomePage {
+  id: number;
+  documentId: string;
+  slider: HeroSlide[];
 }

@@ -1,128 +1,195 @@
 .section {
-  padding: 4rem 0.5rem;
-  background-color: #f5f5f5;
+  padding: 4rem 2rem;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
 .title {
-  font-size: 2.5rem;
+  font-size: 48px;
   font-weight: 700;
   text-align: center;
-  margin-bottom: 3rem;
-  max-width: 900px;
+  margin-bottom: 4rem;
   margin-left: auto;
   margin-right: auto;
+  color: #1a1a1a;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 2rem;
-  max-width: var(--max-width);
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 1320px;
   margin: 0 auto;
 }
 
 .card {
-  border-radius: 30px;
-  padding: 2.5rem 2rem;
+  width: 100%;
+  max-width: 424px;
+  height: 481px;
+  border-radius: 24px;
+  padding: 136px 32px 32px 32px;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   text-decoration: none;
   transition: transform 0.2s ease;
+  margin-top: 231px;
 }
 
 .card:hover {
   transform: translateY(-5px);
 }
 
-/* Colores específicos de los cards */
-.cardGreen { 
+.cardGreen {
   background: #6A892C;
   color: #ffffff;
 }
 
-.cardYellow { 
+.cardYellow {
   background: #F4A910;
   color: #000000;
 }
 
-.cardRed { 
+.cardRed {
   background: #CE171C;
   color: #ffffff;
 }
 
-.cardDefault { 
-  background: #555;
-  color: #ffffff;
-}
-
 .imageWrapper {
+  position: absolute;
+  top: -231px;
+  left: 0;
   width: 100%;
-  max-width: 250px;
-  height: 350px;
+  height: 343px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1rem;
-  position: relative;
+  z-index: 2;
 }
 
-/* Título (nombre) - Montserrat Bold 29px */
+.imageWrapper img {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 360px;
+  height: 227px;
+  gap: 16px;
+  position: relative;
+  z-index: 3;
+  margin: 0 auto;
+}
+
 .nombre {
   font-family: Montserrat, sans-serif;
   font-weight: 700;
-  font-size: 29px;
-  line-height: 120%;
-  letter-spacing: 0%;
+  font-size: 24px;
+  line-height: 1.2;
   text-align: center;
-  margin-bottom: 0.5rem;
+  margin: 0;
+  color: inherit;
 }
 
-/* Precio - Montserrat Regular 32px */
 .precio {
   font-family: Montserrat, sans-serif;
   font-weight: 400;
-  font-size: 32px;
-  line-height: 120%;
-  letter-spacing: 0%;
+  font-size: 28px;
+  line-height: 1.2;
   text-align: center;
-  margin-bottom: 0.5rem;
+  margin: 0;
+  color: inherit;
 }
 
-/* Descripción - Montserrat Bold 18px */
-.descripcion {
+.presentacion {
   font-family: Montserrat, sans-serif;
   font-weight: 700;
   font-size: 18px;
-  line-height: 140%;
-  letter-spacing: 0%;
+  line-height: 1.2;
   text-align: center;
-  margin-bottom: 1.5rem;
+  margin: 0;
+  color: inherit;
+}
+
+.descripcion {
+  font-family: Montserrat, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: center;
+  margin: 0;
   opacity: 0.95;
+  max-width: 280px;
+  color: inherit;
 }
 
 .addToCartBtn {
-  padding: 0.9rem 2.5rem;
+  padding: 12px 24px;
   background-color: #fff;
-  color: #000;
+  color: #1a1a1a;
   border: none;
   border-radius: 30px;
-  font-weight: 700;
-  font-size: 1rem;
+  font-weight: 600;
+  font-size: 16px;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: all 0.2s;
   text-decoration: none;
   display: inline-block;
+  margin: 0;
+  width: fit-content;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .addToCartBtn:hover {
   transform: scale(1.05);
+  background-color: #f0f0f0;
 }
 
-/* Carrusel mobile (oculto en desktop) */
+.verTodas {
+  display: flex;
+  justify-content: center;
+  margin-top: 48px;
+}
+
+.verTodasBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 36px;
+  border-radius: 999px;
+  background-color: #1a1a1a;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.verTodasBtn:hover {
+  transform: translateY(-2px);
+  background-color: #333;
+}
+
+.cardYellow .addToCartBtn {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+.cardYellow .addToCartBtn:hover {
+  background-color: #333333;
+}
+
 .carousel {
   display: none;
 }
@@ -135,13 +202,19 @@
 }
 
 .slide {
-  flex: 0 0 calc(100% - 44px); /* 44px = peek del siguiente card */
+  flex: 0 0 calc(100% - 44px);
   min-width: 0;
 }
 
 .slide .card {
   width: 100%;
   height: auto;
+  margin-top: 185px;
+}
+
+.slide .imageWrapper {
+  top: -185px;
+  height: 274px;
 }
 
 .dotsRow {
@@ -161,9 +234,7 @@
   border: none;
   cursor: pointer;
   padding: 0;
-  transition:
-    width 0.3s ease,
-    background-color 0.3s ease;
+  transition: width 0.3s ease, background-color 0.3s ease;
 }
 
 .dotActive {
@@ -171,65 +242,43 @@
   width: 24px;
 }
 
-/* Responsive */
-@media (max-width: 1024px) {
-  .grid { 
-    grid-template-columns: repeat(2, 1fr); 
-  }
-  
-  .title { 
-    font-size: 1.8rem; 
-  }
-  
-  .nombre {
-    font-size: 26px;
-  }
-  
-  .precio {
-    font-size: 28px;
-  }
-  
-  .descripcion {
-    font-size: 16px;
-  }
-}
-
-@media (max-width: 768px) {
-  .title { 
-    font-size: 1.5rem; 
-  }
-  
-  .nombre { 
-    font-size: 24px; 
-  }
-  
-  .precio { 
-    font-size: 26px; 
-  }
-  
-  .descripcion {
-    font-size: 15px;
-  }
-}
-
-@media (max-width: 640px) {
-  .section {
-    padding: 2.5rem 0 2.5rem 16px; /* padding-left para el primer card */
+@media (max-width: 1200px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
   }
 
   .title {
-    padding: 0 16px;
-    margin-bottom: 2rem;
+    font-size: 2.2rem;
   }
+}
 
-  /* Ocultar grid, mostrar carrusel */
+@media (max-width: 1024px) {
   .grid {
-    display: none;
+    gap: 20px;
   }
 
-  .carousel {
-    display: block;
-    overflow: hidden;
+  .cardContent {
+    width: 320px;
+    height: auto;
+    min-height: 200px;
+    gap: 14px;
+  }
+
+  .title {
+    font-size: 1.8rem;
+  }
+
+  .card {
+    max-width: 380px;
+    height: 430px;
+    padding: 122px 24px 24px 24px;
+    margin-top: 208px;
+  }
+
+  .imageWrapper {
+    height: 308px;
+    top: -208px;
   }
 
   .nombre {
@@ -241,7 +290,107 @@
   }
 
   .descripcion {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .card {
+    max-width: 340px;
+    height: 385px;
+    padding: 110px 20px 20px 20px;
+    margin-top: 185px;
+  }
+
+  .cardContent {
+    width: 280px;
+    gap: 12px;
+  }
+
+  .imageWrapper {
+    height: 274px;
+    top: -185px;
+  }
+
+  .nombre {
+    font-size: 20px;
+  }
+
+  .precio {
+    font-size: 22px;
+  }
+
+  .descripcion {
     font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .addToCartBtn {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 640px) {
+  .section {
+    padding: 2.5rem 0 2.5rem 16px;
+  }
+
+  .title {
+    padding: 0 16px;
+    margin-bottom: 2rem;
+    font-size: 1.3rem;
+  }
+
+  .grid {
+    display: none;
+  }
+
+  .carousel {
+    display: block;
+    overflow: hidden;
+  }
+
+  .slide .card {
+    max-width: 100%;
+    height: auto;
+    min-height: 360px;
+    padding: 100px 16px 16px 16px;
+    margin-top: 185px;
+  }
+
+  .slide .cardContent {
+    width: 260px;
+    height: auto;
+    gap: 10px;
+  }
+
+  .slide .imageWrapper {
+    height: 260px;
+    top: -185px;
+  }
+
+  .slide .nombre {
+    font-size: 18px;
+  }
+
+  .slide .precio {
+    font-size: 20px;
+  }
+
+  .slide .descripcion {
+    font-size: 13px;
     line-height: 1.6;
+    max-width: 220px;
+  }
+
+  .slide .addToCartBtn {
+    padding: 8px 16px;
+    font-size: 13px;
   }
 }

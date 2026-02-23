@@ -42,7 +42,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className={`${montserrat.variable} ${palmer.variable}`}>
+      <body className={`${montserrat.variable} ${palmer.variable}`} suppressHydrationWarning>
         <Header />
         <main>{children}</main>
         <Footer />

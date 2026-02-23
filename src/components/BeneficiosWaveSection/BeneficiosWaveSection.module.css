@@ -1,0 +1,77 @@
+.section {
+  width: 100%;
+  background-color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.beneficiosText {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 24px;
+  line-height: 1.5;
+  color: #ffffff;
+  text-align: center;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px;
+  font-weight: 400;
+  word-break: break-word;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.beneficiosText strong {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.badgesContainer {
+  position: relative;
+  z-index: 4;
+  width: 100%;
+  background-color: #ffffff;
+  padding: 40px 0;
+  /* El wave de WaveSection mide 550px en desktop.
+     Solapamos solo el borde ondulado inferior (~60px) */
+  margin-top: -60px;
+}
+
+.badgesContainer :global(.badgesSection) {
+  padding: 0;
+  background-color: transparent;
+  position: relative;
+  z-index: 5;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .beneficiosText {
+    font-size: 22px;
+    padding: 0 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .beneficiosText {
+    font-size: 20px;
+    padding: 0 24px;
+  }
+
+  /* WaveSection a 768px mide 340px */
+  .badgesContainer {
+    padding: 25px 0;
+    margin-top: -40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .beneficiosText {
+    font-size: 18px;
+    padding: 0 16px;
+  }
+
+  /* WaveSection a 480px mide 420px */
+  .badgesContainer {
+    padding: 20px 0;
+    margin-top: -50px;
+  }
+}

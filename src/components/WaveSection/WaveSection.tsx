@@ -8,7 +8,7 @@ interface WaveSectionProps {
 
 export default function WaveSection({
   children,
-  imageSrc = "/images/web/home/wave_subscribe.png",
+  imageSrc = "/images/web/home/wave_subscribe.svg",
   className,
 }: WaveSectionProps) {
   return (

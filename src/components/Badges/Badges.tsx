@@ -5,6 +5,7 @@ import styles from "./Badges.module.css";
 
 interface BadgesProps {
   badges: Badge[];
+  className?: string;
 }
 
 function BadgeItem({ badge }: { badge: Badge }) {
@@ -14,10 +15,11 @@ function BadgeItem({ badge }: { badge: Badge }) {
         {badge.icono && (
           <Image
             src={getStrapiImageUrl(
-              badge.icono.formats?.small?.url ?? badge.icono.url
+              badge.icono.formats?.small?.url ?? badge.icono.url,
             )}
-            alt={badge.icono.alternativeText ?? badge.titulo}
+            alt={badge.icono.alternativeText ?? badge.titulo ?? ""}
             fill
+            sizes="(max-width: 640px) 72px, 140px"
             style={{ objectFit: "contain" }}
           />
         )}
@@ -27,14 +29,13 @@ function BadgeItem({ badge }: { badge: Badge }) {
   );
 }
 
-export default function Badges({ badges }: BadgesProps) {
+export default function Badges({ badges, className }: BadgesProps) {
   if (badges.length === 0) return null;
 
   const useMarquee = badges.length > 3;
 
   return (
-    <section className={styles.section}>
-      {/* Desktop: grid estático */}
+    <section className={`${styles.badgesSection} ${className || ""}`}>
       <div className={styles.badges}>
         {badges.map((badge) => (
           <BadgeItem key={badge.id} badge={badge} />

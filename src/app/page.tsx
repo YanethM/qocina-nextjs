@@ -1,30 +1,33 @@
-import Link from "next/link";
 import Image from "next/image";
 import styles from "./page.module.css";
+import HeroBanner from "@/components/HeroBanner/HeroBanner";
 import Subscribe from "@/components/Subscribe/Subscribe";
 import Testimonios from "@/components/Testimonios/Testimonios";
 import Productos from "@/components/Productos/Productos";
 import CocinarConQ from "@/components/CocinarConQ/CocinarConQ";
 import NuestroSecreto from "@/components/NuestroSecreto/NuestroSecreto";
-import Badges from "@/components/Badges/Badges";
-import WaveSection from "@/components/WaveSection/WaveSection";
 import RecetasCarousel from "@/components/RecetasCarousel/RecetasCarousel";
 import {
   getBadges,
   getProductos,
   getRecetas,
   getTestimonios,
+  getHomePage,
 } from "@/lib/api";
+import BeneficiosWaveSection from "@/components/BeneficiosWaveSection/BeneficiosWaveSection";
+import IngredientesNaturales from "@/components/IngredientesNaturales/IngredientesNaturales";
 
 export default async function Home() {
-  const [badgesRes, productosRes, recetasRes, testimoniosRes] =
+  const [homeRes, badgesRes, productosRes, recetasRes, testimoniosRes] =
     await Promise.all([
+      getHomePage().catch(() => null),
       getBadges().catch(() => null),
       getProductos().catch(() => null),
       getRecetas().catch(() => null),
       getTestimonios().catch(() => null),
     ]);
 
+  const slides = homeRes?.data?.slider ?? [];
   const badges = badgesRes?.data ?? [];
   const productos = productosRes?.data?.slice(0, 3) ?? [];
   const recetas = recetasRes?.data?.slice(0, 3) ?? [];
@@ -33,58 +36,18 @@ export default async function Home() {
   return (
     <>
       {/* Hero */}
-      <section className={styles.hero}>
-        <div className={styles.heroOverlay}></div>
-        <div className={styles.heroContent}>
-          <div className={styles.heroText}>
-            <h1 className={styles.heroTitle}>
-              Prueba las bases culinarias con el toQue de sabor de Gastón
-              Acurio.
-            </h1>
-            <Link href="/productos" className={styles.heroBtn}>
-              Explorar productos
-            </Link>
-          </div>
-          <div className={styles.heroImage}>
-            <div className={styles.heroSlogan}>
-              <span className={styles.heroSloganText}>ATRÉVETE</span>
-              <span className={styles.heroSloganText}>A QOCINAR</span>
-              <span className={styles.heroSloganText}>
-                CON &quot;<span className={styles.heroQ}>Q</span>&quot;
-              </span>
-            </div>
-          </div>
-        </div>
-      </section>
+      <HeroBanner slides={slides} />
       {/* Beneficios - Wave con texto */}
-      <WaveSection>
-        <p className={styles.beneficiosText}>
-          Nuestras <strong>Bases Culinarias</strong> son sofritos listos,
-          elaborados con vegetales frescos 100% naturales. Inspiradas en las
-          recetas de madres y abuelas son preparadas artesanalmente con el
-          toque de sabor de <strong>Gastón Acurio</strong>; para que cocines
-          en casa <strong>como un experto</strong> platos deliciosos, sanos
-          y en menos tiempo.
-        </p>
-      </WaveSection>
-
-      {/* Badges / Beneficios */}
-      <Badges badges={badges} />
-
+      <BeneficiosWaveSection
+        badges={badges}
+        textoBeneficios="Nuestras <strong>Bases Culinarias</strong> son sofritos listos, elaborados con vegetales frescos 100% naturales. Inspiradas en las recetas de madres y abuelas son preparadas artesanalmente con el toque de sabor de <strong>Gastón Acurio</strong>; para que cocines en casa <strong>como un experto</strong> platos deliciosos, sanos y en menos tiempo."
+      />
 
       {/* Productos Destacados */}
       <Productos productos={productos} />
 
-      {/* Métodos de pago */}
-      <div className={styles.cardsWrapper}>
-        <Image
-          src="/images/web/other/cards.png"
-          alt="Métodos de pago aceptados"
-          width={800}
-          height={80}
-          className={styles.cardsImage}
-        />
-      </div>
+      {/* Ingredientes naturales */}
+      <IngredientesNaturales />
 
       {/* Nuestro Secreto */}
       <NuestroSecreto />
@@ -95,7 +58,7 @@ export default async function Home() {
       {/* Amazon Banner */}
       <section className={styles.amazonBanner}>
         <Image
-          src="/images/web/home/amazon_web.png"
+          src="/images/web/home/amazon/amazon.svg"
           alt="Disponible en Amazon"
           width={1920}
           height={400}

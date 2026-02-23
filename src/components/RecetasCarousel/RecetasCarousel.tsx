@@ -1,46 +1,42 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Receta } from "@/types";
 import { getStrapiImageUrl } from "@/lib/api";
+import { COLOR_MAP, WAVE_MAP, DEFAULT_COLOR, DEFAULT_WAVE } from "@/lib/constants";
+import { useCarousel } from "@/hooks/useCarousel";
 import styles from "./RecetasCarousel.module.css";
 
-const COLOR_MAP: Record<string, string> = {
-  rojo: "#CE171C",
-  verde: "#6A892C",
-  amarillo: "#F4A910",
-};
-
-const WAVE_MAP: Record<string, string> = {
-  rojo: "/images/web/home/wave_red.png",
-  verde: "/images/web/home/wave_green.png",
-  amarillo: "/images/web/home/wave_yellow.png",
-};
-
 function CardItem({ receta }: { receta: Receta }) {
-  const cardColor = COLOR_MAP[receta.color_card] || "#CE171C";
-  const waveSrc =
-    WAVE_MAP[receta.color_card] || "/images/web/home/wave_red.png";
+  const cardColor = COLOR_MAP[receta.color_card] ?? DEFAULT_COLOR;
+  const waveSrc = WAVE_MAP[receta.color_card] ?? DEFAULT_WAVE;
 
   return (
     <Link
-      href={`/recetas/${receta.documentId}`}
+      href={`/home-page/recetas_destacadas/${receta.documentId}`}
       className={styles.card}
       data-color={receta.color_card}>
       <div className={styles.cardImage}>
         {receta.imagen_principal && (
           <Image
             src={getStrapiImageUrl(receta.imagen_principal.url)}
-            alt={receta.imagen_principal.alternativeText ?? receta.titulo}
+            alt={receta.imagen_principal.alternativeText ?? receta.titulo ?? ""}
             fill
+            sizes="(max-width: 640px) 100vw, (max-width: 968px) 50vw, 424px"
             style={{ objectFit: "cover" }}
           />
         )}
       </div>
       <div className={styles.wave}>
-        <img src={waveSrc} alt="" className={styles.waveImg} />
+        <Image
+          src={waveSrc}
+          alt=""
+          width={424}
+          height={80}
+          className={styles.waveImg}
+          style={{ width: "100%", height: "auto" }}
+        />
       </div>
       <div className={styles.cardBody} style={{ backgroundColor: cardColor }}>
         <h3 className={styles.cardTitle}>{receta.titulo}</h3>
@@ -53,6 +49,7 @@ function CardItem({ receta }: { receta: Receta }) {
               alt=""
               width={25}
               height={25}
+              style={{ height: "auto" }}
               className={styles.ctaArrow}
             />
           </span>
@@ -67,45 +64,7 @@ interface Props {
 }
 
 export default function RecetasCarousel({ recetas }: Props) {
-  const [current, setCurrent] = useState(0);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  const touchStartX = useRef<number | null>(null);
-
-  const startInterval = useCallback(() => {
-    if (intervalRef.current) clearInterval(intervalRef.current);
-    intervalRef.current = setInterval(() => {
-      setCurrent((c) => (c + 1) % recetas.length);
-    }, 3500);
-  }, [recetas.length]);
-
-  useEffect(() => {
-    startInterval();
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
-  }, [startInterval]);
-
-  const goTo = (i: number) => {
-    setCurrent(i);
-    startInterval();
-  };
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.targetTouches[0].clientX;
-  };
-
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX.current === null) return;
-    const diff = touchStartX.current - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 50) {
-      if (diff > 0) {
-        goTo((current + 1) % recetas.length);
-      } else {
-        goTo((current - 1 + recetas.length) % recetas.length);
-      }
-    }
-    touchStartX.current = null;
-  };
+  const { current, goTo, handleTouchStart, handleTouchEnd } = useCarousel(recetas.length);
 
   if (recetas.length === 0) return null;
 
@@ -155,6 +114,7 @@ export default function RecetasCarousel({ recetas }: Props) {
             alt=""
             width={20}
             height={20}
+            style={{ height: "auto" }}
           />
         </Link>
       </div>

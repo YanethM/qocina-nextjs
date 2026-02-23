@@ -25,24 +25,21 @@ export default async function ProductoDetailPage({ params }: Props) {
       <section className={styles.content}>
         <div className={styles.grid}>
           <div className={styles.imageWrapper}>
-            {producto.imagen && (
+            {producto.imagen_principal && (
               <Image
-                src={getStrapiImageUrl(producto.imagen.url)}
-                alt={producto.imagen.alternativeText || producto.nombre}
+                src={getStrapiImageUrl(producto.imagen_principal.url)}
+                alt={producto.imagen_principal.alternativeText || producto.nombre}
                 width={600}
-                height={500}
-                style={{ objectFit: "cover", borderRadius: "12px" }}
+                height={600}
+                style={{ objectFit: "contain", borderRadius: "12px", width: "100%", height: "auto" }}
               />
             )}
           </div>
           <div className={styles.info}>
             <h1 className={styles.title}>{producto.nombre}</h1>
-            <p className={styles.description}>{producto.descripcion}</p>
-            {producto.contenido && (
-              <div
-                className={styles.body}
-                dangerouslySetInnerHTML={{ __html: producto.contenido }}
-              />
+            <p className={styles.description}>{producto.descripcion_corta}</p>
+            {producto.descripcion_larga && (
+              <p className={styles.body}>{producto.descripcion_larga}</p>
             )}
           </div>
         </div>

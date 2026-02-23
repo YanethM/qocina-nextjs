@@ -1,0 +1,297 @@
+.hero {
+  position: relative;
+  width: 100%;
+  height: 679px;
+  min-height: unset;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background-image: var(--hero-bg-desktop);
+  background-size: cover;
+  background-position: center top;
+  background-color: #555;
+  padding: 96px 60px 41px 60px;
+  overflow: hidden;
+}
+
+/* Overlay sutil solo en la zona izquierda */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.25) 0%,
+    rgba(0, 0, 0, 0.05) 60%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 1;
+  max-width: 1320px;
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  opacity: 1;
+  transform: rotate(0deg);
+  margin: 0 auto;
+}
+
+.heroText {
+  background: rgba(10, 10, 10, 0.88);
+  width: 536px;
+  height: 310px;
+  padding: 32px 76px;
+  border-radius: 24px;
+  backdrop-filter: blur(6px);
+  opacity: 1;
+  transform: rotate(0deg);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-sizing: border-box;
+}
+
+.heroTitle {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 38px;
+  line-height: 120%;
+  letter-spacing: 0%;
+  color: #fff;
+  margin: 0;
+}
+
+.heroBtn {
+  display: inline-block;
+  width: 235px;
+  height: 46px;
+  min-width: 170px;
+  padding: 12px 32px;
+  gap: 16px;
+  background-color: #f5b800;
+  color: #000;
+  border-radius: 100px;
+  font-weight: 800;
+  font-size: 1rem;
+  transition:
+    transform 0.2s,
+    background-color 0.2s;
+  text-decoration: none;
+  transform: rotate(0deg);
+  align-self: flex-start;
+  box-sizing: border-box;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+}
+
+.heroBtn:hover {
+  transform: scale(1.04);
+  background-color: #e0a900;
+}
+
+.heroBtnText {
+  display: inline-block;
+  height: 22px;
+  opacity: 1;
+  transform: rotate(0deg);
+  line-height: 22px;
+}
+
+/* Slogan derecho - contenedor de las imágenes */
+.heroSlogan {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  height: auto;
+  gap: 16px;
+  opacity: 1;
+  transform: rotate(0deg);
+  padding-left: 1rem;
+}
+
+/* Estilo para la imagen del slogan */
+.sloganImage {
+  width: 277px;
+  height: auto;
+  opacity: 1;
+  transform: rotate(0deg);
+  object-fit: contain;
+}
+
+/* Imagen de libros debajo del slogan */
+.librosImage {
+  width: 380px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Dots del slider */
+.dots {
+  position: absolute;
+  bottom: 1.6rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+  z-index: 2;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  border: none;
+  cursor: pointer;
+  transition:
+    background 0.3s,
+    transform 0.3s;
+  padding: 0;
+  opacity: 1;
+  transform: rotate(0deg);
+}
+
+.dotActive {
+  background: #f5b800;
+  transform: scale(1.25);
+}
+
+/* Responsive */
+
+/* Pantallas grandes: reducir un poco el text box */
+@media (max-width: 1200px) {
+  .hero {
+    padding: 96px 40px 41px 40px;
+  }
+
+  .heroText {
+    width: 450px;
+    height: 290px;
+    padding: 28px 52px;
+  }
+
+  .sloganImage {
+    width: 240px;
+  }
+
+  .librosImage {
+    width: 320px;
+  }
+}
+
+/* Tablet landscape: reducir columnas */
+@media (max-width: 1024px) {
+  .heroText {
+    width: 400px;
+    height: 270px;
+    padding: 24px 40px;
+  }
+
+  .sloganImage {
+    width: 200px;
+  }
+
+  .librosImage {
+    width: 270px;
+  }
+}
+
+/* Tablet portrait: 2 filas (texto arriba, slogan abajo) */
+@media (max-width: 768px) {
+  .hero {
+    background-image: var(--hero-bg-mobile);
+    height: 679px;
+    padding: 48px 24px 40px 24px;
+    justify-content: center;
+  }
+
+  .heroContent {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+  }
+
+  .heroText {
+    width: 100%;
+    max-width: 480px;
+    height: auto;
+    min-height: 180px;
+    padding: 24px 28px;
+    gap: 12px;
+  }
+
+  .heroTitle {
+    font-size: 1.6rem;
+  }
+
+  .heroBtn {
+    width: auto;
+    padding: 10px 28px;
+    font-size: 0.9rem;
+  }
+
+  .heroSlogan {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding-left: 0;
+    gap: 12px;
+  }
+
+  .sloganImage {
+    width: 130px;
+  }
+
+  .librosImage {
+    width: 190px;
+  }
+}
+
+/* Mobile pequeño */
+@media (max-width: 480px) {
+  .hero {
+    height: 600px;
+    padding: 36px 16px 28px 16px;
+  }
+
+  .heroContent {
+    gap: 16px;
+  }
+
+  .heroText {
+    max-width: 360px;
+    padding: 20px 24px;
+  }
+
+  .heroTitle {
+    font-size: 1.4rem;
+  }
+
+  .heroBtn {
+    width: 200px;
+    padding: 10px 24px;
+    font-size: 0.85rem;
+  }
+
+  .heroSlogan {
+    gap: 8px;
+  }
+
+  .sloganImage {
+    width: 100px;
+  }
+
+  .librosImage {
+    width: 145px;
+  }
+}

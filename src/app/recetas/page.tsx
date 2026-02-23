@@ -1,45 +1,14 @@
 import Link from "next/link";
 import Image from "next/image";
 import { getRecetas, getRecetasPage, getStrapiImageUrl } from "@/lib/api";
+import { COLOR_MAP, DEFAULT_COLOR } from "@/lib/constants";
+import type { Receta } from "@/types";
 import styles from "./page.module.css";
 
 export const metadata = {
   title: "Recetas - Q'ocina",
   description: "Descubre nuestras mejores recetas",
 };
-
-const COLOR_MAP: Record<string, string> = {
-  rojo: "#CE171C",
-  verde: "#6A892C",
-  amarillo: "#F4A910",
-};
-
-interface Receta {
-  id: number;
-  documentId: string;
-  titulo: string;
-  slug: string;
-  descripcion_corta: string;
-  descripcion_larga: string;
-  tiempo_preparacion: number;
-  tiempo_coccion: number;
-  porciones: number;
-  dificultad: string;
-  tipo_receta: string;
-  cocina_region: string;
-  tipo_dieta: string;
-  color_card: string;
-  texto_base_utilizada: string;
-  destacada: boolean;
-  orden: number;
-  video_url: string;
-  meta_title: string;
-  meta_description: string;
-  imagen?: {
-    url: string;
-    alternativeText?: string;
-  };
-}
 
 export default async function RecetasPage() {
   const [pageRes, recetasRes] = await Promise.all([
@@ -64,7 +33,7 @@ export default async function RecetasPage() {
       <section className={styles.content}>
         <div className={styles.grid}>
           {recetas.map((receta) => {
-            const cardColor = COLOR_MAP[receta.color_card] || "#CE171C";
+            const cardColor = COLOR_MAP[receta.color_card] ?? DEFAULT_COLOR;
 
             return (
               <Link

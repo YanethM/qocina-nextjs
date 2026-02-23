@@ -1,14 +1,18 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Producto } from "@/types";
 import { getStrapiImageUrl } from "@/lib/api";
+import { useCarousel } from "@/hooks/useCarousel";
 import styles from "./Productos.module.css";
 
 interface ProductosProps {
   productos: Producto[];
+  ctaText?: string;
+  ctaUrl?: string;
+  ctaNuevaVentana?: boolean;
 }
 
 function getCardColor(index: number): string {
@@ -20,7 +24,17 @@ function formatPrice(precio: number, moneda: string): string {
   if (moneda === "PEN") {
     return `S/ ${precio.toFixed(2)}`;
   }
-  return `$${precio.toFixed(2)} USD`;
+  return `${precio.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ".")} COP`;
+}
+
+function getImageUrl(
+  producto: Producto,
+  format: "small" | "medium" | "thumbnail",
+): string {
+  if (producto.imagen_principal?.formats?.[format]?.url) {
+    return getStrapiImageUrl(producto.imagen_principal.formats[format].url);
+  }
+  return getStrapiImageUrl(producto.imagen_principal?.url || "");
 }
 
 function CardItem({
@@ -32,38 +46,57 @@ function CardItem({
 }) {
   return (
     <Link
-      href={`/productos/${producto.documentId}`}
+      href={`/home-page/productos_destacados/${producto.documentId}`}
       className={`${styles.card} ${colorClass}`}>
       <div className={styles.imageWrapper}>
-        {producto.imagen && (
+        {producto.imagen_principal && (
           <Image
-            src={getStrapiImageUrl(producto.imagen.url)}
-            alt={producto.imagen.alternativeText ?? producto.nombre}
+            src={getImageUrl(producto, "medium")}
+            alt={producto.imagen_principal.alternativeText ?? producto.nombre ?? ""}
             fill
+            sizes="(max-width: 640px) 245px, (max-width: 1024px) 500px, 424px"
             style={{ objectFit: "contain" }}
+            priority
           />
         )}
       </div>
-      <h3 className={styles.nombre}>{producto.nombre}</h3>
-      <p className={styles.precio}>
-        {formatPrice(producto.precio, producto.precio_moneda)}
-      </p>
-      <p className={styles.descripcion}>{producto.descripcion_corta}</p>
+      <div className={styles.cardContent}>
+        <h3 className={styles.nombre}>{producto.nombre}</h3>
+        <p className={styles.precio}>
+          {formatPrice(producto.precio, producto.precio_moneda)}
+        </p>
+        {producto.presentacion && (
+          <p className={styles.presentacion}>{producto.presentacion}</p>
+        )}
+        <p className={styles.descripcion}>{producto.descripcion_corta}</p>
+        <button
+          className={styles.addToCartBtn}
+          onClick={(e) => {
+            e.preventDefault();
+            console.log("Añadir al carrito:", producto.nombre);
+          }}>
+          Añadir al carrito
+        </button>
+      </div>
     </Link>
   );
 }
 
-const PEEK = 44; // px del siguiente card visibles
-const GAP = 12; // gap entre slides
+const PEEK = 44;
+const GAP = 12;
 
-export default function Productos({ productos }: ProductosProps) {
-  const [current, setCurrent] = useState(0);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+export default function Productos({
+  productos,
+  ctaText = "Ver todos los productos",
+  ctaUrl = "/productos",
+  ctaNuevaVentana = false,
+}: ProductosProps) {
+  const { current, goTo, handleTouchStart, handleTouchEnd } = useCarousel(
+    productos.length,
+  );
   const carouselRef = useRef<HTMLDivElement>(null);
   const [containerWidth, setContainerWidth] = useState(0);
-  const touchStartX = useRef<number | null>(null);
 
-  // Medir el ancho del contenedor para calcular la traducción exacta
   useEffect(() => {
     const el = carouselRef.current;
     if (!el) return;
@@ -74,42 +107,6 @@ export default function Productos({ productos }: ProductosProps) {
     return () => ro.disconnect();
   }, []);
 
-  const startInterval = useCallback(() => {
-    if (intervalRef.current) clearInterval(intervalRef.current);
-    intervalRef.current = setInterval(() => {
-      setCurrent((c) => (c + 1) % productos.length);
-    }, 3500);
-  }, [productos.length]);
-
-  useEffect(() => {
-    startInterval();
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
-  }, [startInterval]);
-
-  const goTo = (i: number) => {
-    setCurrent(i);
-    startInterval();
-  };
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.targetTouches[0].clientX;
-  };
-
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX.current === null) return;
-    const diff = touchStartX.current - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 50) {
-      if (diff > 0) {
-        goTo((current + 1) % productos.length);
-      } else {
-        goTo((current - 1 + productos.length) % productos.length);
-      }
-    }
-    touchStartX.current = null;
-  };
-
   const slideWidth = containerWidth > 0 ? containerWidth - PEEK : 0;
   const translateX = current * (slideWidth + GAP);
 
@@ -117,11 +114,12 @@ export default function Productos({ productos }: ProductosProps) {
 
   return (
     <section className={styles.section}>
-      <h2 className={styles.title}>
-        ¡Atrévete hoy a disfrutar de la Q&apos;ocina con Q!
-      </h2>
+      <div className={styles.header}>
+        <h2 className={styles.title}>
+          ¡Atrévete hoy a disfrutar de la Q&apos;ocina con Q!
+        </h2>
+      </div>
 
-      {/* Desktop: grid */}
       <div className={styles.grid}>
         {productos.map((producto, index) => (
           <CardItem
@@ -132,7 +130,6 @@ export default function Productos({ productos }: ProductosProps) {
         ))}
       </div>
 
-      {/* Mobile: carrusel con peek */}
       <div
         ref={carouselRef}
         className={styles.carousel}
@@ -158,6 +155,23 @@ export default function Productos({ productos }: ProductosProps) {
             />
           ))}
         </div>
+      </div>
+
+      <div className={styles.verTodas}>
+        <Link
+          href={ctaUrl}
+          className={styles.verTodasBtn}
+          target={ctaNuevaVentana ? "_blank" : "_self"}
+          rel={ctaNuevaVentana ? "noopener noreferrer" : undefined}>
+          {ctaText}{" "}
+          <Image
+            src="/images/web/home/white_arrow_right.png"
+            alt=""
+            width={20}
+            height={20}
+            style={{ height: "auto" }}
+          />
+        </Link>
       </div>
     </section>
   );

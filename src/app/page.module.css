@@ -1,94 +1,3 @@
-/* Hero Section */
-.hero {
-  position: relative;
-  min-height: 600px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-image:
-    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23888" width="1200" height="600"/></svg>');
-  background-size: cover;
-  background-position: center;
-  padding: 4rem 1.5rem;
-  overflow: hidden;
-}
-
-.heroOverlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3));
-}
-
-.heroContent {
-  position: relative;
-  max-width: var(--max-width);
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-  align-items: center;
-  z-index: 1;
-}
-
-.heroText {
-  background: rgba(0, 0, 0, 0.85);
-  padding: 3rem;
-  border-radius: 20px;
-  backdrop-filter: blur(10px);
-}
-
-.heroTitle {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: #fff;
-  margin-bottom: 2rem;
-  line-height: 1.3;
-}
-
-.heroBtn {
-  display: inline-block;
-  padding: 1rem 2.5rem;
-  background-color: #fdb913;
-  color: #000;
-  border-radius: 30px;
-  font-weight: 700;
-  font-size: 1.1rem;
-  transition: transform 0.2s;
-  text-transform: capitalize;
-}
-
-.heroBtn:hover {
-  transform: scale(1.05);
-}
-
-.heroImage {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-.heroSlogan {
-  text-align: right;
-  font-family: "Comic Sans MS", cursive, sans-serif;
-  color: #fff;
-  font-size: 3rem;
-  font-weight: 700;
-  line-height: 0.9;
-  text-transform: uppercase;
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-}
-
-.heroSloganText {
-  display: block;
-}
-
-.heroQ {
-  font-size: 5rem;
-  font-style: italic;
-}
 
 .beneficiosText {
   max-width: 1100px;
@@ -424,20 +333,6 @@
    RESPONSIVE
    ============================================= */
 @media (max-width: 968px) {
-  .heroContent {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-  .heroSlogan {
-    text-align: center;
-    font-size: 2.5rem;
-  }
-  .heroQ {
-    font-size: 4rem;
-  }
-  .heroTitle {
-    font-size: 2rem;
-  }
   .newsletterContent {
     grid-template-columns: 1fr;
     gap: 2rem;
@@ -451,18 +346,6 @@
 }
 
 @media (max-width: 768px) {
-  .heroTitle {
-    font-size: 1.5rem;
-  }
-  .heroText {
-    padding: 2rem;
-  }
-  .heroSlogan {
-    font-size: 2rem;
-  }
-  .heroQ {
-    font-size: 3rem;
-  }
   .sectionTitle {
     font-size: 1.5rem;
   }
@@ -506,12 +389,6 @@
 
 
 @media (max-width: 480px) {
-  .heroSlogan {
-    font-size: 1.5rem;
-  }
-  .heroQ {
-    font-size: 2.5rem;
-  }
   .newsletterContent {
     padding: 3rem 1.5rem;
   }

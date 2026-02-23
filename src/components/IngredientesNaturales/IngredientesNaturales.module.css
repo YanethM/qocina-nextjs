@@ -1,0 +1,206 @@
+.section {
+  max-width: 1440px;
+  min-height: 1009px;
+  margin: 0 auto;
+  padding-top: 96px;
+}
+
+/* Desktop: dos imágenes con gap */
+.desktopContainer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.imageWrapper {
+  position: relative;
+  width: 660px;
+  height: 887px;
+  border-radius: 86px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.gridImage {
+  object-fit: cover;
+}
+
+/* Botón superpuesto en la segunda imagen - Desktop */
+.buttonOverlay {
+  position: absolute;
+  bottom: 40px;
+  left: 79px;
+  right: 79px;
+  display: flex;
+  justify-content: center;
+}
+
+/* Estilos del botón CTA */
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 342px;
+  height: 46px;
+  padding: 12px 32px;
+  background: #000000;
+  border-radius: 100px;
+  color: #ffffff;
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 140%;
+  text-decoration: none;
+  text-align: center;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+.ctaButton:hover {
+  background: #333333;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Ocultar slider en desktop */
+.mobileSlider {
+  display: none;
+}
+
+/* Responsive */
+@media (max-width: 1400px) {
+  .imageWrapper {
+    width: 46vw;
+    height: calc(46vw * (887 / 660));
+    border-radius: 6vw;
+  }
+
+  .buttonOverlay {
+    left: 5vw;
+    right: 5vw;
+  }
+}
+
+@media (max-width: 1024px) {
+  .section {
+    min-height: auto;
+    padding-top: 60px;
+  }
+
+  .imageWrapper {
+    width: 44vw;
+    height: calc(44vw * (887 / 660));
+    border-radius: 5vw;
+  }
+
+  .ctaButton {
+    width: 90%;
+    height: 42px;
+    padding: 10px 20px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 0;
+    overflow: hidden;
+  }
+
+  /* Ocultar desktop, mostrar mobile slider */
+  .desktopContainer {
+    display: none;
+  }
+
+  .mobileSlider {
+    display: block;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .sliderTrack {
+    display: flex;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+  }
+
+  .slide {
+    flex: 0 0 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  .slideImage {
+    width: 100%;
+    max-width: 500px;
+    object-fit: contain;
+  }
+
+  .mobileButtonContainer {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .ctaButton {
+    width: 300px;
+    height: 42px;
+    padding: 10px 24px;
+    font-size: 15px;
+  }
+
+  .dotsContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    padding: 4px 0;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.2);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.3s ease;
+  }
+
+  .dotActive {
+    background: #1a1a1a;
+    width: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .slideImage {
+    max-width: 400px;
+  }
+
+  .ctaButton {
+    width: 280px;
+    height: 40px;
+    padding: 8px 20px;
+    font-size: 14px;
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+  }
+
+  .dotActive {
+    width: 20px;
+  }
+}

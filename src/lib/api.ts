@@ -16,9 +16,10 @@ import type {
   BlogPage,
   FaqPage,
   ProcesoProduccion,
+  HomePage,
 } from "@/types";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://ec2-23-23-186-243.compute-1.amazonaws.com:1337";
+export const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://ec2-23-23-186-243.compute-1.amazonaws.com:1337";
 
 async function fetchAPI<T>(path: string, params?: Record<string, string>): Promise<T> {
   const url = new URL(path, API_URL);
@@ -144,4 +145,12 @@ export async function getFaqPage() {
 
 export async function getProcesoProduccion() {
   return fetchAPI<StrapiSingleResponse<ProcesoProduccion>>("/api/proceso-produccion", { "populate": "*" });
+}
+
+export async function getHomePage() {
+  return fetchAPI<StrapiSingleResponse<HomePage>>("/api/home-page", {
+    "populate[slider][populate][imagen][populate]": "*",
+    "populate[slider][populate][imagen_mobile][populate]": "*",
+    "populate[slider][populate][cta]": "*",
+  });
 }

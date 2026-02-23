@@ -1,104 +1,298 @@
+/* CocinarConQ.module.css */
+
 .cocinarConQ {
   width: 100%;
-  margin: 0;
-  padding: 0;
-  line-height: 0;
+  position: relative;
+  background-color: #fff;
+  overflow: hidden;
 }
 
 .imageWrapper {
   position: relative;
   width: 100%;
-  line-height: 0;
 }
 
-/* ===========================
-   Imagen desktop
-   =========================== */
+/* Imagen Desktop de fondo */
 .mainImage {
   display: block;
   width: 100%;
   height: auto;
+  object-fit: cover;
 }
 
-/* ===========================
-   Imagen mobile (oculta en desktop)
-   =========================== */
-.mainImageMobile {
-  display: none;
-  width: 100%;
-  height: auto;
-}
-
-/* ===========================
-   Wave overlay (desktop)
-   =========================== */
+/* Wave Top decorativo */
 .waveTop {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  line-height: 0;
-  z-index: 1;
+  z-index: 2;
+  pointer-events: none;
 }
 
-/* ===========================
-   Contenido sobre la wave
-   =========================== */
-.contentWrapper {
+.waveTop img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ============================
+   Desktop Content
+   ============================ */
+.desktopContent {
   position: absolute;
-  top: 50%;
+  top: 20%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 2;
+  width: 100%;
+  max-width: 1200px;
   display: flex;
   align-items: center;
-  gap: 40px;
-  max-width: 1200px;
+  justify-content: space-between;
+  gap: 60px;
+  padding: 0 40px;
+  z-index: 5;
+}
+
+/* Logo en desktop */
+.desktopContent .logoWrapper {
+  flex: 0 0 auto;
+  width: 331.65px;
+  height: 226.73px;
+  opacity: 1;
+  transform: rotate(0deg);
+}
+
+.desktopContent .logo {
   width: 100%;
-  padding: 0 20px;
-  pointer-events: auto;
+  height: 100%;
+  object-fit: contain;
 }
 
-.logoWrapper {
-  flex-shrink: 0;
-}
-
-.logo {
-  width: auto;
-  height: auto;
-  max-width: 300px;
-}
-
-.textWrapper {
+/* Layout texto + botón: 650x124 */
+.desktopContent .textButtonWrapper {
+  width: 650px;
+  height: 124px;
+  gap: 16px;
+  opacity: 1;
+  transform: rotate(0deg);
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  color: #fff;
+  align-items: flex-start; /* Alineado a la izquierda */
+  justify-content: center;
 }
 
-.description {
+.desktopContent .description {
+  width: 100%;
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 400;
   font-size: 24px;
-  line-height: 1.6;
+  line-height: 1.5;
+  color: #ffffff;
   margin: 0;
-  color: #fff;
-  max-width: 400px;
 }
 
-/* ===========================
-   Responsive mobile
-   =========================== */
+.desktopBtn {
+  width: 280px !important;
+  height: 48px !important;
+  padding: 12px 32px !important;
+  border-radius: 100px !important;
+  background-color: #f4a910 !important;
+  color: #000 !important;
+  font-family: var(--font-montserrat), sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  border: none !important;
+  cursor: pointer !important;
+  text-decoration: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* ============================
+   Mobile Styles
+   ============================ */
+.mobileImageContainer {
+  display: none;
+  position: relative;
+  width: 100%;
+}
+
+.mainImageMobile {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Contenido móvil sobre la imagen */
+.mobileContent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  z-index: 10;
+  padding: 32px;
+  box-sizing: border-box;
+}
+
+.mobileContent .logoWrapper {
+  width: 263.3004150390625px;
+  height: 180.0001220703125px;
+  opacity: 1;
+  transform: rotate(0deg);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobileContent .logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.mobileContent .textWrapper {
+  width: 329px;
+  height: 137px;
+  gap: 16px;
+  opacity: 1;
+  transform: rotate(0deg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.mobileContent .description {
+  width: 100%;
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.5;
+  text-align: center;
+  color: #ffffff;
+  margin: 0;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.mobileContent .buttonWrapper {
+  width: auto;
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.mobileContent .buttonWrapper :global(.btn-yellow) {
+  width: 280px;
+  height: 48px;
+  padding: 12px 32px;
+  border-radius: 100px;
+  background-color: #f4a910;
+  color: #000;
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ============================
+   Responsive
+   ============================ */
 @media (max-width: 768px) {
-  /* Ocultar imagen desktop y mostrar mobile */
+  /* Ocultar elementos de desktop */
   .mainImage {
     display: none;
   }
-
-  .mainImageMobile {
-    display: block;
-  }
-
-  /* Ocultar overlay (la imagen mobile ya tiene el contenido) */
+  
   .waveTop {
     display: none;
+  }
+  
+  .desktopContent {
+    display: none;
+  }
+  
+  /* Mostrar contenedor mobile */
+  .mobileImageContainer {
+    display: block;
+    min-height: 500px;
+  }
+  
+  .mainImageMobile {
+    display: block;
+    min-height: 500px;
+  }
+}
+
+@media (max-width: 480px) {
+  .mobileImageContainer {
+    min-height: 450px;
+  }
+  
+  .mainImageMobile {
+    min-height: 450px;
+  }
+  
+  .mobileContent .logoWrapper {
+    width: 220px;
+    height: 150px;
+    margin-bottom: 12px;
+  }
+  
+  .mobileContent .textWrapper {
+    width: 280px;
+    height: auto;
+    min-height: 120px;
+    margin-bottom: 12px;
+  }
+  
+  .mobileContent .description {
+    font-size: 14px;
+  }
+  
+  .mobileContent .buttonWrapper :global(.btn-yellow) {
+    width: 240px;
+    font-size: 13px;
+    height: 44px;
+    padding: 10px 24px;
+  }
+}
+
+@media (max-width: 360px) {
+  .mobileImageContainer {
+    min-height: 400px;
+  }
+  
+  .mainImageMobile {
+    min-height: 400px;
+  }
+  
+  .mobileContent .logoWrapper {
+    width: 180px;
+    height: 123px;
+    margin-bottom: 8px;
+  }
+  
+  .mobileContent .textWrapper {
+    width: 240px;
+  }
+  
+  .mobileContent .description {
+    font-size: 13px;
   }
 }
