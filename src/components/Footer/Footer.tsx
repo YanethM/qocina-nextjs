@@ -9,7 +9,7 @@ export default function Footer() {
       <div className={styles.topRow}>
         <Link href="/" className={styles.logo}>
           <Image
-            src="/images/web/footer/logo-qocina.png"
+            src="/images/web/footer/logo-qocina.svg"
             alt="Q'ocina en Casa"
             width={162}
             height={64}
@@ -27,7 +27,7 @@ export default function Footer() {
           </nav>
 
           <Link href="/carrito" className={styles.cartIcon} aria-label="Carrito">
-            <Image src="/images/web/footer/carrito.png" alt="Carrito" width={36} height={36} />
+            <Image src="/images/web/footer/carrito.svg" alt="Carrito" width={36} height={36} />
           </Link>
         </div>
       </div>
@@ -37,20 +37,18 @@ export default function Footer() {
         <div className={styles.paymentSection}>
           <span className={styles.secureText}>Compra en línea 100% seguro</span>
           <Image
-            src="/images/web/footer/mastercard-securecode.png"
+            src="/images/web/footer/mastercard-securecode.svg"
             alt="MasterCard SecureCode"
             width={200}
             height={60}
             className={styles.paymentBadge}
-            style={{ height: "auto" }}
           />
           <Image
-            src="/images/web/footer/verified-by-visa.png"
+            src="/images/web/footer/verified-by-visa.svg"
             alt="Verified by VISA"
             width={200}
             height={60}
             className={styles.paymentBadge}
-            style={{ height: "auto" }}
           />
         </div>
         <div className={styles.socialIcons}>
@@ -64,7 +62,6 @@ export default function Footer() {
               alt="TikTok"
               width={28}
               height={28}
-              style={{ height: "auto" }}
             />
           </a>
           <a
@@ -77,7 +74,6 @@ export default function Footer() {
               alt="YouTube"
               width={28}
               height={28}
-              style={{ height: "auto" }}
             />
           </a>
           <a
@@ -90,7 +86,6 @@ export default function Footer() {
               alt="Facebook"
               width={28}
               height={28}
-              style={{ height: "auto" }}
             />
           </a>
           <a
@@ -103,7 +98,6 @@ export default function Footer() {
               alt="WhatsApp"
               width={28}
               height={28}
-              style={{ height: "auto" }}
             />
           </a>
           <a
@@ -116,7 +110,6 @@ export default function Footer() {
               alt="Instagram"
               width={28}
               height={28}
-              style={{ height: "auto" }}
             />
           </a>
         </div>

@@ -10,12 +10,26 @@
   cursor: pointer;
   transition:
     background-color 0.3s ease,
-    transform 0.2s ease;
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
   width: fit-content;
 }
 
-.button:hover {
-  transform: translateY(-2px);
+/* Elevación solo en dispositivos con mouse real */
+@media (hover: hover) {
+  .button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  }
+}
+
+/* Feedback táctil en mobile: escala sutil sin salto */
+.button:active {
+  transform: scale(0.97);
+  box-shadow: none;
+  transition:
+    transform 0.1s ease,
+    box-shadow 0.1s ease;
 }
 
 .primary {

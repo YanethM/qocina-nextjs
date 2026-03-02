@@ -25,7 +25,7 @@ export default function Header() {
           {/* Logo */}
           <Link href="/" className={styles.logoWrapper} onClick={closeMenu}>
             <Image
-              src="/images/web/header/logo_white.png"
+              src="/images/web/header/logo_white.svg"
               alt="Q'ocina en casa"
               width={162}
               height={64}
@@ -45,7 +45,7 @@ export default function Header() {
             </nav>
             <Link href="/carrito" className={styles.cartWrapper}>
               <Image
-                src="/images/web/header/shopping_white.png"
+                src="/images/web/header/shopping_white.svg"
                 alt="Carrito de compras"
                 width={48}
                 height={48}
@@ -58,7 +58,7 @@ export default function Header() {
           <div className={styles.mobileActions}>
             <Link href="/carrito" className={styles.cartWrapper} onClick={closeMenu}>
               <Image
-                src="/images/web/header/shopping_white.png"
+                src="/images/web/header/shopping_white.svg"
                 alt="Carrito de compras"
                 width={40}
                 height={40}

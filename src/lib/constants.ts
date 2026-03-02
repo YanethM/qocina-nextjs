@@ -5,9 +5,9 @@ export const COLOR_MAP: Record<string, string> = {
 };
 
 export const WAVE_MAP: Record<string, string> = {
-  rojo: "/images/web/home/wave_red.png",
-  verde: "/images/web/home/wave_green.png",
-  amarillo: "/images/web/home/wave_yellow.png",
+  rojo: "/images/web/recetas/red_wave.svg",
+  verde: "/images/web/recetas/green_wave.svg",
+  amarillo: "/images/web/recetas/yellow_wave.svg",
 };
 
 export const DEFAULT_COLOR = COLOR_MAP.rojo;

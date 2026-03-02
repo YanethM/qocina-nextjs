@@ -5,6 +5,9 @@
   position: relative;
   background: #fff;
   overflow: hidden;
+  padding-right: 60px;
+  padding-bottom: 96px;
+  padding-left: 60px;
 }
 
 /* ============================
@@ -19,7 +22,7 @@
   font-weight: 400;
   color: #000000;
   margin: 0;
-  padding: 0px 24px 48px;
+  padding: 0px 60px 60px;
   text-transform: uppercase;
 }
 
@@ -45,8 +48,8 @@
 .backgroundImage {
   position: absolute;
   top: 454px;
-  left: 0;
-  width: 100%;
+  left: -60px;
+  width: calc(100% + 120px);
   z-index: 1;
   overflow: hidden;
 }
@@ -66,9 +69,9 @@
   position: relative;
   z-index: 2;
   width: 100%;
-  max-width: 1400px;
+  max-width: 1096px;
   margin: 0 auto;
-  padding: 0 24px 0px;
+  padding: 0;
   display: flex;
   justify-content: center;
 }
@@ -81,7 +84,9 @@
    ============================ */
 .waveWrapper {
   position: relative;
-  width: 100%;
+  width: calc(100% + 120px);
+  margin-left: -60px;
+  margin-right: -60px;
   /* Subir la sección de olas para que quede pegada al fondo verde */
   margin-top: -280px;
   z-index: 2;
@@ -127,6 +132,8 @@
   overflow: hidden;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   display: flex;
+  gap: 25px;
+  padding-right: 24px;
 }
 
 /* Segunda fila desplazada 232px a la derecha */
@@ -223,7 +230,7 @@
 
 /* Espacio derecho para la foto */
 .cardRight {
-  width: 192px;
+  flex: 1;
   height: 253px;
   position: relative;
   z-index: 1;
@@ -250,12 +257,25 @@
 }
 
 /* ============================
+   Mobile carousel (oculto en desktop)
+   ============================ */
+.mobileSection {
+  display: none;
+}
+
+/* ============================
    Responsive
    ============================ */
 @media (max-width: 968px) {
+  .section {
+    padding-right: 24px;
+    padding-left: 24px;
+  }
+
   .sectionTitle {
     font-size: 80px;
     margin-bottom: 40px;
+    padding: 0px 24px 40px;
   }
 
   .grid {
@@ -276,11 +296,16 @@
 
   /* Ajustar inicio del fondo verde para mobile (1 columna) */
   .backgroundImage {
+    left: -24px;
+    width: calc(100% + 48px);
     /* row1 (253) + gap(20) + 70% row2 (177) = 450px */
     top: 450px;
   }
 
   .waveWrapper {
+    width: calc(100% + 48px);
+    margin-left: -24px;
+    margin-right: -24px;
     margin-top: -180px;
   }
 }
@@ -356,5 +381,101 @@
 
   .backgroundImage {
     top: 380px;
+  }
+}
+
+/* ============================
+   Mobile: ocultar desktop, mostrar carrusel
+   ============================ */
+@media (max-width: 768px) {
+  .section {
+    padding: 0;
+  }
+
+  .backgroundWrapper,
+  .waveWrapper {
+    display: none;
+  }
+
+  .mobileSection {
+    display: block;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .mobileBg {
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .mobileSlider {
+    position: relative;
+    z-index: 1;
+    padding: 48px 0 40px;
+  }
+
+  .sliderTrack {
+    display: flex;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+  }
+
+  .slide {
+    flex: 0 0 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Card mobile: 289×428, border-radius 24px */
+  .mobileCard {
+    position: relative;
+    width: 289px;
+    height: 428px;
+    border-radius: 24px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  /* Texto superpuesto en la parte inferior */
+  .mobileCardText {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 0 0 24px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .dotsContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 24px;
+    padding: 4px 0;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.5);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.3s ease;
+  }
+
+  .dotActive {
+    background: #ffffff;
+    width: 24px;
   }
 }

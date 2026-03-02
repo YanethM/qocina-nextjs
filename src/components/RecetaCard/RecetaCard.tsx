@@ -35,8 +35,18 @@ export default function RecetaCard({
         ) : (
           <div className={styles.imagePlaceholder} />
         )}
-        {/* Wave overlay */}
-        <div className={styles.wave} />
+      </div>
+
+      {/* Wave — sibling del imageWrapper para evitar el clip de overflow:hidden */}
+      <div className={styles.waveWrapper}>
+        <Image
+          src="/images/web/recetas/red_wave.svg"
+          alt=""
+          width={424}
+          height={58}
+          className={styles.waveImg}
+          aria-hidden={true}
+        />
       </div>
 
       {/* Body */}
@@ -45,7 +55,14 @@ export default function RecetaCard({
         <p className={styles.description}>{descripcion}</p>
         <div className={styles.cta}>
           <span className={styles.ctaButton}>
-            Ver receta&nbsp;&nbsp;→
+            Ver receta
+            <Image
+              src="/images/web/recetas/icon_arrow_right.svg"
+              alt=""
+              width={25}
+              height={25}
+              aria-hidden={true}
+            />
           </span>
         </div>
       </div>

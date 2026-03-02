@@ -1,5 +1,7 @@
-import Image from "next/image";
 import { getProducto, getStrapiImageUrl } from "@/lib/api";
+import { notFound } from "next/navigation";
+import Badges from "@/components/Badges/Badges";
+import ProductoDetailClient from "@/components/ProductoDetail/ProductoDetailClient";
 import styles from "./page.module.css";
 
 interface Props {
@@ -7,43 +9,65 @@ interface Props {
 }
 
 export default async function ProductoDetailPage({ params }: Props) {
-  const { id } = await params;
-  const res = await getProducto(id).catch(() => null);
-  const producto = res?.data;
+  try {
+    const { id } = await params;
+    
+    console.log("🔍 Buscando producto con ID:", id);
+    
+    const res = await getProducto(id);
+    
+    const producto = res?.data;
 
-  if (!producto) {
+    if (!producto) {
+      return notFound();
+    }
+
+    // Procesar imágenes
+    const imagenPrincipal = producto.imagen_principal?.url 
+      ? getStrapiImageUrl(producto.imagen_principal.url)
+      : null;
+
+    // Manejar tanto galeria_imagenes como galeria (por compatibilidad)
+    const galeria = (producto.galeria_imagenes ?? producto.galeria ?? [])
+      .filter((img: any) => img?.url)
+      .map((img: any) => getStrapiImageUrl(img.url));
+
+    const allImages = [imagenPrincipal, ...galeria].filter(Boolean) as string[];
+
+    const badges = producto.badges ?? [];
+
     return (
-      <div className={styles.notFound}>
-        <h1>Producto no encontrado</h1>
-        <p>El producto que buscas no existe o fue eliminado.</p>
+      <div className={styles.page}>
+        <ProductoDetailClient
+          nombre={producto.nombre}
+          descripcionCorta={producto.descripcion_corta}
+          descripcionLarga={producto.descripcion_larga}
+          presentacion={producto.presentacion}
+          rinde={producto.rinde}
+          precio={producto.precio}
+          precioMoneda={producto.precio_moneda}
+          allImages={allImages}
+          categoria={producto.categoria}
+          badges={badges}
+        />
+
+        {badges.length > 0 && (
+          <div className={styles.badgesWrapper}>
+            <Badges badges={badges} />
+          </div>
+        )}
+        <img
+          src="/images/web/products/product_detail/waves_product_detail.svg"
+          alt=""
+          width={1440}
+          height={100}
+          className={styles.waveBottom}
+          style={{ width: "100%", height: "auto" }}
+        />
       </div>
     );
+  } catch (error) {
+    console.error("🔥 Error al cargar producto:", error);
+    return notFound();
   }
-
-  return (
-    <div className={styles.page}>
-      <section className={styles.content}>
-        <div className={styles.grid}>
-          <div className={styles.imageWrapper}>
-            {producto.imagen_principal && (
-              <Image
-                src={getStrapiImageUrl(producto.imagen_principal.url)}
-                alt={producto.imagen_principal.alternativeText || producto.nombre}
-                width={600}
-                height={600}
-                style={{ objectFit: "contain", borderRadius: "12px", width: "100%", height: "auto" }}
-              />
-            )}
-          </div>
-          <div className={styles.info}>
-            <h1 className={styles.title}>{producto.nombre}</h1>
-            <p className={styles.description}>{producto.descripcion_corta}</p>
-            {producto.descripcion_larga && (
-              <p className={styles.body}>{producto.descripcion_larga}</p>
-            )}
-          </div>
-        </div>
-      </section>
-    </div>
-  );
 }

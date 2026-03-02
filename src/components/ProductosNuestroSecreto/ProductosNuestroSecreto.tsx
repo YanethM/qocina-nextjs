@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { getStrapiImageUrl } from "@/lib/api";
+import type { StrapiImage } from "@/types";
 import styles from "./ProductosNuestroSecreto.module.css";
 
 const items = [
@@ -49,12 +51,21 @@ const items = [
   },
 ];
 
-export default function ProductosNuestroSecreto() {
+interface Props {
+  secretoImagen?: StrapiImage | null;
+}
+
+export default function ProductosNuestroSecreto({ secretoImagen }: Props) {
   const [openId, setOpenId] = useState<number>(1);
 
   const toggle = (id: number) => {
     setOpenId((prev) => (prev === id ? 0 : id));
   };
+
+  const imageSrc = secretoImagen
+    ? getStrapiImageUrl(secretoImagen.url)
+    : "/images/web/products/nuestro_secreto.svg";
+  const imageAlt = secretoImagen?.alternativeText ?? "Nuestro secreto del sabor";
 
   return (
     <section className={styles.section}>
@@ -64,10 +75,10 @@ export default function ProductosNuestroSecreto() {
         {/* Imagen izquierda */}
         <div className={styles.imageWrapper}>
           <Image
-            src="/images/web/products/nuestro_secreto.svg"
-            alt="Nuestro secreto del sabor"
-            width={611}
-            height={510}
+            src={imageSrc}
+            alt={imageAlt}
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 900px) 100vw, (max-width: 1200px) 480px, 611px"
             className={styles.image}
           />
         </div>

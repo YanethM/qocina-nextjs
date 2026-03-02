@@ -17,6 +17,10 @@
   object-fit: fill;
 }
 
+.waveImgMobile {
+  display: none;
+}
+
 .content {
   position: absolute;
   top: 0;
@@ -33,6 +37,14 @@
   .waveImg {
     height: 340px;
     object-fit: cover;
+  }
+
+  .waveImgDesktop {
+    display: none;
+  }
+
+  .waveImgMobile {
+    display: block;
   }
 
   .content {

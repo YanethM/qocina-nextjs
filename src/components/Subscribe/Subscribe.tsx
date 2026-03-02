@@ -4,7 +4,7 @@ import styles from "./Subscribe.module.css";
 export default function Subscribe() {
   return (
     <section className={styles.section}>
-      <WaveSection>
+      <WaveSection mobileImageSrc="/images/mobile/bases_culinarias/Modulo.svg">
         <div className={styles.container}>
           <div className={styles.textSide}>
             <h2 className={styles.title}>

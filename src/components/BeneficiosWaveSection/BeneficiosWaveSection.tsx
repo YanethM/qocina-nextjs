@@ -14,7 +14,7 @@ export default function BeneficiosWaveSection({
 }: BeneficiosWaveSectionProps) {
   return (
     <section className={styles.section}>
-      <WaveSection>
+      <WaveSection mobileImageSrc="/images/mobile/bases_culinarias/Modulo.svg">
         <p
           className={styles.beneficiosText}
           dangerouslySetInnerHTML={{ __html: textoBeneficios }}

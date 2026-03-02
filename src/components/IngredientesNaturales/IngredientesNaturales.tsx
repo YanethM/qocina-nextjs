@@ -20,7 +20,7 @@ const images = [
     alt: "Ingredientes naturales 1",
   },
   {
-    src: "/images/web/home/ingredientes_naturales/image1.svg",
+    src: "/images/web/home/ingredientes_naturales/image2.svg",
     alt: "Ingredientes naturales 2",
   },
 ];
@@ -52,14 +52,22 @@ export default function IngredientesNaturales({
 
         <div className={styles.imageWrapper}>
           <Image
-            src="/images/web/home/ingredientes_naturales/image1.svg"
+            src="/images/web/home/ingredientes_naturales/image2.svg"
             alt="Ingredientes naturales 2"
             fill
             className={styles.gridImage}
             sizes="(max-width: 1024px) 44vw, 660px"
             priority
           />
-          <div className={styles.buttonOverlay}>
+          <div className={styles.contentOverlay}>
+            <h2 className={styles.overlayTitle}>
+              Ingredientes y procesos a la altura de los grandes sabores.
+            </h2>
+            <p className={styles.overlayDescription}>
+              Nuestras bases culinarias están elaboradas con verduras 100%
+              naturales y se procesan bajo los más altos estándares de calidad,
+              como en los restaurantes de alta cocina.
+            </p>
             <Link
               href={ctaUrl}
               className={styles.ctaButton}

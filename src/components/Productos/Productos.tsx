@@ -46,7 +46,7 @@ function CardItem({
 }) {
   return (
     <Link
-      href={`/home-page/productos_destacados/${producto.documentId}`}
+      href={`/productos/${producto.documentId}`}
       className={`${styles.card} ${colorClass}`}>
       <div className={styles.imageWrapper}>
         {producto.imagen_principal && (
@@ -165,7 +165,7 @@ export default function Productos({
           rel={ctaNuevaVentana ? "noopener noreferrer" : undefined}>
           {ctaText}{" "}
           <Image
-            src="/images/web/home/white_arrow_right.png"
+            src="/images/web/home/white_arrow_right.svg"
             alt=""
             width={20}
             height={20}

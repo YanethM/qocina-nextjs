@@ -15,36 +15,44 @@
 }
 
 .headerLeft {
-  flex: 0 0 auto;
-  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 648px;
+  height: 190px;
+  flex-shrink: 0;
 }
 
 .title {
   font-family: Montserrat, sans-serif;
-  font-weight: 800;
+  font-weight: 700;
   font-size: 48px;
-  line-height: 1.1;
+  line-height: 1.2;
+  letter-spacing: 0;
   color: #1a1a1a;
-  margin: 0 0 16px;
+  margin: 0;
 }
 
 .subtitle {
   font-family: Montserrat, sans-serif;
-  font-size: 16px;
-  line-height: 1.6;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.4;
+  letter-spacing: 0;
   color: #444;
   margin: 0;
-  max-width: 380px;
 }
 
 /* ── Filters ── */
 .filters {
   display: flex;
   align-items: flex-start;
-  gap: 16px;
+  gap: 24px;
   flex-wrap: wrap;
   justify-content: flex-end;
-  padding-top: 8px;
+  width: 648px;
+  flex-shrink: 0;
+  padding-top: 139px;
 }
 
 /* ── Dropdown ── */
@@ -61,14 +69,17 @@
   border-radius: 999px;
   background: #fff;
   font-family: Montserrat, sans-serif;
-  font-size: 15px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0;
   color: #1a1a1a;
   cursor: pointer;
   white-space: nowrap;
   transition: background 0.2s ease, border-color 0.2s ease;
   min-width: 170px;
   justify-content: space-between;
+  vertical-align: middle;
 }
 
 .dropdownTrigger:hover,
@@ -108,7 +119,11 @@
 .dropdownItem {
   padding: 12px 20px;
   font-family: Montserrat, sans-serif;
-  font-size: 15px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0;
+  vertical-align: middle;
   color: #1a1a1a;
   cursor: pointer;
   transition: background 0.15s ease;
@@ -179,8 +194,16 @@
   .section {
     padding: 60px 40px 72px;
   }
+  .headerLeft {
+    width: auto;
+    height: auto;
+  }
   .title {
     font-size: 38px;
+  }
+  .filters {
+    width: auto;
+    padding-top: 8px;
   }
 }
 
@@ -189,7 +212,13 @@
     flex-direction: column;
     gap: 28px;
   }
+  .headerLeft {
+    width: 100%;
+    height: auto;
+  }
   .filters {
+    width: 100%;
+    padding-top: 0;
     justify-content: flex-start;
   }
   .grid {

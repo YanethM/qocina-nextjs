@@ -45,7 +45,7 @@ function CardItem({ receta }: { receta: Receta }) {
           <span className={styles.ctaButton}>
             Ver receta{" "}
             <Image
-              src="/images/web/home/arrow_right.png"
+              src="/images/web/home/arrow_right.svg"
               alt=""
               width={25}
               height={25}
@@ -110,7 +110,7 @@ export default function RecetasCarousel({ recetas }: Props) {
         <Link href="/recetas" className={styles.verTodasBtn}>
           Ver todas{" "}
           <Image
-            src="/images/web/home/white_arrow_right.png"
+            src="/images/web/home/white_arrow_right.svg"
             alt=""
             width={20}
             height={20}

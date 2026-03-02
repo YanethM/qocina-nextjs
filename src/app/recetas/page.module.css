@@ -12,6 +12,17 @@
   object-fit: cover;
 }
 
+.bannerMobileWrapper {
+  display: none;
+  width: 100%;
+}
+
+.bannerMobileImg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 .content {
   padding: 0 24px 60px;
   max-width: 1200px;
@@ -137,15 +148,15 @@
 
 @media (max-width: 768px) {
   .banner {
-    height: 400px;
+    display: none;
+  }
+
+  .bannerMobileWrapper {
+    display: block;
   }
 }
 
 @media (max-width: 640px) {
-  .banner {
-    height: 280px;
-  }
-
   .grid {
     grid-template-columns: 1fr;
     max-width: 400px;

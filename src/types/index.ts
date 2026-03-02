@@ -64,6 +64,7 @@ export interface Testimonio {
   texto_testimonio: string;
   fecha: string;
   destacado: boolean;
+  foto_usuario?: StrapiImage | null;
 }
 
 export interface Producto {
@@ -82,6 +83,7 @@ export interface Producto {
   sku: string | null;
   imagen_principal: StrapiImage | null;
   galeria: StrapiImage[] | null;
+  galeria_imagenes: StrapiImage[] | null;
   categoria: Categoria | null;
   badges: Badge[] | null;
 }
@@ -161,12 +163,37 @@ export interface QuienesSomos {
   valores: Valor[] | null;
 }
 
+export interface PackDestacado {
+  id: number;
+  documentId: string;
+  nombre: string;
+  slug: string;
+  descripcion: string;
+  precio: number;
+  precio_moneda: string;
+  disponible: boolean;
+  sku: string | null;
+  orden: number;
+  imagen: StrapiImage | null;
+}
+
+export interface PerfilUsuario {
+  id: number;
+  titulo: string;
+  descripcion: string;
+  orden: number;
+  imagen: StrapiImage | null;
+}
+
 export interface ProductosPage {
   id: number;
   documentId: string;
   titulo: string;
   descripcion: string;
   banner: StrapiImage | null;
+  secreto_imagen: StrapiImage | null;
+  packs_destacados: PackDestacado[] | null;
+  perfiles_usuario: PerfilUsuario[] | null;
 }
 
 export interface RecetasPage {

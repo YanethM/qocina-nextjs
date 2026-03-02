@@ -32,6 +32,16 @@ export default async function RecetasPage() {
           priority
         />
       </section>
+      <div className={styles.bannerMobileWrapper}>
+        <Image
+          src="/images/web/recetas/banner_mobile.svg"
+          alt="Recetas Q'ocina"
+          width={390}
+          height={600}
+          className={styles.bannerMobileImg}
+          priority
+        />
+      </div>
 
       <BasesCulinarias />
       <ListaRecetas recetas={recetas} />

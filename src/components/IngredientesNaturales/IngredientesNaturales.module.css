@@ -23,17 +23,39 @@
 }
 
 .gridImage {
-  object-fit: cover;
+  object-fit: fill;
 }
 
-/* Botón superpuesto en la segunda imagen - Desktop */
-.buttonOverlay {
+/* Contenido superpuesto en la segunda imagen - Desktop */
+/* Bloque 450×496, centrado horizontalmente: (660-450)/2 = 105px a cada lado */
+.contentOverlay {
   position: absolute;
   bottom: 40px;
-  left: 79px;
-  right: 79px;
+  left: 105px;
+  width: 450px;
+  height: 496px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 48px;
+}
+
+.overlayTitle {
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 120%;
+  color: #ffffff;
+  margin: 0;
+}
+
+.overlayDescription {
+  font-family: Montserrat, sans-serif;
+  font-weight: 400;
+  font-size: 29px;
+  line-height: 120%;
+  color: #ffffff;
+  margin: 0;
 }
 
 /* Estilos del botón CTA */
@@ -76,9 +98,20 @@
     border-radius: 6vw;
   }
 
-  .buttonOverlay {
-    left: 5vw;
-    right: 5vw;
+  /* overlay: 450/660 * 46vw ≈ 31.4vw ancho; offset: 105/660 * 46vw ≈ 7.3vw */
+  .contentOverlay {
+    left: 7.3vw;
+    width: 31.4vw;
+    height: auto;
+    gap: 3.3vw;
+  }
+
+  .overlayTitle {
+    font-size: 2.8vw;
+  }
+
+  .overlayDescription {
+    font-size: 2vw;
   }
 }
 
