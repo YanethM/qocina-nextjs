@@ -1,0 +1,292 @@
+/* ── Section ── */
+.section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 80px;
+  padding-bottom: 96px;
+  padding-left: 60px;
+  padding-right: 60px;
+  max-width: 1440px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.titulo {
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 120%;
+  letter-spacing: 0;
+  text-align: center;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+/* ── Cards stack ── */
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 100%;
+}
+
+/* ── Card row ── */
+.cardRow {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 48px;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  padding-left: 48px;
+  padding-right: 48px;
+  /* min-height derived from product image 263px + vertical padding */
+  min-height: 170px;
+  /* allow product images to overflow vertically */
+  overflow: visible;
+}
+
+/* SVG background shape */
+.cardBg {
+  z-index: 0;
+}
+
+/* ── Product image wrapper ── */
+.productWrapper {
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+  margin-right: 61.5px;
+  margin-top: -50px;
+  margin-bottom: -50px;
+}
+
+.productImg {
+  display: block;
+  width: 209px;
+  height: 263px;
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.2));
+}
+
+/* ── Text block ── */
+.cardText {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 620px;
+}
+
+.cardTitulo {
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 120%;
+  letter-spacing: 0;
+  color: #fff;
+  margin: 0;
+}
+
+.cardDescripcion {
+  font-family: Montserrat, sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 140%;
+  letter-spacing: 0;
+  color: #fff;
+  margin: 0;
+}
+
+/* Card amarillo — texto negro */
+.cardTextDark .cardTitulo,
+.cardTextDark .cardDescripcion {
+  color: #1a1a1a;
+}
+
+/* ── Card amarillo modifier ──
+   Medidas Figma: 19.5px top/bottom, 61.5px left
+   El padding aquí define el espacio entre el borde del SVG y el contenido */
+.cardAmarillo {
+  padding-top: 19.5px;
+  padding-bottom: 19.5px;
+  padding-left: 61.5px;
+  padding-right: 0;
+  gap: 0;
+}
+
+/* ── Card verde modifier ──
+   Medidas Figma: 24px entre producto y texto,
+   imagen sobresale 83.5px arriba y abajo */
+.cardVerde {
+  gap: 24px;
+}
+
+.cardVerde .ctaBtn {
+  margin-left: -12px;
+}
+
+.productWrapperVerde {
+  margin-right: 0;
+  margin-top: -83.5px;
+  margin-bottom: -83.5px;
+}
+
+/* Inner wrapper: texto + botón
+   Ocupa el ancho restante (~1279px), altura 160px, gap 24px entre ítems,
+   border-radius en esquinas derechas */
+.cardContentAmarillo {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 160px;
+  border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+
+/* ── CTA button ── */
+.ctaBtn {
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13.5px 28px;
+  border-radius: 999px;
+  border: 2px solid #fff;
+  background: transparent;
+  color: #fff;
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 140%;
+  letter-spacing: 0;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.ctaBtn:hover {
+  background: #fff;
+  color: #1a1a1a;
+}
+
+/* Card amarillo — botón con borde y texto oscuro */
+.ctaBtnDark {
+  border-color: #1a1a1a;
+  color: #1a1a1a;
+}
+
+.ctaBtnDark:hover {
+  background: #1a1a1a;
+  color: #fff;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .section {
+    padding-left: 32px;
+    padding-right: 32px;
+    gap: 60px;
+  }
+
+  .titulo {
+    font-size: 40px;
+  }
+
+  .cardRow {
+    gap: 32px;
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .productImg {
+    width: 170px;
+    height: 214px;
+  }
+
+  .cardTitulo {
+    font-size: 26px;
+  }
+
+  .cardDescripcion {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding-left: 20px;
+    padding-right: 20px;
+    gap: 40px;
+  }
+
+  .titulo {
+    font-size: 32px;
+  }
+
+  .cardRow {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 24px 20px;
+    gap: 20px;
+  }
+
+  .cardAmarillo {
+    padding: 24px 20px;
+  }
+
+  .cardContentAmarillo {
+    height: auto;
+    flex-direction: column;
+    align-items: flex-start;
+    border-radius: 0;
+    gap: 16px;
+    width: 100%;
+  }
+
+  .productWrapper {
+    margin-top: 0;
+    margin-bottom: 0;
+    order: -1;
+  }
+
+  .productWrapperVerde {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .cardVerde .ctaBtn {
+    margin-left: 0;
+  }
+
+  .productImg {
+    width: 140px;
+    height: 176px;
+  }
+
+  .ctaBtn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .titulo {
+    font-size: 26px;
+  }
+
+  .cardTitulo {
+    font-size: 22px;
+  }
+
+  .cardDescripcion {
+    font-size: 15px;
+  }
+}

@@ -11,20 +11,23 @@ interface BadgesProps {
 function BadgeItem({ badge }: { badge: Badge }) {
   return (
     <div className={styles.badge}>
-      <div className={styles.badgeIcon}>
+      <div
+        className={styles.badgeIcon}
+        style={badge.color_fondo ? { backgroundColor: badge.color_fondo } : undefined}
+      >
         {badge.icono && (
           <Image
             src={getStrapiImageUrl(
               badge.icono.formats?.small?.url ?? badge.icono.url,
             )}
-            alt={badge.icono.alternativeText ?? badge.titulo ?? ""}
+            alt={badge.icono.alternativeText ?? badge.nombre ?? ""}
             fill
             sizes="(max-width: 640px) 72px, 140px"
             style={{ objectFit: "contain" }}
           />
         )}
       </div>
-      <span className={styles.badgeTitle}>{badge.titulo}</span>
+      <span className={styles.badgeTitle}>{badge.nombre}</span>
     </div>
   );
 }

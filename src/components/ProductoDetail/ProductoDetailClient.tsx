@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import type { Badge, Categoria } from "@/types";
 import { COLOR_MAP } from "@/lib/constants";
+import Accordion from "@/components/Accordion/Accordion";
 import styles from "./ProductoDetailClient.module.css";
 
 const PACK_SIZES = [
@@ -54,15 +55,10 @@ export default function ProductoDetailClient({
   const [selectedImg, setSelectedImg] = useState(0);
   const [cantidad, setCantidad] = useState(1);
   const [packSize, setPackSize] = useState("Unidad");
-  const [openAccordion, setOpenAccordion] = useState<string | null>(null);
-
   const titleColor = getTitleColor(nombre, categoria?.slug ?? null);
   const selectedMultiplier =
     PACK_SIZES.find((p) => p.label === packSize)?.multiplier ?? 1;
   const totalPrice = precio * cantidad * selectedMultiplier;
-
-  const toggleAccordion = (key: string) =>
-    setOpenAccordion((prev) => (prev === key ? null : key));
 
   return (
     <div className={styles.grid}>
@@ -119,7 +115,14 @@ export default function ProductoDetailClient({
               onClick={() => setCantidad(Math.max(1, cantidad - 1))}
               aria-label="Reducir cantidad"
             >
-              −
+              <Image
+                src="/images/web/products/product_detail/menos.svg"
+                alt=""
+                width={24}
+                height={24}
+                className={styles.quantityIcon}
+                aria-hidden
+              />
             </button>
             <span className={styles.quantityValue}>{cantidad}</span>
             <button
@@ -127,7 +130,14 @@ export default function ProductoDetailClient({
               onClick={() => setCantidad(cantidad + 1)}
               aria-label="Aumentar cantidad"
             >
-              +
+              <Image
+                src="/images/web/products/product_detail/mas.svg"
+                alt=""
+                width={24}
+                height={24}
+                className={styles.quantityIcon}
+                aria-hidden
+              />
             </button>
           </div>
         </div>
@@ -142,7 +152,15 @@ export default function ProductoDetailClient({
                 className={`${styles.packBtn} ${packSize === p.label ? styles.packBtnActive : ""}`}
                 onClick={() => setPackSize(p.label)}
               >
-                {p.label}
+                <Image
+                  src="/images/web/products/product_detail/pack_image.svg"
+                  alt=""
+                  width={28}
+                  height={30}
+                  className={styles.packIcon}
+                  aria-hidden
+                />
+                <span className={styles.packLabel}>{p.label}</span>
               </button>
             ))}
           </div>
@@ -166,55 +184,30 @@ export default function ProductoDetailClient({
         </div>
 
         {/* Accordions */}
-        <div className={styles.accordionList}>
-          {descripcionLarga && (
-            <div className={styles.accordionItem}>
-              <button
-                className={styles.accordionHeader}
-                onClick={() => toggleAccordion("uso")}
-              >
-                <span>¿Cómo se usa este sofrito?</span>
-                <span
-                  className={`${styles.chevron} ${openAccordion === "uso" ? styles.chevronOpen : ""}`}
-                >
-                  ▼
-                </span>
-              </button>
-              {openAccordion === "uso" && (
-                <div className={styles.accordionBody}>
-                  <p style={{ whiteSpace: "pre-wrap" }}>{descripcionLarga}</p>
-                </div>
-              )}
-            </div>
-          )}
-
-          {badges.length > 0 && (
-            <div className={styles.accordionItem}>
-              <button
-                className={styles.accordionHeader}
-                onClick={() => toggleAccordion("beneficios")}
-              >
-                <span>
-                  Beneficios que se sienten en el paladar de toda la familia
-                </span>
-                <span
-                  className={`${styles.chevron} ${openAccordion === "beneficios" ? styles.chevronOpen : ""}`}
-                >
-                  ▼
-                </span>
-              </button>
-              {openAccordion === "beneficios" && (
-                <div className={styles.accordionBody}>
-                  <ul className={styles.beneficiosList}>
-                    {badges.map((b) => (
-                      <li key={b.id}>{b.titulo}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
+        <Accordion
+          items={[
+            ...(descripcionLarga
+              ? [{
+                  key: "uso",
+                  label: "¿Cómo se usa este sofrito?",
+                  content: <p style={{ whiteSpace: "pre-wrap" }}>{descripcionLarga}</p>,
+                }]
+              : []),
+            ...(badges.length > 0
+              ? [{
+                  key: "beneficios",
+                  label: "Beneficios que se sienten en el paladar de toda la familia",
+                  content: (
+                    <ul className={styles.beneficiosList}>
+                      {badges.map((b) => (
+                        <li key={b.id}>{b.nombre}</li>
+                      ))}
+                    </ul>
+                  ),
+                }]
+              : []),
+          ]}
+        />
 
         {/* Add to cart */}
         <button className={styles.addToCart}>Añadir al carrito</button>

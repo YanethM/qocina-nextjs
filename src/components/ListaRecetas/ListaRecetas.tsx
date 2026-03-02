@@ -8,6 +8,7 @@ import styles from "./ListaRecetas.module.css";
 
 interface ListaRecetasProps {
   recetas: Receta[];
+  hideFilters?: boolean;
 }
 
 /* ── Filter options ── */
@@ -88,7 +89,7 @@ function Dropdown({
 }
 
 /* ── Main component ── */
-export default function ListaRecetas({ recetas }: ListaRecetasProps) {
+export default function ListaRecetas({ recetas, hideFilters = false }: ListaRecetasProps) {
   const [tipoReceta, setTipoReceta] = useState("");
   const [cocina, setCocina] = useState("");
   const [dieta, setDieta] = useState("");
@@ -108,39 +109,43 @@ export default function ListaRecetas({ recetas }: ListaRecetasProps) {
 
   return (
     <section className={styles.section}>
-      {/* Header row */}
-      <div className={styles.header}>
-        <div className={styles.headerLeft}>
-          <h2 className={styles.title}>
-            Recetas fáciles,<br />rápidas y sanas
-          </h2>
-          <p className={styles.subtitle}>
-            Descubre preparaciones latinas con ese sabor casero y un toque extra
-            que despierta recuerdos y conecta al primer bocado.
-          </p>
-        </div>
+      {hideFilters ? (
+        <h2 className={styles.tituloSimple}>Recetas</h2>
+      ) : (
+        /* Header row */
+        <div className={styles.header}>
+          <div className={styles.headerLeft}>
+            <h2 className={styles.title}>
+              Recetas fáciles,<br />rápidas y sanas
+            </h2>
+            <p className={styles.subtitle}>
+              Descubre preparaciones latinas con ese sabor casero y un toque extra
+              que despierta recuerdos y conecta al primer bocado.
+            </p>
+          </div>
 
-        <div className={styles.filters}>
-          <Dropdown
-            label="Tipo de Receta"
-            options={TIPOS_RECETA}
-            value={tipoReceta}
-            onChange={(v) => { setTipoReceta(v); handleFilterChange(); }}
-          />
-          <Dropdown
-            label="Cocina por Región"
-            options={COCINA_REGION}
-            value={cocina}
-            onChange={(v) => { setCocina(v); handleFilterChange(); }}
-          />
-          <Dropdown
-            label="Tipo de dieta"
-            options={TIPOS_DIETA}
-            value={dieta}
-            onChange={(v) => { setDieta(v); handleFilterChange(); }}
-          />
+          <div className={styles.filters}>
+            <Dropdown
+              label="Tipo de Receta"
+              options={TIPOS_RECETA}
+              value={tipoReceta}
+              onChange={(v) => { setTipoReceta(v); handleFilterChange(); }}
+            />
+            <Dropdown
+              label="Cocina por Región"
+              options={COCINA_REGION}
+              value={cocina}
+              onChange={(v) => { setCocina(v); handleFilterChange(); }}
+            />
+            <Dropdown
+              label="Tipo de dieta"
+              options={TIPOS_DIETA}
+              value={dieta}
+              onChange={(v) => { setDieta(v); handleFilterChange(); }}
+            />
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Grid */}
       {shown.length > 0 ? (
@@ -154,7 +159,7 @@ export default function ListaRecetas({ recetas }: ListaRecetasProps) {
                 key={receta.id}
                 href={`/recetas/${receta.documentId}`}
                 titulo={receta.titulo}
-                descripcion={receta.descripcion_corta}
+                descripcion={receta.descripcion_corta ?? receta.descripcion}
                 imagenUrl={imgUrl}
                 imagenAlt={receta.imagen_principal?.alternativeText ?? receta.titulo}
               />

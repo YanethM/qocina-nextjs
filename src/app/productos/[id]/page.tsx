@@ -1,7 +1,10 @@
-import { getProducto, getStrapiImageUrl } from "@/lib/api";
+import { getProducto, getRecetas, getTestimonios, getStrapiImageUrl } from "@/lib/api";
 import { notFound } from "next/navigation";
 import Badges from "@/components/Badges/Badges";
 import ProductoDetailClient from "@/components/ProductoDetail/ProductoDetailClient";
+import ListaRecetas from "@/components/ListaRecetas/ListaRecetas";
+import Testimonios from "@/components/Testimonios/Testimonios";
+import OtrasBasesCulinarias from "@/components/OtrasBasesCulinarias/OtrasBasesCulinarias";
 import styles from "./page.module.css";
 
 interface Props {
@@ -11,10 +14,14 @@ interface Props {
 export default async function ProductoDetailPage({ params }: Props) {
   try {
     const { id } = await params;
-    
-    console.log("🔍 Buscando producto con ID:", id);
-    
-    const res = await getProducto(id);
+
+    console.log("Buscando producto con ID:", id);
+
+    const [res, recetasRes, testimoniosRes] = await Promise.all([
+      getProducto(id),
+      getRecetas().catch(() => null),
+      getTestimonios().catch(() => null),
+    ]);
     
     const producto = res?.data;
 
@@ -35,6 +42,8 @@ export default async function ProductoDetailPage({ params }: Props) {
     const allImages = [imagenPrincipal, ...galeria].filter(Boolean) as string[];
 
     const badges = producto.badges ?? [];
+    const recetas = recetasRes?.data ?? [];
+    const testimonios = testimoniosRes?.data ?? [];
 
     return (
       <div className={styles.page}>
@@ -64,6 +73,10 @@ export default async function ProductoDetailPage({ params }: Props) {
           className={styles.waveBottom}
           style={{ width: "100%", height: "auto" }}
         />
+
+        <ListaRecetas recetas={recetas} hideFilters />
+        <Testimonios testimonios={testimonios} />
+        <OtrasBasesCulinarias />
       </div>
     );
   } catch (error) {

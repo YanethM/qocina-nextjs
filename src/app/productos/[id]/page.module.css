@@ -3,8 +3,13 @@
 }
 
 .badgesWrapper {
-  border-top: 1px solid #f0f0f0;
-  padding-top: 8px;
+  padding: 2rem 0 0;
+}
+
+.waveBottom {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .notFound {

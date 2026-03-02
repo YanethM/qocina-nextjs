@@ -42,8 +42,10 @@ export interface StrapiSingleResponse<T> {
 export interface Badge {
   id: number;
   documentId: string;
-  titulo: string;
+  nombre: string;
+  slug: string;
   descripcion: string;
+  color_fondo: string | null;
   icono: StrapiImage | null;
 }
 
@@ -105,6 +107,9 @@ export interface Receta {
   ingredientes: string | null;
   preparacion: string | null;
   productos: Producto[] | null;
+  tipo_receta?: string | null;
+  cocina_region?: string | null;
+  tipo_dieta?: string | null;
 }
 
 export interface CategoriaBlog {

@@ -91,33 +91,42 @@
 .quantitySelector {
   display: flex;
   align-items: center;
-  gap: 0;
-  width: fit-content;
+  justify-content: space-between;
+  gap: 16px;
+  width: 200px;
+  height: 57px;
 }
 
 .quantityBtn {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: 1.5px solid #1a1a1a;
+  width: 56px;
+  height: 56px;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid transparent;
   background: transparent;
-  font-size: 20px;
   cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: center;
-  transition: background 0.2s;
+  justify-content: space-between;
 }
 
-.quantityBtn:hover {
-  background: #f0f0f0;
+.quantityIcon {
+  width: 24px;
+  height: 24px;
 }
 
 .quantityValue {
+  width: 56px;
+  height: 57px;
+  padding: 16px;
+  border-radius: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-family: Montserrat, sans-serif;
   font-weight: 600;
   font-size: 18px;
-  width: 52px;
+  line-height: 1;
   text-align: center;
 }
 
@@ -129,21 +138,43 @@
 }
 
 .packBtn {
-  padding: 10px 20px;
-  border-radius: 12px;
+  width: 72px;
+  height: 72px;
+  padding: 0;
+  border-radius: 16px;
   border: 1.5px solid #d0d0d0;
-  background: transparent;
-  font-family: Montserrat, sans-serif;
-  font-weight: 600;
-  font-size: 14px;
+  background: #fff;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
   cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.packIcon {
+  width: 28px;
+  height: 30px;
+}
+
+.packLabel {
+  font-family: Montserrat, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 150%;
+  letter-spacing: 0;
   color: #1a1a1a;
-  transition: border-color 0.2s;
 }
 
 .packBtnActive {
-  border-color: #1a1a1a;
+  border-color: #ce171c;
   border-width: 2px;
+  background: #fae8e8;
+}
+
+.packBtnActive .packLabel {
+  font-weight: 700;
 }
 
 /* ── Details ── */
@@ -160,61 +191,6 @@
   color: #1a1a1a;
 }
 
-/* ── Accordion ── */
-.accordionList {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.accordionItem {
-  border-radius: 16px;
-  background: #f5f5f5;
-  overflow: hidden;
-}
-
-.accordionHeader {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px 24px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  font-family: Montserrat, sans-serif;
-  font-weight: 700;
-  font-size: 16px;
-  text-align: left;
-  gap: 16px;
-  color: #1a1a1a;
-}
-
-.chevron {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: #1a1a1a;
-  color: #fff;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  flex-shrink: 0;
-  transition: transform 0.25s ease;
-}
-
-.chevronOpen {
-  transform: rotate(180deg);
-}
-
-.accordionBody {
-  padding: 0 24px 20px;
-  font-family: Montserrat, sans-serif;
-  font-size: 15px;
-  line-height: 1.7;
-  color: #555;
-}
 
 .beneficiosList {
   margin: 0;
@@ -296,10 +272,5 @@
 
   .packSelector {
     gap: 8px;
-  }
-
-  .packBtn {
-    padding: 8px 14px;
-    font-size: 13px;
   }
 }
