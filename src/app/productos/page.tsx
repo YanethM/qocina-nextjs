@@ -113,7 +113,7 @@ export default async function ProductosPage() {
                     {producto.descripcion_corta}
                   </p>
                   <Link
-                    href={`/productos/${producto.documentId}`}
+                    href={`/productos/${producto.slug}`}
                     className={styles.cardButton}>
                     Añadir al carrito
                   </Link>

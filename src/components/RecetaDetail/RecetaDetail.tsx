@@ -68,6 +68,7 @@ export default function RecetaDetail({ receta }: Props) {
           </div>
         </div>
 
+        <div className={styles.wavesTop} />
         <div className={styles.wavesWrapper}>
           {ingredientes.length > 0 && (
             <section className={styles.ingredientesOverWaves}>

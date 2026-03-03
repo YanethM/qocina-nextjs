@@ -27,14 +27,15 @@ async function fetchAPI<T>(
   path: string,
   params?: Record<string, string>,
 ): Promise<T> {
-  const url = new URL(path, API_URL);
+  let urlStr = new URL(path, API_URL).toString();
   if (params) {
-    Object.entries(params).forEach(([key, value]) => {
-      url.searchParams.set(key, value);
-    });
+    const qs = Object.entries(params)
+      .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+      .join("&");
+    urlStr += `?${qs}`;
   }
 
-  const res = await fetch(url.toString(), {
+  const res = await fetch(urlStr, {
     next: { revalidate: 3600 },
   });
 
@@ -107,6 +108,22 @@ export async function getReceta(id: string) {
   return fetchAPI<StrapiSingleResponse<Receta>>(`/api/recetas/${id}`, {
     populate: "*",
   });
+}
+
+export async function getRecetaBySlug(slug: string) {
+  const res = await fetchAPI<StrapiListResponse<Receta>>("/api/recetas", {
+    "filters[slug][$eq]": slug,
+    populate: "*",
+  });
+  return res.data?.[0] ?? null;
+}
+
+export async function getProductoBySlug(slug: string) {
+  const res = await fetchAPI<StrapiListResponse<Producto>>("/api/productos", {
+    "filters[slug][$eq]": slug,
+    populate: "*",
+  });
+  return res.data?.[0] ?? null;
 }
 
 export async function getArticulos() {

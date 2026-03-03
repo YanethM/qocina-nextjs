@@ -78,7 +78,7 @@ export default function PacksDestacados({ packs }: Props) {
                     Añadir al carrito
                   </button>
                   <Link
-                    href={`/productos/${pack.documentId}`}
+                    href={`/productos/${pack.slug}`}
                     className={`${styles.btnSecondary} ${isFeatured ? styles.btnSecondaryFeatured : ""}`}>
                     Más información
                     <Image

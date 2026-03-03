@@ -1,4 +1,4 @@
-import { getProducto, getRecetas, getTestimonios, getStrapiImageUrl } from "@/lib/api";
+import { getProductoBySlug, getRecetas, getTestimonios, getStrapiImageUrl } from "@/lib/api";
 import { notFound } from "next/navigation";
 import Badges from "@/components/Badges/Badges";
 import ProductoDetailClient from "@/components/ProductoDetail/ProductoDetailClient";
@@ -8,22 +8,18 @@ import OtrasBasesCulinarias from "@/components/OtrasBasesCulinarias/OtrasBasesCu
 import styles from "./page.module.css";
 
 interface Props {
-  params: Promise<{ id: string }>;
+  params: Promise<{ slug: string }>;
 }
 
 export default async function ProductoDetailPage({ params }: Props) {
   try {
-    const { id } = await params;
+    const { slug } = await params;
 
-    console.log("Buscando producto con ID:", id);
-
-    const [res, recetasRes, testimoniosRes] = await Promise.all([
-      getProducto(id),
+    const [producto, recetasRes, testimoniosRes] = await Promise.all([
+      getProductoBySlug(slug),
       getRecetas().catch(() => null),
       getTestimonios().catch(() => null),
     ]);
-    
-    const producto = res?.data;
 
     if (!producto) {
       return notFound();

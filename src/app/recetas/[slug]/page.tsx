@@ -1,28 +1,27 @@
-import { getReceta } from "@/lib/api";
+import { getRecetaBySlug } from "@/lib/api";
 import { notFound } from "next/navigation";
 import RecetaDetail from "@/components/RecetaDetail/RecetaDetail";
 
 interface Props {
-  params: Promise<{ id: string }>;
+  params: Promise<{ slug: string }>;
 }
 
 export const dynamic = "force-dynamic";
 
 export default async function RecetaDetailPage({ params }: Props) {
-  const { id } = await params;
+  const { slug } = await params;
 
   try {
-    const res = await getReceta(id);
-    const receta = res?.data;
+    const receta = await getRecetaBySlug(slug);
 
     if (!receta) {
-      console.error("[RecetaDetail] No data for id:", id);
+      console.error("[RecetaDetail] No data for slug:", slug);
       return notFound();
     }
 
     return <RecetaDetail receta={receta} />;
   } catch (err) {
-    console.error("[RecetaDetail] Error fetching receta:", id, err);
+    console.error("[RecetaDetail] Error fetching receta:", slug, err);
     return notFound();
   }
 }

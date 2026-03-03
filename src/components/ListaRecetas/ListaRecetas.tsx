@@ -156,7 +156,7 @@ export default function ListaRecetas({ recetas, hideFilters = false }: ListaRece
             return (
               <RecetaCard
                 key={receta.id}
-                href={`/recetas/${receta.documentId}`}
+                href={`/recetas/${receta.slug}`}
                 titulo={receta.titulo}
                 descripcion={receta.descripcion_corta ?? receta.descripcion}
                 imagenUrl={imgUrl}

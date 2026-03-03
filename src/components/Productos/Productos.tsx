@@ -46,7 +46,7 @@ function CardItem({
 }) {
   return (
     <Link
-      href={`/productos/${producto.documentId}`}
+      href={`/productos/${producto.slug}`}
       className={`${styles.card} ${colorClass}`}>
       <div className={styles.imageWrapper}>
         {producto.imagen_principal && (
