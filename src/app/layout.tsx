@@ -33,6 +33,10 @@ export const metadata: Metadata = {
   title: "Q'ocina - Sabores que inspiran",
   description:
     "Q'ocina - Productos artesanales, recetas y más. Sabores que inspiran, productos que transforman.",
+  icons: {
+    icon: "/images/web/footer/logo-qocina.svg",
+    apple: "/images/web/footer/logo-qocina.svg",
+  },
 };
 
 export default function RootLayout({

@@ -90,6 +90,29 @@ export interface Producto {
   badges: Badge[] | null;
 }
 
+export interface RecetaIngrediente {
+  id: number;
+  nombre: string;
+  cantidad: string;
+  unidad: string;
+  es_opcional: boolean;
+}
+
+export interface RecetaPaso {
+  id: number;
+  numero: number;
+  titulo: string;
+  descripcion: string;
+  tiempo_minutos: number | null;
+  imagen: StrapiImage | null;
+}
+
+export interface RecetaTip {
+  id: number;
+  numero: number;
+  descripcion: string;
+}
+
 export interface Receta {
   color_card: string;
   id: number;
@@ -98,18 +121,28 @@ export interface Receta {
   slug: string;
   descripcion: string;
   descripcion_corta: string | null;
+  descripcion_larga: string | null;
   contenido: string | null;
   imagen: StrapiImage | null;
   imagen_principal: StrapiImage | null;
+  galeria_imagenes: StrapiImage[] | null;
   tiempo: string | null;
+  tiempo_preparacion: number | null;
+  tiempo_coccion: number | null;
   porciones: string | null;
   dificultad: string | null;
-  ingredientes: string | null;
+  ingredientes: RecetaIngrediente[] | string | null;
+  pasos: RecetaPaso[] | null;
+  tips: RecetaTip[] | null;
   preparacion: string | null;
   productos: Producto[] | null;
+  recetas_relacionadas: Receta[] | null;
   tipo_receta?: string | null;
   cocina_region?: string | null;
   tipo_dieta?: string | null;
+  texto_base_utilizada?: string | null;
+  destacada?: boolean;
+  video_url?: string | null;
 }
 
 export interface CategoriaBlog {

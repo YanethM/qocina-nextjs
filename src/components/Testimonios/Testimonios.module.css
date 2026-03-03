@@ -5,9 +5,6 @@
   position: relative;
   background: #fff;
   overflow: hidden;
-  padding-right: 60px;
-  padding-bottom: 96px;
-  padding-left: 60px;
 }
 
 /* ============================
@@ -312,8 +309,9 @@
 
 @media (max-width: 768px) {
   .sectionTitle {
-    font-size: 60px;
-    margin-bottom: 30px;
+    font-size: 80px;
+    padding-bottom: 0;
+    margin-bottom: 12px;
   }
 
   .card {
@@ -358,8 +356,9 @@
 
 @media (max-width: 480px) {
   .sectionTitle {
-    font-size: 48px;
-    margin-bottom: 24px;
+    font-size: 64px;
+    padding-bottom: 0;
+    margin-bottom: 12px;
   }
 
   .cardText {
@@ -389,7 +388,7 @@
    ============================ */
 @media (max-width: 768px) {
   .section {
-    padding: 0;
+    padding: 80px 0 0;
   }
 
   .backgroundWrapper,

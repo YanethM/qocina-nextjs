@@ -20,7 +20,7 @@ const images = [
     alt: "Ingredientes naturales 1",
   },
   {
-    src: "/images/web/home/ingredientes_naturales/image2.svg",
+    src: "/images/web/home/ingredientes_naturales/image2.png",
     alt: "Ingredientes naturales 2",
   },
 ];
@@ -39,25 +39,25 @@ export default function IngredientesNaturales({
   return (
     <section className={styles.section}>
       <div className={styles.desktopContainer}>
+        {/* image1: card con border-radius, imagen cubre todo el contenedor */}
         <div className={styles.imageWrapper}>
           <Image
             src="/images/web/home/ingredientes_naturales/image1.svg"
             alt="Ingredientes naturales 1"
             fill
             className={styles.gridImage}
-            sizes="(max-width: 1024px) 44vw, 660px"
             priority
           />
         </div>
 
-        <div className={styles.imageWrapper}>
-          <Image
-            src="/images/web/home/ingredientes_naturales/image2.svg"
+        {/* image2: SVG escalado a 845px para que la card aparezca a 660px.
+            Los ingredientes desbordan a la derecha y abajo intencionalmente. */}
+        <div className={styles.imageWrapper2}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/web/home/ingredientes_naturales/image2.png"
             alt="Ingredientes naturales 2"
-            fill
-            className={styles.gridImage}
-            sizes="(max-width: 1024px) 44vw, 660px"
-            priority
+            className={styles.image2}
           />
           <div className={styles.contentOverlay}>
             <h2 className={styles.overlayTitle}>
@@ -79,6 +79,7 @@ export default function IngredientesNaturales({
         </div>
       </div>
 
+      {/* Mobile: slider con dots */}
       <div
         className={styles.mobileSlider}
         onTouchStart={handleTouchStart}
@@ -87,26 +88,50 @@ export default function IngredientesNaturales({
           className={styles.sliderTrack}
           style={{ transform: `translateX(-${current * 100}%)` }}>
           {images.map((image, index) => (
-            <div key={index} className={styles.slide}>
-              <Image
-                src={image.src}
-                alt={image.alt}
-                width={660}
-                height={887}
-                className={styles.slideImage}
-                style={{ height: "auto" }}
-                priority={index === 0}
-              />
-              {index === 1 && (
-                <div className={styles.mobileButtonContainer}>
-                  <Link
-                    href={ctaUrl}
-                    className={styles.ctaButton}
-                    target={ctaNuevaVentana ? "_blank" : "_self"}
-                    rel={ctaNuevaVentana ? "noopener noreferrer" : undefined}>
-                    {ctaText}
-                  </Link>
+            <div
+              key={index}
+              className={`${styles.slide} ${index === 1 ? styles.slide2 : ""}`}>
+              {index === 1 ? (
+                <div className={styles.mobileImageContainer}>
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    width={778}
+                    height={1079}
+                    className={styles.slideImage}
+                    style={{ height: "auto" }}
+                  />
+                  <div className={styles.mobileContentOverlay}>
+                    <h2 className={styles.mobileOverlayTitle}>
+                      Ingredientes y procesos a la altura de los grandes
+                      sabores.
+                    </h2>
+                    <p className={styles.mobileOverlayDescription}>
+                      Nuestras bases culinarias están elaboradas con verduras
+                      100% naturales y se procesan bajo los más altos estándares
+                      de calidad, como en los restaurantes de alta cocina.
+                    </p>
+                    <Link
+                      href={ctaUrl}
+                      className={styles.ctaButton}
+                      target={ctaNuevaVentana ? "_blank" : "_self"}
+                      rel={
+                        ctaNuevaVentana ? "noopener noreferrer" : undefined
+                      }>
+                      {ctaText}
+                    </Link>
+                  </div>
                 </div>
+              ) : (
+                <Image
+                  src={image.src}
+                  alt={image.alt}
+                  width={660}
+                  height={887}
+                  className={styles.slideImage}
+                  style={{ height: "auto" }}
+                  priority
+                />
               )}
             </div>
           ))}

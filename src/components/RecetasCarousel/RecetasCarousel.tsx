@@ -14,7 +14,7 @@ function CardItem({ receta }: { receta: Receta }) {
 
   return (
     <Link
-      href={`/home-page/recetas_destacadas/${receta.documentId}`}
+      href={`/recetas/${receta.documentId}`}
       className={styles.card}
       data-color={receta.color_card}>
       <div className={styles.cardImage}>

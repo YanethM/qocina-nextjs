@@ -30,7 +30,7 @@ export default function PacksDestacados({ packs }: Props) {
           const prefix = match ? match[1] : pack.nombre;
           const number = match ? match[2] : null;
           const arrowSrc = isFeatured
-            ? "/images/web/home/white_arrow_right.png"
+            ? "/images/web/home/white_arrow_right.svg"
             : "/images/web/home/arrow_right.svg";
 
           return (

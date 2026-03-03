@@ -35,7 +35,7 @@ async function fetchAPI<T>(
   }
 
   const res = await fetch(url.toString(), {
-    next: { revalidate: 60 },
+    next: { revalidate: 3600 },
   });
 
   if (!res.ok) {
@@ -96,7 +96,7 @@ export async function getProductos() {
 
 export async function getProducto(id: string) {
   return fetchAPI<StrapiSingleResponse<Producto>>(`/api/productos/${id}`, {
-    populate: "*" 
+    populate: "*",
   });
 }
 

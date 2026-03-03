@@ -71,7 +71,7 @@ export default async function Home() {
           width={390}
           height={400}
           className={styles.amazonMobile}
-          priority={false}
+          loading="eager"
         />
       </section>
 

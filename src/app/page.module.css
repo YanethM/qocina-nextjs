@@ -378,7 +378,7 @@
   /* Amazon Banner: intercambio web → mobile */
   .amazonBanner {
     max-width: 100%;
-    padding-top: 48px;
+    padding: 48px 16px 0;
   }
   .amazonWeb {
     display: none;

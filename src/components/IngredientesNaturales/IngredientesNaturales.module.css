@@ -1,6 +1,5 @@
 .section {
   max-width: 1440px;
-  min-height: 1009px;
   margin: 0 auto;
   padding-top: 96px;
 }
@@ -13,31 +12,53 @@
   gap: 24px;
 }
 
+/* image1: card simple que llena el contenedor */
 .imageWrapper {
   position: relative;
-  width: 660px;
-  height: 887px;
+  width: 727px;
+  height: 949px;
   border-radius: 86px;
   overflow: hidden;
   flex-shrink: 0;
 }
 
 .gridImage {
-  object-fit: fill;
+  object-fit: cover;
+  object-position: left top;
+  height: auto !important;
+  /* left top: alinea el SVG a la izquierda para que la card (660px de 728px canvas)
+     ocupe exactamente el wrapper de 660px sin distorsión */
 }
 
-/* Contenido superpuesto en la segunda imagen - Desktop */
-/* Bloque 450×496, centrado horizontalmente: (660-450)/2 = 105px a cada lado */
+.imageWrapper2 {
+  position: relative;
+  width: 729px;
+  height: 1115px;
+  flex-shrink: 0;
+  overflow: visible;
+  clip-path: inset(0 -203px -300px 0);
+}
+
+.image2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 932px; /* 778 × (729/608) */
+  height: auto;
+}
+
+/* Contenido superpuesto sobre la card de image2. */
 .contentOverlay {
   position: absolute;
-  bottom: 40px;
-  left: 105px;
+  top: 80px;
+  left: 62px;
   width: 450px;
   height: 496px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   gap: 48px;
+  opacity: 1;
+  z-index: 1;
 }
 
 .overlayTitle {
@@ -51,14 +72,15 @@
 
 .overlayDescription {
   font-family: Montserrat, sans-serif;
+  font-style: normal;
   font-weight: 400;
   font-size: 29px;
   line-height: 120%;
+  letter-spacing: 0%;
   color: #ffffff;
   margin: 0;
 }
 
-/* Estilos del botón CTA */
 .ctaButton {
   display: inline-flex;
   align-items: center;
@@ -82,7 +104,6 @@
 .ctaButton:hover {
   background: #333333;
   transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 /* Ocultar slider en desktop */
@@ -90,58 +111,93 @@
   display: none;
 }
 
-/* Responsive */
+/* ── Responsive ──────────────────────────────────────────── */
+
 @media (max-width: 1400px) {
   .imageWrapper {
-    width: 46vw;
-    height: calc(46vw * (887 / 660));
-    border-radius: 6vw;
+    width: 600px;
+    height: 780px;
+    border-radius: 70px;
   }
 
-  /* overlay: 450/660 * 46vw ≈ 31.4vw ancho; offset: 105/660 * 46vw ≈ 7.3vw */
+  .imageWrapper2 {
+    width: 600px;
+    height: 920px;
+    clip-path: inset(0 -168px -250px 0);
+  }
+
+  .image2 {
+    width: 768px;
+  }
+
   .contentOverlay {
-    left: 7.3vw;
-    width: 31.4vw;
-    height: auto;
-    gap: 3.3vw;
-  }
-
-  .overlayTitle {
-    font-size: 2.8vw;
+    top: 66px;
+    left: 51px;
+    width: 450px;
   }
 
   .overlayDescription {
-    font-size: 2vw;
+    font-size: 29px;
+  }
+
+  .ctaButton {
+    height: auto;
+    padding: 12px 32px;
+    font-size: 16px;
   }
 }
 
 @media (max-width: 1024px) {
   .section {
-    min-height: auto;
     padding-top: 60px;
   }
 
   .imageWrapper {
-    width: 44vw;
-    height: calc(44vw * (887 / 660));
-    border-radius: 5vw;
+    width: 450px;
+    height: 585px;
+    border-radius: 53px;
+  }
+
+  .imageWrapper2 {
+    width: 450px;
+    height: 688px;
+    clip-path: inset(0 -125px -200px 0);
+  }
+
+  .image2 {
+    width: 575px;
+  }
+
+  .contentOverlay {
+    top: 49px;
+    left: 38px;
+    width: 373px;
+  }
+
+  .overlayTitle {
+    font-size: 25px;
+  }
+
+  .overlayDescription {
+    font-size: 29px;
   }
 
   .ctaButton {
     width: 90%;
-    height: 42px;
+    height: auto;
     padding: 10px 20px;
-    font-size: 15px;
+    font-size: 14px;
   }
 }
 
+/* ── Mobile ──────────────────────────────────────────────── */
+
 @media (max-width: 768px) {
   .section {
-    padding: 0;
+    padding: 0 16px;
     overflow: hidden;
   }
 
-  /* Ocultar desktop, mostrar mobile slider */
   .desktopContainer {
     display: none;
   }
@@ -167,27 +223,56 @@
     position: relative;
   }
 
+  .slide2 {
+    overflow: visible;
+  }
+
   .slideImage {
     width: 100%;
     max-width: 500px;
     object-fit: contain;
   }
 
-  .mobileButtonContainer {
-    position: absolute;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
+  .mobileImageContainer {
+    position: relative;
     width: 100%;
+    max-width: 500px;
+  }
+
+  .mobileContentOverlay {
+    position: absolute;
+    top: 9%;
+    left: 7%;
+    width: 72%;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    gap: 16px;
+    z-index: 1;
+  }
+
+  .mobileOverlayTitle {
+    font-family: Montserrat, sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 120%;
+    color: #ffffff;
+    margin: 0;
+  }
+
+  .mobileOverlayDescription {
+    font-family: Montserrat, sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 120%;
+    color: #ffffff;
+    margin: 0;
   }
 
   .ctaButton {
-    width: 300px;
-    height: 42px;
-    padding: 10px 24px;
-    font-size: 15px;
+    width: auto;
+    height: auto;
+    padding: 8px 20px;
+    font-size: 13px;
   }
 
   .dotsContainer {
