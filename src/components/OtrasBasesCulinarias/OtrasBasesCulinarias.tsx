@@ -11,7 +11,6 @@ export default function OtrasBasesCulinarias() {
 
       <div className={styles.cards}>
 
-        {/* ── Card Verde ── */}
         <div className={`${styles.cardRow} ${styles.cardVerde}`}>
           <Image
             src="/images/web/products/product_detail/card_verde.svg"
@@ -22,7 +21,6 @@ export default function OtrasBasesCulinarias() {
             aria-hidden
           />
 
-          {/* Producto — sobresale a la izquierda */}
           <div className={`${styles.productWrapper} ${styles.productWrapperVerde}`}>
             <Image
               src="/images/web/products/product_detail/product1.svg"
@@ -33,7 +31,6 @@ export default function OtrasBasesCulinarias() {
             />
           </div>
 
-          {/* Texto */}
           <div className={styles.cardText}>
             <h3 className={styles.cardTitulo}>Base Verde</h3>
             <p className={styles.cardDescripcion}>
@@ -43,7 +40,6 @@ export default function OtrasBasesCulinarias() {
             </p>
           </div>
 
-          {/* CTA */}
           <Link href="/productos" className={styles.ctaBtn}>
             Ver producto
             <Image
@@ -56,7 +52,6 @@ export default function OtrasBasesCulinarias() {
           </Link>
         </div>
 
-        {/* ── Card Amarillo ── */}
         <div className={`${styles.cardRow} ${styles.cardAmarillo}`}>
           <Image
             src="/images/web/products/product_detail/card_amarillo.svg"
@@ -67,7 +62,6 @@ export default function OtrasBasesCulinarias() {
             aria-hidden
           />
 
-          {/* Texto + CTA envueltos en el inner wrapper con las propiedades de layout */}
           <div className={styles.cardContentAmarillo}>
             <div className={`${styles.cardText} ${styles.cardTextDark}`}>
               <h3 className={styles.cardTitulo}>Base Amarillo</h3>
@@ -90,7 +84,6 @@ export default function OtrasBasesCulinarias() {
             </Link>
           </div>
 
-          {/* Producto — sobresale a la derecha */}
           <div className={styles.productWrapper}>
             <Image
               src="/images/web/products/product_detail/product2.svg"

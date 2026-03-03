@@ -1,5 +1,3 @@
-/* Testimonios.module.css */
-
 .section {
   width: 100%;
   position: relative;
@@ -7,9 +5,6 @@
   overflow: hidden;
 }
 
-/* ============================
-   Titulo (fuera del background)
-   ============================ */
 .sectionTitle {
   font-family: var(--font-palmer), cursive;
   font-size: 176px;
@@ -23,25 +18,15 @@
   text-transform: uppercase;
 }
 
-/* ============================
-   Contenedor con fondo
-   ============================ */
 .backgroundWrapper {
   position: relative;
   width: 100%;
-  /* 253 (row1) + 24 (gap) + 253 (row2) + 48 (padding-bottom grid) = 578px */
+  
   min-height: 578px;
   overflow: visible;
   z-index: 3;
 }
 
-/* ============================
-   Fondo de la sección (imagen onda verde)
-   Debe iniciar en el 70% del card de la segunda fila:
-   - Row 2 starts: 253 + 24 = 277px
-   - 70% de 253px = ~177px dentro de la row 2
-   - Total: 277 + 177 = 454px desde el top del grid
-   ============================ */
 .backgroundImage {
   position: absolute;
   top: 454px;
@@ -59,9 +44,6 @@
   object-position: top center;
 }
 
-/* ============================
-   Grid wrapper sobre el fondo
-   ============================ */
 .gridWrapper {
   position: relative;
   z-index: 2;
@@ -73,18 +55,12 @@
   justify-content: center;
 }
 
-/* ============================
-   Wave al final de la sección
-   Ajustamos el margin-top para conectar
-   suavemente con el backgroundImage que termina
-   en 454px + altura de testimonials.png
-   ============================ */
 .waveWrapper {
   position: relative;
   width: calc(100% + 120px);
   margin-left: -60px;
   margin-right: -60px;
-  /* Subir la sección de olas para que quede pegada al fondo verde */
+  
   margin-top: -280px;
   z-index: 2;
 }
@@ -105,9 +81,6 @@
   z-index: 2;
 }
 
-/* ============================
-   Grid 2x2
-   ============================ */
 .grid {
   display: grid;
   grid-template-columns: repeat(2, 424px);
@@ -118,9 +91,6 @@
   padding-bottom: 110px;
 }
 
-/* ============================
-   Card
-   ============================ */
 .card {
   position: relative;
   width: 424px;
@@ -133,12 +103,10 @@
   padding-right: 24px;
 }
 
-/* Segunda fila desplazada 232px a la derecha */
 .card:nth-child(n+3) {
   transform: translateX(232px);
 }
 
-/* Foto de fondo que ocupa todo el card */
 .cardBg {
   position: absolute;
   top: 0;
@@ -155,7 +123,6 @@
   height: 100%;
 }
 
-/* Texto con blur - lado izquierdo */
 .cardText {
   position: relative;
   width: 240px;
@@ -177,7 +144,6 @@
   backdrop-filter: blur(8px);
 }
 
-/* Fallback para navegadores sin backdrop-filter */
 @supports not ((backdrop-filter: blur(16px)) or (-webkit-backdrop-filter: blur(16px))) {
   .cardText {
     background: rgba(255, 255, 255, 0.85);
@@ -225,7 +191,6 @@
   overflow: hidden;
 }
 
-/* Espacio derecho para la foto */
 .cardRight {
   flex: 1;
   height: 253px;
@@ -233,7 +198,6 @@
   z-index: 1;
 }
 
-/* Placeholder */
 .cardPlaceholder {
   position: absolute;
   top: 0;
@@ -253,16 +217,10 @@
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* ============================
-   Mobile carousel (oculto en desktop)
-   ============================ */
 .mobileSection {
   display: none;
 }
 
-/* ============================
-   Responsive
-   ============================ */
 @media (max-width: 968px) {
   .section {
     padding-right: 24px;
@@ -286,16 +244,16 @@
     max-width: 424px;
   }
 
-  /* Reset transform en mobile */
+  
   .card:nth-child(n+3) {
     transform: translateX(0);
   }
 
-  /* Ajustar inicio del fondo verde para mobile (1 columna) */
+  
   .backgroundImage {
     left: -24px;
     width: calc(100% + 48px);
-    /* row1 (253) + gap(20) + 70% row2 (177) = 450px */
+    
     top: 450px;
   }
 
@@ -339,7 +297,7 @@
     font-size: 28px;
   }
 
-  /* Descripción: legible y sin corte */
+  
   .content {
     font-size: 14px;
     line-height: 1.6;
@@ -383,9 +341,6 @@
   }
 }
 
-/* ============================
-   Mobile: ocultar desktop, mostrar carrusel
-   ============================ */
 @media (max-width: 768px) {
   .section {
     padding: 80px 0 0;
@@ -427,7 +382,7 @@
     align-items: center;
   }
 
-  /* Card mobile: 289×428, border-radius 24px */
+  
   .mobileCard {
     position: relative;
     width: 289px;
@@ -437,7 +392,7 @@
     flex-shrink: 0;
   }
 
-  /* Texto superpuesto en la parte inferior */
+  
   .mobileCardText {
     position: absolute;
     bottom: 0;

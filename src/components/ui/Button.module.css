@@ -15,7 +15,6 @@
   width: fit-content;
 }
 
-/* Elevación solo en dispositivos con mouse real */
 @media (hover: hover) {
   .button:hover {
     transform: translateY(-3px);
@@ -23,7 +22,6 @@
   }
 }
 
-/* Feedback táctil en mobile: escala sutil sin salto */
 .button:active {
   transform: scale(0.97);
   box-shadow: none;

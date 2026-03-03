@@ -62,7 +62,6 @@ export default function ProductoDetailClient({
 
   return (
     <div className={styles.grid}>
-      {/* ── Left: Image Gallery ── */}
       <div className={styles.imageSection}>
         <div className={styles.mainImageWrapper}>
           {allImages[selectedImg] && (
@@ -99,14 +98,12 @@ export default function ProductoDetailClient({
         )}
       </div>
 
-      {/* ── Right: Info ── */}
       <div className={styles.infoSection}>
         <h1 className={styles.title} style={{ color: titleColor }}>
           {nombre}
         </h1>
         <p className={styles.descripcion}>{descripcionCorta}</p>
 
-        {/* Cantidad */}
         <div className={styles.fieldGroup}>
           <span className={styles.fieldLabel}>Cantidad:</span>
           <div className={styles.quantitySelector}>
@@ -142,7 +139,6 @@ export default function ProductoDetailClient({
           </div>
         </div>
 
-        {/* Pack size */}
         <div className={styles.fieldGroup}>
           <span className={styles.fieldLabel}>Tamaño del paquete:</span>
           <div className={styles.packSelector}>
@@ -166,7 +162,6 @@ export default function ProductoDetailClient({
           </div>
         </div>
 
-        {/* Details */}
         <div className={styles.details}>
           {presentacion && (
             <p className={styles.detail}>
@@ -183,7 +178,6 @@ export default function ProductoDetailClient({
           </p>
         </div>
 
-        {/* Accordions */}
         <Accordion
           items={[
             ...(descripcionLarga
@@ -209,7 +203,6 @@ export default function ProductoDetailClient({
           ]}
         />
 
-        {/* Add to cart */}
         <button className={styles.addToCart}>Añadir al carrito</button>
       </div>
     </div>

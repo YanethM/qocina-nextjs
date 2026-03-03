@@ -29,12 +29,10 @@ export default async function ProductoDetailPage({ params }: Props) {
       return notFound();
     }
 
-    // Procesar imágenes
     const imagenPrincipal = producto.imagen_principal?.url 
       ? getStrapiImageUrl(producto.imagen_principal.url)
       : null;
 
-    // Manejar tanto galeria_imagenes como galeria (por compatibilidad)
     const galeria = (producto.galeria_imagenes ?? producto.galeria ?? [])
       .filter((img: any) => img?.url)
       .map((img: any) => getStrapiImageUrl(img.url));

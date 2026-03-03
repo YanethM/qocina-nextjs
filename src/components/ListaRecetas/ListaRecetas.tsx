@@ -147,7 +147,6 @@ export default function ListaRecetas({ recetas, hideFilters = false }: ListaRece
         </div>
       )}
 
-      {/* Grid */}
       {shown.length > 0 ? (
         <div className={styles.grid}>
           {shown.map((receta) => {
@@ -170,7 +169,6 @@ export default function ListaRecetas({ recetas, hideFilters = false }: ListaRece
         <p className={styles.empty}>No encontramos recetas con estos filtros.</p>
       )}
 
-      {/* Load more */}
       {hasMore && (
         <div className={styles.loadMore}>
           <button

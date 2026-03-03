@@ -4,7 +4,6 @@
   padding-top: 96px;
 }
 
-/* Desktop: dos imágenes con gap */
 .desktopContainer {
   display: flex;
   justify-content: center;
@@ -12,7 +11,6 @@
   gap: 24px;
 }
 
-/* image1: card simple que llena el contenedor */
 .imageWrapper {
   position: relative;
   width: 727px;
@@ -26,8 +24,7 @@
   object-fit: cover;
   object-position: left top;
   height: auto !important;
-  /* left top: alinea el SVG a la izquierda para que la card (660px de 728px canvas)
-     ocupe exactamente el wrapper de 660px sin distorsión */
+  
 }
 
 .imageWrapper2 {
@@ -43,11 +40,10 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 932px; /* 778 × (729/608) */
+  width: 932px; 
   height: auto;
 }
 
-/* Contenido superpuesto sobre la card de image2. */
 .contentOverlay {
   position: absolute;
   top: 80px;
@@ -106,12 +102,9 @@
   transform: scale(1.05);
 }
 
-/* Ocultar slider en desktop */
 .mobileSlider {
   display: none;
 }
-
-/* ── Responsive ──────────────────────────────────────────── */
 
 @media (max-width: 1400px) {
   .imageWrapper {
@@ -189,8 +182,6 @@
     font-size: 14px;
   }
 }
-
-/* ── Mobile ──────────────────────────────────────────────── */
 
 @media (max-width: 768px) {
   .section {

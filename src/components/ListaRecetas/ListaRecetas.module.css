@@ -1,11 +1,9 @@
-/* ── ListaRecetas Section ── */
 .section {
   padding: 72px 60px 80px;
   max-width: 1440px;
   margin: 0 auto;
 }
 
-/* ── Título simplificado (sin filtros) ── */
 .tituloSimple {
   font-family: Montserrat, sans-serif;
   font-weight: 700;
@@ -17,7 +15,6 @@
   margin: 0 0 48px;
 }
 
-/* ── Header ── */
 .header {
   display: flex;
   align-items: flex-start;
@@ -55,7 +52,6 @@
   margin: 0;
 }
 
-/* ── Filters ── */
 .filters {
   display: flex;
   align-items: flex-start;
@@ -67,7 +63,6 @@
   padding-top: 139px;
 }
 
-/* ── Dropdown ── */
 .dropdown {
   position: relative;
 }
@@ -159,14 +154,12 @@
   font-style: italic;
 }
 
-/* ── Grid ── */
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 28px;
 }
 
-/* ── Empty state ── */
 .empty {
   text-align: center;
   padding: 60px 0;
@@ -175,7 +168,6 @@
   color: #888;
 }
 
-/* ── Load More ── */
 .loadMore {
   display: flex;
   justify-content: center;
@@ -201,7 +193,6 @@
   transform: scale(1.03);
 }
 
-/* ── Responsive ── */
 @media (max-width: 1100px) {
   .section {
     padding: 60px 40px 72px;

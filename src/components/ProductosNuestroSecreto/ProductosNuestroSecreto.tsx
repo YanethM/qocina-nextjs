@@ -72,7 +72,6 @@ export default function ProductosNuestroSecreto({ secretoImagen }: Props) {
       <h2 className={styles.title}>Nuestro secreto del sabor</h2>
 
       <div className={styles.body}>
-        {/* Imagen izquierda */}
         <div className={styles.imageWrapper}>
           <Image
             src={imageSrc}
@@ -83,7 +82,6 @@ export default function ProductosNuestroSecreto({ secretoImagen }: Props) {
           />
         </div>
 
-        {/* Acordeones derecha */}
         <div className={styles.accordion}>
           {items.map((item) => {
             const isOpen = openId === item.id;

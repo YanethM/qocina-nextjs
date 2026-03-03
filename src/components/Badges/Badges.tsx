@@ -45,7 +45,6 @@ export default function Badges({ badges, className }: BadgesProps) {
         ))}
       </div>
 
-      {/* Mobile: marquee infinito (>3) o fila centrada (≤3) */}
       <div className={styles.marqueeWrapper}>
         <div
           className={`${styles.marqueeTrack} ${useMarquee ? styles.marqueeAnimated : ""}`}>
@@ -54,7 +53,6 @@ export default function Badges({ badges, className }: BadgesProps) {
               <BadgeItem badge={badge} />
             </div>
           ))}
-          {/* Copia duplicada para loop sin corte */}
           {useMarquee &&
             badges.map((badge) => (
               <div

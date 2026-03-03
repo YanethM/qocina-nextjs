@@ -21,7 +21,6 @@ export default async function FaqPage() {
   const preguntas = preguntasRes?.data ?? [];
   const categorias = categoriasRes?.data ?? [];
 
-  // Group questions by category
   const grouped = categorias.map((cat) => ({
     ...cat,
     preguntas: preguntas.filter(

@@ -16,9 +16,6 @@
   height: 80px;
 }
 
-/* ===========================
-   Logo
-   =========================== */
 .logoWrapper {
   flex-shrink: 0;
   display: flex;
@@ -31,9 +28,6 @@
   opacity: 1;
 }
 
-/* ===========================
-   Desktop: nav + carrito
-   =========================== */
 .rightGroup {
   display: flex;
   align-items: center;
@@ -65,9 +59,6 @@
   opacity: 0.7;
 }
 
-/* ===========================
-   Carrito
-   =========================== */
 .cartWrapper {
   display: flex;
   align-items: center;
@@ -85,19 +76,12 @@
   height: 48px;
 }
 
-/* ===========================
-   Mobile: carrito + hamburguesa
-   Oculto en desktop
-   =========================== */
 .mobileActions {
   display: none;
   align-items: center;
   gap: 8px;
 }
 
-/* ===========================
-   Hamburger button
-   =========================== */
 .hamburger {
   display: flex;
   flex-direction: column;
@@ -126,7 +110,6 @@
   transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-/* Animación X al abrir */
 .lineTop {
   transform: translateY(7px) rotate(45deg);
 }
@@ -140,12 +123,9 @@
   transform: translateY(-7px) rotate(-45deg);
 }
 
-/* ===========================
-   Mobile menu drawer
-   =========================== */
 .mobileMenu {
   position: fixed;
-  top: 70px; /* altura del header en mobile */
+  top: 70px; 
   left: 0;
   right: 0;
   background-color: #000000;
@@ -189,9 +169,6 @@
   color: rgba(255, 255, 255, 0.85);
 }
 
-/* ===========================
-   Overlay (toque fuera = cierra)
-   =========================== */
 .overlay {
   position: fixed;
   inset: 0;
@@ -201,9 +178,6 @@
   backdrop-filter: blur(2px);
 }
 
-/* ===========================
-   Responsive
-   =========================== */
 @media (max-width: 1024px) {
   .container {
     padding: 0 2rem;
@@ -229,12 +203,12 @@
     height: auto;
   }
 
-  /* Ocultar nav desktop */
+  
   .rightGroup {
     display: none;
   }
 
-  /* Mostrar acciones mobile */
+  
   .mobileActions {
     display: flex;
   }

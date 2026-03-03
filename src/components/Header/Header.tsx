@@ -22,7 +22,6 @@ export default function Header() {
     <>
       <header className={styles.header}>
         <div className={styles.container}>
-          {/* Logo */}
           <Link href="/" className={styles.logoWrapper} onClick={closeMenu}>
             <Image
               src="/images/web/header/logo_white.svg"
@@ -34,7 +33,6 @@ export default function Header() {
             />
           </Link>
 
-          {/* Desktop: nav + carrito */}
           <div className={styles.rightGroup}>
             <nav className={styles.nav}>
               {navLinks.map((link) => (
@@ -54,7 +52,6 @@ export default function Header() {
             </Link>
           </div>
 
-          {/* Mobile: carrito + hamburguesa */}
           <div className={styles.mobileActions}>
             <Link href="/carrito" className={styles.cartWrapper} onClick={closeMenu}>
               <Image
@@ -79,7 +76,6 @@ export default function Header() {
         </div>
       </header>
 
-      {/* Mobile menu drawer */}
       <div className={`${styles.mobileMenu} ${menuOpen ? styles.mobileMenuOpen : ""}`}>
         <nav className={styles.mobileNav}>
           {navLinks.map((link) => (
@@ -95,7 +91,6 @@ export default function Header() {
         </nav>
       </div>
 
-      {/* Overlay para cerrar al tocar fuera */}
       {menuOpen && (
         <div className={styles.overlay} onClick={closeMenu} aria-hidden="true" />
       )}

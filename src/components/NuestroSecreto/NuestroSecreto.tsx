@@ -24,7 +24,6 @@ export default async function NuestroSecreto() {
   return (
     <section className={styles.nuestroSecreto}>
       <div className={styles.innerContainer}>
-        {/* Columna izquierda - Texto */}
         <div className={styles.textContainer}>
           <h2 className={styles.title}>Nuestro secreto</h2>
           <p className={styles.description}>
@@ -38,7 +37,6 @@ export default async function NuestroSecreto() {
             garantizan un sabor inigualable.
           </p>
 
-          {/* Badges - grid de imágenes */}
           <div className={styles.badgesGrid}>
             {badges.map((badge) => {
               const icono = badge.icono;
@@ -68,7 +66,6 @@ export default async function NuestroSecreto() {
             })}
           </div>
 
-          {/* Botón negro */}
           <div className={styles.btnContainer}>
             <Button
               href="/sobre-nosotros"
@@ -80,7 +77,6 @@ export default async function NuestroSecreto() {
           </div>
         </div>
 
-        {/* Columna derecha - Imagen de Gastón */}
         <div className={styles.imageWrapper}>
           <Image
             src="/images/web/home/secret/gaston.svg"

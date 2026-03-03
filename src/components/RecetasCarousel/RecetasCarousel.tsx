@@ -72,14 +72,12 @@ export default function RecetasCarousel({ recetas }: Props) {
     <section className={styles.section}>
       <h2 className={styles.title}>Recetas</h2>
 
-      {/* Desktop: grid de 3 columnas */}
       <div className={styles.grid}>
         {recetas.map((receta) => (
           <CardItem key={receta.id} receta={receta} />
         ))}
       </div>
 
-      {/* Mobile: carrusel con dots */}
       <div
         className={styles.carousel}
         onTouchStart={handleTouchStart}

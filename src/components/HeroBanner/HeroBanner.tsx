@@ -22,10 +22,8 @@ export default function HeroBanner({ slides = [] }: { slides?: HeroSlide[] }) {
   const slide = slides[current];
   const { imagen, imagen_mobile } = slide;
 
-  // Desktop: usar imagen.url directamente como solicitaste
   const bgDesktop = getStrapiImageUrl(imagen?.url);
   
-  // Mobile: usar imagen_mobile.url
   const bgMobile = getStrapiImageUrl(imagen_mobile?.url);
 
   return (
@@ -36,7 +34,6 @@ export default function HeroBanner({ slides = [] }: { slides?: HeroSlide[] }) {
         ["--hero-bg-mobile" as string]: bgMobile ? `url(${bgMobile})` : undefined,
       }}>
       <div className={styles.heroContent}>
-        {/* Texto izquierdo */}
         <div className={styles.heroText}>
           <h1 className={styles.heroTitle}>{slide.titulo}</h1>
 
@@ -50,7 +47,6 @@ export default function HeroBanner({ slides = [] }: { slides?: HeroSlide[] }) {
           )}
         </div>
 
-        {/* Slogan derecho */}
         <div className={styles.heroSlogan}>
           <Image
             src="/images/web/home/banner/slogan_qocina.svg"
@@ -73,7 +69,6 @@ export default function HeroBanner({ slides = [] }: { slides?: HeroSlide[] }) {
         </div>
       </div>
 
-      {/* Dots */}
       {slides.length > 1 && (
         <div className={styles.dots}>
           {slides.map((_, i) => (

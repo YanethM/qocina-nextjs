@@ -35,27 +35,20 @@ export default async function Home() {
 
   return (
     <>
-      {/* Hero */}
       <HeroBanner slides={slides} />
-      {/* Beneficios - Wave con texto */}
       <BeneficiosWaveSection
         badges={badges}
         textoBeneficios="Nuestras <strong>Bases Culinarias</strong> son sofritos listos, elaborados con vegetales frescos 100% naturales. Inspiradas en las recetas de madres y abuelas son preparadas artesanalmente con el toque de sabor de <strong>Gastón Acurio</strong>; para que cocines en casa <strong>como un experto</strong> platos deliciosos, sanos y en menos tiempo."
       />
 
-      {/* Productos Destacados */}
       <Productos productos={productos} />
 
-      {/* Ingredientes naturales */}
       <IngredientesNaturales />
 
-      {/* Nuestro Secreto */}
       <NuestroSecreto />
 
-      {/* Cocinar con Q */}
       <CocinarConQ />
 
-      {/* Amazon Banner */}
       <section className={styles.amazonBanner}>
         <Image
           src="/images/web/home/amazon/amazon.svg"
@@ -75,13 +68,10 @@ export default async function Home() {
         />
       </section>
 
-      {/* Recetas Destacadas */}
       <RecetasCarousel recetas={recetas} />
 
-      {/* Testimonios */}
       <Testimonios testimonios={testimonios} />
 
-      {/* Subscribe Component */}
       <Subscribe />
     </>
   );

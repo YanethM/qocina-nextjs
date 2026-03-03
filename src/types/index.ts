@@ -1,4 +1,3 @@
-// Strapi base response types
 export interface StrapiImage {
   id: number;
   url: string;
@@ -38,7 +37,6 @@ export interface StrapiSingleResponse<T> {
   meta: StrapiMeta;
 }
 
-// Entities
 export interface Badge {
   id: number;
   documentId: string;
@@ -180,7 +178,6 @@ export interface PreguntaFrecuente {
   categoria_faq: CategoriaFaq | null;
 }
 
-// Single Types
 export interface Valor {
   id: number;
   titulo: string;

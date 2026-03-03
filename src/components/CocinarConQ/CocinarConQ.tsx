@@ -6,7 +6,6 @@ export default function CocinarConQ() {
   return (
     <section className={styles.cocinarConQ}>
       <div className={styles.imageWrapper}>
-        {/* Imagen Desktop de fondo */}
         <Image
           src="/images/web/home/cocinar/home_cocinar_con_q.svg"
           alt="Cocinar con Q'ocina"
@@ -16,7 +15,6 @@ export default function CocinarConQ() {
           priority={false}
         />
         
-        {/* Wave superior decorativa */}
         <div className={styles.waveTop}>
           <Image
             src="/images/web/home/cocinar/wave_cocinar_con_q.svg"
@@ -28,9 +26,7 @@ export default function CocinarConQ() {
           />
         </div>
 
-        {/* Contenido Desktop */}
         <div className={styles.desktopContent}>
-          {/* Logo */}
           <div className={styles.logoWrapper}>
             <Image
               src="/images/web/home/cocinar/logo_cocinar_con_q.svg"
@@ -42,7 +38,6 @@ export default function CocinarConQ() {
             />
           </div>
           
-          {/* Texto y botón - layout de 650x124 */}
           <div className={styles.textButtonWrapper}>
             <p className={styles.description}>
               Nuestras bases culinarias recuperan los secretitos de las cocinas de nuestras madres y abuelas.
@@ -53,7 +48,6 @@ export default function CocinarConQ() {
           </div>
         </div>
         
-        {/* Imagen Mobile */}
         <div className={styles.mobileImageContainer}>
           <Image
             src="/images/mobile/cocinar/wave_cocinar_con_q.svg"
@@ -64,7 +58,6 @@ export default function CocinarConQ() {
             priority={false}
           />
           
-          {/* Contenido móvil */}
           <div className={styles.mobileContent}>
             <div className={styles.logoWrapper}>
               <Image

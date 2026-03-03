@@ -28,7 +28,6 @@ export default function RecetaDetail({ receta }: Props) {
 
   return (
     <article className={styles.page}>
-      {/* ── Hero image ── */}
       <div className={styles.hero}>
         {heroImage && (
           <Image
@@ -42,7 +41,6 @@ export default function RecetaDetail({ receta }: Props) {
         )}
       </div>
 
-      {/* ── Banner waves + Ingredientes overlay ── */}
       <div className={styles.wavesWrapper}>
         <Image
           src="/images/web/recetas/recetas_detail/baner_waves.svg"
@@ -58,7 +56,6 @@ export default function RecetaDetail({ receta }: Props) {
             <h2 className={styles.ingredientesTitle}>INGREDIENTES</h2>
             <div className={styles.ingredientesBox}>
               <div className={styles.ingredientesColumns}>
-                {/* Primera columna */}
                 <ul className={styles.ingredientesCol}>
                   {ingredientes
                     .slice(0, Math.ceil(ingredientes.length / 2))
@@ -81,7 +78,6 @@ export default function RecetaDetail({ receta }: Props) {
                       </li>
                     ))}
                 </ul>
-                {/* Segunda columna */}
                 <ul className={styles.ingredientesCol}>
                   {ingredientes
                     .slice(Math.ceil(ingredientes.length / 2))
@@ -105,7 +101,6 @@ export default function RecetaDetail({ receta }: Props) {
                     ))}
                 </ul>
               </div>
-              {/* Imagen de productos */}
               <div className={styles.ingredientesImgWrapper}>
                 <Image
                   src="/images/web/recetas/recetas_detail/Productos.svg"
@@ -120,9 +115,7 @@ export default function RecetaDetail({ receta }: Props) {
         )}
       </div>
 
-      {/* ── Content ── */}
       <div className={styles.content}>
-        {/* Header */}
         <div className={styles.header}>
           <h1 className={styles.title} style={{ color: accentColor }}>
             {receta.titulo}
@@ -138,7 +131,6 @@ export default function RecetaDetail({ receta }: Props) {
             </p>
           )}
 
-          {/* Meta info */}
           <div className={styles.meta}>
             {receta.tiempo_preparacion != null && (
               <div className={styles.metaItem}>
@@ -177,7 +169,6 @@ export default function RecetaDetail({ receta }: Props) {
           </div>
         </div>
 
-        {/* ── Pasos ── */}
         {pasos.length > 0 && (
           <div className={styles.pasosSection}>
               <h2 className={styles.sectionTitle}>Preparación</h2>
@@ -204,7 +195,6 @@ export default function RecetaDetail({ receta }: Props) {
             </div>
           )}
 
-        {/* ── Tips ── */}
         {tips.length > 0 && (
           <div className={styles.tipsSection}>
             <h2 className={styles.sectionTitle}>Tips</h2>

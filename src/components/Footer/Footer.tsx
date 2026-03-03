@@ -5,7 +5,6 @@ import styles from "./Footer.module.css";
 export default function Footer() {
   return (
     <footer className={styles.footer}>
-      {/* Row 1: Logo + Nav + Cart */}
       <div className={styles.topRow}>
         <Link href="/" className={styles.logo}>
           <Image
@@ -32,7 +31,6 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Row 2: Payment badges + Social icons */}
       <div className={styles.middleRow}>
         <div className={styles.paymentSection}>
           <span className={styles.secureText}>Compra en línea 100% seguro</span>
@@ -115,8 +113,6 @@ export default function Footer() {
         </div>
       </div>
 
-
-      {/* Row 3: Copyright + Policy links */}
       <div className={styles.bottomRow}>
         <p className={styles.copyright}>
           &copy; All rights reserved. Fuxion {new Date().getFullYear()}.

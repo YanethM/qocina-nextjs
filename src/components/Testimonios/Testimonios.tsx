@@ -30,7 +30,6 @@ export default function Testimonios({ testimonios }: TestimoniosProps) {
     <section className={styles.section}>
       <h2 className={styles.sectionTitle}>TESTIMONIOS</h2>
 
-      {/* ── Desktop grid ── */}
       <div className={styles.backgroundWrapper}>
         <div className={styles.gridWrapper}>
           <div className={styles.grid}>
@@ -94,7 +93,6 @@ export default function Testimonios({ testimonios }: TestimoniosProps) {
         />
       </div>
 
-      {/* ── Mobile carousel ── */}
       <div className={styles.mobileSection}>
         <Image
           src="/images/mobile/testimonials/testimonials_waves.svg"

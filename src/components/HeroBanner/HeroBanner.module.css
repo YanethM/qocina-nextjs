@@ -15,7 +15,6 @@
   overflow: hidden;
 }
 
-/* Overlay sutil solo en la zona izquierda */
 .hero::before {
   content: "";
   position: absolute;
@@ -105,7 +104,6 @@
   line-height: 22px;
 }
 
-/* Slogan derecho - contenedor de las imágenes */
 .heroSlogan {
   display: flex;
   flex-direction: column;
@@ -118,7 +116,6 @@
   padding-left: 1rem;
 }
 
-/* Estilo para la imagen del slogan */
 .sloganImage {
   width: 277px;
   height: auto;
@@ -127,14 +124,12 @@
   object-fit: contain;
 }
 
-/* Imagen de libros debajo del slogan */
 .librosImage {
   width: 380px;
   height: auto;
   object-fit: contain;
 }
 
-/* Dots del slider */
 .dots {
   position: absolute;
   bottom: 1.6rem;
@@ -165,9 +160,6 @@
   transform: scale(1.25);
 }
 
-/* Responsive */
-
-/* Pantallas grandes: reducir un poco el text box */
 @media (max-width: 1200px) {
   .hero {
     padding: 96px 40px 41px 40px;
@@ -188,7 +180,6 @@
   }
 }
 
-/* Tablet landscape: reducir columnas */
 @media (max-width: 1024px) {
   .heroText {
     width: 400px;
@@ -208,9 +199,9 @@
   .hero {
     background-image: var(--hero-bg-mobile);
     height: auto;
-    min-height: 600px; /* Un poco más de altura para ver la imagen */
-    padding: 60px 20px 30px 20px; /* Bajamos el contenido con más padding top */
-    justify-content: flex-start; /* Alineamos hacia arriba para control */
+    min-height: 600px; 
+    padding: 60px 20px 30px 20px; 
+    justify-content: flex-start; 
     align-items: center;
   }
 
@@ -222,44 +213,44 @@
     width: 100%;
     max-width: 400px;
     margin: 0 auto;
-    margin-top: 20px; /* Bajamos todo el conjunto */
+    margin-top: 20px; 
   }
 
-  /* MEJORA CLAVE: SLOGAN GRANDE Y VISIBLE */
+  
   .heroSlogan {
     order: -1;
-    flex-direction: column; /* Volvemos a columna para que se vea grande */
+    flex-direction: column; 
     align-items: center;
     justify-content: center;
     padding-left: 0;
     gap: 8px;
     width: 100%;
-    margin-bottom: 20px; /* Separación del texto */
+    margin-bottom: 20px; 
   }
 
   .sloganImage {
-    width: 220px; /* GRANDE - que se note el slogan */
+    width: 220px; 
     height: auto;
     opacity: 1;
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2)); /* Sombra para que resalte sobre la imagen */
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2)); 
   }
 
   .librosImage {
-    width: 280px; /* GRANDE - acorde al slogan */
+    width: 280px; 
     height: auto;
     opacity: 1;
     filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
   }
 
-  /* MEJORA CLAVE: TEXTO MÁS PEQUEÑO Y DISCRETO */
+  
   .heroText {
     width: 100%;
     max-width: 100%;
     height: auto;
     min-height: unset;
-    padding: 20px 16px; /* Padding más compacto */
+    padding: 20px 16px; 
     gap: 10px;
-    background: rgba(0, 0, 0, 0.6); /* Más transparente para ver la imagen */
+    background: rgba(0, 0, 0, 0.6); 
     backdrop-filter: blur(2px);
     border-radius: 16px;
     margin-top: 10px;
@@ -268,21 +259,21 @@
   .heroTitle {
     font-family: "Montserrat", sans-serif;
     font-weight: 700;
-    font-size: 1.3rem; /* MÁS PEQUEÑO - para que no compita */
+    font-size: 1.3rem; 
     line-height: 1.3;
     color: #ffffff;
     margin: 0;
-    text-align: center; /* Centrado para que se vea como complemento */
+    text-align: center; 
   }
 
-  /* Botón más discreto pero funcional */
+  
   .heroBtn {
     width: fit-content;
     min-width: 160px;
     padding: 10px 24px;
     font-size: 0.85rem;
     font-weight: 700;
-    align-self: center; /* Centrado para armonizar */
+    align-self: center; 
     margin-top: 4px;
     white-space: nowrap;
   }
@@ -291,7 +282,7 @@
     line-height: 1.2;
   }
 
-  /* Dots */
+  
   .dots {
     bottom: 20px;
     gap: 12px;
@@ -309,17 +300,14 @@
   }
 }
 
-/* ============================================ */
-/* MÓVIL PEQUEÑO */
-/* ============================================ */
 @media (max-width: 480px) {
   .hero {
     min-height: 550px;
-    padding: 50px 16px 20px 16px; /* Bajamos más el contenido */
+    padding: 50px 16px 20px 16px; 
   }
 
   .heroContent {
-    margin-top: 30px; /* Más margen superior */
+    margin-top: 30px; 
     gap: 12px;
   }
 
@@ -329,11 +317,11 @@
   }
 
   .sloganImage {
-    width: 180px; /* Grande pero proporcionado */
+    width: 180px; 
   }
 
   .librosImage {
-    width: 220px; /* Grande pero proporcionado */
+    width: 220px; 
   }
 
   .heroText {
@@ -341,7 +329,7 @@
   }
 
   .heroTitle {
-    font-size: 1.1rem; /* Aún más pequeño */
+    font-size: 1.1rem; 
   }
 
   .heroBtn {
@@ -351,9 +339,6 @@
   }
 }
 
-/* ============================================ */
-/* PANTALLAS MUY PEQUEÑAS */
-/* ============================================ */
 @media (max-width: 360px) {
   .hero {
     padding: 40px 12px 20px 12px;

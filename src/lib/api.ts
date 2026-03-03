@@ -45,14 +45,11 @@ async function fetchAPI<T>(
   return res.json();
 }
 
-// Helper to get the full image URL from Strapi
 export function getStrapiImageUrl(url: string | undefined | null): string {
   if (!url) return "";
   if (url.startsWith("http")) return url;
   return `${API_URL}${url}`;
 }
-
-// --- Collections (GET list / GET by ID) ---
 
 export async function getBadges() {
   return fetchAPI<StrapiListResponse<Badge>>("/api/badges", { populate: "*" });
@@ -163,8 +160,6 @@ export async function getPreguntaFrecuente(id: string) {
     { populate: "*" },
   );
 }
-
-// --- Single Types (GET only) ---
 
 export async function getQuienesSomos() {
   return fetchAPI<StrapiSingleResponse<QuienesSomos>>("/api/quienes-somos", {

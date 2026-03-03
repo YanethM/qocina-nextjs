@@ -1,4 +1,3 @@
-/* ── Packs Destacados Section ── */
 .section {
   width: 100%;
   max-width: 1440px;
@@ -6,7 +5,6 @@
   padding: 96px 60px 48px;
 }
 
-/* Título */
 .title {
   font-family: Montserrat, sans-serif;
   font-weight: 700;
@@ -17,9 +15,6 @@
   margin-bottom: 24px;
 }
 
-/* ── Grid ──
-   padding-top = protrusion (174px) para que las imágenes
-   flotantes no tapen el título */
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -27,8 +22,6 @@
   padding-top: 174px;
 }
 
-/* ── Card — content box 424×532, border-radius 24px ──
-   Total visual: 174px imagen + 532px card = 706px           */
 .card {
   position: relative;
   border-radius: 24px;
@@ -44,7 +37,6 @@
   color: #fff;
 }
 
-/* ── Imagen — 424×290, sobresale 174px sobre el card ── */
 .imageWrapper {
   position: absolute;
   top: -174px;
@@ -57,9 +49,6 @@
   object-fit: contain;
 }
 
-/* ── Badge de descuento
-   width/height: 120.139px, border-radius: 56px, angle: -15.03deg, gap: 10px
-   top: 155px = un poco por debajo de la mitad de la imagen (290px / 2 = 145px) ── */
 .discountBadge {
   position: absolute;
   top: 155px;
@@ -96,7 +85,6 @@
   color: #fff;
 }
 
-/* ── Cuerpo de la card ── */
 .cardBody {
   display: flex;
   flex-direction: column;
@@ -106,7 +94,6 @@
   gap: 24px;
 }
 
-/* ── Nombre del pack ── */
 .packName {
   font-family: Montserrat, sans-serif;
   font-weight: 700;
@@ -140,7 +127,6 @@
   color: #1a1a1a;
 }
 
-/* ── Precio ── */
 .price {
   font-family: Montserrat, sans-serif;
   font-weight: 400;
@@ -151,7 +137,6 @@
   color: inherit;
 }
 
-/* ── Descripción ── */
 .descripcion {
   font-family: Montserrat, sans-serif;
   font-weight: 700;
@@ -163,7 +148,6 @@
   flex: 1;
 }
 
-/* ── Botones ── */
 .actions {
   display: flex;
   flex-direction: column;
@@ -234,7 +218,6 @@
   object-fit: contain;
 }
 
-/* ── Responsive ── */
 @media (max-width: 1200px) {
   .section {
     padding: 80px 40px 48px;
@@ -245,14 +228,13 @@
   }
 }
 
-/* Tablet: 2 columnas */
 @media (max-width: 1024px) {
   .grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 28px;
   }
 
-  /* El tercer card ocupa ancho completo centrado */
+  
   .card:nth-child(3) {
     grid-column: 1 / -1;
     max-width: 480px;
@@ -265,7 +247,6 @@
   }
 }
 
-/* Mobile: 1 columna — reducir protrusion para evitar solapamiento */
 @media (max-width: 768px) {
   .section {
     padding: 60px 24px 48px;
@@ -280,9 +261,9 @@
     grid-template-columns: 1fr;
     max-width: 420px;
     margin: 0 auto;
-    /* protrusion reducida a 110px */
+    
     padding-top: 110px;
-    gap: 130px; /* gap > protrusion (110px) para evitar solapamiento */
+    gap: 130px; 
   }
 
   .card {
@@ -291,7 +272,7 @@
     padding: 90px 24px 28px;
   }
 
-  /* Resetear nth-child del tablet */
+  
   .card:nth-child(3) {
     grid-column: auto;
     max-width: none;
@@ -305,7 +286,7 @@
   .discountBadge {
     width: 88px;
     height: 88px;
-    /* proporcional: 155 * (200/290) ≈ 107px */
+    
     top: 107px;
     right: 20px;
     gap: 6px;

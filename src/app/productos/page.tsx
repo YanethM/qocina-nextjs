@@ -13,28 +13,24 @@ export const metadata = {
 
 const CARD_COLORS = [styles.cardGreen, styles.cardYellow, styles.cardRed];
 
-// SVGs de fondo desktop: uno por fila según índice
 const RECT_SVGS = [
   "/images/web/products/rectangle1.svg",
   "/images/web/products/rectangle2.svg",
   "/images/web/products/rectangle1.svg",
 ];
 
-// SVGs de fondo mobile
 const MOBILE_CARD_SVGS = [
   "/images/mobile/products/card1.svg",
   "/images/mobile/products/card2.svg",
   "/images/mobile/products/card3.svg",
 ];
 
-// Flechas decorativas para cada fila (pares de flechas)
 const ARROW_SVGS = [
   { left: "/images/web/products/flecha1.svg", right: "/images/web/products/flecha2.svg" },
   { left: "/images/web/products/flecha3.svg", right: "/images/web/products/flecha4.svg" },
   { left: "/images/web/products/flecha5.svg", right: "/images/web/products/flecha6.svg" },
 ];
 
-// rectangle2 → círculo a la derecha; rectangle1 y rectangle3 → izquierda
 const IS_REVERSED = [false, true, false];
 
 function formatPrice(precio: number, moneda: string): string {
@@ -148,7 +144,6 @@ export default async function ProductosPage() {
 
             return (
               <div key={perfil.id} className={styles.paraQuienRow}>
-                {/* Fondo SVG — desktop */}
                 <img
                   src={RECT_SVGS[svgIndex]}
                   alt=""
@@ -156,7 +151,6 @@ export default async function ProductosPage() {
                   className={styles.paraQuienRect}
                 />
 
-                {/* Fondo SVG — mobile */}
                 <img
                   src={MOBILE_CARD_SVGS[svgIndex]}
                   alt=""
@@ -164,7 +158,6 @@ export default async function ProductosPage() {
                   className={styles.paraQuienMobileCard}
                 />
 
-                {/* Flechas decorativas */}
                 <img
                   src={arrowPair.left}
                   alt=""
@@ -178,7 +171,6 @@ export default async function ProductosPage() {
                   className={`${styles.paraQuienArrow} ${styles.paraQuienArrowRight}`}
                 />
 
-                {/* Círculo con foto */}
                 <div
                   className={`${styles.paraQuienCircle} ${
                     isReversed
@@ -196,7 +188,6 @@ export default async function ProductosPage() {
                   )}
                 </div>
 
-                {/* Texto */}
                 <div
                   className={`${styles.paraQuienText} ${
                     isReversed
@@ -214,9 +205,7 @@ export default async function ProductosPage() {
         </div>
       </section>
 
-      {/* Tienes dudas */}
       <section className={styles.tieneDudas}>
-        {/* Desktop: imagen con padding de página */}
         <div className={styles.tieneDudasImgWrapper}>
           <Image
             src="/images/web/products/tienes_dudas_web.svg"
@@ -227,7 +216,6 @@ export default async function ProductosPage() {
           />
         </div>
 
-        {/* Mobile: card negro con texto y botón */}
         <div className={styles.tieneDudasCard}>
           <div className={styles.tieneDudasContent}>
             <h2 className={styles.tieneDudasTitle}>
@@ -242,7 +230,6 @@ export default async function ProductosPage() {
           </Button>
         </div>
 
-        {/* Mobile: imagen decorativa debajo del recuadro negro */}
         <Image
           src="/images/web/products/tienes_dudas_mobile.svg"
           alt=""

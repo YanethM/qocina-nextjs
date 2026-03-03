@@ -39,7 +39,6 @@ export default function IngredientesNaturales({
   return (
     <section className={styles.section}>
       <div className={styles.desktopContainer}>
-        {/* image1: card con border-radius, imagen cubre todo el contenedor */}
         <div className={styles.imageWrapper}>
           <Image
             src="/images/web/home/ingredientes_naturales/image1.svg"
@@ -50,10 +49,7 @@ export default function IngredientesNaturales({
           />
         </div>
 
-        {/* image2: SVG escalado a 845px para que la card aparezca a 660px.
-            Los ingredientes desbordan a la derecha y abajo intencionalmente. */}
         <div className={styles.imageWrapper2}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/images/web/home/ingredientes_naturales/image2.png"
             alt="Ingredientes naturales 2"
@@ -79,7 +75,6 @@ export default function IngredientesNaturales({
         </div>
       </div>
 
-      {/* Mobile: slider con dots */}
       <div
         className={styles.mobileSlider}
         onTouchStart={handleTouchStart}

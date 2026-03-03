@@ -37,7 +37,6 @@ export default function PacksDestacados({ packs }: Props) {
             <div
               key={pack.id}
               className={`${styles.card} ${isFeatured ? styles.cardFeatured : ""}`}>
-              {/* Imagen — 424×290, sobresale 174px sobre el card */}
               <div className={styles.imageWrapper}>
                 {imagenUrl && (
                   <Image
@@ -50,14 +49,12 @@ export default function PacksDestacados({ packs }: Props) {
                   />
                 )}
 
-                {/* Badge de descuento */}
                 <div className={styles.discountBadge}>
                   <span className={styles.discountPercent}>50%</span>
                   <span className={styles.discountLabel}>dto</span>
                 </div>
               </div>
 
-              {/* Cuerpo de la card */}
               <div className={styles.cardBody}>
                 <h3 className={styles.packName}>
                   {prefix}{" "}

@@ -3,7 +3,6 @@
   width: 100%;
 }
 
-
 .container {
   max-width: 1100px;
   margin: 0 auto;
@@ -13,7 +12,6 @@
   align-items: center;
 }
 
-/* Texto */
 .textSide {
   color: #fff;
 }
@@ -35,7 +33,6 @@
   margin: 0;
 }
 
-/* Formulario */
 .formSide {
   display: flex;
   align-items: center;
@@ -92,7 +89,6 @@
   transform: scale(1.03);
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .container {
     grid-template-columns: 1fr 1fr;

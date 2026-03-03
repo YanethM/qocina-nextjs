@@ -22,7 +22,6 @@ export default function RecetaCard({
 }: RecetaCardProps) {
   return (
     <Link href={href} className={styles.card} style={{ "--accent": accentColor } as React.CSSProperties}>
-      {/* Imagen */}
       <div className={styles.imageWrapper}>
         {imagenUrl ? (
           <Image
@@ -37,7 +36,6 @@ export default function RecetaCard({
         )}
       </div>
 
-      {/* Wave — sibling del imageWrapper para evitar el clip de overflow:hidden */}
       <div className={styles.waveWrapper}>
         <Image
           src="/images/web/recetas/red_wave.svg"
@@ -49,7 +47,6 @@ export default function RecetaCard({
         />
       </div>
 
-      {/* Body */}
       <div className={styles.body}>
         <h3 className={styles.title}>{titulo}</h3>
         <p className={styles.description}>{descripcion}</p>
