@@ -38,7 +38,7 @@ export default async function NuestroSecreto() {
           </p>
 
           <div className={styles.badgesGrid}>
-            {badges.map((badge) => {
+            {badges.map((badge: { id: number; nombre: string; icono?: { url?: string; formats?: { small?: { url?: string }; thumbnail?: { url?: string } } } }) => {
               const icono = badge.icono;
               const formats = icono?.formats;
               
