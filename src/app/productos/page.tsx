@@ -16,19 +16,13 @@ const CARD_COLORS = [styles.cardGreen, styles.cardYellow, styles.cardRed];
 const RECT_SVGS = [
   "/images/web/products/rectangle1.svg",
   "/images/web/products/rectangle2.svg",
-  "/images/web/products/rectangle1.svg",
+  "/images/web/products/rectangle3.svg",
 ];
 
 const MOBILE_CARD_SVGS = [
   "/images/mobile/products/card1.svg",
   "/images/mobile/products/card2.svg",
   "/images/mobile/products/card3.svg",
-];
-
-const ARROW_SVGS = [
-  { left: "/images/web/products/flecha1.svg", right: "/images/web/products/flecha2.svg" },
-  { left: "/images/web/products/flecha3.svg", right: "/images/web/products/flecha4.svg" },
-  { left: "/images/web/products/flecha5.svg", right: "/images/web/products/flecha6.svg" },
 ];
 
 const IS_REVERSED = [false, true, false];
@@ -66,7 +60,9 @@ export default async function ProductosPage() {
           priority
         />
         <p className={styles.heroText}>
-          Inspírate y cocina fácil con<br />nuestras bases culinarias.
+          Inspírate y cocina fácil con
+          <br />
+          nuestras bases culinarias.
         </p>
       </section>
 
@@ -128,55 +124,47 @@ export default async function ProductosPage() {
         <PacksDestacados packs={packsDestacados} />
       )}
 
-      <ProductosNuestroSecreto secretoImagen={productosPageRes?.data?.secreto_imagen ?? null} />
+      <ProductosNuestroSecreto
+        secretoImagen={productosPageRes?.data?.secreto_imagen ?? null}
+      />
 
       <section className={styles.paraQuien}>
         <h2 className={styles.paraQuienTitle}>¿Para quién es Q&apos;ocina?</h2>
 
         <div className={styles.paraQuienContainer}>
           {perfilesUsuario.map((perfil, index) => {
-            const svgIndex = Math.min(index, 2);
+            const svgIndex = index % 3;
             const isReversed = IS_REVERSED[svgIndex];
-            const arrowPair = ARROW_SVGS[svgIndex];
             const imagenUrl = perfil.imagen
               ? getStrapiImageUrl(perfil.imagen.url)
               : null;
 
             return (
-              <div key={perfil.id} className={styles.paraQuienRow}>
-                <img
-                  src={RECT_SVGS[svgIndex]}
-                  alt=""
-                  aria-hidden="true"
-                  className={styles.paraQuienRect}
-                />
+              <div
+                key={perfil.id}
+                className={`${styles.paraQuienRow} ${isReversed ? styles.paraQuienRowReversed : ""}`}>
+                <div
+                  className={`${styles.paraQuienRectWrapper} ${
+                    isReversed ? styles.paraQuienRectWrapperReversed : ""
+                  }`}>
+                  <Image
+                    src={RECT_SVGS[svgIndex]}
+                    alt=""
+                    aria-hidden="true"
+                    fill
+                    className={styles.paraQuienRect}
+                  />
+                </div>
 
-                <img
+                <Image
                   src={MOBILE_CARD_SVGS[svgIndex]}
                   alt=""
                   aria-hidden="true"
+                  fill
                   className={styles.paraQuienMobileCard}
                 />
 
-                <img
-                  src={arrowPair.left}
-                  alt=""
-                  aria-hidden="true"
-                  className={`${styles.paraQuienArrow} ${styles.paraQuienArrowLeft}`}
-                />
-                <img
-                  src={arrowPair.right}
-                  alt=""
-                  aria-hidden="true"
-                  className={`${styles.paraQuienArrow} ${styles.paraQuienArrowRight}`}
-                />
-
-                <div
-                  className={`${styles.paraQuienCircle} ${
-                    isReversed
-                      ? styles.paraQuienCircleRight
-                      : styles.paraQuienCircleLeft
-                  }`}>
+                <div className={styles.paraQuienCircle}>
                   {imagenUrl && (
                     <Image
                       src={imagenUrl}
@@ -188,12 +176,7 @@ export default async function ProductosPage() {
                   )}
                 </div>
 
-                <div
-                  className={`${styles.paraQuienText} ${
-                    isReversed
-                      ? styles.paraQuienTextLeft
-                      : styles.paraQuienTextRight
-                  }`}>
+                <div className={styles.paraQuienText}>
                   <h3 className={styles.paraQuienItemTitle}>{perfil.titulo}</h3>
                   <p className={styles.paraQuienItemDesc}>
                     {perfil.descripcion}
@@ -222,10 +205,14 @@ export default async function ProductosPage() {
               ¿Tienes dudas o necesitas ayuda?
             </h2>
             <p className={styles.tieneDudasDescription}>
-              Resolvemos preguntas rápidas sobre productos, envíos y preparación.
+              Resolvemos preguntas rápidas sobre productos, envíos y
+              preparación.
             </p>
           </div>
-          <Button href="/contacto" variant="yellow" className={styles.tieneDudasBtn}>
+          <Button
+            href="/contacto"
+            variant="yellow"
+            className={styles.tieneDudasBtn}>
             Resuelve aquí tus dudas
           </Button>
         </div>

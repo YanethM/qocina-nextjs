@@ -2,10 +2,16 @@
   min-height: 100vh;
 }
 
+:root {
+  --page-px: 60px;
+}
+
 .hero {
   position: relative;
   width: 100%;
   height: 600px;
+  padding: 0;
+  margin: 0;
 }
 
 .heroImage {
@@ -32,7 +38,7 @@
 }
 
 .content {
-  padding: 48px 60px 80px;
+  padding: 48px var(--page-px) 80px;
   max-width: 1440px;
   margin: 0 auto;
 }
@@ -71,9 +77,18 @@
   transform: translateY(-5px);
 }
 
-.cardGreen { background: #6A892C; color: #fff; }
-.cardYellow { background: #F4A910; color: #000; }
-.cardRed { background: #CE171C; color: #fff; }
+.cardGreen {
+  background: #6a892c;
+  color: #fff;
+}
+.cardYellow {
+  background: #f4a910;
+  color: #000;
+}
+.cardRed {
+  background: #ce171c;
+  color: #fff;
+}
 
 .cardImageWrapper {
   position: absolute;
@@ -147,7 +162,9 @@
   font-weight: 700;
   font-size: 15px;
   text-decoration: none;
-  transition: transform 0.2s, background 0.2s;
+  transition:
+    transform 0.2s,
+    background 0.2s;
 }
 
 .cardButton:hover {
@@ -161,8 +178,10 @@
 }
 
 .paraQuien {
-  width: 100%;
-  padding: 0 70px 80px;
+  overflow: hidden;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 80px 60px;
 }
 
 .paraQuienTitle {
@@ -173,12 +192,11 @@
   text-align: center;
   color: #1a1a1a;
   margin-bottom: 48px;
+  padding: 0;
 }
 
 .paraQuienContainer {
-  max-width: 1301px;
-  margin: 0 auto;
-  padding-top: 48px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -186,21 +204,32 @@
 
 .paraQuienRow {
   position: relative;
-  height: 431px;
-  
-  -webkit-clip-path: inset(0 round 0px);
-  clip-path: inset(0 round 0px);
+  width: 100%;
+  height: clamp(270px, 30vw, 431px);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.paraQuienRowReversed {
+  flex-direction: row-reverse;
+}
+
+.paraQuienRectWrapper {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: clamp(135px, 15vw, 215px);
+  right: 0;
+  z-index: 0;
+}
+
+.paraQuienRectWrapperReversed {
+  left: 0;
+  right: clamp(135px, 15vw, 215px);
 }
 
 .paraQuienRect {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  
-  display: block;
   object-fit: fill;
 }
 
@@ -209,60 +238,35 @@
 }
 
 .paraQuienCircle {
-  position: absolute;
-  width: 431px;
-  height: 431px;
-  top: 0;
+  width: clamp(270px, 30vw, 431px);
+  height: clamp(270px, 30vw, 431px);
+  flex-shrink: 0;
   border-radius: 50%;
   overflow: hidden;
   background: #e0e0e0;
+  position: relative;
   z-index: 2;
-  
+
   -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
   mask-image: radial-gradient(circle, white 100%, black 100%);
-  
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
 }
 
-.paraQuienPlaceholder {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, #d8d8d8 0%, #bebebe 100%);
-}
-
-.paraQuienCircleLeft {
-  left: 0;
-}
-
-.paraQuienCircleRight {
-  right: 0;
-}
-
 .paraQuienText {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+  flex: 1;
+  position: relative;
   z-index: 2;
   display: flex;
   flex-direction: column;
   gap: 16px;
-}
-
-.paraQuienTextRight {
-  left: 471px;
-  right: 40px;
-}
-
-.paraQuienTextLeft {
-  left: 40px;
-  right: 471px;
+  padding: 0 48px;
 }
 
 .paraQuienItemTitle {
   font-family: Montserrat, sans-serif;
   font-weight: 700;
-  font-size: 28px;
+  font-size: 32px;
   line-height: 1.2;
   color: #1a1a1a;
   margin: 0;
@@ -270,21 +274,38 @@
 
 .paraQuienItemDesc {
   font-family: Montserrat, sans-serif;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.6;
   color: #444;
   margin: 0;
   max-width: 600px;
 }
 
+.tieneDudas {
+  width: 100%;
+}
+
+.tieneDudasImgWrapper {
+  max-width: 1440px;
+  margin: 0 auto;
+  line-height: 0;
+}
+
+.tieneDudasCard {
+  display: none;
+}
+
+.tieneDudasMobileImg {
+  display: none;
+}
+
 @media (max-width: 1200px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
+  :root {
+    --page-px: 40px;
   }
 
-  .content {
-    padding-left: 40px;
-    padding-right: 40px;
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .sectionTitle {
@@ -293,17 +314,16 @@
 }
 
 @media (max-width: 768px) {
+  :root {
+    --page-px: 20px;
+  }
+
   .hero {
     height: 400px;
   }
 
   .heroText {
     font-size: 40px;
-  }
-
-  .content {
-    padding-left: 20px;
-    padding-right: 20px;
   }
 
   .sectionTitle {
@@ -329,11 +349,6 @@
     font-size: 22px;
   }
 
-  
-  .paraQuien {
-    padding: 0 20px 60px;
-  }
-
   .paraQuienTitle {
     font-size: 32px;
     margin-bottom: 32px;
@@ -345,18 +360,18 @@
     align-items: center;
   }
 
-  
-  .paraQuienRow {
+  .paraQuienRow,
+  .paraQuienRowReversed {
     width: 100%;
     max-width: 329px;
-    height: 412px;
-    
-    -webkit-clip-path: none;
-    clip-path: none;
+    height: 453px;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
   }
 
-  
-  .paraQuienRect {
+  .paraQuienRectWrapper,
+  .paraQuienRectWrapperReversed {
     display: none;
   }
 
@@ -370,34 +385,21 @@
     z-index: 0;
   }
 
-  
-  .paraQuienCircle,
-  .paraQuienCircleLeft,
-  .paraQuienCircleRight {
-    width: 62%;
-    height: auto;
-    
-    padding-bottom: 0;
-    aspect-ratio: 1 / 1;
-    top: 0;
-    left: 19%;
-    right: auto;
-    transform: none;
-    -webkit-transform: none;
-    border-radius: 50%;
+  .paraQuienCircle {
+    flex-shrink: 0;
+    z-index: 2;
   }
 
-  .paraQuienText,
-  .paraQuienTextLeft,
-  .paraQuienTextRight {
-    top: auto;
-    bottom: 24px;
+  .paraQuienText {
+    flex: none;
+    position: absolute;
+    bottom: 79px;
     left: 24px;
     right: 24px;
-    width: auto;
-    transform: none;
+    padding: 0;
     text-align: center;
     align-items: center;
+    z-index: 2;
   }
 
   .paraQuienItemTitle {
@@ -408,55 +410,7 @@
     font-size: 14px;
     max-width: 100%;
   }
-}
 
-@media (max-width: 640px) {
-  .heroText {
-    font-size: 28px;
-    padding: 0 24px;
-  }
-
-  .grid {
-    grid-template-columns: 1fr;
-    justify-items: center;
-  }
-
-  .card {
-    max-width: 380px;
-    width: 100%;
-  }
-
-  .hero {
-    height: 280px;
-  }
-}
-
-.tieneDudas {
-  width: 100%;
-}
-
-.tieneDudasImgWrapper {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 0 60px;
-  line-height: 0;
-}
-
-.tieneDudasCard {
-  display: none;
-}
-
-.tieneDudasMobileImg {
-  display: none;
-}
-
-@media (max-width: 1200px) {
-  .tieneDudasImgWrapper {
-    padding: 0 40px;
-  }
-}
-
-@media (max-width: 768px) {
   .tieneDudasImgWrapper {
     display: none;
   }
@@ -514,5 +468,38 @@
   .tieneDudasMobileImg {
     display: block;
     line-height: 0;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 768px) {
+  .paraQuienCircle {
+    width: 270px;
+    height: 270px;
+  }
+}
+
+@media (max-width: 640px) {
+  .heroText {
+    font-size: 28px;
+    padding: 0 24px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  .card {
+    max-width: 380px;
+    width: 100%;
+  }
+
+  .hero {
+    height: 280px;
+  }
+
+  .paraQuienCircle {
+    width: 204px;
+    height: 204px;
   }
 }
