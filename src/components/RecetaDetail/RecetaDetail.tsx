@@ -122,7 +122,7 @@ export default function RecetaDetail({ receta }: Props) {
                 </div>
                 <div className={styles.ingredientesImgWrapper}>
                   <Image
-                    src="/images/web/recetas/recetas_detail/Productos.svg"
+                    src="/images/web/recetas/recetas_detail/productos.svg"
                     alt="Productos Q'ocina"
                     width={300}
                     height={260}
@@ -220,13 +220,13 @@ export default function RecetaDetail({ receta }: Props) {
           <div className={styles.tipsBody}>
             <div className={styles.tipsHeader}>
               <Image
-                src="/images/web/recetas/recetas_detail/checkmark.svg"
+                src="/images/web/recetas/recetas_detail/tips.svg"
                 alt=""
-                width={40}
-                height={40}
+                width={313}
+                height={97}
+                style={{ transform: "rotate(2deg)" }}
                 aria-hidden
               />
-              <h2 className={styles.tipsTitle}>TIPS</h2>
             </div>
             <div className={styles.tipsList}>
               {tips
@@ -238,6 +238,16 @@ export default function RecetaDetail({ receta }: Props) {
                   </div>
                 ))}
             </div>
+          </div>
+          <div className={styles.tipsWaveBottomWrapper}>
+            <Image
+              src="/images/web/recetas/recetas_detail/white_waves.svg"
+              alt=""
+              width={1440}
+              height={110}
+              className={styles.tipsWaveBottom}
+              aria-hidden
+            />
           </div>
         </div>
       )}

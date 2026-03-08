@@ -9,9 +9,10 @@ import { useCarousel } from "@/hooks/useCarousel";
 
 interface TestimoniosProps {
   testimonios: Testimonio[];
+  waveImage?: string;
 }
 
-export default function Testimonios({ testimonios }: TestimoniosProps) {
+export default function Testimonios({ testimonios, waveImage = "/images/web/home/testimonials/wave_testimonial.svg" }: TestimoniosProps) {
   const [imageErrors, setImageErrors] = useState<Record<number, boolean>>({});
   const { current, goTo, handleTouchStart, handleTouchEnd } = useCarousel(
     testimonios.length,
@@ -84,7 +85,7 @@ export default function Testimonios({ testimonios }: TestimoniosProps) {
 
       <div className={styles.waveWrapper}>
         <Image
-          src="/images/web/home/testimonials/wave_testimonial.svg"
+          src={waveImage}
           alt=""
           width={1440}
           height={280}

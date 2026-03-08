@@ -108,7 +108,7 @@
   gap: 86px;
   width: 100%;
   max-width: 1255px;
-  min-height: 478px;
+  min-height: 350px;
 }
 
 .ingredientesTitle {
@@ -128,7 +128,7 @@
   background: #000;
   border-radius: 24px;
   border: 1px solid #333;
-  padding: 32px;
+  padding: 0px 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -165,7 +165,7 @@
 .ingredienteText {
   font-family: Montserrat, sans-serif;
   font-weight: 400;
-  font-size: 15px;
+  font-size: 20px;
   line-height: 160%;
   color: #fff;
 }
@@ -181,11 +181,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: -60px;
+  margin-bottom: -48px;
 }
 
 .ingredientesImg {
   height: auto;
-  max-height: 260px;
+  max-height: 360px;
   width: auto;
 }
 
@@ -292,7 +294,7 @@
 .preparacionSidebar {
   width: 358px;
   flex-shrink: 0;
-  background: #FCE4B5;
+  background: #C98E171A;
   border-radius: 24px;
   padding: 40px 32px;
   display: flex;
@@ -392,16 +394,22 @@
 .tipsBody {
   width: 100%;
   background: #F4A910;
-  padding: 40px 93px 80px;
+  padding: 40px 93px 32px;
   display: flex;
   flex-direction: column;
   gap: 32px;
 }
 
+.tipsWaveBottomWrapper {
+  background: #F4A910;
+  padding-bottom: 46.24px;
+  line-height: 0;
+}
+
 .tipsHeader {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 11.61px;
 }
 
 .tipsTitle {
@@ -419,6 +427,12 @@
   gap: 20px;
 }
 
+.tipsWaveBottom {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 .tipCard {
   display: flex;
   align-items: center;
@@ -429,19 +443,20 @@
 }
 
 .tipNumero {
-  flex-shrink: 0;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: #F4A910;
-  color: #fff;
-  font-family: var(--font-palmer), sans-serif;
-  font-weight: 400;
-  font-size: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
+     color: #000000;
+    width: 88px;
+    height: 88px;
+    font-family: var(--font-palmer), sans-serif;
+    background: #f4a910;
+    border-radius: 50%;
+    flex-shrink: 0;
+    justify-content: center;
+    align-items: center;
+    font-size: 114px;
+    font-weight: 400;
+    line-height: 1;
+    padding: 30px;
+    display: flex;
 }
 
 .tipText {
@@ -636,6 +651,29 @@
 
   .tipText {
     font-size: 16px;
+  }
+
+  .tipsSection {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tipsWaveTop {
+    background-image: url("/images/mobile/recetas/tips.svg");
+    background-size: 100% auto;
+    background-position: top center;
+    height: 140px;
+    order: 1;
+  }
+
+  .tipsBody {
+    background: #F4A910;
+    padding: 24px 20px 32px;
+    order: 2;
+  }
+
+  .tipsWaveBottomWrapper {
+    order: 3;
   }
 }
 

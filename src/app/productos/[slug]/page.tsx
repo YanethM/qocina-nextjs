@@ -69,7 +69,7 @@ export default async function ProductoDetailPage({ params }: Props) {
         />
 
         <ListaRecetas recetas={recetas} hideFilters />
-        <Testimonios testimonios={testimonios} />
+        <Testimonios testimonios={testimonios} waveImage="/images/web/products/red_waves.svg" />
         <OtrasBasesCulinarias />
       </div>
     );
