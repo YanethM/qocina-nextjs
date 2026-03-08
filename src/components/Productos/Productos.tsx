@@ -40,9 +40,11 @@ function getImageUrl(
 function CardItem({
   producto,
   colorClass,
+  priority = false,
 }: {
   producto: Producto;
   colorClass: string;
+  priority?: boolean;
 }) {
   return (
     <Link
@@ -56,7 +58,7 @@ function CardItem({
             fill
             sizes="(max-width: 640px) 245px, (max-width: 1024px) 500px, 424px"
             style={{ objectFit: "contain" }}
-            priority
+            priority={priority}
           />
         )}
       </div>
@@ -126,6 +128,7 @@ export default function Productos({
             key={producto.id}
             producto={producto}
             colorClass={getCardColor(index)}
+            priority={index === 0}
           />
         ))}
       </div>
@@ -140,7 +143,7 @@ export default function Productos({
           style={{ transform: `translateX(-${translateX}px)` }}>
           {productos.map((producto, index) => (
             <div key={producto.id} className={styles.slide}>
-              <CardItem producto={producto} colorClass={getCardColor(index)} />
+              <CardItem producto={producto} colorClass={getCardColor(index)} priority={index === 0} />
             </div>
           ))}
         </div>

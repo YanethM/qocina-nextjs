@@ -44,6 +44,7 @@ export default function IngredientesNaturales({
             src="/images/web/home/ingredientes_naturales/image1.svg"
             alt="Ingredientes naturales 1"
             fill
+            sizes="(max-width: 768px) 100vw, 50vw"
             className={styles.gridImage}
             priority
           />

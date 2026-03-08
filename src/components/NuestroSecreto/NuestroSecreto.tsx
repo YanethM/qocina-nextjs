@@ -38,7 +38,7 @@ export default async function NuestroSecreto() {
           </p>
 
           <div className={styles.badgesGrid}>
-            {badges.map((badge) => {
+            {badges.map((badge: any) => {
               const icono = badge.icono;
               const formats = icono?.formats;
               
@@ -68,7 +68,7 @@ export default async function NuestroSecreto() {
 
           <div className={styles.btnContainer}>
             <Button
-              href="/sobre-nosotros"
+              href="/nuestro-proceso"
               variant="primary"
               className={styles.procesoBtn}
             >

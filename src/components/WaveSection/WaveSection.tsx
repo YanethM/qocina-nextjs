@@ -16,9 +16,9 @@ export default function WaveSection({
   return (
     <div className={`${styles.wrapper} ${className ?? ""}`}>
       <div className={styles.wave}>
-        <img src={imageSrc} alt="" className={`${styles.waveImg} ${mobileImageSrc ? styles.waveImgDesktop : ""}`} />
+        <img src={imageSrc} alt="" loading="lazy" className={`${styles.waveImg} ${mobileImageSrc ? styles.waveImgDesktop : ""}`} />
         {mobileImageSrc && (
-          <img src={mobileImageSrc} alt="" className={`${styles.waveImg} ${styles.waveImgMobile}`} />
+          <img src={mobileImageSrc} alt="" loading="lazy" className={`${styles.waveImg} ${styles.waveImgMobile}`} />
         )}
       </div>
       <div className={styles.content}>{children}</div>

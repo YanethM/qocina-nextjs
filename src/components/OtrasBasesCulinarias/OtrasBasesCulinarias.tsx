@@ -16,6 +16,7 @@ export default function OtrasBasesCulinarias() {
             src="/images/web/products/product_detail/card_verde.svg"
             alt=""
             fill
+            sizes="(max-width: 768px) 100vw, 50vw"
             className={styles.cardBg}
             style={{ objectFit: "fill" }}
             aria-hidden
@@ -57,6 +58,7 @@ export default function OtrasBasesCulinarias() {
             src="/images/web/products/product_detail/card_amarillo.svg"
             alt=""
             fill
+            sizes="(max-width: 768px) 100vw, 50vw"
             className={styles.cardBg}
             style={{ objectFit: "fill" }}
             aria-hidden
