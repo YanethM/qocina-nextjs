@@ -189,16 +189,6 @@ export default async function ProductosPage() {
       </section>
 
       <section className={styles.tieneDudas}>
-        <div className={styles.tieneDudasImgWrapper}>
-          <Image
-            src="/images/web/products/tienes_dudas_web.svg"
-            alt="¿Tienes dudas?"
-            width={1440}
-            height={400}
-            style={{ width: "100%", height: "auto" }}
-          />
-        </div>
-
         <div className={styles.tieneDudasCard}>
           <div className={styles.tieneDudasContent}>
             <h2 className={styles.tieneDudasTitle}>
@@ -215,6 +205,16 @@ export default async function ProductosPage() {
             className={styles.tieneDudasBtn}>
             Resuelve aquí tus dudas
           </Button>
+        </div>
+
+        <div className={styles.tieneDudasImgWrapper}>
+          <Image
+            src="/images/web/products/tienes_dudas_web.svg"
+            alt="¿Tienes dudas?"
+            width={1440}
+            height={400}
+            style={{ width: "100%", height: "auto" }}
+          />
         </div>
 
         <Image

@@ -6,6 +6,7 @@ const apiUrl = new URL(
 );
 
 const nextConfig: NextConfig = {
+  allowedDevOrigins: ["192.168.1.11"],
   images: {
     remotePatterns: [
       {

@@ -283,6 +283,7 @@
 
 .tieneDudas {
   width: 100%;
+  position: relative;
 }
 
 .tieneDudasImgWrapper {
@@ -292,7 +293,51 @@
 }
 
 .tieneDudasCard {
-  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding-left: 64px;
+  gap: 24px;
+  z-index: 1;
+}
+
+.tieneDudasContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  max-width: 600px;
+  text-align: left;
+}
+
+.tieneDudasTitle {
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 120%;
+  letter-spacing: 0%;
+  text-align: left;
+  color: #ffffff;
+  margin: 0;
+}
+
+.tieneDudasDescription {
+  font-family: Montserrat, sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 140%;
+  letter-spacing: 0%;
+  text-align: left;
+  color: #ffffff;
+  margin: 0;
 }
 
 .tieneDudasMobileImg {
@@ -364,10 +409,11 @@
   .paraQuienRowReversed {
     width: 100%;
     max-width: 329px;
-    height: 453px;
+    height: 500px;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    overflow: hidden;
   }
 
   .paraQuienRectWrapper,
@@ -393,13 +439,15 @@
   .paraQuienText {
     flex: none;
     position: absolute;
-    bottom: 79px;
+    bottom: 150px;
     left: 24px;
     right: 24px;
     padding: 0;
     text-align: center;
     align-items: center;
     z-index: 2;
+    max-height: calc(100% - 220px);
+    overflow: hidden;
   }
 
   .paraQuienItemTitle {
@@ -416,16 +464,16 @@
   }
 
   .tieneDudasCard {
+    position: static;
+    max-width: 100%;
+    height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     background: #000000;
-    width: 100%;
-    min-height: 412px;
-    padding: 88px 64px;
+    padding: 48px 24px;
     gap: 24px;
-    border-radius: 24px 24px 0 0;
   }
 
   .tieneDudasContent {
@@ -435,6 +483,7 @@
     gap: 16px;
     width: 327px;
     max-width: 100%;
+    text-align: center;
   }
 
   .tieneDudasTitle {
