@@ -23,7 +23,7 @@ function getTitleColor(nombre: string, categoriaSlug: string | null): string {
   const text = `${nombre} ${categoriaSlug ?? ""}`.toLowerCase();
   if (text.includes("roj")) return COLOR_MAP.rojo;
   if (text.includes("verd")) return COLOR_MAP.verde;
-  if (text.includes("amarill")) return COLOR_MAP.amarillo;
+  if (text.includes("amarill")) return "#CE171C";
   return COLOR_MAP.rojo;
 }
 

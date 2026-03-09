@@ -30,7 +30,7 @@ async function fetchAPI<T>(
   let urlStr = new URL(path, API_URL).toString();
   if (params) {
     const qs = Object.entries(params)
-      .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+      .map(([key, value]) => `${key}=${encodeURIComponent(value).replace(/%2A/g, "*")}`)
       .join("&");
     urlStr += `?${qs}`;
   }

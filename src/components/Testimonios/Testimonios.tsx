@@ -33,7 +33,7 @@ export default function Testimonios({ testimonios, waveImage = "/images/web/home
 
       <div className={styles.backgroundWrapper}>
         <div className={styles.gridWrapper}>
-          <div className={styles.grid}>
+          <div className={styles.grid} data-count={testimonios.length}>
             {testimonios.map((testimonio, index) => {
               const fotoUrl = getStrapiImageUrl(testimonio.foto_usuario?.url);
               const showImage = fotoUrl && !imageErrors[testimonio.id];

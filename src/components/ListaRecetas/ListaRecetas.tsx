@@ -148,7 +148,7 @@ export default function ListaRecetas({ recetas, hideFilters = false }: ListaRece
       )}
 
       {shown.length > 0 ? (
-        <div className={styles.grid}>
+        <div className={styles.grid} data-count={shown.length}>
           {shown.map((receta) => {
             const imgUrl = receta.imagen_principal
               ? getStrapiImageUrl(receta.imagen_principal.url)

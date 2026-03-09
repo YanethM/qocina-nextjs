@@ -160,6 +160,12 @@
   gap: 28px;
 }
 
+.grid[data-count="1"],
+.grid[data-count="2"] {
+  justify-content: center;
+  grid-template-columns: repeat(auto-fit, minmax(0, 424px));
+}
+
 .empty {
   text-align: center;
   padding: 60px 0;

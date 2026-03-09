@@ -20,6 +20,60 @@
   cursor: pointer;
 }
 
+.desktopImage {
+  display: block;
+}
+
+.desktopOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: 80px;
+  padding-left: 60px;
+  padding-right: 24px;
+  box-sizing: border-box;
+}
+
+.desktopOverlayContent {
+  width: 340px;
+  height: 62px;
+  opacity: 1;
+  display: flex;
+  flex-direction: column;
+  box-sizing: content-box;
+}
+
+.desktopLabel {
+  font-family: var(--font-palmer), cursive;
+  font-weight: 400;
+  font-size: 70px;
+  line-height: 50%;
+  letter-spacing: 0%;
+  text-align: left;
+  margin: 0;
+}
+
+.desktopDescription {
+  font-family: Montserrat, sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 130%;
+  letter-spacing: 0%;
+  text-align: left;
+  margin: 0;
+  margin-top: 16px;
+}
+
+.mobileImage {
+  display: none;
+}
+
 @media (max-width: 768px) {
   .section {
     height: 400px;
@@ -34,12 +88,63 @@
 
   .item {
     width: 100%;
-    height: 280px;
+    height: auto;
     flex: none;
   }
 
   .itemActive {
     flex: none;
-    height: 480px;
+    height: auto;
+  }
+
+  .desktopImage {
+    display: none;
+  }
+
+  .mobileImage {
+    display: block;
+    position: relative;
+  }
+
+  .mobileOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 66.23px;
+    padding-bottom: 30.86px;
+    box-sizing: border-box;
+  }
+
+  .mobileOverlayActive {
+    padding-top: 165px;
+  }
+
+  .mobileLabel {
+    font-family: var(--font-palmer), cursive;
+    font-weight: 400;
+    font-size: 47.73px;
+    line-height: 50%;
+    letter-spacing: 0%;
+    margin: 0;
+    text-align: center;
+    width: 100%;
+  }
+
+  .mobileDescription {
+    font-family: Montserrat, sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    letter-spacing: 0%;
+    margin: 0;
+    margin-top: 16px;
+    text-align: center;
+    padding-left: 24px;
+    padding-right: 24px;
   }
 }

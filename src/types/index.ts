@@ -86,6 +86,8 @@ export interface Producto {
   galeria_imagenes: StrapiImage[] | null;
   categoria: Categoria | null;
   badges: Badge[] | null;
+  recetas_relacionadas: Receta[] | null;
+  testimonios: Testimonio[] | null;
 }
 
 export interface RecetaIngrediente {
