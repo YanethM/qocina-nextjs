@@ -158,10 +158,15 @@ export interface Articulo {
   titulo: string;
   slug: string;
   descripcion: string;
+  descripcion_corta: string | null;
   contenido: string | null;
   imagen: StrapiImage | null;
   fecha: string | null;
+  fecha_publicacion: string | null;
   autor: string | null;
+  tiempo_lectura: number | null;
+  destacado: boolean;
+  orden: number;
   categoria_blog: CategoriaBlog | null;
 }
 
@@ -177,6 +182,7 @@ export interface PreguntaFrecuente {
   documentId: string;
   pregunta: string;
   respuesta: string;
+  orden: number;
   categoria_faq: CategoriaFaq | null;
 }
 
@@ -246,7 +252,19 @@ export interface BlogPage {
   documentId: string;
   titulo: string;
   descripcion: string;
+  hero_titulo: string;
+  hero_subtitulo: string;
+  publicaciones_titulo: string;
+  cta_cargar_mas: string;
+  newsletter_titulo: string;
+  newsletter_descripcion: string;
+  newsletter_placeholder: string;
+  newsletter_cta_texto: string;
+  meta_title: string;
+  meta_description: string;
   banner: StrapiImage | null;
+  hero_imagen: StrapiImage | null;
+  hero_imagen_mobile: StrapiImage | null;
 }
 
 export interface FaqPage {

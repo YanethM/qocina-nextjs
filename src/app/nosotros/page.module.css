@@ -1,0 +1,25 @@
+.page {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.gastonSection {
+  width: 100%;
+  line-height: 0;
+}
+
+.gastonImage {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.premiosSection {
+  width: 100%;
+  line-height: 0;
+}
+
+.procesoSection {
+  width: 100%;
+  line-height: 0;
+}

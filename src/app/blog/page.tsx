@@ -6,6 +6,7 @@ import {
   getCategoriasBlog,
   getStrapiImageUrl,
 } from "@/lib/api";
+import Subscribe from "@/components/Subscribe/Subscribe";
 import styles from "./page.module.css";
 
 export const metadata = {
@@ -90,6 +91,11 @@ export default async function BlogListPage() {
           ))}
         </div>
       </section>
+
+      <Subscribe
+        title="¿Te falta inspiración para cocinar hoy?"
+        description="Únete a nuestra comunidad y recibe recetas fáciles, consejos prácticos y 10% de descuento en tu próxima compra."
+      />
     </div>
   );
 }

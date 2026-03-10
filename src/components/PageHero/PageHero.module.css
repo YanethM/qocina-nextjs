@@ -34,3 +34,33 @@
   padding: 0 60px 60px;
   pointer-events: all;
 }
+
+@media (max-width: 768px) {
+  .hero {
+    height: 320px;
+    border-bottom-left-radius: 24px;
+    border-bottom-right-radius: 24px;
+  }
+
+  .blackWave {
+    width: 75%;
+  }
+
+  .content {
+    padding: 0 24px 32px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    height: 260px;
+  }
+
+  .blackWave {
+    width: 90%;
+  }
+
+  .content {
+    padding: 0 16px 24px;
+  }
+}

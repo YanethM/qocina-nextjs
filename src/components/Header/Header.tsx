@@ -7,7 +7,7 @@ import styles from "./Header.module.css";
 
 const navLinks = [
   { href: "/nosotros", label: "Nosotros" },
-  { href: "/tienda", label: "Tienda" },
+  { href: "/productos", label: "Tienda" },
   { href: "/recetas", label: "Recetas" },
   { href: "/blog-y-noticias", label: "Blog y Noticias" },
   { href: "/contacto", label: "Contacto" },

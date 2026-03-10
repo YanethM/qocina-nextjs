@@ -138,6 +138,14 @@ export async function getArticulo(id: string) {
   });
 }
 
+export async function getArticuloBySlug(slug: string) {
+  const res = await fetchAPI<StrapiListResponse<Articulo>>("/api/articulos", {
+    "filters[slug][$eq]": slug,
+    populate: "*",
+  });
+  return res.data?.[0] ?? null;
+}
+
 export async function getCategoriasBlog() {
   return fetchAPI<StrapiListResponse<CategoriaBlog>>("/api/categorias-blog", {
     populate: "*",

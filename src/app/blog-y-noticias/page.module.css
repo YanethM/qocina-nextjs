@@ -12,10 +12,9 @@
 
 .publicacionesSection {
   width: 100%;
-  max-width: 1440px;
+  max-width: 1550px;
   margin: 0 auto;
-  height: 1554px;
-  padding: 96px 2rem 48px;
+  padding: 96px 24px 48px;
   display: flex;
   flex-direction: column;
   gap: 42px;
@@ -33,9 +32,8 @@
 .cardsGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, 639px);
+  grid-auto-rows: 639px;
   gap: 24px;
-  height: 1310px;
 }
 
 .card {
@@ -47,3 +45,45 @@
   background: #ededed;
 }
 
+@media (max-width: 768px) {
+  .heroLogoWrapper {
+    justify-content: flex-start;
+    padding: 0 24px;
+  }
+
+  .heroLogo {
+    max-width: 260px;
+  }
+
+  .publicacionesSection {
+    height: auto;
+    padding: 48px 16px 32px;
+    gap: 28px;
+  }
+
+  .publicacionesTitulo {
+    font-size: 32px;
+  }
+
+  .cardsGrid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    height: auto;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .heroLogo {
+    max-width: 200px;
+  }
+
+  .publicacionesSection {
+    padding: 32px 16px 24px;
+    gap: 20px;
+  }
+
+  .publicacionesTitulo {
+    font-size: 26px;
+  }
+}

@@ -1,0 +1,45 @@
+.heroLogoWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.heroTitle {
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 120%;
+  color: #ffffff;
+  margin: 0;
+}
+
+.faqSection {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 80px 60px;
+}
+
+@media (max-width: 768px) {
+  .heroLogoWrapper {
+    padding: 0 24px;
+  }
+
+  .heroTitle {
+    font-size: 32px;
+  }
+
+  .faqSection {
+    padding: 48px 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .heroTitle {
+    font-size: 26px;
+  }
+
+  .faqSection {
+    padding: 32px 16px;
+  }
+}

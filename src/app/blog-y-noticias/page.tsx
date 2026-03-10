@@ -1,11 +1,21 @@
 import Image from "next/image";
 import PageHero from "@/components/PageHero/PageHero";
 import BlogCard from "@/components/BlogCard/BlogCard";
+import Subscribe from "@/components/Subscribe/Subscribe";
+import { getBlogPage, getArticulos } from "@/lib/api";
 import styles from "./page.module.css";
 
-const cards = Array.from({ length: 6 }, (_, i) => i + 1);
+export default async function BlogYNoticiasPage() {
+  const [pageRes, articulosRes] = await Promise.all([
+    getBlogPage().catch(() => null),
+    getArticulos().catch(() => null),
+  ]);
 
-export default function BlogYNoticiasPage() {
+  const pageData = pageRes?.data;
+  const articulos = (articulosRes?.data ?? []).sort(
+    (a, b) => a.orden - b.orden
+  );
+
   return (
     <>
       <PageHero backgroundAlt="Blog y Noticias">
@@ -23,14 +33,26 @@ export default function BlogYNoticiasPage() {
       </PageHero>
 
       <section className={styles.publicacionesSection}>
-        <h2 className={styles.publicacionesTitulo}>Últimas publicaciones</h2>
+        <h2 className={styles.publicacionesTitulo}>
+          {pageData?.publicaciones_titulo || "Últimas publicaciones"}
+        </h2>
 
         <div className={styles.cardsGrid}>
-          {cards.map((i) => (
-            <BlogCard key={i} />
+          {articulos.map((articulo) => (
+            <BlogCard
+              key={articulo.id}
+              titulo={articulo.titulo}
+              descripcion_corta={articulo.descripcion_corta}
+              href={`/blog-y-noticias/${articulo.slug}`}
+            />
           ))}
         </div>
       </section>
+
+      <Subscribe
+        title="¿Te falta inspiración para cocinar hoy?"
+        description="Únete a nuestra comunidad y recibe recetas fáciles, consejos prácticos y 10% de descuento en tu próxima compra."
+      />
     </>
   );
 }
