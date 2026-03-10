@@ -3,9 +3,27 @@
   overflow-x: hidden;
 }
 
+.beneficiosSection {
+  display: flex;
+  width: 100%;
+  max-width: 1306px;
+  margin: 0 auto;
+  padding: 48px 0;
+  gap: 17px;
+  box-sizing: border-box;
+}
+
+.beneficioCard {
+  position: relative;
+  flex: 1;
+  height: 471px;
+}
+
 .gastonSection {
   width: 100%;
   line-height: 0;
+  position: relative;
+  z-index: 2;
 }
 
 .gastonImage {
@@ -17,6 +35,9 @@
 .premiosSection {
   width: 100%;
   line-height: 0;
+  margin-top: -80px;
+  position: relative;
+  z-index: 1;
 }
 
 .procesoSection {

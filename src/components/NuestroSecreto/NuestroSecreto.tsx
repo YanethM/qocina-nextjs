@@ -96,7 +96,7 @@ export default async function NuestroSecreto() {
             priority={false}
           />
           <Button
-            href="/sobre-nosotros"
+            href="/nosotros"
             variant="yellow"
             className={styles.gastonBtn}
           >

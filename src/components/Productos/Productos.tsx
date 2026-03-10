@@ -10,6 +10,7 @@ import styles from "./Productos.module.css";
 
 interface ProductosProps {
   productos: Producto[];
+  title?: string;
   ctaText?: string;
   ctaUrl?: string;
   ctaNuevaVentana?: boolean;
@@ -89,6 +90,7 @@ const GAP = 12;
 
 export default function Productos({
   productos,
+  title = "¡Atrévete hoy a disfrutar de la Q\u2019ocina con Q!",
   ctaText = "Ver todos los productos",
   ctaUrl = "/productos",
   ctaNuevaVentana = false,
@@ -117,9 +119,7 @@ export default function Productos({
   return (
     <section className={styles.section}>
       <div className={styles.header}>
-        <h2 className={styles.title}>
-          ¡Atrévete hoy a disfrutar de la Q&apos;ocina con Q!
-        </h2>
+        <h2 className={styles.title}>{title}</h2>
       </div>
 
       <div className={styles.grid}>
