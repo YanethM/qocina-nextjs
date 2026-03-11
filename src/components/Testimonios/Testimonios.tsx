@@ -50,6 +50,7 @@ export default function Testimonios({ testimonios, waveImage = "/images/web/home
                         sizes="424px"
                         priority={index < 2}
                         onError={() => handleImageError(testimonio.id)}
+                        unoptimized
                       />
                     ) : (
                       <div className={styles.cardPlaceholder}>
@@ -127,6 +128,7 @@ export default function Testimonios({ testimonios, waveImage = "/images/web/home
                           sizes="289px"
                           priority={index === 0}
                           onError={() => handleImageError(testimonio.id)}
+                          unoptimized
                         />
                       ) : (
                         <div className={styles.cardPlaceholder}>

@@ -24,6 +24,7 @@ function BadgeItem({ badge }: { badge: Badge }) {
             fill
             sizes="(max-width: 640px) 72px, 140px"
             style={{ objectFit: "contain" }}
+            unoptimized
           />
         )}
       </div>

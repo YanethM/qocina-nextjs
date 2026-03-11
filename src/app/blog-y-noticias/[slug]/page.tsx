@@ -33,6 +33,7 @@ export default async function ArticuloDetailPage({ params }: Props) {
             fill
             className={styles.portadaImg}
             priority
+            unoptimized
           />
         ) : (
           <div className={styles.portadaPlaceholder} />

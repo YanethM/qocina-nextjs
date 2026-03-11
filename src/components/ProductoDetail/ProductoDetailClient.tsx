@@ -72,6 +72,7 @@ export default function ProductoDetailClient({
               style={{ objectFit: "contain" }}
               sizes="(max-width: 768px) 100vw, 50vw"
               priority
+              unoptimized
             />
           )}
         </div>
@@ -91,6 +92,7 @@ export default function ProductoDetailClient({
                   fill
                   style={{ objectFit: "cover" }}
                   sizes="80px"
+                  unoptimized
                 />
               </button>
             ))}

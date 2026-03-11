@@ -47,26 +47,6 @@ export default function HeroBanner({ slides = [] }: { slides?: HeroSlide[] }) {
           )}
         </div>
 
-        <div className={styles.heroSlogan}>
-          <Image
-            src="/images/web/home/banner/slogan_qocina.svg"
-            alt="ATRÉVETE A QOCINAR CON Q"
-            width={277}
-            height={225}
-            className={styles.sloganImage}
-            style={{ height: "auto" }}
-            priority
-          />
-          <Image
-            src="/images/web/home/banner/libros.svg"
-            alt=""
-            width={380}
-            height={227}
-            className={styles.librosImage}
-            style={{ height: "auto" }}
-            priority
-          />
-        </div>
       </div>
 
       {slides.length > 1 && (

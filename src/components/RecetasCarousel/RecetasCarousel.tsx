@@ -25,6 +25,7 @@ function CardItem({ receta }: { receta: Receta }) {
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 968px) 50vw, 424px"
             style={{ objectFit: "cover" }}
+            unoptimized
           />
         )}
       </div>

@@ -30,6 +30,7 @@ export default async function QuienesSomosPage() {
                 width={600}
                 height={400}
                 style={{ objectFit: "cover", borderRadius: "12px" }}
+                unoptimized
               />
             </div>
           )}

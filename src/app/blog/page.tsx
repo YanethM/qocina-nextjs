@@ -61,6 +61,7 @@ export default async function BlogListPage() {
                     alt={articulo.imagen.alternativeText || articulo.titulo}
                     fill
                     style={{ objectFit: "cover" }}
+                    unoptimized
                   />
                 )}
               </div>

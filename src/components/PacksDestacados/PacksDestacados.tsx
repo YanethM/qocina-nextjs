@@ -46,6 +46,7 @@ export default function PacksDestacados({ packs }: Props) {
                     sizes="(max-width: 768px) 90vw, 424px"
                     style={{ objectFit: "contain" }}
                     className={styles.image}
+                    unoptimized
                   />
                 )}
 

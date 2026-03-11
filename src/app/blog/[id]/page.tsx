@@ -53,6 +53,7 @@ export default async function ArticuloDetailPage({ params }: Props) {
             height={500}
             style={{ objectFit: "cover", borderRadius: "12px" }}
             priority
+            unoptimized
           />
         </div>
       )}

@@ -60,6 +60,7 @@ function CardItem({
             sizes="(max-width: 640px) 245px, (max-width: 1024px) 500px, 424px"
             style={{ objectFit: "contain" }}
             priority={priority}
+            unoptimized
           />
         )}
       </div>
