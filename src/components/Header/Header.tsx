@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
+import { useCart } from "@/context/CartContext";
 import styles from "./Header.module.css";
 
 const navLinks = [
@@ -15,6 +16,7 @@ const navLinks = [
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { count } = useCart();
 
   const closeMenu = () => setMenuOpen(false);
 
@@ -42,25 +44,35 @@ export default function Header() {
               ))}
             </nav>
             <Link href="/carrito" className={styles.cartWrapper}>
-              <Image
-                src="/images/web/header/shopping_white.svg"
-                alt="Carrito de compras"
-                width={48}
-                height={48}
-                className={styles.cartIcon}
-              />
+              <div className={styles.cartIconWrapper}>
+                <Image
+                  src="/images/web/header/shopping_white.svg"
+                  alt="Carrito de compras"
+                  width={48}
+                  height={48}
+                  className={styles.cartIcon}
+                />
+                {count > 0 && (
+                  <span className={styles.cartBadge}>{count > 99 ? "99+" : count}</span>
+                )}
+              </div>
             </Link>
           </div>
 
           <div className={styles.mobileActions}>
             <Link href="/carrito" className={styles.cartWrapper} onClick={closeMenu}>
-              <Image
-                src="/images/web/header/shopping_white.svg"
-                alt="Carrito de compras"
-                width={40}
-                height={40}
-                className={styles.cartIcon}
-              />
+              <div className={styles.cartIconWrapper}>
+                <Image
+                  src="/images/web/header/shopping_white.svg"
+                  alt="Carrito de compras"
+                  width={40}
+                  height={40}
+                  className={styles.cartIcon}
+                />
+                {count > 0 && (
+                  <span className={styles.cartBadge}>{count > 99 ? "99+" : count}</span>
+                )}
+              </div>
             </Link>
             <button
               className={styles.hamburger}

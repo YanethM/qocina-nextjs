@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import type { Badge, Categoria } from "@/types";
 import { COLOR_MAP } from "@/lib/constants";
+import { useCart } from "@/context/CartContext";
 import Accordion from "@/components/Accordion/Accordion";
 import styles from "./ProductoDetailClient.module.css";
 
@@ -28,6 +29,8 @@ function getTitleColor(nombre: string, categoriaSlug: string | null): string {
 }
 
 interface Props {
+  id: number;
+  slug: string;
   nombre: string;
   descripcionCorta: string;
   descripcionLarga: string | null;
@@ -36,11 +39,14 @@ interface Props {
   precio: number;
   precioMoneda: string;
   allImages: string[];
+  imagenPrincipal: string | null;
   categoria: Categoria | null;
   badges: Badge[];
 }
 
 export default function ProductoDetailClient({
+  id,
+  slug,
   nombre,
   descripcionCorta,
   descripcionLarga,
@@ -49,9 +55,11 @@ export default function ProductoDetailClient({
   precio,
   precioMoneda,
   allImages,
+  imagenPrincipal,
   categoria,
   badges,
 }: Props) {
+  const { addItem } = useCart();
   const [selectedImg, setSelectedImg] = useState(0);
   const [cantidad, setCantidad] = useState(1);
   const [packSize, setPackSize] = useState("Unidad");
@@ -205,7 +213,17 @@ export default function ProductoDetailClient({
           ]}
         />
 
-        <button className={styles.addToCart}>Añadir al carrito</button>
+        <button
+          className={styles.addToCart}
+          onClick={() =>
+            addItem(
+              { id, slug, nombre, descripcionCorta, precio, precioMoneda, imagen: imagenPrincipal },
+              cantidad * (PACK_SIZES.find((p) => p.label === packSize)?.multiplier ?? 1)
+            )
+          }
+        >
+          Añadir al carrito
+        </button>
       </div>
     </div>
   );

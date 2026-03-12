@@ -73,9 +73,34 @@
   opacity: 0.7;
 }
 
+.cartIconWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .cartIcon {
   width: 48px;
   height: 48px;
+}
+
+.cartBadge {
+  position: absolute;
+  top: -4px;
+  right: -6px;
+  background: #E8B84B;
+  color: #1a1a1a;
+  font-size: 11px;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  line-height: 1;
 }
 
 .mobileActions {

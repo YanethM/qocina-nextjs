@@ -48,6 +48,8 @@ export default async function ProductoDetailPage({ params }: Props) {
     return (
       <div className={styles.page}>
         <ProductoDetailClient
+          id={producto.id}
+          slug={producto.slug}
           nombre={producto.nombre}
           descripcionCorta={producto.descripcion_corta}
           descripcionLarga={producto.descripcion_larga}
@@ -56,6 +58,7 @@ export default async function ProductoDetailPage({ params }: Props) {
           precio={producto.precio}
           precioMoneda={producto.precio_moneda}
           allImages={allImages}
+          imagenPrincipal={imagenPrincipal}
           categoria={producto.categoria}
           badges={badges}
         />
