@@ -30,6 +30,7 @@ function getTitleColor(nombre: string, categoriaSlug: string | null): string {
 
 interface Props {
   id: number;
+  documentId: string;
   slug: string;
   nombre: string;
   descripcionCorta: string;
@@ -46,6 +47,7 @@ interface Props {
 
 export default function ProductoDetailClient({
   id,
+  documentId,
   slug,
   nombre,
   descripcionCorta,
@@ -217,7 +219,7 @@ export default function ProductoDetailClient({
           className={styles.addToCart}
           onClick={() =>
             addItem(
-              { id, slug, nombre, descripcionCorta, precio, precioMoneda, imagen: imagenPrincipal },
+              { id, documentId, slug, nombre, descripcionCorta, precio, precioMoneda, imagen: imagenPrincipal },
               cantidad * (PACK_SIZES.find((p) => p.label === packSize)?.multiplier ?? 1)
             )
           }

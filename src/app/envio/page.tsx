@@ -56,8 +56,6 @@ export default function EnvioPage() {
     if (!documento) e.documento = "Requerido";
     if (!direccion) e.direccion = "Requerido";
     if (!ciudad) e.ciudad = "Requerido";
-    if (!estado) e.estado = "Requerido";
-    if (!codigoPostal) e.codigoPostal = "Requerido";
     return e;
   };
 
@@ -262,7 +260,7 @@ export default function EnvioPage() {
             </div>
             <div className={styles.fieldGrid3}>
               <div className={styles.field}>
-                <label className={styles.label}>Estado / Provincia*</label>
+                <label className={styles.label}>Estado / Provincia</label>
                 <div className={styles.selectWrapper}>
                   <select
                     className={`${styles.select} ${errors.estado ? styles.inputError : ""}`}
@@ -284,9 +282,9 @@ export default function EnvioPage() {
                 />
               </div>
               <div className={styles.field}>
-                <label className={styles.label}>Código postal*</label>
+                <label className={styles.label}>Código postal</label>
                 <input
-                  className={`${styles.input} ${errors.codigoPostal ? styles.inputError : ""}`}
+                  className={styles.input}
                   placeholder="Ej: 28001 o 110111"
                   value={codigoPostal}
                   onChange={(e) => setCodigoPostal(e.target.value)}

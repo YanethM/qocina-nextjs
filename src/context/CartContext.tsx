@@ -4,6 +4,7 @@ import { createContext, useContext, useEffect, useState, useCallback } from "rea
 
 export interface CartItem {
   id: number;
+  documentId: string;
   slug: string;
   nombre: string;
   descripcionCorta: string;

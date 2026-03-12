@@ -49,6 +49,7 @@ export default async function ProductoDetailPage({ params }: Props) {
       <div className={styles.page}>
         <ProductoDetailClient
           id={producto.id}
+          documentId={producto.documentId}
           slug={producto.slug}
           nombre={producto.nombre}
           descripcionCorta={producto.descripcion_corta}

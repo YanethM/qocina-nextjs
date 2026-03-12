@@ -251,6 +251,7 @@ export default function CarritoPage() {
                           onClick={() =>
                             addItem({
                               id: producto.id,
+                              documentId: producto.documentId,
                               slug: producto.slug,
                               nombre: producto.nombre,
                               descripcionCorta: producto.descripcion_corta,
