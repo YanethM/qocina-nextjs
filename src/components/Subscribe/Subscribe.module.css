@@ -35,7 +35,9 @@
 
 .formSide {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
 }
 
 .form {
@@ -87,6 +89,57 @@
 .button:hover {
   background-color: #e5a710;
   transform: scale(1.03);
+}
+
+.alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 12px;
+  padding: 14px 18px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 12px;
+  backdrop-filter: blur(4px);
+}
+
+.alertError {
+  background: rgba(255, 80, 80, 0.2);
+  border-color: rgba(255, 120, 120, 0.5);
+}
+
+.alertIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #2d8a4e;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.alertError .alertIcon {
+  color: #cc3333;
+}
+
+.alertTitle {
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: #ffffff;
+  margin: 0 0 2px;
+}
+
+.alertText {
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
 }
 
 .containerContact {
