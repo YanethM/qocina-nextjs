@@ -2,86 +2,56 @@ import Image from "next/image";
 import { Button } from "@/components/ui";
 import styles from "./CocinarConQ.module.css";
 
-export default function CocinarConQ() {
+export default function CocinarConQ({
+  historia_descripcion,
+  historia_frase_q,
+  historia_cta,
+}: {
+  historia_descripcion?: string;
+  historia_frase_q?: string;
+  historia_cta?: { texto: string; url: string; nueva_ventana: boolean } | null;
+}) {
   return (
     <section className={styles.cocinarConQ}>
       <div className={styles.imageWrapper}>
         <Image
-          src="/images/web/home/cocinar/home_cocinar_con_q.svg"
-          alt="Cocinar con Q'ocina"
+          src="/images/web/home/cocinar/wave_cocinar_con_q.svg"
+          alt=""
           width={1920}
-          height={400}
-          className={styles.mainImage}
+          height={864}
+          className={styles.waveImage}
           priority={false}
         />
-        
-        <div className={styles.waveTop}>
-          <Image
-            src="/images/web/home/cocinar/wave_cocinar_con_q.svg"
-            alt=""
-            width={1920}
-            height={200}
-            style={{ width: '100%', height: 'auto' }}
-            priority={false}
-          />
-        </div>
+
+        {historia_frase_q && (
+          <p className={styles.historiaFraseQ}>{historia_frase_q}</p>
+        )}
 
         <div className={styles.desktopContent}>
-          <div className={styles.logoWrapper}>
-            <Image
-              src="/images/web/home/cocinar/logo_cocinar_con_q.svg"
-              alt="Cocinar con Q"
-              width={263}
-              height={180}
-              className={styles.logo}
-              priority={false}
-            />
-          </div>
-          
           <div className={styles.textButtonWrapper}>
-            <p className={styles.description}>
-              Nuestras bases culinarias recuperan los secretitos de las cocinas de nuestras madres y abuelas.
-            </p>
-            <Button href="/quienes-somos" variant="yellow" className={styles.desktopBtn}>
-              Conoce nuestra historia
-            </Button>
+            <p className={styles.description}>{historia_descripcion}</p>
+            {historia_cta && (
+              <Button
+                href={historia_cta.url}
+                variant="yellow"
+                className={styles.desktopBtn}>
+                {historia_cta.texto}
+              </Button>
+            )}
           </div>
         </div>
-        
-        <div className={styles.mobileImageContainer}>
-          <Image
-            src="/images/mobile/cocinar/wave_cocinar_con_q.svg"
-            alt="Cocinar con Q'ocina"
-            width={390}
-            height={500}
-            className={styles.mainImageMobile}
-            priority={false}
-          />
-          
-          <div className={styles.mobileContent}>
-            <div className={styles.logoWrapper}>
-              <Image
-                src="/images/web/home/cocinar/logo_cocinar_con_q.svg"
-                alt="Cocinar con Q"
-                width={263}
-                height={180}
-                className={styles.logo}
-                priority={false}
-              />
-            </div>
-            
-            <div className={styles.textWrapper}>
-              <p className={styles.description}>
-                Nuestras bases culinarias recuperan los secretitos de las cocinas de nuestras madres y abuelas.
-              </p>
-            </div>
-            
+
+        <div className={styles.mobileContent}>
+          <div className={styles.textWrapper}>
+            <p className={styles.description}>{historia_descripcion}</p>
+          </div>
+          {historia_cta && (
             <div className={styles.buttonWrapper}>
-              <Button href="/quienes-somos" variant="yellow">
-                Conoce nuestra historia
+              <Button href={historia_cta.url} variant="yellow">
+                {historia_cta.texto}
               </Button>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </section>

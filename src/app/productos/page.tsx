@@ -28,6 +28,7 @@ const MOBILE_CARD_SVGS = [
 const IS_REVERSED = [false, true, false];
 
 function formatPrice(precio: number, moneda: string): string {
+  if (!precio && precio !== 0) return "";
   if (moneda === "PEN") return `S/ ${precio.toFixed(2)}`;
   return `${precio.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ".")} COP`;
 }

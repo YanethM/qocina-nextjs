@@ -22,6 +22,7 @@ function getCardColor(index: number): string {
 }
 
 function formatPrice(precio: number, moneda: string): string {
+  if (!precio && precio !== 0) return "";
   if (moneda === "PEN") {
     return `S/ ${precio.toFixed(2)}`;
   }
@@ -91,10 +92,10 @@ const GAP = 12;
 
 export default function Productos({
   productos,
-  title = "¡Atrévete hoy a disfrutar de la Q\u2019ocina con Q!",
-  ctaText = "Ver todos los productos",
-  ctaUrl = "/productos",
-  ctaNuevaVentana = false,
+  title,
+  ctaText,
+  ctaUrl,
+  ctaNuevaVentana,
 }: ProductosProps) {
   const { current, goTo, handleTouchStart, handleTouchEnd } = useCarousel(
     productos.length,
@@ -161,22 +162,24 @@ export default function Productos({
         </div>
       </div>
 
-      <div className={styles.verTodas}>
-        <Link
-          href={ctaUrl}
-          className={styles.verTodasBtn}
-          target={ctaNuevaVentana ? "_blank" : "_self"}
-          rel={ctaNuevaVentana ? "noopener noreferrer" : undefined}>
-          {ctaText}{" "}
-          <Image
-            src="/images/web/home/white_arrow_right.svg"
-            alt=""
-            width={20}
-            height={20}
-            style={{ height: "auto" }}
-          />
-        </Link>
-      </div>
+      {ctaUrl && ctaText && (
+        <div className={styles.verTodas}>
+          <Link
+            href={ctaUrl}
+            className={styles.verTodasBtn}
+            target={ctaNuevaVentana ? "_blank" : "_self"}
+            rel={ctaNuevaVentana ? "noopener noreferrer" : undefined}>
+            {ctaText}{" "}
+            <Image
+              src="/images/web/home/white_arrow_right.svg"
+              alt=""
+              width={20}
+              height={20}
+              style={{ height: "auto" }}
+            />
+          </Link>
+        </div>
+      )}
     </section>
   );
 }

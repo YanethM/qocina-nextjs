@@ -23,24 +23,42 @@ export const API_URL =
   process.env.NEXT_PUBLIC_API_URL ||
   "http://ec2-23-23-186-243.compute-1.amazonaws.com:1337";
 
+const SITE_CODE = process.env.NEXT_PUBLIC_SITE_CODE || "pe";
+
+function imgFields(field: string): Record<string, string> {
+  return {
+    [`populate[${field}][fields][0]`]: "url",
+    [`populate[${field}][fields][1]`]: "alternativeText",
+    [`populate[${field}][fields][2]`]: "width",
+    [`populate[${field}][fields][3]`]: "height",
+    [`populate[${field}][fields][4]`]: "formats",
+    [`populate[${field}][fields][5]`]: "name",
+  };
+}
+
 async function fetchAPI<T>(
   path: string,
   params?: Record<string, string>,
+  locale?: string,
 ): Promise<T> {
-  let urlStr = new URL(path, API_URL).toString();
-  if (params) {
-    const qs = Object.entries(params)
-      .map(([key, value]) => `${key}=${encodeURIComponent(value).replace(/%2A/g, "*")}`)
-      .join("&");
-    urlStr += `?${qs}`;
-  }
+  const resolvedLocale = locale || process.env.NEXT_PUBLIC_LOCALE || "en";
+  const allParams = { locale: resolvedLocale, ...params };
+  const qs = Object.entries(allParams)
+    .map(([key, value]) => `${key}=${encodeURIComponent(value).replace(/%2A/g, "*")}`)
+    .join("&");
+  const urlStr = `${new URL(path, API_URL).toString()}?${qs}`;
 
+  console.log("[API] GET", urlStr);
   const res = await fetch(urlStr, {
-    next: { revalidate: 3600 },
+    cache: "no-store",
+    headers: {
+      "X-Site": SITE_CODE,
+    },
   });
 
   if (!res.ok) {
-    throw new Error(`API error: ${res.status} ${res.statusText}`);
+    const body = await res.text();
+    throw new Error(`API error: ${res.status} ${res.statusText} — ${body}`);
   }
 
   return res.json();
@@ -52,183 +70,192 @@ export function getStrapiImageUrl(url: string | undefined | null): string {
   return `${API_URL}${url}`;
 }
 
-export async function getBadges() {
-  return fetchAPI<StrapiListResponse<Badge>>("/api/badges", { populate: "*" });
+export async function getBadges(locale?: string) {
+  return fetchAPI<StrapiListResponse<Badge>>("/api/badges", {}, locale);
 }
 
-export async function getBadge(id: string) {
-  return fetchAPI<StrapiSingleResponse<Badge>>(`/api/badges/${id}`, {
-    populate: "*",
-  });
+export async function getBadge(id: string, locale?: string) {
+  return fetchAPI<StrapiSingleResponse<Badge>>(`/api/badges/${id}`, {}, locale);
 }
 
-export async function getCategorias() {
-  return fetchAPI<StrapiListResponse<Categoria>>("/api/categorias", {
-    populate: "*",
-  });
+export async function getCategorias(locale?: string) {
+  return fetchAPI<StrapiListResponse<Categoria>>("/api/categorias", {}, locale);
 }
 
-export async function getCategoria(id: string) {
-  return fetchAPI<StrapiSingleResponse<Categoria>>(`/api/categorias/${id}`, {
-    populate: "*",
-  });
+export async function getCategoria(id: string, locale?: string) {
+  return fetchAPI<StrapiSingleResponse<Categoria>>(`/api/categorias/${id}`, {}, locale);
 }
 
-export async function getTestimonios() {
-  return fetchAPI<StrapiListResponse<Testimonio>>("/api/testimonios", {
-    populate: "*",
-  });
+export async function getTestimonios(locale?: string) {
+  return fetchAPI<StrapiListResponse<Testimonio>>("/api/testimonios", {}, locale);
 }
 
-export async function getTestimonio(id: string) {
-  return fetchAPI<StrapiSingleResponse<Testimonio>>(`/api/testimonios/${id}`, {
-    populate: "*",
-  });
+export async function getTestimonio(id: string, locale?: string) {
+  return fetchAPI<StrapiSingleResponse<Testimonio>>(`/api/testimonios/${id}`, {}, locale);
 }
 
-export async function getProductos() {
+export async function getProductos(locale?: string) {
   return fetchAPI<StrapiListResponse<Producto>>("/api/productos", {
-    populate: "*",
-  });
+    ...imgFields("imagen_principal"),
+    "populate[tamanos_disponibles]": "*",
+    "populate[sitios][populate][site]": "*",
+  }, locale);
 }
 
-export async function getProducto(id: string) {
+export async function getProducto(id: string, locale?: string) {
   return fetchAPI<StrapiSingleResponse<Producto>>(`/api/productos/${id}`, {
-    populate: "*",
-  });
+    ...imgFields("imagen_principal"),
+    "populate[galeria_imagenes][fields][0]": "url",
+    "populate[galeria_imagenes][fields][1]": "alternativeText",
+    "populate[galeria_imagenes][fields][2]": "width",
+    "populate[galeria_imagenes][fields][3]": "height",
+    "populate[galeria_imagenes][fields][4]": "formats",
+    "populate[tamanos_disponibles]": "*",
+    "populate[secciones_expandibles]": "*",
+    "populate[ingredientes_destacados]": "*",
+    "populate[testimonios]": "*",
+    "populate[sitios][populate][site]": "*",
+  }, locale);
 }
 
-export async function getRecetas() {
+export async function getRecetas(locale?: string) {
   return fetchAPI<StrapiListResponse<Receta>>("/api/recetas", {
-    populate: "*",
-  });
+    ...imgFields("imagen_principal"),
+  }, locale);
 }
 
-export async function getReceta(id: string) {
+export async function getReceta(id: string, locale?: string) {
   return fetchAPI<StrapiSingleResponse<Receta>>(`/api/recetas/${id}`, {
-    populate: "*",
-  });
+    ...imgFields("imagen_principal"),
+    "populate[ingredientes]": "*",
+    "populate[pasos]": "*",
+  }, locale);
 }
 
-export async function getRecetaBySlug(slug: string) {
+export async function getRecetaBySlug(slug: string, locale?: string) {
   const res = await fetchAPI<StrapiListResponse<Receta>>("/api/recetas", {
     "filters[slug][$eq]": slug,
-    populate: "*",
-  });
+    ...imgFields("imagen_principal"),
+    "populate[ingredientes]": "*",
+    "populate[pasos]": "*",
+  }, locale);
   return res.data?.[0] ?? null;
 }
 
-export async function getProductoBySlug(slug: string) {
+export async function getProductoBySlug(slug: string, locale?: string) {
   const res = await fetchAPI<StrapiListResponse<Producto>>("/api/productos", {
     "filters[slug][$eq]": slug,
-    populate: "*",
-  });
+    ...imgFields("imagen_principal"),
+    "populate[galeria_imagenes][fields][0]": "url",
+    "populate[galeria_imagenes][fields][1]": "alternativeText",
+    "populate[galeria_imagenes][fields][2]": "width",
+    "populate[galeria_imagenes][fields][3]": "height",
+    "populate[galeria_imagenes][fields][4]": "formats",
+    "populate[tamanos_disponibles]": "*",
+    "populate[secciones_expandibles]": "*",
+    "populate[ingredientes_destacados]": "*",
+    "populate[testimonios]": "*",
+    "populate[sitios][populate][site]": "*",
+  }, locale);
   return res.data?.[0] ?? null;
 }
 
-export async function getArticulos() {
+export async function getArticulos(locale?: string) {
   return fetchAPI<StrapiListResponse<Articulo>>("/api/articulos", {
-    populate: "*",
-  });
+    ...imgFields("imagen_principal"),
+  }, locale);
 }
 
-export async function getArticulo(id: string) {
+export async function getArticulo(id: string, locale?: string) {
   return fetchAPI<StrapiSingleResponse<Articulo>>(`/api/articulos/${id}`, {
-    populate: "*",
-  });
+    ...imgFields("imagen_principal"),
+  }, locale);
 }
 
-export async function getArticuloBySlug(slug: string) {
+export async function getArticuloBySlug(slug: string, locale?: string) {
   const res = await fetchAPI<StrapiListResponse<Articulo>>("/api/articulos", {
     "filters[slug][$eq]": slug,
-    populate: "*",
-  });
+    ...imgFields("imagen_principal"),
+  }, locale);
   return res.data?.[0] ?? null;
 }
 
-export async function getCategoriasBlog() {
-  return fetchAPI<StrapiListResponse<CategoriaBlog>>("/api/categorias-blog", {
-    populate: "*",
-  });
+export async function getCategoriasBlog(locale?: string) {
+  return fetchAPI<StrapiListResponse<CategoriaBlog>>("/api/categorias-blog", {}, locale);
 }
 
-export async function getCategoriaBlog(id: string) {
-  return fetchAPI<StrapiSingleResponse<CategoriaBlog>>(
-    `/api/categorias-blog/${id}`,
-    { populate: "*" },
-  );
+export async function getCategoriaBlog(id: string, locale?: string) {
+  return fetchAPI<StrapiSingleResponse<CategoriaBlog>>(`/api/categorias-blog/${id}`, {}, locale);
 }
 
-export async function getCategoriasFaq() {
-  return fetchAPI<StrapiListResponse<CategoriaFaq>>("/api/categorias-faq", {
-    populate: "*",
-  });
+export async function getCategoriasFaq(locale?: string) {
+  return fetchAPI<StrapiListResponse<CategoriaFaq>>("/api/categorias-faq", {}, locale);
 }
 
-export async function getCategoriaFaq(id: string) {
-  return fetchAPI<StrapiSingleResponse<CategoriaFaq>>(
-    `/api/categorias-faq/${id}`,
-    { populate: "*" },
-  );
+export async function getCategoriaFaq(id: string, locale?: string) {
+  return fetchAPI<StrapiSingleResponse<CategoriaFaq>>(`/api/categorias-faq/${id}`, {}, locale);
 }
 
-export async function getPreguntasFrecuentes() {
-  return fetchAPI<StrapiListResponse<PreguntaFrecuente>>(
-    "/api/preguntas-frecuentes",
-    { populate: "*" },
-  );
+export async function getPreguntasFrecuentes(locale?: string) {
+  return fetchAPI<StrapiListResponse<PreguntaFrecuente>>("/api/preguntas-frecuentes", {}, locale);
 }
 
-export async function getPreguntaFrecuente(id: string) {
-  return fetchAPI<StrapiSingleResponse<PreguntaFrecuente>>(
-    `/api/preguntas-frecuentes/${id}`,
-    { populate: "*" },
-  );
+export async function getPreguntaFrecuente(id: string, locale?: string) {
+  return fetchAPI<StrapiSingleResponse<PreguntaFrecuente>>(`/api/preguntas-frecuentes/${id}`, {}, locale);
 }
 
-export async function getQuienesSomos() {
-  return fetchAPI<StrapiSingleResponse<QuienesSomos>>("/api/quienes-somos", {
-    populate: "*",
-  });
+export async function getQuienesSomos(locale?: string) {
+  return fetchAPI<StrapiSingleResponse<QuienesSomos>>("/api/quienes-somos", {}, locale);
 }
 
-export async function getProductosPage() {
+export async function getProductosPage(locale?: string) {
   return fetchAPI<StrapiSingleResponse<ProductosPage>>("/api/productos-page", {
-    "populate[0]": "perfiles_usuario.imagen",
-    "populate[1]": "secreto_imagen",
-    "populate[2]": "packs_destacados.imagen",
-  });
+    "populate[perfiles_usuario][populate][imagen][fields][0]": "url",
+    "populate[perfiles_usuario][populate][imagen][fields][1]": "alternativeText",
+    "populate[perfiles_usuario][populate][imagen][fields][2]": "width",
+    "populate[perfiles_usuario][populate][imagen][fields][3]": "height",
+    "populate[secreto_imagen][fields][0]": "url",
+    "populate[secreto_imagen][fields][1]": "alternativeText",
+    "populate[secreto_imagen][fields][2]": "width",
+    "populate[secreto_imagen][fields][3]": "height",
+    "populate[packs_destacados][populate][imagen][fields][0]": "url",
+    "populate[packs_destacados][populate][imagen][fields][1]": "alternativeText",
+    "populate[packs_destacados][populate][imagen][fields][2]": "width",
+    "populate[packs_destacados][populate][imagen][fields][3]": "height",
+  }, locale);
 }
 
-export async function getRecetasPage() {
-  return fetchAPI<StrapiSingleResponse<RecetasPage>>("/api/recetas-page", {
-    populate: "*",
-  });
+export async function getRecetasPage(locale?: string) {
+  return fetchAPI<StrapiSingleResponse<RecetasPage>>("/api/recetas-page", {}, locale);
 }
 
-export async function getBlogPage() {
-  return fetchAPI<StrapiSingleResponse<BlogPage>>("/api/blog-page", {
-    populate: "*",
-  });
+export async function getBlogPage(locale?: string) {
+  return fetchAPI<StrapiSingleResponse<BlogPage>>("/api/blog-page", {}, locale);
 }
 
-export async function getFaqPage() {
-  return fetchAPI<StrapiSingleResponse<FaqPage>>("/api/faq-page", {
-    populate: "*",
-  });
+export async function getFaqPage(locale?: string) {
+  return fetchAPI<StrapiSingleResponse<FaqPage>>("/api/faq-page", {}, locale);
 }
 
-export async function getProcesoProduccion() {
-  return fetchAPI<StrapiSingleResponse<ProcesoProduccion>>(
-    "/api/proceso-produccion",
-    { populate: "*" },
-  );
+export async function getProcesoProduccion(locale?: string) {
+  return fetchAPI<StrapiSingleResponse<ProcesoProduccion>>("/api/proceso-produccion", {}, locale);
 }
 
-export async function getHomePage() {
+export async function getHomePage(locale?: string) {
   return fetchAPI<StrapiSingleResponse<HomePage>>("/api/home-page", {
-    "populate[slider][populate][imagen][populate]": "*",
-    "populate[slider][populate][imagen_mobile][populate]": "*",
+    "populate[slider][populate][imagen][fields][0]": "url",
+    "populate[slider][populate][imagen][fields][1]": "alternativeText",
+    "populate[slider][populate][imagen][fields][2]": "width",
+    "populate[slider][populate][imagen][fields][3]": "height",
+    "populate[slider][populate][imagen_mobile][fields][0]": "url",
+    "populate[slider][populate][imagen_mobile][fields][1]": "alternativeText",
+    "populate[slider][populate][imagen_mobile][fields][2]": "width",
+    "populate[slider][populate][imagen_mobile][fields][3]": "height",
     "populate[slider][populate][cta]": "*",
-  });
+    "populate[productos_cta]": "*",
+    "populate[natural_cta]": "*",
+    "populate[secreto_cta]": "*",
+    "populate[secreto_chef_cta]": "*",
+    "populate[historia_cta]": "*",
+  }, locale);
 }

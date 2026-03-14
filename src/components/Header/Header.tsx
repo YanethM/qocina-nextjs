@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import styles from "./Header.module.css";
 
 const navLinks = [
-  { href: "/nosotros", label: "Nosotros" },
+  { href: "/quienes-somos", label: "Nosotros" },
   { href: "/productos", label: "Tienda" },
   { href: "/recetas", label: "Recetas" },
   { href: "/blog-y-noticias", label: "Blog y Noticias" },
@@ -16,9 +17,22 @@ const navLinks = [
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [locale, setLocale] = useState("es");
   const { count } = useCart();
+  const router = useRouter();
 
   const closeMenu = () => setMenuOpen(false);
+
+  useEffect(() => {
+    const match = document.cookie.match(/(?:^|;\s*)locale=([^;]+)/);
+    if (match?.[1]) setLocale(match[1]);
+  }, []);
+
+  const changeLocale = (newLocale: string) => {
+    document.cookie = `locale=${newLocale}; path=/; max-age=31536000`;
+    setLocale(newLocale);
+    router.refresh();
+  };
 
   return (
     <>
@@ -43,6 +57,21 @@ export default function Header() {
                 </Link>
               ))}
             </nav>
+            <div className={styles.langSelector}>
+              <button
+                className={`${styles.langBtn} ${locale === "es" ? styles.langActive : ""}`}
+                onClick={() => changeLocale("es")}
+              >
+                ES
+              </button>
+              <span className={styles.langDivider}>|</span>
+              <button
+                className={`${styles.langBtn} ${locale === "en" ? styles.langActive : ""}`}
+                onClick={() => changeLocale("en")}
+              >
+                EN
+              </button>
+            </div>
             <Link href="/carrito" className={styles.cartWrapper}>
               <div className={styles.cartIconWrapper}>
                 <Image
@@ -100,6 +129,21 @@ export default function Header() {
               {link.label}
             </Link>
           ))}
+          <div className={styles.mobileLangSelector}>
+            <button
+              className={`${styles.langBtn} ${locale === "es" ? styles.langActive : ""}`}
+              onClick={() => { changeLocale("es"); closeMenu(); }}
+            >
+              ES
+            </button>
+            <span className={styles.langDivider}>|</span>
+            <button
+              className={`${styles.langBtn} ${locale === "en" ? styles.langActive : ""}`}
+              onClick={() => { changeLocale("en"); closeMenu(); }}
+            >
+              EN
+            </button>
+          </div>
         </nav>
       </div>
 

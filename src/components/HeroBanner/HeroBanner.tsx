@@ -49,18 +49,16 @@ export default function HeroBanner({ slides = [] }: { slides?: HeroSlide[] }) {
 
       </div>
 
-      {slides.length > 1 && (
-        <div className={styles.dots}>
-          {slides.map((_, i) => (
-            <button
-              key={i}
-              className={`${styles.dot} ${i === current ? styles.dotActive : ""}`}
-              onClick={() => setCurrent(i)}
-              aria-label={`Slide ${i + 1}`}
-            />
-          ))}
-        </div>
-      )}
+      <div className={styles.dots}>
+        {slides.map((_, i) => (
+          <button
+            key={i}
+            className={`${styles.dot} ${i === current ? styles.dotActive : ""}`}
+            onClick={() => setCurrent(i)}
+            aria-label={`Slide ${i + 1}`}
+          />
+        ))}
+      </div>
     </section>
   );
 }

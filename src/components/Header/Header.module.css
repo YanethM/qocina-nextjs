@@ -196,6 +196,46 @@
   color: rgba(255, 255, 255, 0.85);
 }
 
+.langSelector {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.langBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.5);
+  padding: 0;
+  transition: color 0.2s ease;
+  letter-spacing: 0.05em;
+}
+
+.langBtn:hover {
+  color: #ffffff;
+}
+
+.langActive {
+  color: #ffffff;
+}
+
+.langDivider {
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 12px;
+  user-select: none;
+}
+
+.mobileLangSelector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 24px;
+}
+
 .overlay {
   position: fixed;
   inset: 0;
