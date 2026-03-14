@@ -47,6 +47,41 @@ img {
   max-width: 100%;
 }
 
+[data-btn="dark"] {
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+[data-btn="dark"]:hover {
+  background-color: #f5b800;
+  color: #000;
+}
+
+[data-btn="yellow"] {
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+[data-btn="yellow"]:hover {
+  background-color: #1a1a1a;
+  color: #fff;
+}
+
+[data-btn="white"] {
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+[data-btn="white"]:hover {
+  background-color: #1a1a1a;
+  color: #fff;
+}
+[data-btn="white"]:hover img {
+  filter: brightness(0) invert(1);
+}
+
+[data-card]:hover [data-btn="white"] {
+  background-color: #1a1a1a;
+  color: #fff;
+}
+[data-card]:hover [data-btn="white"] img {
+  filter: brightness(0) invert(1);
+}
+
 .container {
   max-width: var(--max-width);
   margin: 0 auto;

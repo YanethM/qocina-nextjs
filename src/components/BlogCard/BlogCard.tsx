@@ -31,7 +31,7 @@ export default function BlogCard({
             )}
           </div>
           <div className={styles.cardBtnWrapper}>
-            <Link href={href} className={styles.cardBtn}>
+            <Link href={href} className={styles.cardBtn} data-btn="white">
               Leer más
               <Image
                 src="/images/web/home/arrow_right.svg"

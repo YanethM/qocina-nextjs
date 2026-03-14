@@ -111,6 +111,3 @@
   transition: background-color 0.2s ease;
 }
 
-.card:hover .ctaButton {
-  background-color: #f0f0f0;
-}

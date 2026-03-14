@@ -2,11 +2,14 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { useRef, useState, useEffect } from "react";
 import { Receta } from "@/types";
 import { getStrapiImageUrl } from "@/lib/api";
 import { COLOR_MAP, WAVE_MAP, DEFAULT_COLOR, DEFAULT_WAVE } from "@/lib/constants";
 import { useCarousel } from "@/hooks/useCarousel";
 import styles from "./RecetasCarousel.module.css";
+
+const GAP = 16;
 
 function CardItem({ receta }: { receta: Receta }) {
   const cardColor = COLOR_MAP[receta.color_card] ?? DEFAULT_COLOR;
@@ -16,6 +19,7 @@ function CardItem({ receta }: { receta: Receta }) {
     <Link
       href={`/recetas/${receta.slug}`}
       className={styles.card}
+      data-card
       data-color={receta.color_card}>
       <div className={styles.cardImage}>
         {receta.imagen_principal && (
@@ -43,7 +47,7 @@ function CardItem({ receta }: { receta: Receta }) {
         <h3 className={styles.cardTitle}>{receta.titulo}</h3>
         <p className={styles.cardDescription}>{receta.descripcion_corta}</p>
         <div className={styles.cardCta}>
-          <span className={styles.ctaButton}>
+          <span className={styles.ctaButton} data-btn="white">
             Ver receta{" "}
             <Image
               src="/images/web/home/arrow_right.svg"
@@ -68,6 +72,26 @@ interface Props {
 
 export default function RecetasCarousel({ recetas, recetas_titulo, recetas_cta }: Props) {
   const { current, goTo, handleTouchStart, handleTouchEnd } = useCarousel(recetas.length);
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const [containerWidth, setContainerWidth] = useState(0);
+
+  useEffect(() => {
+    const el = carouselRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(([entry]) => {
+      setContainerWidth(entry.contentRect.width);
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  const isMobile = containerWidth > 0 && containerWidth <= 640;
+  const slideWidth = isMobile
+    ? containerWidth
+    : containerWidth > 0
+    ? Math.floor(containerWidth / 2 - GAP / 2)
+    : 0;
+  const translateX = current * (slideWidth + (isMobile ? 0 : GAP));
 
   if (recetas.length === 0) return null;
 
@@ -82,12 +106,13 @@ export default function RecetasCarousel({ recetas, recetas_titulo, recetas_cta }
       </div>
 
       <div
+        ref={carouselRef}
         className={styles.carousel}
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}>
         <div
           className={styles.track}
-          style={{ transform: `translateX(-${current * 100}%)` }}>
+          style={{ transform: `translateX(-${translateX}px)` }}>
           {recetas.map((receta) => (
             <div key={receta.id} className={styles.slide}>
               <CardItem receta={receta} />
@@ -114,6 +139,7 @@ export default function RecetasCarousel({ recetas, recetas_titulo, recetas_cta }
             target={recetas_cta.nueva_ventana ? "_blank" : "_self"}
             rel={recetas_cta.nueva_ventana ? "noopener noreferrer" : undefined}
             className={styles.verTodasBtn}
+            data-btn="dark"
           >
             {recetas_cta.texto}{" "}
             <Image

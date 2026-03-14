@@ -62,7 +62,7 @@ export default function Subscribe({ title, description, formulario_boton, varian
                   required
                 />
                 <div className={styles.submitRowContact}>
-                  <button type="submit" className={styles.button}>
+                  <button type="submit" className={styles.button} data-btn="yellow">
                     {formulario_boton ?? "Enviar"}
                   </button>
                 </div>
@@ -77,7 +77,7 @@ export default function Subscribe({ title, description, formulario_boton, varian
                   onChange={(e) => setEmail(e.target.value)}
                   required
                 />
-                <button type="submit" className={styles.button} disabled={status === "loading"}>
+                <button type="submit" className={styles.button} data-btn="yellow" disabled={status === "loading"}>
                   {status === "loading" ? "..." : (formulario_boton ?? "Suscribirme")}
                 </button>
               </form>

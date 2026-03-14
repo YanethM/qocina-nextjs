@@ -128,7 +128,8 @@
 }
 
 .card:hover .ctaButton {
-  background-color: #f5f5f5;
+  background-color: #1a1a1a;
+  color: #fff;
 }
 
 .ctaArrow {

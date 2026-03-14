@@ -48,6 +48,8 @@ function CardItem({
   colorClass: string;
   priority?: boolean;
 }) {
+  const btnVariant = colorClass === styles.cardYellow ? "dark" : "white";
+
   return (
     <Link
       href={`/productos/${producto.slug}`}
@@ -76,6 +78,7 @@ function CardItem({
         <p className={styles.descripcion}>{producto.descripcion_corta}</p>
         <button
           className={styles.addToCartBtn}
+          data-btn={btnVariant}
           onClick={(e) => {
             e.preventDefault();
             console.log("Añadir al carrito:", producto.nombre);
@@ -87,8 +90,7 @@ function CardItem({
   );
 }
 
-const PEEK = 44;
-const GAP = 12;
+const GAP = 16;
 
 export default function Productos({
   productos,
@@ -113,8 +115,13 @@ export default function Productos({
     return () => ro.disconnect();
   }, []);
 
-  const slideWidth = containerWidth > 0 ? containerWidth - PEEK : 0;
-  const translateX = current * (slideWidth + GAP);
+  const isMobile = containerWidth > 0 && containerWidth <= 640;
+  const slideWidth = isMobile
+    ? containerWidth
+    : containerWidth > 0
+    ? Math.floor(containerWidth / 2 - GAP / 2)
+    : 0;
+  const translateX = current * (slideWidth + (isMobile ? 0 : GAP));
 
   if (productos.length === 0) return null;
 
@@ -167,6 +174,7 @@ export default function Productos({
           <Link
             href={ctaUrl}
             className={styles.verTodasBtn}
+            data-btn="dark"
             target={ctaNuevaVentana ? "_blank" : "_self"}
             rel={ctaNuevaVentana ? "noopener noreferrer" : undefined}>
             {ctaText}{" "}

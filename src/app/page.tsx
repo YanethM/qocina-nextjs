@@ -115,6 +115,7 @@ export default async function Home() {
                 target={homeRes.data.amazon_cta.nueva_ventana ? "_blank" : "_self"}
                 rel={homeRes.data.amazon_cta.nueva_ventana ? "noopener noreferrer" : undefined}
                 className={styles.amazonCta}
+                data-btn="dark"
               >
                 {homeRes.data.amazon_cta.texto}
               </a>

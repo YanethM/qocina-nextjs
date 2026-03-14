@@ -4,8 +4,6 @@ import Link from "next/link";
 import type { HeroSlide } from "@/types";
 import { getStrapiImageUrl } from "@/lib/api";
 import styles from "./HeroBanner.module.css";
-import Image from "next/image";
-
 export default function HeroBanner({ slides = [] }: { slides?: HeroSlide[] }) {
   const [current, setCurrent] = useState(0);
 
@@ -41,6 +39,7 @@ export default function HeroBanner({ slides = [] }: { slides?: HeroSlide[] }) {
             <Link
               href={slide.cta.url}
               className={styles.heroBtn}
+              data-btn="yellow"
               target={slide.cta.nueva_ventana ? "_blank" : "_self"}>
               <span className={styles.heroBtnText}>{slide.cta.texto}</span>
             </Link>

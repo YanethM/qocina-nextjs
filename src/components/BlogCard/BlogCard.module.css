@@ -94,6 +94,7 @@
   top: 3.69px;
   left: -6px;
   flex-shrink: 0;
+  transition: filter 0.2s ease;
 }
 
 .cardBtn {
@@ -114,6 +115,11 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.cardBtn:hover {
+  transform: scale(1.03);
 }
 
 @media (max-width: 768px) {

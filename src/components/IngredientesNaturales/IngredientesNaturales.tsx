@@ -70,7 +70,7 @@ export default function IngredientesNaturales({
             {ctaText && (
               <Link
                 href={ctaUrl}
-                className={styles.ctaButton}
+                className={styles.ctaButton} data-btn="dark"
                 target={ctaNuevaVentana ? "_blank" : "_self"}
                 rel={ctaNuevaVentana ? "noopener noreferrer" : undefined}>
                 {ctaText}
@@ -107,7 +107,7 @@ export default function IngredientesNaturales({
                     {ctaText && (
                       <Link
                         href={ctaUrl}
-                        className={styles.ctaButton}
+                        className={styles.ctaButton} data-btn="dark"
                         target={ctaNuevaVentana ? "_blank" : "_self"}
                         rel={ctaNuevaVentana ? "noopener noreferrer" : undefined}>
                         {ctaText}
