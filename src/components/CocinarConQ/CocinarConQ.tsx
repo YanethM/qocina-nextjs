@@ -19,7 +19,15 @@ export default function CocinarConQ({
           alt=""
           width={1920}
           height={864}
-          className={styles.waveImage}
+          className={`${styles.waveImage} ${styles.waveImageDesktop}`}
+          priority={false}
+        />
+        <Image
+          src="/images/mobile/cocinar/wave_cocinar_con_q.svg"
+          alt=""
+          width={390}
+          height={500}
+          className={`${styles.waveImage} ${styles.waveImageMobile}`}
           priority={false}
         />
 
@@ -43,11 +51,14 @@ export default function CocinarConQ({
 
         <div className={styles.mobileContent}>
           <div className={styles.textWrapper}>
+            {historia_frase_q && (
+              <p className={styles.mobileFraseQ}>{historia_frase_q}</p>
+            )}
             <p className={styles.description}>{historia_descripcion}</p>
           </div>
           {historia_cta && (
             <div className={styles.buttonWrapper}>
-              <Button href={historia_cta.url} variant="yellow">
+              <Button href={historia_cta.url} variant="yellow" className={styles.mobileBtn}>
                 {historia_cta.texto}
               </Button>
             </div>

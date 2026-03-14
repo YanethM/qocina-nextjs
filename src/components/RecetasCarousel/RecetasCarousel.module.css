@@ -159,6 +159,7 @@
 .track {
   display: flex;
   gap: 16px;
+  align-items: stretch;
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
 }
@@ -166,11 +167,14 @@
 .slide {
   flex: 0 0 calc(50% - 8px);
   min-width: 0;
+  display: flex;
 }
 
 .slide .card {
   width: 100%;
-  height: auto;
+  height: 100%;
+  border-radius: 16px;
+  overflow: hidden;
 }
 
 .dotsRow {
@@ -202,7 +206,7 @@
 
 @media (max-width: 900px) {
   .section {
-    padding: 40px 0;
+    padding: 40px 0 40px 16px;
   }
 
   .title {
@@ -227,6 +231,10 @@
 }
 
 @media (max-width: 640px) {
+  .section {
+    padding: 40px 16px;
+  }
+
   .slide {
     flex: 0 0 100%;
   }

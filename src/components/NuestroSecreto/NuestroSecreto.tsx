@@ -93,10 +93,10 @@ export default async function NuestroSecreto({ secreto_titulo, secreto_descripci
             priority={false}
           />
           <Image
-            src="/images/mobile/nuestro_secreto/secreto.svg"
+            src="/images/mobile/nuestro_secreto/cocinar_con_q.svg"
             alt="Nuestro secreto"
             width={390}
-            height={500}
+            height={700}
             className={styles.mobileSecretoImage}
             style={{ height: "auto" }}
             priority={false}

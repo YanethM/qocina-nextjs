@@ -81,7 +81,6 @@ function CardItem({
           data-btn={btnVariant}
           onClick={(e) => {
             e.preventDefault();
-            console.log("Añadir al carrito:", producto.nombre);
           }}>
           Añadir al carrito
         </button>
@@ -121,7 +120,7 @@ export default function Productos({
     : containerWidth > 0
     ? Math.floor(containerWidth / 2 - GAP / 2)
     : 0;
-  const translateX = current * (slideWidth + (isMobile ? 0 : GAP));
+  const translateX = current * (slideWidth + GAP);
 
   if (productos.length === 0) return null;
 

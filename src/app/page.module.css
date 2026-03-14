@@ -424,6 +424,32 @@
   .amazonMobile {
     display: block;
   }
+  .amazonOverlay {
+    width: 340px;
+    min-height: 264px;
+    padding-top: 80px;
+    padding-left: clamp(24px, 4%, 64px);
+    gap: 15px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .amazonTitulo {
+    font-size: 32px;
+    line-height: 106%;
+    letter-spacing: 0%;
+    color: #000;
+  }
+  .amazonDescripcion {
+    font-size: 16px;
+    color: #000;
+  }
+  .amazonCta {
+    width: auto;
+    white-space: nowrap;
+    padding: 16px 24px;
+  }
 }
 
 @media (max-width: 480px) {

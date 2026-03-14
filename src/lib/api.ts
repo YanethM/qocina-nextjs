@@ -49,13 +49,14 @@ async function fetchAPI<T>(
     .join("&");
   const urlStr = `${new URL(path, API_URL).toString()}?${qs}`;
 
-  console.log("[API] GET", urlStr);
   const res = await fetch(urlStr, {
     cache: "no-store",
     headers: {
       "X-Site": SITE_CODE,
     },
   });
+
+  console.log(`[API] ${res.status} ${path}`);
 
   if (!res.ok) {
     const body = await res.text();

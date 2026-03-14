@@ -157,6 +157,14 @@
 }
 
 @media (max-width: 1024px) {
+  .naturalFraseQ {
+    width: 200px;
+    height: 92.56px;
+    padding-left: 85px;
+    font-size: 16px;
+    top: 140px;
+  }
+
   .section {
     padding-top: 60px;
   }

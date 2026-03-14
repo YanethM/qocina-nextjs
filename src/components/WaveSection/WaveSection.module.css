@@ -33,12 +33,13 @@
   padding: 20px 48px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) and (min-width: 481px) {
   .waveImg {
-    height: 340px;
-    object-fit: cover;
+    height: 420px;
   }
+}
 
+@media (max-width: 768px) {
   .waveImgDesktop {
     display: none;
   }

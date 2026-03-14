@@ -91,7 +91,7 @@ export default function RecetasCarousel({ recetas, recetas_titulo, recetas_cta }
     : containerWidth > 0
     ? Math.floor(containerWidth / 2 - GAP / 2)
     : 0;
-  const translateX = current * (slideWidth + (isMobile ? 0 : GAP));
+  const translateX = current * (slideWidth + GAP);
 
   if (recetas.length === 0) return null;
 

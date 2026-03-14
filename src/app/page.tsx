@@ -31,14 +31,7 @@ export default async function Home() {
       getContactoPage(locale).catch(() => null),
     ]);
 
-  console.log("[HOME] locale:", await getLocale());
-  console.log("[HOME] homeRes.data:", homeRes?.data ? "OK" : "NULL");
-  console.log("[HOME] productosRes count:", productosRes?.data?.length ?? 0);
-  console.log("[HOME] recetasRes count:", recetasRes?.data?.length ?? 0);
-  console.log("[HOME] badgesRes count:", badgesRes?.data?.length ?? 0);
-  console.log("[HOME] testimoniosRes count:", testimoniosRes?.data?.length ?? 0);
-
-  const slides = homeRes?.data?.slider ?? [];
+const slides = homeRes?.data?.slider ?? [];
   const introTexto = homeRes?.data?.intro_texto ?? "";
   const productosTitulo = homeRes?.data?.productos_titulo ?? "";
   const productosCta = homeRes?.data?.productos_cta;
