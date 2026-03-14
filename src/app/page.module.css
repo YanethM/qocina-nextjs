@@ -127,11 +127,66 @@
 }
 
 .amazonBanner {
+  position: relative;
   width: 100%;
   max-width: 1320px;
   margin: 0 auto;
   padding: 0;
   line-height: 0;
+}
+
+.amazonOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 549px;
+  min-height: 264px;
+  padding-left: 64px;
+  padding-top: 166px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  opacity: 1;
+}
+
+.amazonTitulo {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 106%;
+  letter-spacing: 0%;
+}
+
+.amazonDescripcion {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: 23px;
+  line-height: 140%;
+  letter-spacing: 0%;
+}
+
+.amazonCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 280px;
+  height: 54px;
+  min-width: 170px;
+  border-radius: 100px;
+  padding-top: 16px;
+  padding-right: 48px;
+  padding-bottom: 16px;
+  padding-left: 48px;
+  gap: 16px;
+  text-decoration: none;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: #ffffff;
+  background-color: #000000;
+  cursor: pointer;
 }
 
 .amazonWeb {

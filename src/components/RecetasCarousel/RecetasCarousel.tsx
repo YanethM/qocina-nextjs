@@ -62,16 +62,18 @@ function CardItem({ receta }: { receta: Receta }) {
 
 interface Props {
   recetas: Receta[];
+  recetas_titulo?: string;
+  recetas_cta?: { texto: string; url: string; nueva_ventana: boolean } | null;
 }
 
-export default function RecetasCarousel({ recetas }: Props) {
+export default function RecetasCarousel({ recetas, recetas_titulo, recetas_cta }: Props) {
   const { current, goTo, handleTouchStart, handleTouchEnd } = useCarousel(recetas.length);
 
   if (recetas.length === 0) return null;
 
   return (
     <section className={styles.section}>
-      <h2 className={styles.title}>Recetas</h2>
+      {recetas_titulo && <h2 className={styles.title}>{recetas_titulo}</h2>}
 
       <div className={styles.grid}>
         {recetas.map((receta) => (
@@ -105,18 +107,25 @@ export default function RecetasCarousel({ recetas }: Props) {
         </div>
       </div>
 
-      <div className={styles.verTodas}>
-        <Link href="/recetas" className={styles.verTodasBtn}>
-          Ver todas{" "}
-          <Image
-            src="/images/web/home/white_arrow_right.svg"
-            alt=""
-            width={20}
-            height={20}
-            style={{ height: "auto" }}
-          />
-        </Link>
-      </div>
+      {recetas_cta && (
+        <div className={styles.verTodas}>
+          <Link
+            href={recetas_cta.url}
+            target={recetas_cta.nueva_ventana ? "_blank" : "_self"}
+            rel={recetas_cta.nueva_ventana ? "noopener noreferrer" : undefined}
+            className={styles.verTodasBtn}
+          >
+            {recetas_cta.texto}{" "}
+            <Image
+              src="/images/web/home/white_arrow_right.svg"
+              alt=""
+              width={20}
+              height={20}
+              style={{ height: "auto" }}
+            />
+          </Link>
+        </div>
+      )}
     </section>
   );
 }

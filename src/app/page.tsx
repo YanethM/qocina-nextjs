@@ -13,6 +13,7 @@ import {
   getRecetas,
   getTestimonios,
   getHomePage,
+  getContactoPage,
 } from "@/lib/api";
 import { getLocale } from "@/lib/locale";
 import BeneficiosWaveSection from "@/components/BeneficiosWaveSection/BeneficiosWaveSection";
@@ -20,13 +21,14 @@ import IngredientesNaturales from "@/components/IngredientesNaturales/Ingredient
 
 export default async function Home() {
   const locale = await getLocale();
-  const [homeRes, badgesRes, productosRes, recetasRes, testimoniosRes] =
+  const [homeRes, badgesRes, productosRes, recetasRes, testimoniosRes, contactoRes] =
     await Promise.all([
       getHomePage(locale).catch((e) => { console.error("getHomePage error:", e); return null; }),
       getBadges(locale).catch((e) => { console.error("getBadges error:", e); return null; }),
       getProductos(locale).catch((e) => { console.error("getProductos error:", e); return null; }),
       getRecetas(locale).catch((e) => { console.error("getRecetas error:", e); return null; }),
       getTestimonios(locale).catch((e) => { console.error("getTestimonios error:", e); return null; }),
+      getContactoPage(locale).catch(() => null),
     ]);
 
   console.log("[HOME] locale:", await getLocale());
@@ -99,13 +101,37 @@ export default async function Home() {
           className={styles.amazonMobile}
           loading="eager"
         />
+        {(homeRes?.data?.amazon_titulo || homeRes?.data?.amazon_descripcion) && (
+          <div className={styles.amazonOverlay}>
+            {homeRes.data.amazon_titulo && (
+              <h2 className={styles.amazonTitulo}>{homeRes.data.amazon_titulo}</h2>
+            )}
+            {homeRes.data.amazon_descripcion && (
+              <p className={styles.amazonDescripcion}>{homeRes.data.amazon_descripcion}</p>
+            )}
+            {homeRes.data.amazon_cta && (
+              <a
+                href={homeRes.data.amazon_cta.url}
+                target={homeRes.data.amazon_cta.nueva_ventana ? "_blank" : "_self"}
+                rel={homeRes.data.amazon_cta.nueva_ventana ? "noopener noreferrer" : undefined}
+                className={styles.amazonCta}
+              >
+                {homeRes.data.amazon_cta.texto}
+              </a>
+            )}
+          </div>
+        )}
       </section>
 
-      <RecetasCarousel recetas={recetas} />
+      <RecetasCarousel recetas={recetas} recetas_titulo={homeRes?.data?.recetas_titulo} recetas_cta={homeRes?.data?.recetas_cta} />
 
-      <Testimonios testimonios={testimonios} />
+      <Testimonios testimonios={testimonios} testimonios_titulo={homeRes?.data?.testimonios_titulo} />
 
-      <Subscribe />
+      <Subscribe
+        title={contactoRes?.data?.titulo}
+        description={contactoRes?.data?.descripcion}
+        formulario_boton={contactoRes?.data?.formulario_boton}
+      />
     </>
   );
 }

@@ -284,6 +284,14 @@ export interface ProcesoProduccion {
   imagen: StrapiImage | null;
 }
 
+export interface ContactoPage {
+  id: number;
+  documentId: string;
+  titulo: string;
+  descripcion: string;
+  formulario_boton: string;
+}
+
 export interface HeroSlide {
   id: number;
   titulo: string;
@@ -316,4 +324,10 @@ export interface HomePage {
   historia_descripcion: string;
   historia_frase_q: string;
   historia_cta: { texto: string; url: string; nueva_ventana: boolean } | null;
+  amazon_titulo: string;
+  amazon_descripcion: string;
+  amazon_cta: { texto: string; url: string; nueva_ventana: boolean } | null;
+  recetas_titulo: string;
+  recetas_cta: { texto: string; url: string; nueva_ventana: boolean } | null;
+  testimonios_titulo: string;
 }

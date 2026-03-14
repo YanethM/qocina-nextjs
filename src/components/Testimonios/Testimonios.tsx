@@ -9,10 +9,11 @@ import { useCarousel } from "@/hooks/useCarousel";
 
 interface TestimoniosProps {
   testimonios: Testimonio[];
+  testimonios_titulo?: string;
   waveImage?: string;
 }
 
-export default function Testimonios({ testimonios, waveImage = "/images/web/home/testimonials/wave_testimonial.svg" }: TestimoniosProps) {
+export default function Testimonios({ testimonios, testimonios_titulo, waveImage = "/images/web/home/testimonials/testimonials.svg" }: TestimoniosProps) {
   const [imageErrors, setImageErrors] = useState<Record<number, boolean>>({});
   const { current, goTo, handleTouchStart, handleTouchEnd } = useCarousel(
     testimonios.length,
@@ -27,9 +28,28 @@ export default function Testimonios({ testimonios, waveImage = "/images/web/home
   const getInitials = (name: string) =>
     name.split(" ").map((w) => w[0]).join("").toUpperCase().slice(0, 2);
 
+  const abbreviateName = (name: string) => {
+    const parts = name.trim().split(/\s+/);
+    if (parts.length <= 1) return name;
+    return `${parts[0]} ${parts.slice(1).map((p) => `${p[0]}.`).join(" ")}`;
+  };
+
   return (
     <section className={styles.section}>
-      <h2 className={styles.sectionTitle}>TESTIMONIOS</h2>
+      <div className={styles.bgImage}>
+        <Image
+          src={waveImage}
+          alt=""
+          width={1920}
+          height={900}
+          className={styles.bgImg}
+          priority={false}
+          unoptimized
+        />
+      </div>
+
+      <div className={styles.contentLayer}>
+        {testimonios_titulo && <h2 className={styles.sectionTitle}>{testimonios_titulo}</h2>}
 
       <div className={styles.backgroundWrapper}>
         <div className={styles.gridWrapper}>
@@ -70,7 +90,7 @@ export default function Testimonios({ testimonios, waveImage = "/images/web/home
                         <span key={`empty-${i}`} className={styles.starEmpty}>☆</span>
                       ))}
                     </div>
-                    <p className={styles.author}>{testimonio.nombre_usuario}</p>
+                    <p className={styles.author}>{abbreviateName(testimonio.nombre_usuario)}</p>
                     <p className={styles.content}>
                       &ldquo;{testimonio.texto_testimonio}&rdquo;
                     </p>
@@ -82,17 +102,6 @@ export default function Testimonios({ testimonios, waveImage = "/images/web/home
             })}
           </div>
         </div>
-      </div>
-
-      <div className={styles.waveWrapper}>
-        <Image
-          src={waveImage}
-          alt=""
-          width={1440}
-          height={280}
-          className={styles.waveTestimonial}
-          style={{ width: "100%", height: "auto" }}
-        />
       </div>
 
       <div className={styles.mobileSection}>
@@ -148,7 +157,7 @@ export default function Testimonios({ testimonios, waveImage = "/images/web/home
                           <span key={`empty-${i}`} className={styles.starEmpty}>☆</span>
                         ))}
                       </div>
-                      <p className={styles.author}>{testimonio.nombre_usuario}</p>
+                      <p className={styles.author}>{abbreviateName(testimonio.nombre_usuario)}</p>
                       <p className={styles.content}>
                         &ldquo;{testimonio.texto_testimonio}&rdquo;
                       </p>
@@ -171,6 +180,8 @@ export default function Testimonios({ testimonios, waveImage = "/images/web/home
           </div>
         </div>
       </div>
+      </div>
+
     </section>
   );
 }

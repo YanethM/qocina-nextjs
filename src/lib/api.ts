@@ -17,6 +17,7 @@ import type {
   FaqPage,
   ProcesoProduccion,
   HomePage,
+  ContactoPage,
 } from "@/types";
 
 export const API_URL =
@@ -257,5 +258,11 @@ export async function getHomePage(locale?: string) {
     "populate[secreto_cta]": "*",
     "populate[secreto_chef_cta]": "*",
     "populate[historia_cta]": "*",
+    "populate[amazon_cta]": "*",
+    "populate[recetas_cta]": "*",
   }, locale);
+}
+
+export async function getContactoPage(locale?: string) {
+  return fetchAPI<StrapiSingleResponse<ContactoPage>>("/api/contacto-page", {}, locale);
 }

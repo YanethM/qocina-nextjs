@@ -4,21 +4,18 @@ import styles from "./Subscribe.module.css";
 interface SubscribeProps {
   title?: string;
   description?: string;
+  formulario_boton?: string;
   variant?: "email" | "contact";
 }
 
-export default function Subscribe({ title, description, variant = "email" }: SubscribeProps = {}) {
+export default function Subscribe({ title, description, formulario_boton, variant = "email" }: SubscribeProps = {}) {
   return (
     <section className={styles.section}>
       <WaveSection mobileImageSrc="/images/mobile/bases_culinarias/Modulo.svg">
         <div className={`${styles.container} ${variant === "contact" ? styles.containerContact : ""}`}>
           <div className={styles.textSide}>
-            <h2 className={styles.title}>
-              {title ?? "SUSCRÍBETE Y OBTÉN 5% DE DESCUENTO"}
-            </h2>
-            <p className={styles.description}>
-              {description ?? "Recibe en tu correo recetas exclusivas, tips para cocinar fácil y sano, y todas las novedades de Q\u2019ocina en Casa."}
-            </p>
+            {title && <h2 className={styles.title}>{title}</h2>}
+            {description && <p className={styles.description}>{description}</p>}
           </div>
           <div className={styles.formSide}>
             {variant === "contact" ? (
@@ -42,7 +39,7 @@ export default function Subscribe({ title, description, variant = "email" }: Sub
                 />
                 <div className={styles.submitRowContact}>
                   <button type="submit" className={styles.button}>
-                    Enviar
+                    {formulario_boton ?? "Enviar"}
                   </button>
                 </div>
               </form>
@@ -55,7 +52,7 @@ export default function Subscribe({ title, description, variant = "email" }: Sub
                   required
                 />
                 <button type="submit" className={styles.button}>
-                  Suscribirme
+                  {formulario_boton ?? "Suscribirme"}
                 </button>
               </form>
             )}
