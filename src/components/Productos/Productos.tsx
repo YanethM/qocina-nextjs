@@ -16,6 +16,7 @@ interface ProductosProps {
   ctaText?: string;
   ctaUrl?: string;
   ctaNuevaVentana?: boolean;
+  className?: string;
 }
 
 function getCardColor(index: number): string {
@@ -101,6 +102,7 @@ export default function Productos({
   ctaText,
   ctaUrl,
   ctaNuevaVentana,
+  className,
 }: ProductosProps) {
   const { current, goTo, handleTouchStart, handleTouchEnd } = useCarousel(
     productos.length,
@@ -129,7 +131,7 @@ export default function Productos({
   if (productos.length === 0) return null;
 
   return (
-    <section className={styles.section}>
+    <section className={`${styles.section}${className ? ` ${className}` : ``}`}>
       <div className={styles.header}>
         {title && <p className={styles.title}>{title}</p>}
         {subtitle && <h2 className={styles.subtitle}>{subtitle}</h2>}

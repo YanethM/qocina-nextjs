@@ -235,7 +235,42 @@ export async function getProductosPage(locale?: string) {
     "populate[packs_destacados][populate][imagen][fields][1]": "alternativeText",
     "populate[packs_destacados][populate][imagen][fields][2]": "width",
     "populate[packs_destacados][populate][imagen][fields][3]": "height",
+    "populate[packs_destacados][populate][productos][populate][imagen_principal][fields][0]": "url",
+    "populate[packs_destacados][populate][productos][populate][imagen_principal][fields][1]": "alternativeText",
+    "populate[packs_destacados][populate][productos][populate][imagen_principal][fields][2]": "width",
+    "populate[packs_destacados][populate][productos][populate][imagen_principal][fields][3]": "height",
+    "populate[productos_destacados][populate][imagen_principal][fields][0]": "url",
+    "populate[productos_destacados][populate][imagen_principal][fields][1]": "alternativeText",
+    "populate[productos_destacados][populate][imagen_principal][fields][2]": "width",
+    "populate[productos_destacados][populate][imagen_principal][fields][3]": "height",
+    "populate[productos_destacados][populate][imagen_principal][fields][4]": "formats",
+    "populate[ayuda_cta]": "*",
   }, locale);
+}
+
+export async function getPack(slug: string, locale?: string) {
+  const res = await fetchAPI<StrapiSingleResponse<ProductosPage>>(
+    "/api/productos-page",
+    {
+      "populate[packs_destacados][populate][imagen][fields][0]": "url",
+      "populate[packs_destacados][populate][imagen][fields][1]": "alternativeText",
+      "populate[packs_destacados][populate][imagen][fields][2]": "width",
+      "populate[packs_destacados][populate][imagen][fields][3]": "height",
+      "populate[packs_destacados][populate][productos][populate][imagen_principal][fields][0]": "url",
+      "populate[packs_destacados][populate][productos][populate][imagen_principal][fields][1]": "alternativeText",
+      "populate[packs_destacados][populate][productos][populate][imagen_principal][fields][2]": "width",
+      "populate[packs_destacados][populate][productos][populate][imagen_principal][fields][3]": "height",
+      "populate[packs_destacados][populate][productos][populate][imagen_principal][fields][4]": "formats",
+    },
+    locale,
+  );
+  const data = res?.data;
+  const pack = data?.packs_destacados?.find((p) => p.slug === slug) ?? null;
+  return {
+    pack,
+    mostrarDescuento: data?.packs_mostrar_descuento ?? false,
+    porcentajeDescuento: data?.packs_porcentaje_descuento ?? null,
+  };
 }
 
 export async function getRecetasPage(locale?: string) {

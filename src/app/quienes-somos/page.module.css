@@ -372,7 +372,7 @@
   width: 100%;
   max-width: 1500px;
   margin: 0 auto;
-  padding: 0 8px;
+  padding: 0 20px;
   box-sizing: border-box;
   line-height: 0;
   position: relative;
@@ -399,13 +399,14 @@
   gap: 16px;
   pointer-events: auto;
   margin-left: 60px;
+  margin-top: 40px;
 }
 
 .procesoTitulo {
   margin: 0;
   font-family: var(--font-montserrat), sans-serif;
   font-weight: 700;
-  font-size: 48px;
+  font-size: 30px;
   line-height: 120%;
   letter-spacing: 0%;
   color: #ffffff;
@@ -467,7 +468,7 @@
 
   .bannerTextContainer {
     justify-content: flex-end;
-    padding-bottom: 48px;
+    padding-bottom: 90px;
   }
 
   .bannerTextInner {
@@ -514,12 +515,12 @@
     left: 0;
     transform: none;
     width: 100%;
-    padding: 32px 40px 0;
+    padding: 50px 40px 0;
     box-sizing: border-box;
   }
 
   .queEsTitulo {
-    font-size: 32px;
+    font-size: 25px;
   }
 
   .queEsDescripcionP {
@@ -558,14 +559,16 @@
   }
 
   .gastonMobileTop {
+    flex-direction: column;
+    gap: 8px;
+    padding: 50px 16px;
+    display: flex;
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    padding: 28px 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+    align-items: center;
+    justify-content: center;
   }
 
   .gastonMobileTop .gastonNombre {
@@ -574,7 +577,7 @@
   }
 
   .gastonMobileTop .gastonTitulo {
-    font-size: 15px;
+            font-size: 20px;
     color: #000000;
   }
 
@@ -583,7 +586,7 @@
     top: 22%;
     left: 0;
     right: 0;
-    padding: 0 16px;
+    padding: 0px 25px;
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -593,5 +596,13 @@
   .gastonMobileBottom .gastonDescripcion {
     font-size: 15px;
     color: #ffffff;
+  }
+
+  .productosQuienes > div:first-child > p:first-child {
+    font-size: 30px;
+  }
+
+  .productosQuienes > div:first-child > h2 {
+    font-size: 30px;
   }
 }

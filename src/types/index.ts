@@ -245,6 +245,7 @@ export interface PackDestacado {
   disponible: boolean;
   sku: string | null;
   orden: number;
+  productos: Producto[] | null;
   imagen: StrapiImage | null;
 }
 
@@ -261,10 +262,20 @@ export interface ProductosPage {
   documentId: string;
   titulo: string;
   descripcion: string;
+  hero_titulo: string | null;
+  hero_subtitulo: string | null;
+  productos_titulo: string | null;
+  productos_destacados: Producto[] | null;
+  packs_titulo: string | null;
+  packs_mostrar_descuento: boolean;
+  packs_porcentaje_descuento: number | null;
   banner: StrapiImage | null;
   secreto_imagen: StrapiImage | null;
   packs_destacados: PackDestacado[] | null;
   perfiles_usuario: PerfilUsuario[] | null;
+  ayuda_titulo: string | null;
+  ayuda_subtitulo: string | null;
+  ayuda_cta: { id: number; texto: string; url: string; nueva_ventana: boolean } | null;
 }
 
 export interface RecetasPage {

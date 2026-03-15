@@ -294,6 +294,7 @@ export default async function NosotrosPage() {
         ctaText={data?.productos_cta?.texto ?? undefined}
         ctaUrl={data?.productos_cta?.url ?? undefined}
         ctaNuevaVentana={data?.productos_cta?.nueva_ventana ?? undefined}
+        className={styles.productosQuienes}
       />
 
       <section className={styles.procesoSection}>

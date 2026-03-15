@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import styles from "./Header.module.css";
 
@@ -20,6 +20,7 @@ export default function Header() {
   const [locale, setLocale] = useState("es");
   const { count } = useCart();
   const router = useRouter();
+  const pathname = usePathname();
 
   const closeMenu = () => setMenuOpen(false);
 
@@ -52,7 +53,10 @@ export default function Header() {
           <div className={styles.rightGroup}>
             <nav className={styles.nav}>
               {navLinks.map((link) => (
-                <Link key={link.href} href={link.href} className={styles.navLink}>
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`${styles.navLink} ${pathname.startsWith(link.href) ? styles.navLinkActive : ""}`}>
                   {link.label}
                 </Link>
               ))}
@@ -123,7 +127,7 @@ export default function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className={styles.mobileNavLink}
+              className={`${styles.mobileNavLink} ${pathname.startsWith(link.href) ? styles.mobileNavLinkActive : ""}`}
               onClick={closeMenu}
             >
               {link.label}
