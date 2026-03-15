@@ -1,0 +1,89 @@
+.wrapper {
+  width: 100%;
+  position: relative;
+  line-height: 0;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.overlayInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 8px;
+  box-sizing: border-box;
+}
+
+.left {
+  flex: 1;
+}
+
+.right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.seccionTitulo {
+  margin: 0;
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 120%;
+  letter-spacing: 0%;
+  color: #000000;
+}
+
+.premioNombre {
+  margin: 0;
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 120%;
+  letter-spacing: 0%;
+  color: #000000;
+  text-align: right;
+}
+
+.dotsContainer {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: auto;
+}
+
+.dotsRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #000000;
+  border-radius: 100px;
+  padding: 10px 16px;
+}
+
+.dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.5);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: background-color 0.3s ease;
+  pointer-events: auto;
+}
+
+.dotActive {
+  background: #f4a910;
+}

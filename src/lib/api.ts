@@ -207,7 +207,17 @@ export async function getPreguntaFrecuente(id: string, locale?: string) {
 }
 
 export async function getQuienesSomos(locale?: string) {
-  return fetchAPI<StrapiSingleResponse<QuienesSomos>>("/api/quienes-somos", {}, locale);
+  return fetchAPI<StrapiSingleResponse<QuienesSomos>>("/api/quienes-somos", {
+    ...imgFields("hero_imagen"),
+    "populate[valores][populate][imagen][fields][0]": "url",
+    "populate[valores][populate][imagen][fields][1]": "alternativeText",
+    "populate[valores][populate][imagen][fields][2]": "width",
+    "populate[valores][populate][imagen][fields][3]": "height",
+    "populate[valores][populate][imagen][fields][4]": "formats",
+    "populate[proceso_cta]": "*",
+    "populate[productos_cta]": "*",
+    "populate[premios]": "*",
+  }, locale);
 }
 
 export async function getProductosPage(locale?: string) {

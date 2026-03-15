@@ -8,10 +8,40 @@
   font-size: 48px;
   font-weight: 700;
   text-align: center;
-  margin-bottom: 4rem;
+  margin: 0;
   margin-left: auto;
   margin-right: auto;
   color: #1a1a1a;
+}
+
+.subtitle {
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 120%;
+  letter-spacing: 0%;
+  text-align: center;
+  margin: 0;
+  color: #1a1a1a;
+}
+
+.description {
+  font-family: Montserrat, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 140%;
+  letter-spacing: 0%;
+  text-align: center;
+  margin: 0;
+  color: #1a1a1a;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 4rem;
 }
 
 .grid {
@@ -93,8 +123,9 @@
 .nombre {
   font-family: Montserrat, sans-serif;
   font-weight: 700;
-  font-size: 24px;
-  line-height: 1.2;
+  font-size: 29px;
+  line-height: 120%;
+  letter-spacing: 0%;
   text-align: center;
   margin: 0;
   color: inherit;
@@ -138,8 +169,11 @@
   color: #1a1a1a;
   border: none;
   border-radius: 30px;
-  font-weight: 600;
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
   font-size: 16px;
+  line-height: 140%;
+  letter-spacing: 0%;
   cursor: pointer;
   transition: all 0.2s;
   text-decoration: none;
@@ -162,17 +196,20 @@
 .verTodasBtn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 14px 36px;
-  border-radius: 999px;
-  background-color: #1a1a1a;
-  color: #fff;
+  justify-content: center;
+  gap: 16px;
+  min-width: 170px;
+  width: 304px;
+  height: 49px;
+  padding: 12px 32px;
+  border-radius: 100px;
+  background-color: #000000;
+  color: #ffffff;
   text-decoration: none;
+  font-family: Montserrat, sans-serif;
   font-weight: 600;
-  font-size: 1rem;
-  transition:
-    transform 0.2s ease,
-    background-color 0.2s ease;
+  font-size: 14px;
+  transition: transform 0.2s ease;
 }
 
 .verTodasBtn:hover {

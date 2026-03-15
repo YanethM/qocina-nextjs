@@ -11,6 +11,8 @@ import styles from "./Productos.module.css";
 interface ProductosProps {
   productos: Producto[];
   title?: string;
+  subtitle?: string;
+  description?: string;
   ctaText?: string;
   ctaUrl?: string;
   ctaNuevaVentana?: boolean;
@@ -94,6 +96,8 @@ const GAP = 16;
 export default function Productos({
   productos,
   title,
+  subtitle,
+  description,
   ctaText,
   ctaUrl,
   ctaNuevaVentana,
@@ -127,7 +131,9 @@ export default function Productos({
   return (
     <section className={styles.section}>
       <div className={styles.header}>
-        <h2 className={styles.title}>{title}</h2>
+        {title && <p className={styles.title}>{title}</p>}
+        {subtitle && <h2 className={styles.subtitle}>{subtitle}</h2>}
+        {description && <p className={styles.description}>{description}</p>}
       </div>
 
       <div className={styles.grid}>

@@ -1,73 +1,235 @@
 import Image from "next/image";
+import ReactMarkdown from "react-markdown";
 import Productos from "@/components/Productos/Productos";
-import { getProductos } from "@/lib/api";
+import PremiosCarousel from "@/components/PremiosCarousel/PremiosCarousel";
+import { getProductos, getQuienesSomos, getStrapiImageUrl } from "@/lib/api";
 import styles from "./page.module.css";
 
-export const metadata = {
-  title: "Nosotros - Q'ocina",
-  description: "Conoce quiénes somos, nuestra misión, visión y valores.",
-};
+export async function generateMetadata() {
+  const res = await getQuienesSomos().catch(() => null);
+  return {
+    title: res?.data?.meta_title ?? "Nosotros - Q'ocina",
+    description: res?.data?.meta_description ?? "Conoce quiénes somos, nuestra misión, visión y valores.",
+  };
+}
 
 export default async function NosotrosPage() {
-  const productosRes = await getProductos().catch(() => null);
+  const [productosRes, quienesSomosRes] = await Promise.all([
+    getProductos().catch(() => null),
+    getQuienesSomos().catch(() => null),
+  ]);
+
   const productos = productosRes?.data?.slice(0, 3) ?? [];
+  const data = quienesSomosRes?.data;
+
+  const heroImagen = data?.hero_imagen;
+  const heroSrc = heroImagen?.formats?.large?.url
+    ? getStrapiImageUrl(heroImagen.formats.large.url)
+    : heroImagen?.url
+    ? getStrapiImageUrl(heroImagen.url)
+    : "/images/web/nosotros/banner.svg";
+
+  const heroSrcMedium = heroImagen?.formats?.medium?.url
+    ? getStrapiImageUrl(heroImagen.formats.medium.url)
+    : heroSrc;
+
+  const heroSrcSmall = heroImagen?.formats?.small?.url
+    ? getStrapiImageUrl(heroImagen.formats.small.url)
+    : heroSrcMedium;
+
+  const heroWidth = heroImagen?.formats?.large?.width ?? heroImagen?.width ?? 1440;
+  const heroHeight = heroImagen?.formats?.large?.height ?? heroImagen?.height ?? 600;
 
   return (
     <div className={styles.page}>
-      <section className={styles.beneficiosSection}>
-        {[
-          { src: "/images/web/nosotros/rico.svg", alt: "Rico" },
-          { src: "/images/web/nosotros/facil.svg", alt: "Fácil" },
-          { src: "/images/web/nosotros/sano.svg", alt: "Sano" },
-        ].map(({ src, alt }) => (
-          <div key={alt} className={styles.beneficioCard}>
-            <Image
-              src={src}
-              alt={alt}
-              fill
-              style={{ objectFit: "cover" }}
-            />
+      <section className={styles.bannerSection}>
+        <picture>
+          <source media="(max-width: 500px)" srcSet={heroSrcSmall} />
+          <source media="(max-width: 800px)" srcSet={heroSrcMedium} />
+          <Image
+            src={heroSrc}
+            alt={heroImagen?.alternativeText ?? data?.hero_titulo ?? "Nosotros"}
+            width={heroWidth}
+            height={heroHeight}
+            className={styles.bannerImage}
+            priority
+            style={{ width: "100%", height: "auto" }}
+            unoptimized
+          />
+        </picture>
+        <Image
+          src="/images/web/nosotros/banner.svg"
+          alt=""
+          width={1957}
+          height={1047}
+          className={styles.bannerOverlay}
+          priority
+        />
+        <div className={styles.bannerTextContainer}>
+          <div className={styles.bannerTextInner}>
+            {data?.hero_titulo && (
+              <p className={styles.heroTitulo}>{data.hero_titulo}</p>
+            )}
+            {data?.hero_subtitulo && (
+              <p className={styles.heroSubtitulo}>{data.hero_subtitulo}</p>
+            )}
           </div>
-        ))}
+        </div>
       </section>
+
+      <section className={styles.secondSection}>
+        <Image
+          src="/images/web/nosotros/second_section.svg"
+          alt=""
+          width={1440}
+          height={600}
+          style={{ width: "100%", height: "auto" }}
+        />
+        {(data?.que_es_titulo || data?.que_es_descripcion) && (
+          <div className={styles.secondTextOverlay}>
+            {data.que_es_titulo && (
+              <h2 className={styles.queEsTitulo}>{data.que_es_titulo}</h2>
+            )}
+            {data.que_es_descripcion && (
+              <div className={styles.queEsDescripcion}>
+                <ReactMarkdown
+                  components={{
+                    p: ({ children }) => <p className={styles.queEsDescripcionP}>{children}</p>,
+                    strong: ({ children }) => <strong className={styles.queEsDescripcionStrong}>{children}</strong>,
+                  }}
+                >
+                  {data.que_es_descripcion}
+                </ReactMarkdown>
+              </div>
+            )}
+          </div>
+        )}
+      </section>
+
+      {data?.valores && data.valores.length > 0 && (
+        <section className={styles.beneficiosSection}>
+          {[...data.valores]
+            .sort((a, b) => (a.orden ?? 0) - (b.orden ?? 0))
+            .map((valor, index) => {
+              const colorConfig = [
+                { svg: "/images/web/nosotros/rojo.svg", textColor: "#ffffff" },
+                { svg: "/images/web/nosotros/amarillo.svg", textColor: "#000000" },
+                { svg: "/images/web/nosotros/verde.svg", textColor: "#ffffff" },
+              ];
+              const { svg: colorSvg, textColor } = colorConfig[index] ?? colorConfig[0];
+              const imgSrc = valor.imagen?.formats?.large?.url
+                ? getStrapiImageUrl(valor.imagen.formats.large.url)
+                : valor.imagen?.url
+                ? getStrapiImageUrl(valor.imagen.url)
+                : null;
+              return (
+                <div key={valor.id} className={styles.beneficioCard}>
+                  <div className={styles.beneficioImageTop}>
+                    {imgSrc && (
+                      <Image
+                        src={imgSrc}
+                        alt={valor.imagen?.alternativeText ?? valor.titulo}
+                        fill
+                        style={{ objectFit: "cover" }}
+                        unoptimized
+                      />
+                    )}
+                  </div>
+                  <div
+                    className={styles.beneficioBottom}
+                    style={{ backgroundImage: `url('${colorSvg}')` }}
+                  >
+                    <div className={styles.beneficioText} style={{ color: textColor }}>
+                      <p className={styles.beneficioTitulo}>{valor.titulo}</p>
+                      <p className={styles.beneficioDescripcion}>{valor.descripcion}</p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+        </section>
+      )}
 
       <section className={styles.gastonSection}>
         <Image
           src="/images/web/nosotros/gaston.svg"
-          alt="Gastón Acurio"
+          alt={data?.chef_nombre ?? "Gastón Acurio"}
           width={1440}
           height={800}
           className={styles.gastonImage}
           priority
           style={{ width: "100%", height: "auto" }}
         />
+        {(data?.chef_nombre || data?.chef_titulo) && (
+          <div className={styles.gastonTextOverlay}>
+            {data.chef_nombre && (
+              <p className={styles.gastonNombre}>{data.chef_nombre}</p>
+            )}
+            {data.chef_titulo && (
+              <p className={styles.gastonTitulo}>{data.chef_titulo}</p>
+            )}
+          </div>
+        )}
+        {data?.chef_descripcion && (
+          <div className={styles.gastonDescripcionOverlay}>
+            <ReactMarkdown
+              components={{
+                p: ({ children }) => <p className={styles.gastonDescripcion}>{children}</p>,
+                strong: ({ children }) => <strong style={{ fontWeight: 700 }}>{children}</strong>,
+              }}
+            >
+              {data.chef_descripcion}
+            </ReactMarkdown>
+          </div>
+        )}
       </section>
 
       <section className={styles.premiosSection}>
-        <Image
-          src="/images/web/nosotros/premios.svg"
-          alt="Premios"
-          width={1440}
-          height={600}
-          className={styles.gastonImage}
-          style={{ width: "100%", height: "auto" }}
+        <PremiosCarousel
+          titulo={data?.premios_titulo}
+          premios={data?.premios ?? []}
         />
       </section>
 
       <Productos
         productos={productos}
-        title="Nuestras Bases: Una experiencia rica, fácil y sana."
+        title={data?.productos_titulo ?? undefined}
+        subtitle={data?.productos_subtitulo ?? undefined}
+        description={data?.productos_descripcion ?? undefined}
+        ctaText={data?.productos_cta?.texto ?? undefined}
+        ctaUrl={data?.productos_cta?.url ?? undefined}
+        ctaNuevaVentana={data?.productos_cta?.nueva_ventana ?? undefined}
       />
 
       <section className={styles.procesoSection}>
         <Image
           src="/images/web/nosotros/proceso.svg"
-          alt="Proceso"
+          alt={data?.proceso_titulo ?? "Proceso"}
           width={1440}
           height={600}
           className={styles.gastonImage}
           style={{ width: "100%", height: "auto" }}
         />
+        {(data?.proceso_titulo || data?.proceso_cta) && (
+          <div className={styles.procesoContainer}>
+            <div className={styles.procesoOverlay}>
+              {data.proceso_titulo && (
+                <p className={styles.procesoTitulo}>{data.proceso_titulo}</p>
+              )}
+              {data.proceso_cta && (
+                <a
+                  href={data.proceso_cta.url}
+                  className={styles.procesoCta}
+                  data-btn="yellow"
+                  target={data.proceso_cta.nueva_ventana ? "_blank" : "_self"}
+                  rel={data.proceso_cta.nueva_ventana ? "noopener noreferrer" : undefined}
+                >
+                  {data.proceso_cta.texto}
+                </a>
+              )}
+            </div>
+          </div>
+        )}
       </section>
     </div>
   );

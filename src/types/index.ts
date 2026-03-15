@@ -192,6 +192,13 @@ export interface Valor {
   descripcion: string;
   color?: string;
   orden?: number;
+  imagen?: StrapiImage | null;
+}
+
+export interface Premio {
+  id: number;
+  titulo?: string | null;
+  orden?: number;
 }
 
 export interface QuienesSomos {
@@ -204,6 +211,24 @@ export interface QuienesSomos {
   mision: string | null;
   vision: string | null;
   valores: Valor[] | null;
+  hero_titulo: string | null;
+  hero_subtitulo: string | null;
+  hero_imagen: StrapiImage | null;
+  que_es_titulo: string | null;
+  que_es_descripcion: string | null;
+  chef_nombre: string | null;
+  chef_titulo: string | null;
+  chef_descripcion: string | null;
+  premios_titulo: string | null;
+  premios: Premio[] | null;
+  productos_titulo: string | null;
+  productos_subtitulo: string | null;
+  productos_descripcion: string | null;
+  productos_cta: { id: number; texto: string; url: string; nueva_ventana: boolean } | null;
+  proceso_titulo: string | null;
+  proceso_cta: { id: number; texto: string; url: string; nueva_ventana: boolean } | null;
+  meta_title: string | null;
+  meta_description: string | null;
 }
 
 export interface PackDestacado {
