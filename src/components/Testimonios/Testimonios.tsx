@@ -119,7 +119,7 @@ export default function Testimonios({ testimonios, testimonios_titulo, waveImage
           onTouchEnd={handleTouchEnd}>
           <div
             className={styles.sliderTrack}
-            style={{ transform: `translateX(-${current * 100}%)` }}>
+            style={{ transform: `translateX(-${current * 100}vw)` }}>
             {testimonios.map((testimonio, index) => {
               const fotoUrl = getStrapiImageUrl(testimonio.foto_usuario?.url);
               const showImage = fotoUrl && !imageErrors[testimonio.id];

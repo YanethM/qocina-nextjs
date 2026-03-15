@@ -389,12 +389,34 @@
 
 @media (max-width: 768px) {
   .section {
-    padding: 80px 0 0;
+    display: block;
+    padding: 60px 0 0;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .bgImage {
+    display: none;
+  }
+
+  .contentLayer {
+    display: block;
+    width: 100%;
   }
 
   .backgroundWrapper,
   .waveWrapper {
     display: none;
+  }
+
+  .sectionTitle {
+    font-size: 64px;
+    text-align: center;
+    padding: 0 16px 24px;
+    margin: 0;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .mobileSection {
@@ -412,7 +434,10 @@
   .mobileSlider {
     position: relative;
     z-index: 1;
-    padding: 48px 0 40px;
+    padding: 40px 0;
+    overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .sliderTrack {
@@ -422,13 +447,13 @@
   }
 
   .slide {
-    flex: 0 0 100%;
+    flex: 0 0 100vw;
+    width: 100vw;
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
-  
   .mobileCard {
     position: relative;
     width: 289px;
@@ -438,7 +463,6 @@
     flex-shrink: 0;
   }
 
-  
   .mobileCardText {
     position: absolute;
     bottom: 0;

@@ -43,7 +43,7 @@
 }
 
 .heroText {
-  background: rgba(10, 10, 10, 0.88);
+  background: #0a0a0af0;
   width: 536px;
   min-height: 310px;
   padding: 32px 76px;
@@ -70,7 +70,6 @@
 .heroBtn {
   display: inline-block;
   width: 235px;
-  height: 46px;
   min-width: 170px;
   padding: 12px 32px;
   gap: 16px;
@@ -222,7 +221,7 @@
     height: auto;
     min-height: 600px;
     padding: 60px 20px 30px 20px;
-    justify-content: flex-start;
+    justify-content: flex-end;
     align-items: center;
   }
 
@@ -269,7 +268,7 @@
     min-height: unset;
     padding: 20px 16px;
     gap: 10px;
-    background: rgba(0, 0, 0, 0.6);
+    background: #000000db;
     backdrop-filter: blur(2px);
     border-radius: 16px;
     margin-top: 10px;
@@ -307,12 +306,12 @@
   }
 
   .dot {
-    width: 28px;
-    height: 18px;
+    width: 8px;
+    height: 8px;
   }
 
   .dotActive {
-    width: 18px;
+    width: 20px;
     background: #f5b800;
   }
 }
@@ -324,7 +323,7 @@
   }
 
   .heroContent {
-    margin-top: 30px;
+   margin-bottom: 45px;
     gap: 12px;
   }
 
