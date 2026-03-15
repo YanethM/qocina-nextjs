@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, useCallback } from "react";
+import { createContext, useContext, useEffect, useState, useCallback, useRef } from "react";
 
 export interface CartItem {
   id: number;
@@ -22,12 +22,18 @@ interface CartContextValue {
   clearCart: () => void;
   total: number;
   count: number;
+  toastVisible: boolean;
+  toastNombre: string;
+  dismissToast: () => void;
 }
 
 const CartContext = createContext<CartContextValue | null>(null);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
+  const [toastVisible, setToastVisible] = useState(false);
+  const [toastNombre, setToastNombre] = useState("");
+  const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     try {
@@ -40,6 +46,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem("qocina_cart", JSON.stringify(items));
   }, [items]);
 
+  const dismissToast = useCallback(() => {
+    setToastVisible(false);
+    if (toastTimer.current) clearTimeout(toastTimer.current);
+  }, []);
+
   const addItem = useCallback((item: Omit<CartItem, "cantidad">, cantidad = 1) => {
     setItems((prev) => {
       const existing = prev.find((i) => i.id === item.id);
@@ -50,6 +61,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       }
       return [...prev, { ...item, cantidad }];
     });
+    setToastNombre(item.nombre);
+    setToastVisible(true);
+    if (toastTimer.current) clearTimeout(toastTimer.current);
+    toastTimer.current = setTimeout(() => setToastVisible(false), 4000);
   }, []);
 
   const removeItem = useCallback((id: number) => {
@@ -69,7 +84,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const count = items.length;
 
   return (
-    <CartContext.Provider value={{ items, addItem, removeItem, updateCantidad, clearCart, total, count }}>
+    <CartContext.Provider value={{ items, addItem, removeItem, updateCantidad, clearCart, total, count, toastVisible, toastNombre, dismissToast }}>
       {children}
     </CartContext.Provider>
   );

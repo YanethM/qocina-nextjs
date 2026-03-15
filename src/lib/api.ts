@@ -115,7 +115,7 @@ export async function getProducto(id: string, locale?: string) {
     "populate[tamanos_disponibles]": "*",
     "populate[secciones_expandibles]": "*",
     "populate[ingredientes_destacados]": "*",
-    "populate[testimonios]": "*",
+    "populate[testimonios][fields][0]": "id",
     "populate[sitios][populate][site]": "*",
   }, locale);
 }
@@ -156,7 +156,7 @@ export async function getProductoBySlug(slug: string, locale?: string) {
     "populate[tamanos_disponibles]": "*",
     "populate[secciones_expandibles]": "*",
     "populate[ingredientes_destacados]": "*",
-    "populate[testimonios]": "*",
+    "populate[testimonios][fields][0]": "id",
     "populate[sitios][populate][site]": "*",
   }, locale);
   return res.data?.[0] ?? null;
