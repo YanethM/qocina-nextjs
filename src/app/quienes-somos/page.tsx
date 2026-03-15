@@ -62,8 +62,16 @@ export default async function NosotrosPage() {
           alt=""
           width={1957}
           height={1047}
-          className={styles.bannerOverlay}
-          priority
+          className={`${styles.bannerOverlay} ${styles.desktopOnly}`}
+          unoptimized
+        />
+        <Image
+          src="/images/mobile/nosotros/banner.svg"
+          alt=""
+          width={390}
+          height={629}
+          className={`${styles.bannerOverlay} ${styles.mobileOnly}`}
+          unoptimized
         />
         <div className={styles.bannerTextContainer}>
           <div className={styles.bannerTextInner}>
@@ -83,6 +91,15 @@ export default async function NosotrosPage() {
           alt=""
           width={1440}
           height={600}
+          className={styles.desktopOnly}
+          style={{ width: "100%", height: "auto" }}
+        />
+        <Image
+          src="/images/mobile/nosotros/second_section.svg"
+          alt=""
+          width={390}
+          height={600}
+          className={styles.mobileOnly}
           style={{ width: "100%", height: "auto" }}
         />
         {(data?.que_es_titulo || data?.que_es_descripcion) && (
@@ -131,6 +148,7 @@ export default async function NosotrosPage() {
                         alt={valor.imagen?.alternativeText ?? valor.titulo}
                         fill
                         style={{ objectFit: "cover" }}
+                        loading="lazy"
                         unoptimized
                       />
                     )}
@@ -156,32 +174,109 @@ export default async function NosotrosPage() {
           alt={data?.chef_nombre ?? "Gastón Acurio"}
           width={1440}
           height={800}
-          className={styles.gastonImage}
-          priority
+          className={`${styles.gastonImage} ${styles.desktopOnly}`}
+          loading="lazy"
+          unoptimized
           style={{ width: "100%", height: "auto" }}
         />
-        {(data?.chef_nombre || data?.chef_titulo) && (
-          <div className={styles.gastonTextOverlay}>
-            {data.chef_nombre && (
-              <p className={styles.gastonNombre}>{data.chef_nombre}</p>
-            )}
-            {data.chef_titulo && (
-              <p className={styles.gastonTitulo}>{data.chef_titulo}</p>
-            )}
-          </div>
-        )}
-        {data?.chef_descripcion && (
-          <div className={styles.gastonDescripcionOverlay}>
-            <ReactMarkdown
-              components={{
-                p: ({ children }) => <p className={styles.gastonDescripcion}>{children}</p>,
-                strong: ({ children }) => <strong style={{ fontWeight: 700 }}>{children}</strong>,
-              }}
-            >
-              {data.chef_descripcion}
-            </ReactMarkdown>
-          </div>
-        )}
+
+        <div className={`${styles.gastonPrevWrapper} ${styles.mobileOnly}`}>
+          <Image
+            src="/images/mobile/nosotros/PREV_GASTON.svg"
+            alt=""
+            width={390}
+            height={500}
+            style={{ width: "100%", height: "auto", display: "block" }}
+            loading="lazy"
+            unoptimized
+          />
+          {(data?.chef_nombre || data?.chef_titulo) && (
+            <div className={styles.gastonMobileTop}>
+              {data.chef_nombre && (
+                <p className={styles.gastonNombre}>{data.chef_nombre}</p>
+              )}
+              {data.chef_titulo && (
+                <p className={styles.gastonTitulo}>{data.chef_titulo}</p>
+              )}
+            </div>
+          )}
+        </div>
+
+        <div className={`${styles.gastonMainWrapper} ${styles.mobileOnly}`}>
+          <Image
+            src="/images/mobile/nosotros/gaston.svg"
+            alt={data?.chef_nombre ?? "Gastón Acurio"}
+            width={390}
+            height={800}
+            style={{ width: "100%", height: "auto", display: "block" }}
+            loading="lazy"
+            unoptimized
+          />
+          {(data?.chef_descripcion || data?.chef_cta) && (
+            <div className={styles.gastonMobileBottom}>
+              {data.chef_descripcion && (
+                <ReactMarkdown
+                  components={{
+                    p: ({ children }) => <p className={styles.gastonDescripcion}>{children}</p>,
+                    strong: ({ children }) => <strong style={{ fontWeight: 700 }}>{children}</strong>,
+                  }}
+                >
+                  {data.chef_descripcion}
+                </ReactMarkdown>
+              )}
+              {data.chef_cta && (
+                <a
+                  href={data.chef_cta.url}
+                  className={styles.gastonCta}
+                  data-btn="dark"
+                  target={data.chef_cta.nueva_ventana ? "_blank" : "_self"}
+                  rel={data.chef_cta.nueva_ventana ? "noopener noreferrer" : undefined}
+                >
+                  {data.chef_cta.texto}
+                </a>
+              )}
+            </div>
+          )}
+        </div>
+
+        <div className={`${styles.gastonContainer} ${styles.desktopOnly}`}>
+          {(data?.chef_nombre || data?.chef_titulo) && (
+            <div className={styles.gastonTextOverlay}>
+              {data.chef_nombre && (
+                <p className={styles.gastonNombre}>{data.chef_nombre}</p>
+              )}
+              {data.chef_titulo && (
+                <p className={styles.gastonTitulo}>{data.chef_titulo}</p>
+              )}
+            </div>
+          )}
+          {(data?.chef_descripcion || data?.chef_cta) && (
+            <div className={styles.gastonDescripcionOverlay}>
+              {data.chef_descripcion && (
+                <ReactMarkdown
+                  components={{
+                    p: ({ children }) => <p className={styles.gastonDescripcion}>{children}</p>,
+                    strong: ({ children }) => <strong style={{ fontWeight: 700 }}>{children}</strong>,
+                  }}
+                >
+                  {data.chef_descripcion}
+                </ReactMarkdown>
+              )}
+              {data.chef_cta && (
+                <a
+                  href={data.chef_cta.url}
+                  className={styles.gastonCta}
+                  data-btn="dark"
+                  target={data.chef_cta.nueva_ventana ? "_blank" : "_self"}
+                  rel={data.chef_cta.nueva_ventana ? "noopener noreferrer" : undefined}
+                >
+                  {data.chef_cta.texto}
+                </a>
+              )}
+            </div>
+          )}
+        </div>
+
       </section>
 
       <section className={styles.premiosSection}>
@@ -207,7 +302,15 @@ export default async function NosotrosPage() {
           alt={data?.proceso_titulo ?? "Proceso"}
           width={1440}
           height={600}
-          className={styles.gastonImage}
+          className={`${styles.gastonImage} ${styles.desktopOnly}`}
+          style={{ width: "100%", height: "auto" }}
+        />
+        <Image
+          src="/images/mobile/nosotros/proceso.svg"
+          alt={data?.proceso_titulo ?? "Proceso"}
+          width={390}
+          height={600}
+          className={`${styles.gastonImage} ${styles.mobileOnly}`}
           style={{ width: "100%", height: "auto" }}
         />
         {(data?.proceso_titulo || data?.proceso_cta) && (

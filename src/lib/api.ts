@@ -214,6 +214,7 @@ export async function getQuienesSomos(locale?: string) {
     "populate[valores][populate][imagen][fields][2]": "width",
     "populate[valores][populate][imagen][fields][3]": "height",
     "populate[valores][populate][imagen][fields][4]": "formats",
+    "populate[chef_cta]": "*",
     "populate[proceso_cta]": "*",
     "populate[productos_cta]": "*",
     "populate[premios]": "*",

@@ -198,6 +198,8 @@ export interface Valor {
 export interface Premio {
   id: number;
   titulo?: string | null;
+  descripcion?: string | null;
+  imagen?: StrapiImage | null;
   orden?: number;
 }
 
@@ -219,6 +221,7 @@ export interface QuienesSomos {
   chef_nombre: string | null;
   chef_titulo: string | null;
   chef_descripcion: string | null;
+  chef_cta: { id: number; texto: string; url: string; nueva_ventana: boolean } | null;
   premios_titulo: string | null;
   premios: Premio[] | null;
   productos_titulo: string | null;
