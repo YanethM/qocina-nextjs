@@ -28,6 +28,10 @@
   height: auto;
 }
 
+.blackWaveFull {
+  width: 100%;
+}
+
 .overlayContent {
   position: absolute;
   inset: 0;

@@ -1,3 +1,13 @@
+export interface Site {
+  id: number;
+  documentId: string;
+  code: string;
+  nombre: string;
+  moneda: string;
+  activo: boolean;
+  ofix_country_code: string;
+}
+
 export interface StrapiImage {
   id: number;
   url: string;
@@ -176,6 +186,7 @@ export interface CategoriaFaq {
   documentId: string;
   nombre: string;
   slug: string;
+  orden?: number;
 }
 
 export interface PreguntaFrecuente {
@@ -320,6 +331,13 @@ export interface FaqPage {
   documentId: string;
   titulo: string;
   descripcion: string;
+  hero_etiqueta: string | null;
+  hero_titulo: string | null;
+  hero_descripcion: string | null;
+  hero_imagen: StrapiImage | null;
+  meta_title: string | null;
+  meta_description: string | null;
+  cta_cargar_mas: string | null;
 }
 
 export interface ProcesoProduccion {
@@ -338,6 +356,10 @@ export interface ContactoPage {
   titulo: string;
   descripcion: string;
   formulario_boton: string;
+  whatsapp_texto: string | null;
+  whatsapp_url: string | null;
+  whatsapp_cta_texto: string | null;
+  imagen: StrapiImage | null;
 }
 
 export interface HeroSlide {

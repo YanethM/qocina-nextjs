@@ -18,6 +18,7 @@ import type {
   ProcesoProduccion,
   HomePage,
   ContactoPage,
+  Site,
 } from "@/types";
 
 export const API_URL =
@@ -217,6 +218,12 @@ export async function getPreguntasFrecuentes(locale?: string) {
   return fetchAPI<StrapiListResponse<PreguntaFrecuente>>("/api/preguntas-frecuentes", {}, locale);
 }
 
+export async function getPreguntasFrecuentesByCategoria(categoriaSlug: string, locale?: string) {
+  return fetchAPI<StrapiListResponse<PreguntaFrecuente>>("/api/preguntas-frecuentes", {
+    "filters[categoria_faq][slug][$eq]": categoriaSlug,
+  }, locale);
+}
+
 export async function getPreguntaFrecuente(id: string, locale?: string) {
   return fetchAPI<StrapiSingleResponse<PreguntaFrecuente>>(`/api/preguntas-frecuentes/${id}`, {}, locale);
 }
@@ -310,7 +317,9 @@ export async function getBlogPage(locale?: string) {
 }
 
 export async function getFaqPage(locale?: string) {
-  return fetchAPI<StrapiSingleResponse<FaqPage>>("/api/faq-page", {}, locale);
+  return fetchAPI<StrapiSingleResponse<FaqPage>>("/api/faq-page", {
+    ...imgFields("hero_imagen"),
+  }, locale);
 }
 
 export async function getProcesoProduccion(locale?: string) {
@@ -339,5 +348,11 @@ export async function getHomePage(locale?: string) {
 }
 
 export async function getContactoPage(locale?: string) {
-  return fetchAPI<StrapiSingleResponse<ContactoPage>>("/api/contacto-page", {}, locale);
+  return fetchAPI<StrapiSingleResponse<ContactoPage>>("/api/contacto-page", {
+    ...imgFields("imagen"),
+  }, locale);
+}
+
+export async function getSites() {
+  return fetchAPI<StrapiListResponse<Site>>("/api/sites", {});
 }

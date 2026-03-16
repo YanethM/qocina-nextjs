@@ -1,31 +1,112 @@
+import Image from "next/image";
 import PageHero from "@/components/PageHero/PageHero";
-import FaqAccordion from "@/components/FaqAccordion/FaqAccordion";
+import FaqClient from "@/components/FaqClient/FaqClient";
 import Subscribe from "@/components/Subscribe/Subscribe";
-import { getPreguntasFrecuentes } from "@/lib/api";
+import {
+  getPreguntasFrecuentes,
+  getPreguntasFrecuentesByCategoria,
+  getCategoriasFaq,
+  getFaqPage,
+  getStrapiImageUrl,
+} from "@/lib/api";
 import styles from "./page.module.css";
 
 export default async function PreguntasFrecuentesPage() {
-  const preguntasRes = await getPreguntasFrecuentes().catch(() => null);
-  const preguntas = (preguntasRes?.data ?? []).sort(
+  const [pageRes, categoriasRes] = await Promise.all([
+    getFaqPage().catch(() => null),
+    getCategoriasFaq().catch(() => null),
+  ]);
+
+  const pageData = pageRes?.data ?? null;
+  const categorias = (categoriasRes?.data ?? []).sort(
     (a, b) => (a.orden ?? 0) - (b.orden ?? 0)
+  );
+
+  const [todasRes, ...porCategoriaRes] = await Promise.all([
+    getPreguntasFrecuentes().catch(() => null),
+    ...categorias.map((cat) =>
+      getPreguntasFrecuentesByCategoria(cat.slug).catch(() => null)
+    ),
+  ]);
+
+  const todas = (todasRes?.data ?? []).sort((a, b) => (a.orden ?? 0) - (b.orden ?? 0));
+
+  const preguntasPorCategoria: Record<string, typeof todas> = {};
+  categorias.forEach((cat, i) => {
+    const res = porCategoriaRes[i];
+    preguntasPorCategoria[cat.slug] = (res?.data ?? []).sort(
+      (a, b) => (a.orden ?? 0) - (b.orden ?? 0)
+    );
+  });
+
+  const heroImageUrl = pageData?.hero_imagen?.url
+    ? getStrapiImageUrl(pageData.hero_imagen.url)
+    : null;
+
+  const heroText = (
+    <>
+      {pageData?.hero_etiqueta && (
+        <p className={styles.heroLabel}>{pageData.hero_etiqueta}</p>
+      )}
+      {pageData?.hero_titulo && (
+        <h1 className={styles.heroTitle}>{pageData.hero_titulo}</h1>
+      )}
+      {pageData?.hero_descripcion && (
+        <p className={styles.heroDescription}>{pageData.hero_descripcion}</p>
+      )}
+    </>
   );
 
   return (
     <>
-      <PageHero backgroundAlt="Preguntas Frecuentes">
-        <div className={styles.heroLogoWrapper}>
-          <h1 className={styles.heroTitle}>Preguntas Frecuentes</h1>
+      <div className={styles.desktopHero}>
+        <PageHero
+          backgroundImage={heroImageUrl ?? undefined}
+          backgroundAlt={pageData?.hero_imagen?.alternativeText ?? "Preguntas Frecuentes"}
+          overlayContent={
+            <div className={styles.heroLogoWrapper}>{heroText}</div>
+          }
+        />
+      </div>
+
+      <div className={styles.mobileHero}>
+        {heroImageUrl && (
+          <div className={styles.heroImageWrapper}>
+            <Image
+              src={heroImageUrl}
+              alt={pageData?.hero_imagen?.alternativeText ?? ""}
+              fill
+              className={styles.heroImage}
+              priority
+              unoptimized
+            />
+          </div>
+        )}
+        <div className={styles.heroBannerWrapper}>
+          <img
+            src="/images/mobile/faq/banner.svg"
+            alt=""
+            className={styles.heroBanner}
+            aria-hidden
+          />
+          <div className={styles.heroText}>{heroText}</div>
         </div>
-      </PageHero>
+      </div>
 
       <section className={styles.faqSection}>
-        <FaqAccordion items={preguntas} />
+        <FaqClient
+          categorias={categorias}
+          todas={todas}
+          preguntasPorCategoria={preguntasPorCategoria}
+          ctaCargarMas={pageData?.cta_cargar_mas ?? "Cargar más"}
+        />
       </section>
 
       <Subscribe
         variant="contact"
-        title="¿TIENES ALGUNA DUDA?"
-        description="Si tienes más preguntas sobre nuestras bases culinarias Q'ocina en Casa o cómo usarlas en tu cocina, ¡no dudes en dejarlas aquí!"
+        title={pageData?.meta_title || "¿TIENES ALGUNA DUDA?"}
+        description={pageData?.meta_description || ""}
+        mobileWaveImage="/images/mobile/faq/union.svg"
       />
     </>
   );

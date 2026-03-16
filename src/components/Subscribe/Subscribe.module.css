@@ -34,6 +34,7 @@
 }
 
 .formSide {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -70,11 +71,13 @@
 }
 
 .button {
-  padding: 14px 32px;
-  background-color: #fdb913;
-  color: #000;
+  min-width: 170px;
+  height: 49px;
+  padding: 12px 32px;
+  background-color: #CE171C;
+  color: #fff;
   border: none;
-  border-radius: 999px;
+  border-radius: 100px;
   font-family: var(--font-montserrat), sans-serif;
   font-weight: 700;
   font-size: 16px;
@@ -87,19 +90,24 @@
 }
 
 .button:hover {
+  background-color: #a81216;
   transform: scale(1.03);
 }
 
 .alert {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 0;
+  right: 0;
   display: flex;
   align-items: flex-start;
   gap: 12px;
-  margin-top: 12px;
   padding: 14px 18px;
   background: rgba(255, 255, 255, 0.15);
   border: 1px solid rgba(255, 255, 255, 0.4);
   border-radius: 12px;
   backdrop-filter: blur(4px);
+  z-index: 10;
 }
 
 .alertError {
@@ -142,7 +150,7 @@
 }
 
 .containerContact {
-  align-items: flex-start;
+  align-items: center;
 }
 
 .formContact {
@@ -248,5 +256,17 @@
   .button {
     width: 100%;
     border-radius: 12px;
+  }
+
+  .alert {
+    position: fixed;
+    bottom: 24px;
+    left: 16px;
+    right: 16px;
+    top: auto;
+    z-index: 9999;
+    background: rgba(30, 30, 30, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
   }
 }

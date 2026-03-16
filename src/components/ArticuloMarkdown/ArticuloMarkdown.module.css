@@ -184,7 +184,8 @@
 
 @media (max-width: 768px) {
   .h2 {
-    font-size: 32px;
+    font-size: 48px;
+    line-height: 115%;
     margin-bottom: 16px;
   }
 
@@ -208,7 +209,8 @@
 
 @media (max-width: 480px) {
   .h2 {
-    font-size: 26px;
+    font-size: 40px;
+    line-height: 115%;
   }
 
   .numImg {

@@ -3,6 +3,7 @@ import {
   getCategoriasFaq,
   getFaqPage,
 } from "@/lib/api";
+import FaqClient from "@/components/FaqClient/FaqClient";
 import styles from "./page.module.css";
 
 export const metadata = {
@@ -19,16 +20,7 @@ export default async function FaqPage() {
 
   const pageData = pageRes?.data;
   const preguntas = preguntasRes?.data ?? [];
-  const categorias = categoriasRes?.data ?? [];
-
-  const grouped = categorias.map((cat) => ({
-    ...cat,
-    preguntas: preguntas.filter(
-      (p) => p.categoria_faq?.id === cat.id
-    ),
-  }));
-
-  const sinCategoria = preguntas.filter((p) => !p.categoria_faq);
+  const categorias = (categoriasRes?.data ?? []).sort((a, b) => (a.orden ?? 0) - (b.orden ?? 0));
 
   return (
     <div className={styles.page}>
@@ -42,44 +34,7 @@ export default async function FaqPage() {
       </section>
 
       <section className={styles.content}>
-        {grouped.map(
-          (cat) =>
-            cat.preguntas.length > 0 && (
-              <div key={cat.id} className={styles.category}>
-                <h2 className={styles.categoryTitle}>{cat.nombre}</h2>
-                <div className={styles.faqList}>
-                  {cat.preguntas.map((pregunta) => (
-                    <details key={pregunta.id} className={styles.faqItem}>
-                      <summary className={styles.faqQuestion}>
-                        {pregunta.pregunta}
-                      </summary>
-                      <div className={styles.faqAnswer}>
-                        {pregunta.respuesta}
-                      </div>
-                    </details>
-                  ))}
-                </div>
-              </div>
-            )
-        )}
-
-        {sinCategoria.length > 0 && (
-          <div className={styles.category}>
-            <h2 className={styles.categoryTitle}>General</h2>
-            <div className={styles.faqList}>
-              {sinCategoria.map((pregunta) => (
-                <details key={pregunta.id} className={styles.faqItem}>
-                  <summary className={styles.faqQuestion}>
-                    {pregunta.pregunta}
-                  </summary>
-                  <div className={styles.faqAnswer}>
-                    {pregunta.respuesta}
-                  </div>
-                </details>
-              ))}
-            </div>
-          </div>
-        )}
+        <FaqClient categorias={categorias} preguntas={preguntas} />
       </section>
     </div>
   );

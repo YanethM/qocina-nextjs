@@ -5,11 +5,12 @@ interface PageHeroProps {
   backgroundImage?: string;
   backgroundAlt?: string;
   waveImage?: string;
+  waveFullWidth?: boolean;
   overlayContent?: React.ReactNode;
   children?: React.ReactNode;
 }
 
-export default function PageHero({ backgroundImage, backgroundAlt = "", waveImage, overlayContent, children }: PageHeroProps) {
+export default function PageHero({ backgroundImage, backgroundAlt = "", waveImage, waveFullWidth, overlayContent, children }: PageHeroProps) {
   return (
     <div className={styles.hero}>
       {backgroundImage && (
@@ -27,7 +28,7 @@ export default function PageHero({ backgroundImage, backgroundAlt = "", waveImag
         <img
           src={waveImage ?? "/images/web/nuestro_proceso/black_wave.svg"}
           alt=""
-          className={styles.blackWave}
+          className={`${styles.blackWave} ${waveFullWidth ? styles.blackWaveFull : ""}`}
           aria-hidden
         />
         {overlayContent && (
