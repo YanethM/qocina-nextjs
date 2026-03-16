@@ -1,0 +1,130 @@
+.page {
+  width: 100%;
+  padding: 64px 24px 96px;
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.title {
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 1.2;
+  color: #1a1a1a;
+  margin: 0 0 8px;
+}
+
+.updated {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 13px;
+  color: #888;
+  margin: 0 0 48px;
+}
+
+.section {
+  margin-bottom: 48px;
+}
+
+.section p {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 15px;
+  line-height: 1.75;
+  color: #1a1a1a;
+  margin: 0 0 16px;
+}
+
+.section p:last-child {
+  margin-bottom: 0;
+}
+
+.heading {
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  color: #1a1a1a;
+  margin: 0 0 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #5a7a2e;
+}
+
+.subheading {
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: #1a1a1a;
+  margin: 28px 0 12px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 24px;
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 14px;
+}
+
+.table th {
+  background: #f5f5f5;
+  font-weight: 700;
+  text-align: left;
+  padding: 10px 14px;
+  color: #1a1a1a;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.table td {
+  padding: 10px 14px;
+  color: #1a1a1a;
+  border-bottom: 1px solid #eeeeee;
+  vertical-align: top;
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+.list {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 15px;
+  line-height: 1.75;
+  color: #1a1a1a;
+  padding-left: 24px;
+  margin: 0 0 16px;
+}
+
+.list li {
+  margin-bottom: 8px;
+}
+
+.link {
+  color: #5a7a2e;
+  text-decoration: underline;
+}
+
+.link:hover {
+  color: #3d5a1e;
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding: 40px 16px 64px;
+  }
+
+  .title {
+    font-size: 26px;
+  }
+
+  .heading {
+    font-size: 18px;
+  }
+
+  .table {
+    font-size: 12px;
+    display: block;
+    overflow-x: auto;
+  }
+}
