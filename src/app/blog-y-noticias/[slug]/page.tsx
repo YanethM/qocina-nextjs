@@ -1,9 +1,11 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 import ArticuloMarkdown from "@/components/ArticuloMarkdown/ArticuloMarkdown";
 import BlogCard from "@/components/BlogCard/BlogCard";
+import RelacionadosCarousel from "@/components/RelacionadosCarousel/RelacionadosCarousel";
 import Subscribe from "@/components/Subscribe/Subscribe";
-import { getArticuloBySlug, getArticulos, getStrapiImageUrl } from "@/lib/api";
+import { getArticuloBySlug, getArticulos, getBlogPage, getStrapiImageUrl } from "@/lib/api";
 import styles from "./page.module.css";
 
 interface Props {
@@ -12,24 +14,31 @@ interface Props {
 
 export default async function ArticuloDetailPage({ params }: Props) {
   const { slug } = await params;
-  const [articulo, articulosRes] = await Promise.all([
+  const [articulo, articulosRes, blogPageRes] = await Promise.all([
     getArticuloBySlug(slug).catch(() => null),
     getArticulos().catch(() => null),
+    getBlogPage().catch(() => null),
   ]);
+  const blogPage = blogPageRes?.data ?? null;
 
   if (!articulo) notFound();
 
+  const categoriaId = articulo.categoria_blog?.id ?? null;
   const otrosArticulos = (articulosRes?.data ?? [])
-    .filter((a) => a.slug !== slug)
+    .filter((a) => {
+      if (a.slug === slug) return false;
+      if (categoriaId !== null) return a.categoria_blog?.id === categoriaId;
+      return true;
+    })
     .sort((a, b) => a.orden - b.orden);
 
   return (
     <div className={styles.page}>
       <div className={styles.portada}>
-        {articulo.imagen ? (
+        {articulo.imagen_principal ? (
           <Image
-            src={getStrapiImageUrl(articulo.imagen.url)}
-            alt={articulo.imagen.alternativeText || articulo.titulo}
+            src={getStrapiImageUrl(articulo.imagen_principal.url)}
+            alt={articulo.imagen_principal.alternativeText || articulo.titulo}
             fill
             className={styles.portadaImg}
             priority
@@ -72,25 +81,44 @@ export default async function ArticuloDetailPage({ params }: Props) {
             el hashtag <strong>#AtreveteAMás</strong> para mostrar cómo
             transformas tus platos con nuestras bases.
           </p>
-
-          {otrosArticulos.length > 0 && (
-            <div className={styles.relacionados}>
-              {otrosArticulos.map((a) => (
-                <BlogCard
-                  key={a.id}
-                  titulo={a.titulo}
-                  descripcion_corta={a.descripcion_corta}
-                  href={`/blog-y-noticias/${a.slug}`}
-                />
-              ))}
-            </div>
-          )}
         </div>
       </div>
 
+      {otrosArticulos.length > 0 && (
+        <div className={styles.relacionadosSection}>
+          <div className={styles.relacionadosHeader}>
+            <h2 className={styles.relacionadosTitulo}>Noticias relacionadas</h2>
+            {blogPage?.relacionadas_cta_ver_todas && (
+              <Link href="/blog-y-noticias" className={styles.relacionadosBtn}>
+                {blogPage.relacionadas_cta_ver_todas}
+              </Link>
+            )}
+          </div>
+          <div className={styles.relacionados}>
+            {otrosArticulos.map((a) => (
+              <BlogCard
+                key={a.id}
+                titulo={a.titulo}
+                descripcion_corta={a.descripcion_corta}
+                href={`/blog-y-noticias/${a.slug}`}
+                imagenUrl={a.imagen_principal?.url ? getStrapiImageUrl(a.imagen_principal.url) : undefined}
+              />
+            ))}
+          </div>
+          <div className={styles.relacionadosCarousel}>
+            <RelacionadosCarousel
+              articulos={otrosArticulos}
+              ctaVerTodas={blogPage?.relacionadas_cta_ver_todas}
+            />
+          </div>
+        </div>
+      )}
+
       <Subscribe
-        title="¡No te pierdas ni un solo consejo!"
-        description="Recibe en tu correo todos los tips de cocina y novedades. Además, si te suscribes ahora, obtendrás un 10% de descuento en tu próxima compra"
+        title={blogPage?.newsletter_titulo ?? "¡No te pierdas ni un solo consejo!"}
+        description={blogPage?.newsletter_descripcion ?? "Recibe en tu correo todos los tips de cocina y novedades."}
+        placeholder={blogPage?.newsletter_placeholder}
+        formulario_boton={blogPage?.newsletter_cta_texto}
       />
     </div>
   );

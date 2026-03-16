@@ -17,7 +17,8 @@ const NUMBER_IMAGES: Record<number, string> = {
 type NumberedItem = { num: number; label: string; body: string };
 type Section =
   | { type: "numbered-group"; items: NumberedItem[] }
-  | { type: "normal"; body: string };
+  | { type: "normal"; body: string }
+  | { type: "card"; body: string };
 
 function parseContent(content: string): Section[] {
   const lines = content.split("\n");
@@ -59,6 +60,25 @@ function parseContent(content: string): Section[] {
   }
   flush();
 
+  const hasNumbered = sections.some((s) => s.type === "numbered-group");
+
+  if (!hasNumbered && sections.length === 1 && sections[0].type === "normal") {
+    const body = (sections[0] as { type: "normal"; body: string }).body;
+    const firstParaEnd = body.indexOf("\n\n");
+    const secondParaEnd = firstParaEnd !== -1 ? body.indexOf("\n\n", firstParaEnd + 2) : -1;
+    const splitAt = secondParaEnd !== -1 ? secondParaEnd : firstParaEnd;
+    if (splitAt !== -1) {
+      const firstPara = body.slice(0, splitAt).trim();
+      const rest = body.slice(splitAt).trim();
+      if (firstPara && rest) {
+        return [
+          { type: "normal", body: firstPara },
+          { type: "card", body: rest },
+        ];
+      }
+    }
+  }
+
   return sections;
 }
 
@@ -89,6 +109,9 @@ const mdComponents = {
       </div>
     );
   },
+  ul({ children }: { children?: React.ReactNode }) {
+    return <ul className={styles.ul}>{children}</ul>;
+  },
   h2({ children }: { children?: React.ReactNode }) {
     return <h2 className={styles.h2}>{children}</h2>;
   },
@@ -100,9 +123,6 @@ const mdComponents = {
   },
   p({ children }: { children?: React.ReactNode }) {
     return <p className={styles.p}>{children}</p>;
-  },
-  ul({ children }: { children?: React.ReactNode }) {
-    return <ul className={styles.ul}>{children}</ul>;
   },
   li({ children }: { children?: React.ReactNode }) {
     return <li className={styles.ulLi}>{children}</li>;
@@ -135,16 +155,27 @@ export default function ArticuloMarkdown({ content }: { content: string }) {
                       ) : (
                         <span className={styles.numFallback}>{item.num}.</span>
                       )}
-                      <span className={styles.numberedLabel}>{item.label}</span>
+                      <div className={styles.numberedTextBlock}>
+                        <span className={styles.numberedLabel}>{item.label}</span>
+                        {item.body && (
+                          <ReactMarkdown components={mdComponents}>
+                            {item.body}
+                          </ReactMarkdown>
+                        )}
+                      </div>
                     </div>
-                    {item.body && (
-                      <ReactMarkdown components={mdComponents}>
-                        {item.body}
-                      </ReactMarkdown>
-                    )}
                   </React.Fragment>
                 );
               })}
+            </div>
+          );
+        }
+        if (section.type === "card") {
+          return (
+            <div key={i} className={styles.numberedCard}>
+              <ReactMarkdown components={mdComponents}>
+                {section.body}
+              </ReactMarkdown>
             </div>
           );
         }
