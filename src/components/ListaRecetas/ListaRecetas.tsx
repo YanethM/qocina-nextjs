@@ -2,13 +2,16 @@
 
 import { useState, useRef, useEffect } from "react";
 import RecetaCard from "@/components/RecetaCard/RecetaCard";
-import { getStrapiImageUrl } from "@/lib/api";
+import { getStrapiImageUrl, getRecetas } from "@/lib/api";
 import type { Receta } from "@/types";
 import styles from "./ListaRecetas.module.css";
 
 interface ListaRecetasProps {
   recetas: Receta[];
   hideFilters?: boolean;
+  labelTipoReceta?: string;
+  labelRegion?: string;
+  labelDieta?: string;
 }
 
 /* ── Filter options ── */
@@ -89,30 +92,42 @@ function Dropdown({
 }
 
 /* ── Main component ── */
-export default function ListaRecetas({ recetas, hideFilters = false }: ListaRecetasProps) {
-  const [tipoReceta, setTipoReceta] = useState("");
-  const [cocina, setCocina] = useState("");
-  const [dieta, setDieta] = useState("");
+export default function ListaRecetas({ recetas, hideFilters = false, labelTipoReceta, labelRegion, labelDieta }: ListaRecetasProps) {
+  const [filters, setFilters] = useState({ tipoReceta: "", cocina: "", dieta: "" });
   const [visible, setVisible] = useState(PAGE_SIZE);
+  const [resultado, setResultado] = useState<Receta[]>(recetas);
+  const [loading, setLoading] = useState(false);
 
-  const filtered = recetas.filter((r) => {
-    if (tipoReceta && r.tipo_receta !== tipoReceta) return false;
-    if (cocina && r.cocina_region !== cocina) return false;
-    if (dieta && r.tipo_dieta !== dieta) return false;
-    return true;
-  });
+  const hasActiveFilters = !!(filters.tipoReceta || filters.cocina || filters.dieta);
 
-  const shown = filtered.slice(0, visible);
-  const hasMore = visible < filtered.length;
+  const applyFilter = (next: { tipoReceta: string; cocina: string; dieta: string }) => {
+    setFilters(next);
+    setVisible(PAGE_SIZE);
+    if (!next.tipoReceta && !next.cocina && !next.dieta) {
+      setResultado(recetas);
+      return;
+    }
+    setLoading(true);
+    getRecetas(undefined, {
+      tipo_receta: next.tipoReceta || undefined,
+      cocina_region: next.cocina || undefined,
+      tipo_dieta: next.dieta || undefined,
+    })
+      .then((res) => setResultado(res.data ?? []))
+      .catch(() => setResultado([]))
+      .finally(() => setLoading(false));
+  };
 
-  const handleFilterChange = () => setVisible(PAGE_SIZE);
+  const clearFilters = () => applyFilter({ tipoReceta: "", cocina: "", dieta: "" });
+
+  const shown = resultado.slice(0, visible);
+  const hasMore = visible < resultado.length;
 
   return (
     <section className={styles.section}>
       {hideFilters ? (
         <h2 className={styles.tituloSimple}>Recetas</h2>
       ) : (
-        /* Header row */
         <div className={styles.header}>
           <div className={styles.headerLeft}>
             <h2 className={styles.title}>
@@ -126,28 +141,33 @@ export default function ListaRecetas({ recetas, hideFilters = false }: ListaRece
 
           <div className={styles.filters}>
             <Dropdown
-              label="Tipo de Receta"
+              label={labelTipoReceta ?? "Tipo de Receta"}
               options={TIPOS_RECETA}
-              value={tipoReceta}
-              onChange={(v) => { setTipoReceta(v); handleFilterChange(); }}
+              value={filters.tipoReceta}
+              onChange={(v) => applyFilter({ ...filters, tipoReceta: v })}
             />
             <Dropdown
-              label="Cocina por Región"
+              label={labelRegion ?? "Cocina por Región"}
               options={COCINA_REGION}
-              value={cocina}
-              onChange={(v) => { setCocina(v); handleFilterChange(); }}
+              value={filters.cocina}
+              onChange={(v) => applyFilter({ ...filters, cocina: v })}
             />
             <Dropdown
-              label="Tipo de dieta"
+              label={labelDieta ?? "Tipo de dieta"}
               options={TIPOS_DIETA}
-              value={dieta}
-              onChange={(v) => { setDieta(v); handleFilterChange(); }}
+              value={filters.dieta}
+              onChange={(v) => applyFilter({ ...filters, dieta: v })}
             />
           </div>
         </div>
       )}
 
-      {shown.length > 0 ? (
+      {loading ? (
+        <div className={styles.loadingWrapper}>
+          <div className={styles.spinner} />
+          <p className={styles.loadingText}>Buscando recetas...</p>
+        </div>
+      ) : shown.length > 0 ? (
         <div className={styles.grid} data-count={shown.length}>
           {shown.map((receta) => {
             const imgUrl = receta.imagen_principal
@@ -165,11 +185,18 @@ export default function ListaRecetas({ recetas, hideFilters = false }: ListaRece
             );
           })}
         </div>
-      ) : (
-        <p className={styles.empty}>No encontramos recetas con estos filtros.</p>
-      )}
+      ) : hasActiveFilters ? (
+        <div className={styles.emptyState}>
+          <div className={styles.emptyIcon}>🍽️</div>
+          <h3 className={styles.emptyTitle}>No encontramos recetas</h3>
+          <p className={styles.emptySubtitle}>No hay recetas que coincidan con los filtros seleccionados.</p>
+          <button className={styles.emptyBtn} onClick={clearFilters}>
+            Ver todas las recetas
+          </button>
+        </div>
+      ) : null}
 
-      {hasMore && (
+      {!loading && hasMore && (
         <div className={styles.loadMore}>
           <button
             className={styles.loadMoreBtn}

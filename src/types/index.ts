@@ -283,7 +283,14 @@ export interface RecetasPage {
   documentId: string;
   titulo: string;
   descripcion: string;
+  hero_titulo: string | null;
+  hero_subtitulo: string | null;
   banner: StrapiImage | null;
+  filtro_tipo_receta_label: string | null;
+  filtro_region_label: string | null;
+  filtro_dieta_label: string | null;
+  testimonios_titulo: string | null;
+  testimonios: Testimonio[] | null;
 }
 
 export interface BlogPage {

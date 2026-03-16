@@ -166,12 +166,81 @@
   grid-template-columns: repeat(auto-fit, minmax(0, 424px));
 }
 
-.empty {
-  text-align: center;
-  padding: 60px 0;
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80px 24px;
+  gap: 16px;
+}
+
+.emptyIcon {
+  font-size: 56px;
+  line-height: 1;
+}
+
+.emptyTitle {
   font-family: Montserrat, sans-serif;
-  font-size: 18px;
+  font-weight: 700;
+  font-size: 24px;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.emptySubtitle {
+  font-family: Montserrat, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
   color: #888;
+  margin: 0;
+  text-align: center;
+}
+
+.emptyBtn {
+  margin-top: 8px;
+  padding: 14px 36px;
+  border: 2px solid #1a1a1a;
+  border-radius: 999px;
+  background: transparent;
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  color: #1a1a1a;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.emptyBtn:hover {
+  background: #1a1a1a;
+  color: #fff;
+}
+
+.loadingWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80px 24px;
+  gap: 20px;
+}
+
+.spinner {
+  width: 44px;
+  height: 44px;
+  border: 3px solid #eaeaea;
+  border-top-color: #CE171C;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loadingText {
+  font-family: Montserrat, sans-serif;
+  font-size: 15px;
+  color: #888;
+  margin: 0;
 }
 
 .loadMore {

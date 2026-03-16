@@ -9,7 +9,7 @@
   flex: 1;
   min-width: 0;
   overflow: hidden;
-  transition: flex 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: flex 0.65s cubic-bezier(0.77, 0, 0.18, 1);
 }
 
 .itemActive {
@@ -38,6 +38,14 @@
   padding-left: 60px;
   padding-right: 24px;
   box-sizing: border-box;
+  opacity: 0;
+  transition: opacity 0.3s ease 0.1s;
+  pointer-events: none;
+}
+
+.desktopOverlayVisible {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .desktopOverlayContent {
@@ -118,6 +126,7 @@
     padding-top: 66.23px;
     padding-bottom: 30.86px;
     box-sizing: border-box;
+    transition: padding-top 0.4s cubic-bezier(0.77, 0, 0.18, 1);
   }
 
   .mobileOverlayActive {
@@ -146,5 +155,13 @@
     text-align: center;
     padding-left: 24px;
     padding-right: 24px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .mobileDescriptionVisible {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

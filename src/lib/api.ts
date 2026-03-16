@@ -120,9 +120,17 @@ export async function getProducto(id: string, locale?: string) {
   }, locale);
 }
 
-export async function getRecetas(locale?: string) {
+export async function getRecetas(
+  locale?: string,
+  filters?: { tipo_receta?: string; cocina_region?: string; tipo_dieta?: string },
+) {
+  const filterParams: Record<string, string> = {};
+  if (filters?.tipo_receta) filterParams["filters[tipo_receta][$eq]"] = filters.tipo_receta;
+  if (filters?.cocina_region) filterParams["filters[cocina_region][$eq]"] = filters.cocina_region;
+  if (filters?.tipo_dieta) filterParams["filters[tipo_dieta][$eq]"] = filters.tipo_dieta;
   return fetchAPI<StrapiListResponse<Receta>>("/api/recetas", {
     ...imgFields("imagen_principal"),
+    ...filterParams,
   }, locale);
 }
 
@@ -130,7 +138,10 @@ export async function getReceta(id: string, locale?: string) {
   return fetchAPI<StrapiSingleResponse<Receta>>(`/api/recetas/${id}`, {
     ...imgFields("imagen_principal"),
     "populate[ingredientes]": "*",
-    "populate[pasos]": "*",
+    "populate[pasos][fields][0]": "numero",
+    "populate[pasos][fields][1]": "titulo",
+    "populate[pasos][fields][2]": "descripcion",
+    "populate[pasos][fields][3]": "tiempo_minutos",
   }, locale);
 }
 
@@ -139,7 +150,10 @@ export async function getRecetaBySlug(slug: string, locale?: string) {
     "filters[slug][$eq]": slug,
     ...imgFields("imagen_principal"),
     "populate[ingredientes]": "*",
-    "populate[pasos]": "*",
+    "populate[pasos][fields][0]": "numero",
+    "populate[pasos][fields][1]": "titulo",
+    "populate[pasos][fields][2]": "descripcion",
+    "populate[pasos][fields][3]": "tiempo_minutos",
   }, locale);
   return res.data?.[0] ?? null;
 }
@@ -274,7 +288,17 @@ export async function getPack(slug: string, locale?: string) {
 }
 
 export async function getRecetasPage(locale?: string) {
-  return fetchAPI<StrapiSingleResponse<RecetasPage>>("/api/recetas-page", {}, locale);
+  return fetchAPI<StrapiSingleResponse<RecetasPage>>("/api/recetas-page", {
+    "populate[testimonios][fields][0]": "nombre_usuario",
+    "populate[testimonios][fields][1]": "rating",
+    "populate[testimonios][fields][2]": "texto_testimonio",
+    "populate[testimonios][fields][3]": "fecha",
+    "populate[testimonios][fields][4]": "destacado",
+    "populate[testimonios][populate][foto_usuario][fields][0]": "url",
+    "populate[testimonios][populate][foto_usuario][fields][1]": "alternativeText",
+    "populate[testimonios][populate][foto_usuario][fields][2]": "width",
+    "populate[testimonios][populate][foto_usuario][fields][3]": "height",
+  }, locale);
 }
 
 export async function getBlogPage(locale?: string) {

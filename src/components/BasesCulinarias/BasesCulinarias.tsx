@@ -76,21 +76,7 @@ export default function BasesCulinarias() {
               priority
               className={styles.desktopImage}
             />
-            {isActive && (
-              <div className={styles.desktopOverlay}>
-                <div className={styles.desktopOverlayContent}>
-                  <p className={styles.desktopLabel} style={{ color: base.labelColor }}>{base.label}</p>
-                  <p className={styles.desktopDescription} style={{ color: base.descriptionColor }}>{base.description}</p>
-                </div>
-              </div>
-            )}
             <div className={styles.mobileImage}>
-              <div className={`${styles.mobileOverlay} ${isActive ? styles.mobileOverlayActive : ""}`}>
-                <p className={styles.mobileLabel} style={{ color: base.labelColor }}>{base.label}</p>
-                {isActive && (
-                  <p className={styles.mobileDescription} style={{ color: base.descriptionColor }}>{base.description}</p>
-                )}
-              </div>
               <Image
                 src={mobileImageSrc}
                 alt={base.alt}
