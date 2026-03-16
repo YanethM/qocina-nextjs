@@ -57,8 +57,8 @@ export default function RecetaDetail({ receta }: Props) {
                       key={i}
                       src="/images/web/recetas/recetas_detail/porcion.svg"
                       alt=""
-                      width={28}
-                      height={28}
+                      width={32}
+                      height={32}
                       className={styles.porcionIcon}
                       aria-hidden
                     />
@@ -84,8 +84,8 @@ export default function RecetaDetail({ receta }: Props) {
                           <Image
                             src="/images/web/recetas/recetas_detail/checkmark.svg"
                             alt=""
-                            width={20}
-                            height={20}
+                            width={24}
+                            height={24}
                             className={styles.checkIcon}
                             aria-hidden
                           />
@@ -106,8 +106,8 @@ export default function RecetaDetail({ receta }: Props) {
                           <Image
                             src="/images/web/recetas/recetas_detail/checkmark.svg"
                             alt=""
-                            width={20}
-                            height={20}
+                            width={24}
+                            height={24}
                             className={styles.checkIcon}
                             aria-hidden
                           />
@@ -137,8 +137,6 @@ export default function RecetaDetail({ receta }: Props) {
       </div>
 
       <div className={styles.content}>
-  
-
         {pasos.length > 0 && (
           <div className={styles.pasosSection}>
             <h2 className={styles.preparacionTitle}>PREPARACIÓN</h2>
@@ -172,12 +170,13 @@ export default function RecetaDetail({ receta }: Props) {
                       <div
                         className={styles.difficultyFill}
                         style={{
-                          width:
-                            receta.dificultad.toLowerCase() === 'fácil' || receta.dificultad.toLowerCase() === 'facil'
-                              ? '33%'
-                              : receta.dificultad.toLowerCase() === 'intermedio'
-                                ? '66%'
-                                : '100%',
+                          width: (() => {
+                            const d = receta.dificultad.toLowerCase();
+                            if (d === 'fácil' || d === 'facil') return '28%';
+                            if (d === 'media') return '60%';
+                            if (d === 'intermedio') return '75%';
+                            return '100%';
+                          })(),
                         }}
                       />
                     </div>
@@ -223,9 +222,9 @@ export default function RecetaDetail({ receta }: Props) {
               <Image
                 src="/images/web/recetas/recetas_detail/tips.svg"
                 alt=""
-                width={313}
-                height={97}
-                style={{ transform: "rotate(2deg)" }}
+                width={500}
+                height={280}
+                style={{ transform: "rotate(354deg)" }}
                 aria-hidden
               />
             </div>

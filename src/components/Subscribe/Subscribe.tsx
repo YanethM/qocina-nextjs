@@ -8,11 +8,12 @@ import styles from "./Subscribe.module.css";
 interface SubscribeProps {
   title?: string;
   description?: string;
+  placeholder?: string;
   formulario_boton?: string;
   variant?: "email" | "contact";
 }
 
-export default function Subscribe({ title, description, formulario_boton, variant = "email" }: SubscribeProps = {}) {
+export default function Subscribe({ title, description, placeholder, formulario_boton, variant = "email" }: SubscribeProps = {}) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
@@ -71,7 +72,7 @@ export default function Subscribe({ title, description, formulario_boton, varian
               <form className={styles.form} onSubmit={handleSubmit}>
                 <input
                   type="email"
-                  placeholder="Correo electrónico"
+                  placeholder={placeholder ?? "Correo electrónico"}
                   className={styles.input}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}

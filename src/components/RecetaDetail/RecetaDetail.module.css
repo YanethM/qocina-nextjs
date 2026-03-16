@@ -38,13 +38,14 @@
   gap: 12px;
 }
 
+
 .heroTitle {
   font-family: Montserrat, sans-serif;
   font-weight: 700;
   font-size: 48px;
   line-height: 120%;
   letter-spacing: 0%;
-  color: #1a1a1a;
+  color: #000000;
   margin: 0;
 }
 
@@ -60,17 +61,20 @@
   font-size: 24px;
   line-height: 130%;
   letter-spacing: 0%;
-  color: #1a1a1a;
+  color: #000000;
 }
 
 .porcionesIcons {
   display: flex;
-  gap: 4px;
+  gap: 10px;
 }
 
 .porcionIcon {
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
+  border-radius: 40px;
+  padding: 0 4px;
+  box-sizing: content-box;
   filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.25));
 }
 
@@ -91,8 +95,8 @@
   width: 100%;
   margin-top: 0;
   z-index: 3;
-  min-height: 657px;
-  padding: 93px;
+  min-height: auto;
+  padding: 48px 93px 60px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -105,17 +109,17 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 86px;
+  gap: 40px;
   width: 100%;
   max-width: 1255px;
-  min-height: 350px;
+  min-height: auto;
 }
 
 .ingredientesTitle {
   font-family: var(--font-palmer), sans-serif;
   font-weight: 400;
   font-size: 176px;
-  line-height: 50%;
+  line-height: 0.85;
   text-align: center;
   color: #ffffff;
   margin: 0;
@@ -128,7 +132,7 @@
   background: #000;
   border-radius: 24px;
   border: 1px solid #333;
-  padding: 0px 32px;
+  padding: 36px 48px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -165,7 +169,7 @@
 .ingredienteText {
   font-family: Montserrat, sans-serif;
   font-weight: 400;
-  font-size: 20px;
+  font-size: 16px;
   line-height: 160%;
   color: #fff;
 }
@@ -181,20 +185,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: -60px;
-  margin-bottom: -48px;
+  margin-top: -120px;
+  margin-bottom: -52px;
 }
 
 .ingredientesImg {
   height: auto;
-  max-height: 360px;
-  width: auto;
+  max-height: 440px;
+  width: 340px;
 }
 
 .content {
-  max-width: 1440px;
+  max-width: 1500px;
   margin: 0 auto;
-  padding: 64px 60px 96px;
+  padding: 64px 8px 96px;
   display: flex;
   flex-direction: column;
   gap: 64px;
@@ -272,11 +276,12 @@
   font-family: var(--font-palmer), sans-serif;
   font-weight: 400;
   font-size: 121px;
-  line-height: 50%;
+  line-height: 1;
   letter-spacing: 0%;
   text-align: center;
   color: #1a1a1a;
   margin: 0;
+  padding-bottom: 8px;
 }
 
 .pasosSection {
@@ -311,33 +316,37 @@
 .sidebarLabel {
   font-family: Montserrat, sans-serif;
   font-weight: 400;
-  font-size: 14px;
-  line-height: 150%;
+  font-size: 20px;
+  line-height: 140%;
+  letter-spacing: 0%;
   color: #1a1a1a;
 }
 
 .sidebarValue {
   font-family: Montserrat, sans-serif;
   font-weight: 700;
-  font-size: 16px;
-  line-height: 150%;
+  font-size: 20px;
+  line-height: 140%;
+  letter-spacing: 0%;
   color: #1a1a1a;
 }
 
 .difficultyBar {
   width: 100%;
-  height: 10px;
-  background: #e0c88a;
-  border-radius: 5px;
-  overflow: hidden;
-  margin-top: 4px;
+  height: 20px;
+  background: #fff;
+  border-radius: 999px;
+  border: 2px solid #F4A910;
+  margin-top: 8px;
+  padding: 3px;
+  box-sizing: border-box;
 }
 
 .difficultyFill {
   height: 100%;
   background: #F4A910;
-  border-radius: 5px;
-  transition: width 0.3s ease;
+  border-radius: 999px;
+  transition: width 0.5s ease;
 }
 
 .pasosList {
@@ -346,26 +355,35 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 0;
   flex: 1;
   max-width: 907px;
 }
 
 .pasoItem {
   display: flex;
-  gap: 20px;
-  align-items: flex-start;
+  gap: 24px;
+  align-items: center;
+  padding-bottom: 32px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.pasoItem:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
 }
 
 .pasoNumero {
   flex-shrink: 0;
-  font-family: var(--font-palmer), sans-serif;
+  font-family: var(--font-palmer), cursive;
   font-weight: 400;
   font-size: 220px;
   line-height: 50%;
   letter-spacing: 0%;
   color: #F4A910;
   vertical-align: middle;
+  width: 140px;
+  text-align: center;
 }
 
 .pasoDescripcion {
@@ -410,6 +428,7 @@
   display: flex;
   align-items: center;
   gap: 11.61px;
+  padding-left: 11.61px;
 }
 
 .tipsTitle {
@@ -491,7 +510,7 @@
   }
 
   .content {
-    padding: 48px 32px 64px;
+    padding: 48px 2rem 64px;
     gap: 48px;
   }
 
@@ -532,7 +551,8 @@
   }
 
   .pasoNumero {
-    font-size: 160px;
+    font-size: 120px;
+    width: 90px;
   }
 
   .pasoDescripcion {
@@ -552,6 +572,7 @@
     right: 24px;
   }
 
+
   .heroTitle {
     font-size: 28px;
   }
@@ -570,7 +591,7 @@
   }
 
   .content {
-    padding: 32px 20px 48px;
+    padding: 32px 1rem 48px;
     gap: 40px;
   }
 
@@ -612,6 +633,10 @@
     font-size: 64px;
   }
 
+  .pasosSection {
+    gap: 0;
+  }
+
   .preparacionLayout {
     flex-direction: column;
   }
@@ -629,8 +654,17 @@
     min-width: 140px;
   }
 
+  .sidebarLabel {
+    font-size: 16px;
+  }
+
+  .sidebarValue {
+    font-size: 16px;
+  }
+
   .pasoNumero {
-    font-size: 120px;
+    font-size: 96px;
+    width: 72px;
   }
 
   .pasoDescripcion {
@@ -646,47 +680,112 @@
   }
 
   .tipCard {
-    padding: 18px 24px;
+    padding: 20px 20px;
+    gap: 16px;
+    border-radius: 24px;
+  }
+
+  .tipNumero {
+    width: 72px;
+    height: 72px;
+    font-size: 88px;
+    padding: 20px;
   }
 
   .tipText {
-    font-size: 16px;
+    font-family: Montserrat, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .tipsList {
+    gap: 16px;
   }
 
   .tipsSection {
     display: flex;
     flex-direction: column;
+    background: transparent;
   }
 
   .tipsWaveTop {
-    background-image: url("/images/mobile/recetas/tips.svg");
-    background-size: 100% auto;
-    background-position: top center;
-    height: 140px;
-    order: 1;
+    display: block;
+    width: 100%;
+    height: calc(100vw * 40 / 392);
+    background-image: url("/images/mobile/recetas/ondas.svg");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    flex-shrink: 0;
+  }
+
+  .tipsHeader {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    width: 100%;
+  }
+
+  .tipsHeader img {
+    width: 280px !important;
+    height: auto !important;
   }
 
   .tipsBody {
     background: #F4A910;
-    padding: 24px 20px 32px;
-    order: 2;
+    padding: 24px 20px 40px;
   }
 
   .tipsWaveBottomWrapper {
-    order: 3;
+    display: block;
+    width: 100%;
+    height: calc(100vw * 172 / 393);
+    background-image: url("/images/mobile/recetas/tips.svg");
+    background-size: 100% auto;
+    background-position: bottom center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    padding: 0;
+    line-height: 0;
+  }
+
+  .tipsWaveBottom {
+    display: none;
   }
 }
 
 @media (max-width: 480px) {
   .hero {
-    height: 300px;
+    height: 280px;
   }
 
-  .heroContent {
-    top: auto;
-    bottom: 24px;
-    left: 16px;
-    right: 16px;
+  .ingredientesBox {
+    flex-direction: column;
+    padding: 24px 20px 20px;
+    gap: 20px;
+  }
+
+  .ingredientesColumns {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .ingredientesCol {
+    width: 100%;
+    max-height: none;
+  }
+
+  .ingredientesImgWrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .ingredientesImg {
+    max-height: 200px;
+    width: 160px;
   }
 
   .heroTitle {
@@ -742,7 +841,8 @@
   }
 
   .pasoNumero {
-    font-size: 80px;
+    font-size: 72px;
+    width: 56px;
   }
 
   .pasoDescripcion {

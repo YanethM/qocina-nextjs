@@ -154,6 +154,7 @@ export async function getRecetaBySlug(slug: string, locale?: string) {
     "populate[pasos][fields][1]": "titulo",
     "populate[pasos][fields][2]": "descripcion",
     "populate[pasos][fields][3]": "tiempo_minutos",
+    "populate[tips]": "*",
   }, locale);
   return res.data?.[0] ?? null;
 }
@@ -302,7 +303,10 @@ export async function getRecetasPage(locale?: string) {
 }
 
 export async function getBlogPage(locale?: string) {
-  return fetchAPI<StrapiSingleResponse<BlogPage>>("/api/blog-page", {}, locale);
+  return fetchAPI<StrapiSingleResponse<BlogPage>>("/api/blog-page", {
+    ...imgFields("hero_imagen"),
+    ...imgFields("hero_imagen_mobile"),
+  }, locale);
 }
 
 export async function getFaqPage(locale?: string) {

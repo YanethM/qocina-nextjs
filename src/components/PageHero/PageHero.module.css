@@ -28,6 +28,13 @@
   height: auto;
 }
 
+.overlayContent {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
 .content {
   position: relative;
   z-index: 1;

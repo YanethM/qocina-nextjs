@@ -1,8 +1,7 @@
-import Image from "next/image";
 import PageHero from "@/components/PageHero/PageHero";
-import BlogCard from "@/components/BlogCard/BlogCard";
 import Subscribe from "@/components/Subscribe/Subscribe";
-import { getBlogPage, getArticulos } from "@/lib/api";
+import { getBlogPage, getArticulos, getStrapiImageUrl } from "@/lib/api";
+import BlogGrid from "./BlogGrid";
 import styles from "./page.module.css";
 
 export default async function BlogYNoticiasPage() {
@@ -15,43 +14,41 @@ export default async function BlogYNoticiasPage() {
   const articulos = (articulosRes?.data ?? []).sort(
     (a, b) => a.orden - b.orden
   );
+  const heroImageUrl = pageData?.hero_imagen?.url
+    ? getStrapiImageUrl(pageData.hero_imagen.url)
+    : undefined;
 
   return (
     <>
-      <PageHero backgroundAlt="Blog y Noticias">
-        <div className={styles.heroLogoWrapper}>
-          <Image
-            src="/images/web/noticias/blog_logo.svg"
-            alt="Blog y Noticias"
-            width={400}
-            height={200}
-            className={styles.heroLogo}
-            style={{ height: "auto" }}
-            priority
-          />
-        </div>
-      </PageHero>
+      <PageHero
+        backgroundImage={heroImageUrl}
+        backgroundAlt="Blog y Noticias"
+        waveImage="/images/web/noticias/hero_wave.svg"
+        overlayContent={
+          pageData?.hero_titulo ? (
+            <p className={styles.heroTitulo}>{pageData.hero_titulo}</p>
+          ) : undefined
+        }
+      />
 
       <section className={styles.publicacionesSection}>
-        <h2 className={styles.publicacionesTitulo}>
-          {pageData?.publicaciones_titulo || "Últimas publicaciones"}
-        </h2>
+        {pageData?.publicaciones_titulo && (
+          <h2 className={styles.publicacionesTitulo}>
+            {pageData.publicaciones_titulo}
+          </h2>
+        )}
 
-        <div className={styles.cardsGrid}>
-          {articulos.map((articulo) => (
-            <BlogCard
-              key={articulo.id}
-              titulo={articulo.titulo}
-              descripcion_corta={articulo.descripcion_corta}
-              href={`/blog-y-noticias/${articulo.slug}`}
-            />
-          ))}
-        </div>
+        <BlogGrid
+          articulos={articulos}
+          ctaVerTodas={pageData?.relacionadas_cta_ver_todas}
+        />
       </section>
 
       <Subscribe
-        title="¿Te falta inspiración para cocinar hoy?"
-        description="Únete a nuestra comunidad y recibe recetas fáciles, consejos prácticos y 10% de descuento en tu próxima compra."
+        title={pageData?.newsletter_titulo ?? undefined}
+        description={pageData?.newsletter_descripcion ?? undefined}
+        placeholder={pageData?.newsletter_placeholder ?? undefined}
+        formulario_boton={pageData?.newsletter_cta_texto ?? undefined}
       />
     </>
   );

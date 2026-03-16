@@ -6,15 +6,27 @@ interface BlogCardProps {
   titulo?: string;
   descripcion_corta?: string | null;
   href?: string;
+  imagenUrl?: string;
 }
 
 export default function BlogCard({
   titulo,
   descripcion_corta,
   href = "#",
+  imagenUrl,
 }: BlogCardProps) {
   return (
     <div className={styles.card}>
+      {imagenUrl && (
+        <Image
+          src={imagenUrl}
+          alt={titulo ?? ""}
+          fill
+          className={styles.cardPhoto}
+          style={{ objectFit: "cover" }}
+          unoptimized
+        />
+      )}
       <div className={styles.cardBgWrapper}>
         <Image
           src="/images/web/noticias/card_background.svg"

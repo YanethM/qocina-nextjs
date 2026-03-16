@@ -161,6 +161,7 @@ export interface Articulo {
   descripcion_corta: string | null;
   contenido: string | null;
   imagen: StrapiImage | null;
+  imagen_principal: StrapiImage | null;
   fecha: string | null;
   fecha_publicacion: string | null;
   autor: string | null;
@@ -302,6 +303,7 @@ export interface BlogPage {
   hero_subtitulo: string;
   publicaciones_titulo: string;
   cta_cargar_mas: string;
+  relacionadas_cta_ver_todas: string | null;
   newsletter_titulo: string;
   newsletter_descripcion: string;
   newsletter_placeholder: string;
