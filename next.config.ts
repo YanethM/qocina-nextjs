@@ -47,10 +47,7 @@ const nextConfig: NextConfig = {
   allowedDevOrigins: ["192.168.1.11"],
   images: {
     remotePatterns: buildRemotePatterns(),
-    formats: ["image/avif", "image/webp"],
-    minimumCacheTTL: 31536000,
-    deviceSizes: [640, 828, 1080, 1200, 1920],
-    imageSizes: [32, 64, 96, 128, 256, 384],
+    unoptimized: true,
   },
 };
 
