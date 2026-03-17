@@ -21,17 +21,38 @@ import IngredientesNaturales from "@/components/IngredientesNaturales/Ingredient
 
 export default async function Home() {
   const locale = await getLocale();
-  const [homeRes, badgesRes, productosRes, recetasRes, testimoniosRes, contactoRes] =
-    await Promise.all([
-      getHomePage(locale).catch((e) => { console.error("getHomePage error:", e); return null; }),
-      getBadges(locale).catch((e) => { console.error("getBadges error:", e); return null; }),
-      getProductos(locale).catch((e) => { console.error("getProductos error:", e); return null; }),
-      getRecetas(locale).catch((e) => { console.error("getRecetas error:", e); return null; }),
-      getTestimonios(locale).catch((e) => { console.error("getTestimonios error:", e); return null; }),
-      getContactoPage(locale).catch(() => null),
-    ]);
+  const [
+    homeRes,
+    badgesRes,
+    productosRes,
+    recetasRes,
+    testimoniosRes,
+    contactoRes,
+  ] = await Promise.all([
+    getHomePage(locale).catch((e) => {
+      console.error("getHomePage error:", e);
+      return null;
+    }),
+    getBadges(locale).catch((e) => {
+      console.error("getBadges error:", e);
+      return null;
+    }),
+    getProductos(locale).catch((e) => {
+      console.error("getProductos error:", e);
+      return null;
+    }),
+    getRecetas(locale).catch((e) => {
+      console.error("getRecetas error:", e);
+      return null;
+    }),
+    getTestimonios(locale).catch((e) => {
+      console.error("getTestimonios error:", e);
+      return null;
+    }),
+    getContactoPage(locale).catch(() => null),
+  ]);
 
-const slides = homeRes?.data?.slider ?? [];
+  const slides = homeRes?.data?.slider ?? [];
   const introTexto = homeRes?.data?.intro_texto ?? "";
   const productosTitulo = homeRes?.data?.productos_titulo ?? "";
   const productosCta = homeRes?.data?.productos_cta;
@@ -42,11 +63,9 @@ const slides = homeRes?.data?.slider ?? [];
 
   return (
     <>
+      <div className="versionclass">v1</div>
       <HeroBanner slides={slides} />
-      <BeneficiosWaveSection
-        badges={badges}
-        textoBeneficios={introTexto}
-      />
+      <BeneficiosWaveSection badges={badges} textoBeneficios={introTexto} />
 
       <Productos
         productos={productos}
@@ -94,22 +113,32 @@ const slides = homeRes?.data?.slider ?? [];
           className={styles.amazonMobile}
           loading="eager"
         />
-        {(homeRes?.data?.amazon_titulo || homeRes?.data?.amazon_descripcion) && (
+        {(homeRes?.data?.amazon_titulo ||
+          homeRes?.data?.amazon_descripcion) && (
           <div className={styles.amazonOverlay}>
             {homeRes.data.amazon_titulo && (
-              <h2 className={styles.amazonTitulo}>{homeRes.data.amazon_titulo}</h2>
+              <h2 className={styles.amazonTitulo}>
+                {homeRes.data.amazon_titulo}
+              </h2>
             )}
             {homeRes.data.amazon_descripcion && (
-              <p className={styles.amazonDescripcion}>{homeRes.data.amazon_descripcion}</p>
+              <p className={styles.amazonDescripcion}>
+                {homeRes.data.amazon_descripcion}
+              </p>
             )}
             {homeRes.data.amazon_cta && (
               <a
                 href={homeRes.data.amazon_cta.url}
-                target={homeRes.data.amazon_cta.nueva_ventana ? "_blank" : "_self"}
-                rel={homeRes.data.amazon_cta.nueva_ventana ? "noopener noreferrer" : undefined}
+                target={
+                  homeRes.data.amazon_cta.nueva_ventana ? "_blank" : "_self"
+                }
+                rel={
+                  homeRes.data.amazon_cta.nueva_ventana
+                    ? "noopener noreferrer"
+                    : undefined
+                }
                 className={styles.amazonCta}
-                data-btn="dark"
-              >
+                data-btn="dark">
                 {homeRes.data.amazon_cta.texto}
               </a>
             )}
@@ -117,9 +146,16 @@ const slides = homeRes?.data?.slider ?? [];
         )}
       </section>
 
-      <RecetasCarousel recetas={recetas} recetas_titulo={homeRes?.data?.recetas_titulo} recetas_cta={homeRes?.data?.recetas_cta} />
+      <RecetasCarousel
+        recetas={recetas}
+        recetas_titulo={homeRes?.data?.recetas_titulo}
+        recetas_cta={homeRes?.data?.recetas_cta}
+      />
 
-      <Testimonios testimonios={testimonios} testimonios_titulo={homeRes?.data?.testimonios_titulo} />
+      <Testimonios
+        testimonios={testimonios}
+        testimonios_titulo={homeRes?.data?.testimonios_titulo}
+      />
 
       <Subscribe
         title={contactoRes?.data?.titulo}
