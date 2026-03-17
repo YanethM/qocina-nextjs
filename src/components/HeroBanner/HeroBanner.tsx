@@ -4,8 +4,6 @@ import Link from "next/link";
 import type { HeroSlide } from "@/types";
 import { getStrapiImageUrl } from "@/lib/api";
 import styles from "./HeroBanner.module.css";
-import Image from "next/image";
-
 export default function HeroBanner({ slides = [] }: { slides?: HeroSlide[] }) {
   const [current, setCurrent] = useState(0);
 
@@ -41,46 +39,25 @@ export default function HeroBanner({ slides = [] }: { slides?: HeroSlide[] }) {
             <Link
               href={slide.cta.url}
               className={styles.heroBtn}
+              data-btn="yellow"
               target={slide.cta.nueva_ventana ? "_blank" : "_self"}>
               <span className={styles.heroBtnText}>{slide.cta.texto}</span>
             </Link>
           )}
         </div>
 
-        <div className={styles.heroSlogan}>
-          <Image
-            src="/images/web/home/banner/slogan_qocina.svg"
-            alt="ATRÉVETE A QOCINAR CON Q"
-            width={277}
-            height={225}
-            className={styles.sloganImage}
-            style={{ height: "auto" }}
-            priority
-          />
-          <Image
-            src="/images/web/home/banner/libros.svg"
-            alt=""
-            width={380}
-            height={227}
-            className={styles.librosImage}
-            style={{ height: "auto" }}
-            priority
-          />
-        </div>
       </div>
 
-      {slides.length > 1 && (
-        <div className={styles.dots}>
-          {slides.map((_, i) => (
-            <button
-              key={i}
-              className={`${styles.dot} ${i === current ? styles.dotActive : ""}`}
-              onClick={() => setCurrent(i)}
-              aria-label={`Slide ${i + 1}`}
-            />
-          ))}
-        </div>
-      )}
+      <div className={styles.dots}>
+        {slides.map((_, i) => (
+          <button
+            key={i}
+            className={`${styles.dot} ${i === current ? styles.dotActive : ""}`}
+            onClick={() => setCurrent(i)}
+            aria-label={`Slide ${i + 1}`}
+          />
+        ))}
+      </div>
     </section>
   );
 }

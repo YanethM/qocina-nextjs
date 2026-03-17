@@ -13,7 +13,7 @@ function BadgeItem({ badge }: { badge: Badge }) {
     <div className={styles.badge}>
       <div
         className={styles.badgeIcon}
-        style={badge.color_fondo ? { backgroundColor: badge.color_fondo } : undefined}
+        style={{ backgroundColor: "transparent" }}
       >
         {badge.icono && (
           <Image
@@ -24,10 +24,10 @@ function BadgeItem({ badge }: { badge: Badge }) {
             fill
             sizes="(max-width: 640px) 72px, 140px"
             style={{ objectFit: "contain" }}
+            unoptimized
           />
         )}
       </div>
-      <span className={styles.badgeTitle}>{badge.nombre}</span>
     </div>
   );
 }

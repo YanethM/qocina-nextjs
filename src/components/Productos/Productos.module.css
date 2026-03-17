@@ -8,10 +8,40 @@
   font-size: 48px;
   font-weight: 700;
   text-align: center;
-  margin-bottom: 4rem;
+  margin: 0;
   margin-left: auto;
   margin-right: auto;
   color: #1a1a1a;
+}
+
+.subtitle {
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 120%;
+  letter-spacing: 0%;
+  text-align: center;
+  margin: 0;
+  color: #1a1a1a;
+}
+
+.description {
+  font-family: Montserrat, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 140%;
+  letter-spacing: 0%;
+  text-align: center;
+  margin: 0;
+  color: #1a1a1a;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 4rem;
 }
 
 .grid {
@@ -93,8 +123,9 @@
 .nombre {
   font-family: Montserrat, sans-serif;
   font-weight: 700;
-  font-size: 24px;
-  line-height: 1.2;
+  font-size: 29px;
+  line-height: 120%;
+  letter-spacing: 0%;
   text-align: center;
   margin: 0;
   color: inherit;
@@ -138,8 +169,11 @@
   color: #1a1a1a;
   border: none;
   border-radius: 30px;
-  font-weight: 600;
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
   font-size: 16px;
+  line-height: 140%;
+  letter-spacing: 0%;
   cursor: pointer;
   transition: all 0.2s;
   text-decoration: none;
@@ -151,7 +185,6 @@
 
 .addToCartBtn:hover {
   transform: scale(1.05);
-  background-color: #f0f0f0;
 }
 
 .verTodas {
@@ -163,22 +196,24 @@
 .verTodasBtn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 14px 36px;
-  border-radius: 999px;
-  background-color: #1a1a1a;
-  color: #fff;
+  justify-content: center;
+  gap: 16px;
+  min-width: 170px;
+  width: 304px;
+  height: 49px;
+  padding: 12px 32px;
+  border-radius: 100px;
+  background-color: #000000;
+  color: #ffffff;
   text-decoration: none;
+  font-family: Montserrat, sans-serif;
   font-weight: 600;
-  font-size: 1rem;
-  transition:
-    transform 0.2s ease,
-    background-color 0.2s ease;
+  font-size: 14px;
+  transition: transform 0.2s ease;
 }
 
 .verTodasBtn:hover {
   transform: translateY(-2px);
-  background-color: #333;
 }
 
 .cardYellow .addToCartBtn {
@@ -186,9 +221,6 @@
   color: #ffffff;
 }
 
-.cardYellow .addToCartBtn:hover {
-  background-color: #333333;
-}
 
 .carousel {
   display: none;
@@ -202,19 +234,19 @@
 }
 
 .slide {
-  flex: 0 0 calc(100% - 44px);
+  flex: 0 0 calc(50% - 8px);
   min-width: 0;
 }
 
 .slide .card {
   width: 100%;
   height: auto;
-  margin-top: 185px;
+  margin-top: 200px;
 }
 
 .slide .imageWrapper {
-  top: -185px;
-  height: 274px;
+  top: -200px;
+  height: 290px;
 }
 
 .dotsRow {
@@ -242,109 +274,44 @@
   width: 24px;
 }
 
-@media (max-width: 1200px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
-    justify-items: center;
+@media (max-width: 1300px) {
+  .section {
+    padding: 3rem 1.5rem;
   }
 
   .title {
-    font-size: 2.2rem;
-  }
-}
-
-@media (max-width: 1024px) {
-  .grid {
-    gap: 20px;
-  }
-
-  .cardContent {
-    width: 320px;
-    height: auto;
-    min-height: 200px;
-    gap: 14px;
-  }
-
-  .title {
-    font-size: 1.8rem;
+    font-size: 2rem;
+    margin-bottom: 2.5rem;
   }
 
   .card {
-    max-width: 380px;
-    height: 430px;
-    padding: 122px 24px 24px 24px;
-    margin-top: 208px;
+    max-width: 100%;
+    height: auto;
+    min-height: 400px;
+    padding: 120px 20px 20px 20px;
+    margin-top: 200px;
   }
 
   .imageWrapper {
-    height: 308px;
-    top: -208px;
-  }
-
-  .nombre {
-    font-size: 22px;
-  }
-
-  .precio {
-    font-size: 24px;
-  }
-
-  .descripcion {
-    font-size: 15px;
-  }
-}
-
-@media (max-width: 768px) {
-  .title {
-    font-size: 1.5rem;
-    margin-bottom: 3rem;
-  }
-
-  .card {
-    max-width: 340px;
-    height: 385px;
-    padding: 110px 20px 20px 20px;
-    margin-top: 185px;
+    height: 290px;
+    top: -200px;
   }
 
   .cardContent {
-    width: 280px;
+    width: 90%;
     gap: 12px;
   }
-
-  .imageWrapper {
-    height: 274px;
-    top: -185px;
-  }
-
-  .nombre {
-    font-size: 20px;
-  }
-
-  .precio {
-    font-size: 22px;
-  }
-
-  .descripcion {
-    font-size: 14px;
-    line-height: 1.5;
-  }
-
-  .addToCartBtn {
-    padding: 10px 20px;
-    font-size: 14px;
-  }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 900px) {
   .section {
     padding: 2.5rem 0 2.5rem 16px;
   }
 
   .title {
     padding: 0 16px;
+    font-size: 1.8rem;
     margin-bottom: 2rem;
-    font-size: 1.3rem;
   }
 
   .grid {
@@ -357,8 +324,56 @@
   }
 
   .slide .card {
+    min-height: 380px;
+    padding: 110px 16px 16px 16px;
+    margin-top: 200px;
+  }
+
+  .slide .cardContent {
+    width: 90%;
+    gap: 12px;
+  }
+
+  .slide .imageWrapper {
+    height: 290px;
+    top: -200px;
+  }
+
+  .slide .nombre {
+    font-size: 20px;
+  }
+
+  .slide .precio {
+    font-size: 22px;
+  }
+
+  .slide .descripcion {
+    font-size: 14px;
     max-width: 100%;
-    height: auto;
+  }
+
+  .slide .addToCartBtn {
+    padding: 10px 18px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 640px) {
+  .section {
+    padding: 2.5rem 16px;
+  }
+
+  .title {
+    padding: 0;
+    margin-bottom: 2rem;
+    font-size: 1.3rem;
+  }
+
+  .slide {
+    flex: 0 0 100%;
+  }
+
+  .slide .card {
     min-height: 360px;
     padding: 100px 16px 16px 16px;
     margin-top: 185px;
@@ -366,7 +381,6 @@
 
   .slide .cardContent {
     width: 260px;
-    height: auto;
     gap: 10px;
   }
 

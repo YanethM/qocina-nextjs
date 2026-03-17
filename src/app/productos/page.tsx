@@ -1,9 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
-import { getProductos, getProductosPage, getStrapiImageUrl } from "@/lib/api";
+import { getProductosPage, getStrapiImageUrl } from "@/lib/api";
 import styles from "./page.module.css";
 import ProductosNuestroSecreto from "@/components/ProductosNuestroSecreto/ProductosNuestroSecreto";
 import PacksDestacados from "@/components/PacksDestacados/PacksDestacados";
+import ProductosCarousel from "@/components/ProductosCarousel/ProductosCarousel";
 import { Button } from "@/components/ui";
 
 export const metadata = {
@@ -28,22 +29,21 @@ const MOBILE_CARD_SVGS = [
 const IS_REVERSED = [false, true, false];
 
 function formatPrice(precio: number, moneda: string): string {
+  if (!precio && precio !== 0) return "";
   if (moneda === "PEN") return `S/ ${precio.toFixed(2)}`;
   return `${precio.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ".")} COP`;
 }
 
 export default async function ProductosPage() {
-  const [productosPageRes, productosRes] = await Promise.all([
-    getProductosPage().catch(() => null),
-    getProductos().catch(() => null),
-  ]);
+  const productosPageRes = await getProductosPage().catch(() => null);
 
-  const productos = productosRes?.data ?? [];
-  const rawPacks = productosPageRes?.data?.packs_destacados;
+  const pageData = productosPageRes?.data;
+  const productos = pageData?.productos_destacados ?? [];
+  const rawPacks = pageData?.packs_destacados;
   const packsDestacados = (Array.isArray(rawPacks) ? rawPacks : []).sort(
     (a, b) => a.orden - b.orden,
   );
-  const rawPerfiles = productosPageRes?.data?.perfiles_usuario;
+  const rawPerfiles = pageData?.perfiles_usuario;
   const perfilesUsuario = (Array.isArray(rawPerfiles) ? rawPerfiles : []).sort(
     (a, b) => a.orden - b.orden,
   );
@@ -59,73 +59,86 @@ export default async function ProductosPage() {
           style={{ objectFit: "cover" }}
           priority
         />
-        <p className={styles.heroText}>
-          Inspírate y cocina fácil con
-          <br />
-          nuestras bases culinarias.
-        </p>
-      </section>
-
-      <section className={styles.content}>
-        <h2 className={styles.sectionTitle}>
-          ¡Atrévete hoy a disfrutar de la Q&apos;ocina con Q!
-        </h2>
-        <div className={styles.grid}>
-          {productos.map((producto, index) => {
-            const colorClass = CARD_COLORS[index % 3];
-            const imagenUrl = producto.imagen_principal
-              ? getStrapiImageUrl(producto.imagen_principal.url)
-              : null;
-
-            return (
-              <div key={producto.id} className={`${styles.card} ${colorClass}`}>
-                <div className={styles.cardImageWrapper}>
-                  {imagenUrl && (
-                    <Image
-                      src={imagenUrl}
-                      alt={
-                        producto.imagen_principal?.alternativeText ??
-                        producto.nombre
-                      }
-                      fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      className={styles.cardImage}
-                      style={{ objectFit: "contain" }}
-                    />
-                  )}
-                </div>
-
-                <div className={styles.cardBody}>
-                  <h3 className={styles.cardTitle}>{producto.nombre}</h3>
-                  <p className={styles.cardPrice}>
-                    {formatPrice(producto.precio, producto.precio_moneda)}
-                  </p>
-                  {producto.presentacion && (
-                    <p className={styles.cardPresentacion}>
-                      {producto.presentacion}
-                    </p>
-                  )}
-                  <p className={styles.cardDescription}>
-                    {producto.descripcion_corta}
-                  </p>
-                  <Link
-                    href={`/productos/${producto.slug}`}
-                    className={styles.cardButton}>
-                    Añadir al carrito
-                  </Link>
-                </div>
-              </div>
-            );
-          })}
+        <div className={styles.heroText}>
+          {pageData?.hero_titulo && (
+            <p className={styles.heroTitulo}>{pageData.hero_titulo}</p>
+          )}
+          {pageData?.hero_subtitulo && (
+            <p className={styles.heroSubtitulo}>{pageData.hero_subtitulo}</p>
+          )}
         </div>
       </section>
 
+      <section className={styles.content}>
+        {pageData?.productos_titulo && (
+          <h2 className={styles.sectionTitle}>{pageData.productos_titulo}</h2>
+        )}
+        {productos.length > 3 ? (
+          <ProductosCarousel productos={productos} />
+        ) : (
+          <div className={`${styles.grid} ${productos.length <= 2 ? styles.gridFew : ""}`}>
+            {productos.map((producto, index) => {
+              const colorClass = CARD_COLORS[index % 3];
+              const imagenUrl = producto.imagen_principal
+                ? getStrapiImageUrl(producto.imagen_principal.url)
+                : null;
+
+              return (
+                <div key={producto.id} className={`${styles.card} ${colorClass}`}>
+                  <div className={styles.cardImageWrapper}>
+                    {imagenUrl && (
+                      <Image
+                        src={imagenUrl}
+                        alt={
+                          producto.imagen_principal?.alternativeText ??
+                          producto.nombre
+                        }
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className={styles.cardImage}
+                        style={{ objectFit: "contain" }}
+                        unoptimized
+                      />
+                    )}
+                  </div>
+
+                  <div className={styles.cardBody}>
+                    <h3 className={styles.cardTitle}>{producto.nombre}</h3>
+                    <p className={styles.cardPrice}>
+                      {formatPrice(producto.precio, producto.precio_moneda)}
+                    </p>
+                    {producto.presentacion && (
+                      <p className={styles.cardPresentacion}>
+                        {producto.presentacion}
+                      </p>
+                    )}
+                    <p className={styles.cardDescription}>
+                      {producto.descripcion_corta}
+                    </p>
+                    <Link
+                      href={`/productos/${producto.slug}`}
+                      className={styles.cardButton}>
+                      Añadir al carrito
+                    </Link>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </section>
+
       {packsDestacados.length > 0 && (
-        <PacksDestacados packs={packsDestacados} />
+        <PacksDestacados
+          packs={packsDestacados}
+          titulo={pageData?.packs_titulo}
+          mostrarDescuento={pageData?.packs_mostrar_descuento ?? false}
+          porcentajeDescuento={pageData?.packs_porcentaje_descuento}
+        />
       )}
 
       <ProductosNuestroSecreto
-        secretoImagen={productosPageRes?.data?.secreto_imagen ?? null}
+        secretoImagen={pageData?.secreto_imagen ?? null}
       />
 
       <section className={styles.paraQuien}>
@@ -156,13 +169,15 @@ export default async function ProductosPage() {
                   />
                 </div>
 
-                <Image
-                  src={MOBILE_CARD_SVGS[svgIndex]}
-                  alt=""
-                  aria-hidden="true"
-                  fill
-                  className={styles.paraQuienMobileCard}
-                />
+                <div className={styles.paraQuienMobileCardWrapper}>
+                  <Image
+                    src={MOBILE_CARD_SVGS[svgIndex]}
+                    alt=""
+                    aria-hidden="true"
+                    fill
+                    className={styles.paraQuienMobileCard}
+                  />
+                </div>
 
                 <div className={styles.paraQuienCircle}>
                   {imagenUrl && (
@@ -189,6 +204,24 @@ export default async function ProductosPage() {
       </section>
 
       <section className={styles.tieneDudas}>
+        <div className={styles.tieneDudasCard}>
+          <div className={styles.tieneDudasContent}>
+            <h2 className={styles.tieneDudasTitle}>
+              {pageData?.ayuda_titulo ?? "¿Tienes dudas o necesitas ayuda?"}
+            </h2>
+            <p className={styles.tieneDudasDescription}>
+              {pageData?.ayuda_subtitulo ?? "Resolvemos preguntas rápidas sobre productos, envíos y preparación."}
+            </p>
+          </div>
+          <Button
+            href={pageData?.ayuda_cta?.url ?? "/contacto"}
+            variant="yellow"
+            target={pageData?.ayuda_cta?.nueva_ventana ? "_blank" : undefined}
+            className={styles.tieneDudasBtn}>
+            {pageData?.ayuda_cta?.texto ?? "Resuelve aquí tus dudas"}
+          </Button>
+        </div>
+
         <div className={styles.tieneDudasImgWrapper}>
           <Image
             src="/images/web/products/tienes_dudas_web.svg"
@@ -197,24 +230,6 @@ export default async function ProductosPage() {
             height={400}
             style={{ width: "100%", height: "auto" }}
           />
-        </div>
-
-        <div className={styles.tieneDudasCard}>
-          <div className={styles.tieneDudasContent}>
-            <h2 className={styles.tieneDudasTitle}>
-              ¿Tienes dudas o necesitas ayuda?
-            </h2>
-            <p className={styles.tieneDudasDescription}>
-              Resolvemos preguntas rápidas sobre productos, envíos y
-              preparación.
-            </p>
-          </div>
-          <Button
-            href="/contacto"
-            variant="yellow"
-            className={styles.tieneDudasBtn}>
-            Resuelve aquí tus dudas
-          </Button>
         </div>
 
         <Image

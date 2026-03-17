@@ -21,7 +21,7 @@ export default function RecetaCard({
   accentColor = "#CE171C",
 }: RecetaCardProps) {
   return (
-    <Link href={href} className={styles.card} style={{ "--accent": accentColor } as React.CSSProperties}>
+    <Link href={href} className={styles.card} data-card style={{ "--accent": accentColor } as React.CSSProperties}>
       <div className={styles.imageWrapper}>
         {imagenUrl ? (
           <Image
@@ -51,7 +51,7 @@ export default function RecetaCard({
         <h3 className={styles.title}>{titulo}</h3>
         <p className={styles.description}>{descripcion}</p>
         <div className={styles.cta}>
-          <span className={styles.ctaButton}>
+          <span className={styles.ctaButton} data-btn="white">
             Ver receta
             <Image
               src="/images/web/recetas/icon_arrow_right.svg"

@@ -9,9 +9,11 @@ import { useCarousel } from "@/hooks/useCarousel";
 
 interface TestimoniosProps {
   testimonios: Testimonio[];
+  testimonios_titulo?: string;
+  waveImage?: string;
 }
 
-export default function Testimonios({ testimonios }: TestimoniosProps) {
+export default function Testimonios({ testimonios, testimonios_titulo, waveImage = "/images/web/home/testimonials/testimonials.svg" }: TestimoniosProps) {
   const [imageErrors, setImageErrors] = useState<Record<number, boolean>>({});
   const { current, goTo, handleTouchStart, handleTouchEnd } = useCarousel(
     testimonios.length,
@@ -26,13 +28,32 @@ export default function Testimonios({ testimonios }: TestimoniosProps) {
   const getInitials = (name: string) =>
     name.split(" ").map((w) => w[0]).join("").toUpperCase().slice(0, 2);
 
+  const abbreviateName = (name: string) => {
+    const parts = name.trim().split(/\s+/);
+    if (parts.length <= 1) return name;
+    return `${parts[0]} ${parts.slice(1).map((p) => `${p[0]}.`).join(" ")}`;
+  };
+
   return (
     <section className={styles.section}>
-      <h2 className={styles.sectionTitle}>TESTIMONIOS</h2>
+      <div className={styles.bgImage}>
+        <Image
+          src={waveImage}
+          alt=""
+          width={1920}
+          height={900}
+          className={styles.bgImg}
+          priority={false}
+          unoptimized
+        />
+      </div>
+
+      <div className={styles.contentLayer}>
+        {testimonios_titulo && <h2 className={styles.sectionTitle}>{testimonios_titulo}</h2>}
 
       <div className={styles.backgroundWrapper}>
         <div className={styles.gridWrapper}>
-          <div className={styles.grid}>
+          <div className={styles.grid} data-count={testimonios.length}>
             {testimonios.map((testimonio, index) => {
               const fotoUrl = getStrapiImageUrl(testimonio.foto_usuario?.url);
               const showImage = fotoUrl && !imageErrors[testimonio.id];
@@ -49,6 +70,7 @@ export default function Testimonios({ testimonios }: TestimoniosProps) {
                         sizes="424px"
                         priority={index < 2}
                         onError={() => handleImageError(testimonio.id)}
+                        unoptimized
                       />
                     ) : (
                       <div className={styles.cardPlaceholder}>
@@ -68,7 +90,7 @@ export default function Testimonios({ testimonios }: TestimoniosProps) {
                         <span key={`empty-${i}`} className={styles.starEmpty}>☆</span>
                       ))}
                     </div>
-                    <p className={styles.author}>{testimonio.nombre_usuario}</p>
+                    <p className={styles.author}>{abbreviateName(testimonio.nombre_usuario)}</p>
                     <p className={styles.content}>
                       &ldquo;{testimonio.texto_testimonio}&rdquo;
                     </p>
@@ -80,17 +102,6 @@ export default function Testimonios({ testimonios }: TestimoniosProps) {
             })}
           </div>
         </div>
-      </div>
-
-      <div className={styles.waveWrapper}>
-        <Image
-          src="/images/web/home/testimonials/wave_testimonial.svg"
-          alt=""
-          width={1440}
-          height={280}
-          className={styles.waveTestimonial}
-          style={{ width: "100%", height: "auto" }}
-        />
       </div>
 
       <div className={styles.mobileSection}>
@@ -108,7 +119,7 @@ export default function Testimonios({ testimonios }: TestimoniosProps) {
           onTouchEnd={handleTouchEnd}>
           <div
             className={styles.sliderTrack}
-            style={{ transform: `translateX(-${current * 100}%)` }}>
+            style={{ transform: `translateX(-${current * 100}vw)` }}>
             {testimonios.map((testimonio, index) => {
               const fotoUrl = getStrapiImageUrl(testimonio.foto_usuario?.url);
               const showImage = fotoUrl && !imageErrors[testimonio.id];
@@ -126,6 +137,7 @@ export default function Testimonios({ testimonios }: TestimoniosProps) {
                           sizes="289px"
                           priority={index === 0}
                           onError={() => handleImageError(testimonio.id)}
+                          unoptimized
                         />
                       ) : (
                         <div className={styles.cardPlaceholder}>
@@ -145,7 +157,7 @@ export default function Testimonios({ testimonios }: TestimoniosProps) {
                           <span key={`empty-${i}`} className={styles.starEmpty}>☆</span>
                         ))}
                       </div>
-                      <p className={styles.author}>{testimonio.nombre_usuario}</p>
+                      <p className={styles.author}>{abbreviateName(testimonio.nombre_usuario)}</p>
                       <p className={styles.content}>
                         &ldquo;{testimonio.texto_testimonio}&rdquo;
                       </p>
@@ -168,6 +180,8 @@ export default function Testimonios({ testimonios }: TestimoniosProps) {
           </div>
         </div>
       </div>
+      </div>
+
     </section>
   );
 }

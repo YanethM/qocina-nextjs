@@ -2,12 +2,14 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter, usePathname } from "next/navigation";
+import { useCart } from "@/context/CartContext";
 import styles from "./Header.module.css";
 
 const navLinks = [
-  { href: "/nosotros", label: "Nosotros" },
-  { href: "/tienda", label: "Tienda" },
+  { href: "/quienes-somos", label: "Nosotros" },
+  { href: "/productos", label: "Tienda" },
   { href: "/recetas", label: "Recetas" },
   { href: "/blog-y-noticias", label: "Blog y Noticias" },
   { href: "/contacto", label: "Contacto" },
@@ -15,8 +17,23 @@ const navLinks = [
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [locale, setLocale] = useState("es");
+  const { count } = useCart();
+  const router = useRouter();
+  const pathname = usePathname();
 
   const closeMenu = () => setMenuOpen(false);
+
+  useEffect(() => {
+    const match = document.cookie.match(/(?:^|;\s*)locale=([^;]+)/);
+    if (match?.[1]) setLocale(match[1]);
+  }, []);
+
+  const changeLocale = (newLocale: string) => {
+    document.cookie = `locale=${newLocale}; path=/; max-age=31536000`;
+    setLocale(newLocale);
+    router.refresh();
+  };
 
   return (
     <>
@@ -36,31 +53,59 @@ export default function Header() {
           <div className={styles.rightGroup}>
             <nav className={styles.nav}>
               {navLinks.map((link) => (
-                <Link key={link.href} href={link.href} className={styles.navLink}>
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`${styles.navLink} ${pathname.startsWith(link.href) ? styles.navLinkActive : ""}`}>
                   {link.label}
                 </Link>
               ))}
             </nav>
+            <div className={styles.langSelector}>
+              <button
+                className={`${styles.langBtn} ${locale === "es" ? styles.langActive : ""}`}
+                onClick={() => changeLocale("es")}
+              >
+                ES
+              </button>
+              <span className={styles.langDivider}>|</span>
+              <button
+                className={`${styles.langBtn} ${locale === "en" ? styles.langActive : ""}`}
+                onClick={() => changeLocale("en")}
+              >
+                EN
+              </button>
+            </div>
             <Link href="/carrito" className={styles.cartWrapper}>
-              <Image
-                src="/images/web/header/shopping_white.svg"
-                alt="Carrito de compras"
-                width={48}
-                height={48}
-                className={styles.cartIcon}
-              />
+              <div className={styles.cartIconWrapper}>
+                <Image
+                  src="/images/web/header/shopping_white.svg"
+                  alt="Carrito de compras"
+                  width={48}
+                  height={48}
+                  className={styles.cartIcon}
+                />
+                {count > 0 && (
+                  <span className={styles.cartBadge}>{count > 99 ? "99+" : count}</span>
+                )}
+              </div>
             </Link>
           </div>
 
           <div className={styles.mobileActions}>
             <Link href="/carrito" className={styles.cartWrapper} onClick={closeMenu}>
-              <Image
-                src="/images/web/header/shopping_white.svg"
-                alt="Carrito de compras"
-                width={40}
-                height={40}
-                className={styles.cartIcon}
-              />
+              <div className={styles.cartIconWrapper}>
+                <Image
+                  src="/images/web/header/shopping_white.svg"
+                  alt="Carrito de compras"
+                  width={40}
+                  height={40}
+                  className={styles.cartIcon}
+                />
+                {count > 0 && (
+                  <span className={styles.cartBadge}>{count > 99 ? "99+" : count}</span>
+                )}
+              </div>
             </Link>
             <button
               className={styles.hamburger}
@@ -82,12 +127,27 @@ export default function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className={styles.mobileNavLink}
+              className={`${styles.mobileNavLink} ${pathname.startsWith(link.href) ? styles.mobileNavLinkActive : ""}`}
               onClick={closeMenu}
             >
               {link.label}
             </Link>
           ))}
+          <div className={styles.mobileLangSelector}>
+            <button
+              className={`${styles.langBtn} ${locale === "es" ? styles.langActive : ""}`}
+              onClick={() => { changeLocale("es"); closeMenu(); }}
+            >
+              ES
+            </button>
+            <span className={styles.langDivider}>|</span>
+            <button
+              className={`${styles.langBtn} ${locale === "en" ? styles.langActive : ""}`}
+              onClick={() => { changeLocale("en"); closeMenu(); }}
+            >
+              EN
+            </button>
+          </div>
         </nav>
       </div>
 

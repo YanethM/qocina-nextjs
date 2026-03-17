@@ -8,7 +8,13 @@ interface ButtonProps {
   variant?: "primary" | "secondary" | "yellow";
   type?: "button" | "submit" | "reset";
   className?: string;
+  target?: string;
 }
+
+const VARIANT_BTN: Record<string, string> = {
+  secondary: "dark",
+  yellow: "yellow",
+};
 
 export default function Button({
   children,
@@ -17,19 +23,21 @@ export default function Button({
   variant = "primary",
   type = "button",
   className = "",
+  target,
 }: ButtonProps) {
   const buttonClass = `${styles.button} ${styles[variant]} ${className}`;
+  const datBtn = VARIANT_BTN[variant] ?? "dark";
 
   if (href) {
     return (
-      <Link href={href} className={buttonClass}>
+      <Link href={href} className={buttonClass} data-btn={datBtn} target={target}>
         {children}
       </Link>
     );
   }
 
   return (
-    <button type={type} onClick={onClick} className={buttonClass}>
+    <button type={type} onClick={onClick} className={buttonClass} data-btn={datBtn}>
       {children}
     </button>
   );

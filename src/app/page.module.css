@@ -127,11 +127,63 @@
 }
 
 .amazonBanner {
+  position: relative;
   width: 100%;
   max-width: 1320px;
   margin: 0 auto;
   padding: 0;
   line-height: 0;
+}
+
+.amazonOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: min(549px, 45%);
+  min-height: 264px;
+  padding-left: clamp(24px, 4%, 64px);
+  padding-top: clamp(40px, 12%, 166px);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  opacity: 1;
+}
+
+.amazonTitulo {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: clamp(24px, 3vw, 48px);
+  line-height: 106%;
+  letter-spacing: 0%;
+}
+
+.amazonDescripcion {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: clamp(14px, 1.6vw, 23px);
+  line-height: 140%;
+  letter-spacing: 0%;
+}
+
+.amazonCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(160px, 20vw, 280px);
+  height: 54px;
+  min-width: 140px;
+  border-radius: 100px;
+  padding: 16px clamp(24px, 3vw, 48px);
+  gap: 16px;
+  text-decoration: none;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: clamp(13px, 1.1vw, 16px);
+  color: #ffffff;
+  background-color: #000000;
+  cursor: pointer;
 }
 
 .amazonWeb {
@@ -371,6 +423,32 @@
   }
   .amazonMobile {
     display: block;
+  }
+  .amazonOverlay {
+    width: 340px;
+    min-height: 264px;
+    padding-top: 80px;
+    padding-left: clamp(24px, 4%, 64px);
+    gap: 15px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .amazonTitulo {
+    font-size: 32px;
+    line-height: 106%;
+    letter-spacing: 0%;
+    color: #000;
+  }
+  .amazonDescripcion {
+    font-size: 16px;
+    color: #000;
+  }
+  .amazonCta {
+    width: auto;
+    white-space: nowrap;
+    padding: 16px 24px;
   }
 }
 

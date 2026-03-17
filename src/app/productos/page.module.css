@@ -22,9 +22,17 @@
   position: absolute;
   inset: 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
+  gap: 16px;
+  padding: 0 40px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.heroTitulo {
   font-family: Montserrat, sans-serif;
   font-weight: 700;
   font-size: 64px;
@@ -32,13 +40,20 @@
   letter-spacing: 0%;
   color: #fff;
   margin: 0;
-  padding: 0 40px;
-  z-index: 1;
-  pointer-events: none;
+}
+
+.heroSubtitulo {
+  letter-spacing: 0%;
+  color: #fff;
+  margin: 0;
+  font-family: Montserrat, sans-serif;
+  font-size: 55px;
+  font-weight: 600;
+  line-height: 100%;
 }
 
 .content {
-  padding: 48px var(--page-px) 80px;
+  padding: 80px var(--page-px);
   max-width: 1440px;
   margin: 0 auto;
 }
@@ -58,6 +73,11 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
+}
+
+.gridFew {
+  grid-template-columns: repeat(auto-fit, calc((100% - 48px) / 3));
+  justify-content: center;
 }
 
 .card {
@@ -120,7 +140,7 @@
 .cardTitle {
   font-family: Montserrat, sans-serif;
   font-weight: 700;
-  font-size: 22px;
+  font-size: 28px;
   line-height: 1.2;
   margin: 0;
   color: inherit;
@@ -128,7 +148,7 @@
 
 .cardPrice {
   font-family: Montserrat, sans-serif;
-  font-size: 26px;
+  font-size: 30px;
   font-weight: 400;
   margin: 0;
   color: inherit;
@@ -154,22 +174,34 @@
 
 .cardButton {
   display: inline-block;
-  padding: 12px 28px;
+  padding: 12px 40px;
   background: #fff;
   color: #1a1a1a;
+  border: none;
   border-radius: 999px;
   font-family: Montserrat, sans-serif;
   font-weight: 700;
   font-size: 15px;
   text-decoration: none;
   transition:
-    transform 0.2s,
-    background 0.2s;
+    background-color 0.3s ease,
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.cardButton:hover {
-  transform: scale(1.05);
-  background: #f0f0f0;
+@media (hover: hover) {
+  .cardButton:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.cardButton:active {
+  transform: scale(0.97);
+  box-shadow: none;
+  transition:
+    transform 0.1s ease,
+    box-shadow 0.1s ease;
 }
 
 .cardYellow .cardButton {
@@ -283,6 +315,7 @@
 
 .tieneDudas {
   width: 100%;
+  position: relative;
 }
 
 .tieneDudasImgWrapper {
@@ -292,7 +325,51 @@
 }
 
 .tieneDudasCard {
-  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding-left: 64px;
+  gap: 24px;
+  z-index: 1;
+}
+
+.tieneDudasContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  max-width: 600px;
+  text-align: left;
+}
+
+.tieneDudasTitle {
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 120%;
+  letter-spacing: 0%;
+  text-align: left;
+  color: #ffffff;
+  margin: 0;
+}
+
+.tieneDudasDescription {
+  font-family: Montserrat, sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 140%;
+  letter-spacing: 0%;
+  text-align: left;
+  color: #ffffff;
+  margin: 0;
 }
 
 .tieneDudasMobileImg {
@@ -322,8 +399,12 @@
     height: 400px;
   }
 
-  .heroText {
+  .heroTitulo {
     font-size: 40px;
+  }
+
+  .heroSubtitulo {
+    font-size: 20px;
   }
 
   .sectionTitle {
@@ -356,7 +437,7 @@
 
   .paraQuienContainer {
     padding-top: 32px;
-    gap: 32px;
+    gap: 0;
     align-items: center;
   }
 
@@ -364,10 +445,11 @@
   .paraQuienRowReversed {
     width: 100%;
     max-width: 329px;
-    height: 453px;
+    height: 500px;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    overflow: visible;
   }
 
   .paraQuienRectWrapper,
@@ -375,31 +457,39 @@
     display: none;
   }
 
-  .paraQuienMobileCard {
+  .paraQuienMobileCardWrapper {
     display: block;
     position: absolute;
-    top: 0;
+    top: 110px;
     left: 0;
-    width: 100%;
-    height: 100%;
+    right: 0;
+    bottom: 0;
     z-index: 0;
+  }
+
+  .paraQuienMobileCard {
+    display: block;
   }
 
   .paraQuienCircle {
     flex-shrink: 0;
     z-index: 2;
+    margin-top: -60px;
   }
 
   .paraQuienText {
     flex: none;
     position: absolute;
-    bottom: 79px;
+    top: 230px;
+    bottom: 40px;
     left: 24px;
     right: 24px;
     padding: 0;
     text-align: center;
     align-items: center;
+    justify-content: center;
     z-index: 2;
+    overflow: hidden;
   }
 
   .paraQuienItemTitle {
@@ -416,16 +506,16 @@
   }
 
   .tieneDudasCard {
+    position: static;
+    max-width: 100%;
+    height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     background: #000000;
-    width: 100%;
-    min-height: 412px;
-    padding: 88px 64px;
+    padding: 48px 24px;
     gap: 24px;
-    border-radius: 24px 24px 0 0;
   }
 
   .tieneDudasContent {
@@ -435,6 +525,7 @@
     gap: 16px;
     width: 327px;
     max-width: 100%;
+    text-align: center;
   }
 
   .tieneDudasTitle {
@@ -479,8 +570,25 @@
 }
 
 @media (max-width: 640px) {
-  .heroText {
+  .paraQuienMobileCardWrapper {
+    top: 90px;
+  }
+
+  .paraQuienText {
+    top: 200px;
+  }
+}
+
+@media (max-width: 640px) {
+  .heroTitulo {
     font-size: 28px;
+  }
+
+  .heroSubtitulo {
+    font-size: 16px;
+  }
+
+  .heroText {
     padding: 0 24px;
   }
 
@@ -501,5 +609,6 @@
   .paraQuienCircle {
     width: 204px;
     height: 204px;
+    margin-top: 0;
   }
 }

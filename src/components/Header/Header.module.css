@@ -4,6 +4,8 @@
   z-index: 100;
   background-color: #000000;
   padding: 0;
+  border-bottom-left-radius: 24px;
+  border-bottom-right-radius: 24px;
 }
 
 .container {
@@ -40,7 +42,7 @@
 .nav {
   display: flex;
   align-items: center;
-  gap: 2.5rem;
+  gap: 0.5rem;
 }
 
 .navLink {
@@ -51,12 +53,21 @@
   letter-spacing: 0%;
   color: #ffffff;
   text-decoration: none;
-  transition: opacity 0.2s ease;
   white-space: nowrap;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: transparent;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .navLink:hover {
-  opacity: 0.7;
+  background: #ffffff7a;
+  color: #000000;
+}
+
+.navLinkActive {
+  background: #ffffff7a;
+  color: #000000;
 }
 
 .cartWrapper {
@@ -71,9 +82,34 @@
   opacity: 0.7;
 }
 
+.cartIconWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .cartIcon {
   width: 48px;
   height: 48px;
+}
+
+.cartBadge {
+  position: absolute;
+  top: -4px;
+  right: -6px;
+  background: #E8B84B;
+  color: #1a1a1a;
+  font-size: 11px;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  line-height: 1;
 }
 
 .mobileActions {
@@ -167,6 +203,51 @@
 .mobileNavLink:hover {
   background-color: rgba(255, 255, 255, 0.06);
   color: rgba(255, 255, 255, 0.85);
+}
+
+.mobileNavLinkActive {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+.langSelector {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.langBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.5);
+  padding: 0;
+  transition: color 0.2s ease;
+  letter-spacing: 0.05em;
+}
+
+.langBtn:hover {
+  color: #ffffff;
+}
+
+.langActive {
+  color: #ffffff;
+}
+
+.langDivider {
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 12px;
+  user-select: none;
+}
+
+.mobileLangSelector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 24px;
 }
 
 .overlay {

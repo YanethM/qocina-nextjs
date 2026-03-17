@@ -10,55 +10,48 @@
   width: 100%;
 }
 
-.mainImage {
-  display: block;
+.waveImage {
   width: 100%;
   height: auto;
-  object-fit: cover;
+  display: block;
+  opacity: 1;
 }
 
-.waveTop {
+.waveImageMobile {
+  display: none;
+}
+
+.historiaFraseQ {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 2;
-  pointer-events: none;
-}
-
-.waveTop img {
-  width: 100%;
-  height: auto;
-  display: block;
+  top: 240px;
+  left: 360px;
+  width: 162.61px;
+  height: 102.42px;
+  opacity: 1;
+  z-index: 6;
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 130%;
+  color: #ffffff;
+  margin: 0;
+  transform: rotate(-10deg);
+  transform-origin: left center;
 }
 
 .desktopContent {
+  z-index: 5;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 60px;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 40px;
+  display: flex;
   position: absolute;
   top: 20%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 100%;
-  max-width: 1200px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 60px;
-  padding: 0 40px;
-  z-index: 5;
-}
-
-.desktopContent .logoWrapper {
-  flex: 0 0 auto;
-  width: 331.65px;
-  height: 226.73px;
-  opacity: 1;
-  transform: rotate(0deg);
-}
-
-.desktopContent .logo {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
 }
 
 .desktopContent .textButtonWrapper {
@@ -66,10 +59,10 @@
   height: 124px;
   gap: 16px;
   opacity: 1;
-  transform: rotate(0deg);
   display: flex;
   flex-direction: column;
-  align-items: flex-start; 
+  align-items: flex-start;
+  padding-right: 10px;
   justify-content: center;
 }
 
@@ -92,66 +85,42 @@
   color: #000 !important;
   font-family: var(--font-montserrat), sans-serif !important;
   font-weight: 700 !important;
-  font-size: 14px !important;
+  font-size: 16px !important;
   border: none !important;
   cursor: pointer !important;
   text-decoration: none !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease !important;
 }
 
-.mobileImageContainer {
-  display: none;
-  position: relative;
-  width: 100%;
-}
-
-.mainImageMobile {
-  display: block;
-  width: 100%;
-  height: auto;
-  object-fit: cover;
+.desktopBtn:hover {
+  background-color: #1a1a1a !important;
+  color: #fff !important;
 }
 
 .mobileContent {
+  display: none;
   position: absolute;
-  top: 0;
+  top: 73px;
   left: 0;
   width: 100%;
   height: 100%;
-  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   z-index: 10;
-  padding: 32px;
   box-sizing: border-box;
 }
 
-.mobileContent .logoWrapper {
-  width: 263.3004150390625px;
-  height: 180.0001220703125px;
-  opacity: 1;
-  transform: rotate(0deg);
-  margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.mobileContent .logo {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
 .mobileContent .textWrapper {
-  width: 329px;
+  width: 400px;
   height: 137px;
   gap: 16px;
   opacity: 1;
-  transform: rotate(0deg);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -168,7 +137,16 @@
   text-align: center;
   color: #ffffff;
   margin: 0;
+  padding-top: 15px;
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.mobileFraseQ {
+  display: none;
+}
+
+.mobileBtn {
+  display: none;
 }
 
 .mobileContent .buttonWrapper {
@@ -179,15 +157,15 @@
 }
 
 .mobileContent .buttonWrapper :global(.btn-yellow) {
-  width: 280px;
+  width: 350px;
   height: 48px;
-  padding: 12px 32px;
+  padding: 0.8rem 2.5rem;
+  font-size: 16px !important;
   border-radius: 100px;
   background-color: #f4a910;
   color: #000;
   font-family: var(--font-montserrat), sans-serif;
   font-weight: 700;
-  font-size: 14px;
   border: none;
   cursor: pointer;
   text-decoration: none;
@@ -198,57 +176,74 @@
 }
 
 @media (max-width: 768px) {
-  
-  .mainImage {
+  .cocinarConQ {
+    overflow: visible;
+  }
+
+  .waveImageDesktop {
     display: none;
   }
-  
-  .waveTop {
-    display: none;
+
+  .waveImageMobile {
+    display: block;
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
   }
-  
+
+  .imageWrapper {
+    height: auto;
+    overflow: visible;
+  }
+
   .desktopContent {
     display: none;
   }
-  
-  
-  .mobileImageContainer {
-    display: block;
-    min-height: 500px;
+
+  .historiaFraseQ {
+    display: none;
   }
-  
-  .mainImageMobile {
+
+  .mobileContent {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .mobileFraseQ {
+    font-family: var(--font-montserrat), sans-serif;
+    color: #fff;
+    text-align: center;
+    align-self: flex-start;
+    width: 154px;
+    margin-top: 50px;
+    font-size: 14px;
+    padding-left: 64px;
+    font-weight: 400;
+    line-height: 1.3;
     display: block;
-    min-height: 500px;
+    transform: translateX(-30px) rotate(-10deg);
+  }
+
+  .mobileBtn {
+    display: flex;
+    padding: 0.8rem 2.5rem !important;
+    font-size: 16px !important;
   }
 }
 
 @media (max-width: 480px) {
-  .mobileImageContainer {
-    min-height: 450px;
-  }
-  
-  .mainImageMobile {
-    min-height: 450px;
-  }
-  
-  .mobileContent .logoWrapper {
-    width: 220px;
-    height: 150px;
-    margin-bottom: 12px;
-  }
-  
   .mobileContent .textWrapper {
     width: 280px;
     height: auto;
     min-height: 120px;
     margin-bottom: 12px;
   }
-  
+
   .mobileContent .description {
-    font-size: 14px;
+    font-size: 16px;
   }
-  
+
   .mobileContent .buttonWrapper :global(.btn-yellow) {
     width: 240px;
     font-size: 13px;
@@ -258,24 +253,10 @@
 }
 
 @media (max-width: 360px) {
-  .mobileImageContainer {
-    min-height: 400px;
-  }
-  
-  .mainImageMobile {
-    min-height: 400px;
-  }
-  
-  .mobileContent .logoWrapper {
-    width: 180px;
-    height: 123px;
-    margin-bottom: 8px;
-  }
-  
   .mobileContent .textWrapper {
     width: 240px;
   }
-  
+
   .mobileContent .description {
     font-size: 13px;
   }

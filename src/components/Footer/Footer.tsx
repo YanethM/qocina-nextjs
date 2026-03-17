@@ -18,10 +18,10 @@ export default function Footer() {
 
         <div className={styles.navCart}>
           <nav className={styles.nav}>
-            <Link href="/sobre-nosotros">Sobre nosotros</Link>
+            <Link href="/quienes-somos">Sobre nosotros</Link>
             <Link href="/productos">Productos</Link>
             <Link href="/recetas">Recetas</Link>
-            <Link href="/actualidad">Actualidad</Link>
+            <Link href="/blog-y-noticias">Actualidad</Link>
             <Link href="/contacto">Contacto</Link>
           </nav>
 

@@ -18,27 +18,31 @@ async function getBadges() {
   }
 }
 
-export default async function NuestroSecreto() {
+interface NuestroSecretoProps {
+  secreto_titulo?: string;
+  secreto_descripcion?: string;
+  secreto_chef_frase_q?: string;
+  secreto_cta?: { texto: string; url: string; nueva_ventana: boolean } | null;
+  secreto_chef_cta?: { texto: string; url: string; nueva_ventana: boolean } | null;
+}
+
+export default async function NuestroSecreto({ secreto_titulo, secreto_descripcion, secreto_chef_frase_q, secreto_cta, secreto_chef_cta }: NuestroSecretoProps) {
   const badges = await getBadges();
 
   return (
     <section className={styles.nuestroSecreto}>
       <div className={styles.innerContainer}>
         <div className={styles.textContainer}>
-          <h2 className={styles.title}>Nuestro secreto</h2>
-          <p className={styles.description}>
-            Un <span className={styles.highlight}>proceso único</span> que une lo
-            artesanal y lo tecnológico:{" "}
-            <span className={styles.highlight}>bases culinarias</span>{" "}
-            desarrolladas por el reconocido{" "}
-            <span className={styles.highlight}>chef Gastón Acurio</span>, que
-            rescata recetas de madres y abuelas, y las combina con{" "}
-            <span className={styles.highlight}>secretos de alta cocina</span> que
-            garantizan un sabor inigualable.
-          </p>
+          {secreto_titulo && <h2 className={styles.title}>{secreto_titulo}</h2>}
+          {secreto_descripcion && (
+            <div
+              className={styles.description}
+              dangerouslySetInnerHTML={{ __html: secreto_descripcion }}
+            />
+          )}
 
           <div className={styles.badgesGrid}>
-            {badges.map((badge: { id: number; nombre: string; icono?: { url?: string; formats?: { small?: { url?: string }; thumbnail?: { url?: string } } } }) => {
+            {badges.map((badge: any) => {
               const icono = badge.icono;
               const formats = icono?.formats;
               
@@ -66,15 +70,17 @@ export default async function NuestroSecreto() {
             })}
           </div>
 
-          <div className={styles.btnContainer}>
-            <Button
-              href="/sobre-nosotros"
-              variant="primary"
-              className={styles.procesoBtn}
-            >
-              Conoce nuestro proceso
-            </Button>
-          </div>
+          {secreto_cta && (
+            <div className={styles.btnContainer}>
+              <Button
+                href={secreto_cta.url}
+                variant="primary"
+                className={styles.procesoBtn}
+              >
+                {secreto_cta.texto}
+              </Button>
+            </div>
+          )}
         </div>
 
         <div className={styles.imageWrapper}>
@@ -87,21 +93,26 @@ export default async function NuestroSecreto() {
             priority={false}
           />
           <Image
-            src="/images/mobile/nuestro_secreto/secreto.svg"
+            src="/images/mobile/nuestro_secreto/cocinar_con_q.svg"
             alt="Nuestro secreto"
             width={390}
-            height={500}
+            height={700}
             className={styles.mobileSecretoImage}
             style={{ height: "auto" }}
             priority={false}
           />
-          <Button
-            href="/sobre-nosotros"
-            variant="yellow"
-            className={styles.gastonBtn}
-          >
-            Conoce más sobre Gastón Acurio
-          </Button>
+          {secreto_chef_frase_q && (
+            <p className={styles.chefFraseQ}>{secreto_chef_frase_q}</p>
+          )}
+          {secreto_chef_cta && (
+            <Button
+              href={secreto_chef_cta.url}
+              variant="yellow"
+              className={styles.gastonBtn}
+            >
+              {secreto_chef_cta.texto}
+            </Button>
+          )}
         </div>
       </div>
     </section>

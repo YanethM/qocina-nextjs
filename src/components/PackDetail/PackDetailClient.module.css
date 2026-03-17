@@ -1,0 +1,199 @@
+.infoSection {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.title {
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 120%;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.descripcion {
+  font-family: Montserrat, sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 160%;
+  color: #444;
+  margin: 0;
+}
+
+.sku {
+  font-family: Montserrat, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: #999;
+  margin: 0;
+}
+
+.priceRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.priceOriginal {
+  font-family: Montserrat, sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  color: #999;
+  text-decoration: line-through;
+}
+
+.priceRight {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.price {
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 120%;
+  color: #1a1a1a;
+}
+
+.discountBadge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.28);
+  border-radius: 12px;
+  padding: 8px 12px;
+  gap: 0;
+  border: 1.5px solid #1a1a1a;
+}
+
+.discountPercent {
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 120%;
+  letter-spacing: 0;
+  color: #1a1a1a;
+}
+
+.discountLabel {
+  font-family: Montserrat, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 120%;
+  color: #1a1a1a;
+  margin-top: -4px;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.fieldLabel {
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: #1a1a1a;
+}
+
+.quantitySelector {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 200px;
+  height: 57px;
+}
+
+.quantityBtn {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quantityIcon {
+  width: 56px;
+  height: 56px;
+}
+
+.quantityValue {
+  width: 56px;
+  height: 57px;
+  padding: 16px;
+  border-radius: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Montserrat, sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 1;
+  text-align: center;
+}
+
+.addToCart {
+  width: 100%;
+  padding: 18px 24px;
+  background: #1a1a1a;
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  cursor: pointer;
+  transition:
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@media (hover: hover) {
+  .addToCart:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.addToCart:active {
+  transform: scale(0.97);
+  box-shadow: none;
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 32px;
+    text-align: center;
+  }
+
+  .descripcion {
+    text-align: center;
+  }
+
+  .sku {
+    text-align: center;
+  }
+
+  .priceRow {
+    justify-content: center;
+  }
+
+  .fieldGroup {
+    align-items: center;
+  }
+
+  .addToCart {
+    font-size: 16px;
+    padding: 16px 24px;
+  }
+}

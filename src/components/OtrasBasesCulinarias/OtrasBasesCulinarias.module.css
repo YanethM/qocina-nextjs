@@ -20,6 +20,58 @@
   text-align: center;
   color: #1a1a1a;
   margin: 0;
+  padding-top: 96px;
+}
+
+.mobileCards {
+  display: none;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.mobileSlider {
+  overflow: hidden;
+  width: 100%;
+}
+
+.mobileTrack {
+  display: flex;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.mobileSlide {
+  flex: 0 0 100%;
+}
+
+.mobileCard {
+  border-radius: 16px;
+  overflow: hidden;
+  display: block;
+}
+
+.mobileDots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.mobileDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #ccc;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+.mobileDotActive {
+  background: #CE171C;
+  width: 24px;
 }
 
 .cards {
@@ -108,6 +160,10 @@
 }
 
 .cardVerde {
+  gap: 24px;
+}
+
+.cardRojo {
   gap: 24px;
 }
 
@@ -202,6 +258,14 @@
 }
 
 @media (max-width: 768px) {
+  .mobileCards {
+    display: flex;
+  }
+
+  .cards {
+    display: none;
+  }
+
   .section {
     padding-left: 20px;
     padding-right: 20px;

@@ -79,6 +79,7 @@ export default function ProductosNuestroSecreto({ secretoImagen }: Props) {
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 900px) 100vw, (max-width: 1200px) 480px, 611px"
             className={styles.image}
+            unoptimized
           />
         </div>
 

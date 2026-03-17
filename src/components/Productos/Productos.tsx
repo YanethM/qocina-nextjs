@@ -10,9 +10,13 @@ import styles from "./Productos.module.css";
 
 interface ProductosProps {
   productos: Producto[];
+  title?: string;
+  subtitle?: string;
+  description?: string;
   ctaText?: string;
   ctaUrl?: string;
   ctaNuevaVentana?: boolean;
+  className?: string;
 }
 
 function getCardColor(index: number): string {
@@ -21,6 +25,7 @@ function getCardColor(index: number): string {
 }
 
 function formatPrice(precio: number, moneda: string): string {
+  if (!precio && precio !== 0) return "";
   if (moneda === "PEN") {
     return `S/ ${precio.toFixed(2)}`;
   }
@@ -40,10 +45,14 @@ function getImageUrl(
 function CardItem({
   producto,
   colorClass,
+  priority = false,
 }: {
   producto: Producto;
   colorClass: string;
+  priority?: boolean;
 }) {
+  const btnVariant = colorClass === styles.cardYellow ? "dark" : "white";
+
   return (
     <Link
       href={`/productos/${producto.slug}`}
@@ -56,7 +65,8 @@ function CardItem({
             fill
             sizes="(max-width: 640px) 245px, (max-width: 1024px) 500px, 424px"
             style={{ objectFit: "contain" }}
-            priority
+            priority={priority}
+            unoptimized
           />
         )}
       </div>
@@ -71,9 +81,9 @@ function CardItem({
         <p className={styles.descripcion}>{producto.descripcion_corta}</p>
         <button
           className={styles.addToCartBtn}
+          data-btn={btnVariant}
           onClick={(e) => {
             e.preventDefault();
-            console.log("Añadir al carrito:", producto.nombre);
           }}>
           Añadir al carrito
         </button>
@@ -82,14 +92,17 @@ function CardItem({
   );
 }
 
-const PEEK = 44;
-const GAP = 12;
+const GAP = 16;
 
 export default function Productos({
   productos,
-  ctaText = "Ver todos los productos",
-  ctaUrl = "/productos",
-  ctaNuevaVentana = false,
+  title,
+  subtitle,
+  description,
+  ctaText,
+  ctaUrl,
+  ctaNuevaVentana,
+  className,
 }: ProductosProps) {
   const { current, goTo, handleTouchStart, handleTouchEnd } = useCarousel(
     productos.length,
@@ -107,17 +120,22 @@ export default function Productos({
     return () => ro.disconnect();
   }, []);
 
-  const slideWidth = containerWidth > 0 ? containerWidth - PEEK : 0;
+  const isMobile = containerWidth > 0 && containerWidth <= 640;
+  const slideWidth = isMobile
+    ? containerWidth
+    : containerWidth > 0
+    ? Math.floor(containerWidth / 2 - GAP / 2)
+    : 0;
   const translateX = current * (slideWidth + GAP);
 
   if (productos.length === 0) return null;
 
   return (
-    <section className={styles.section}>
+    <section className={`${styles.section}${className ? ` ${className}` : ``}`}>
       <div className={styles.header}>
-        <h2 className={styles.title}>
-          ¡Atrévete hoy a disfrutar de la Q&apos;ocina con Q!
-        </h2>
+        {title && <p className={styles.title}>{title}</p>}
+        {subtitle && <h2 className={styles.subtitle}>{subtitle}</h2>}
+        {description && <p className={styles.description}>{description}</p>}
       </div>
 
       <div className={styles.grid}>
@@ -126,6 +144,7 @@ export default function Productos({
             key={producto.id}
             producto={producto}
             colorClass={getCardColor(index)}
+            priority={index === 0}
           />
         ))}
       </div>
@@ -140,7 +159,7 @@ export default function Productos({
           style={{ transform: `translateX(-${translateX}px)` }}>
           {productos.map((producto, index) => (
             <div key={producto.id} className={styles.slide}>
-              <CardItem producto={producto} colorClass={getCardColor(index)} />
+              <CardItem producto={producto} colorClass={getCardColor(index)} priority={index === 0} />
             </div>
           ))}
         </div>
@@ -157,22 +176,25 @@ export default function Productos({
         </div>
       </div>
 
-      <div className={styles.verTodas}>
-        <Link
-          href={ctaUrl}
-          className={styles.verTodasBtn}
-          target={ctaNuevaVentana ? "_blank" : "_self"}
-          rel={ctaNuevaVentana ? "noopener noreferrer" : undefined}>
-          {ctaText}{" "}
-          <Image
-            src="/images/web/home/white_arrow_right.svg"
-            alt=""
-            width={20}
-            height={20}
-            style={{ height: "auto" }}
-          />
-        </Link>
-      </div>
+      {ctaUrl && ctaText && (
+        <div className={styles.verTodas}>
+          <Link
+            href={ctaUrl}
+            className={styles.verTodasBtn}
+            data-btn="dark"
+            target={ctaNuevaVentana ? "_blank" : "_self"}
+            rel={ctaNuevaVentana ? "noopener noreferrer" : undefined}>
+            {ctaText}{" "}
+            <Image
+              src="/images/web/home/white_arrow_right.svg"
+              alt=""
+              width={20}
+              height={20}
+              style={{ height: "auto" }}
+            />
+          </Link>
+        </div>
+      )}
     </section>
   );
 }

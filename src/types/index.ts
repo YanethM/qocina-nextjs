@@ -1,3 +1,13 @@
+export interface Site {
+  id: number;
+  documentId: string;
+  code: string;
+  nombre: string;
+  moneda: string;
+  activo: boolean;
+  ofix_country_code: string;
+}
+
 export interface StrapiImage {
   id: number;
   url: string;
@@ -86,6 +96,8 @@ export interface Producto {
   galeria_imagenes: StrapiImage[] | null;
   categoria: Categoria | null;
   badges: Badge[] | null;
+  recetas_relacionadas: Receta[] | null;
+  testimonios: Testimonio[] | null;
 }
 
 export interface RecetaIngrediente {
@@ -156,10 +168,16 @@ export interface Articulo {
   titulo: string;
   slug: string;
   descripcion: string;
+  descripcion_corta: string | null;
   contenido: string | null;
   imagen: StrapiImage | null;
+  imagen_principal: StrapiImage | null;
   fecha: string | null;
+  fecha_publicacion: string | null;
   autor: string | null;
+  tiempo_lectura: number | null;
+  destacado: boolean;
+  orden: number;
   categoria_blog: CategoriaBlog | null;
 }
 
@@ -168,6 +186,7 @@ export interface CategoriaFaq {
   documentId: string;
   nombre: string;
   slug: string;
+  orden?: number;
 }
 
 export interface PreguntaFrecuente {
@@ -175,6 +194,7 @@ export interface PreguntaFrecuente {
   documentId: string;
   pregunta: string;
   respuesta: string;
+  orden: number;
   categoria_faq: CategoriaFaq | null;
 }
 
@@ -183,6 +203,15 @@ export interface Valor {
   titulo: string;
   descripcion: string;
   color?: string;
+  orden?: number;
+  imagen?: StrapiImage | null;
+}
+
+export interface Premio {
+  id: number;
+  titulo?: string | null;
+  descripcion?: string | null;
+  imagen?: StrapiImage | null;
   orden?: number;
 }
 
@@ -196,6 +225,25 @@ export interface QuienesSomos {
   mision: string | null;
   vision: string | null;
   valores: Valor[] | null;
+  hero_titulo: string | null;
+  hero_subtitulo: string | null;
+  hero_imagen: StrapiImage | null;
+  que_es_titulo: string | null;
+  que_es_descripcion: string | null;
+  chef_nombre: string | null;
+  chef_titulo: string | null;
+  chef_descripcion: string | null;
+  chef_cta: { id: number; texto: string; url: string; nueva_ventana: boolean } | null;
+  premios_titulo: string | null;
+  premios: Premio[] | null;
+  productos_titulo: string | null;
+  productos_subtitulo: string | null;
+  productos_descripcion: string | null;
+  productos_cta: { id: number; texto: string; url: string; nueva_ventana: boolean } | null;
+  proceso_titulo: string | null;
+  proceso_cta: { id: number; texto: string; url: string; nueva_ventana: boolean } | null;
+  meta_title: string | null;
+  meta_description: string | null;
 }
 
 export interface PackDestacado {
@@ -209,6 +257,7 @@ export interface PackDestacado {
   disponible: boolean;
   sku: string | null;
   orden: number;
+  productos: Producto[] | null;
   imagen: StrapiImage | null;
 }
 
@@ -225,10 +274,20 @@ export interface ProductosPage {
   documentId: string;
   titulo: string;
   descripcion: string;
+  hero_titulo: string | null;
+  hero_subtitulo: string | null;
+  productos_titulo: string | null;
+  productos_destacados: Producto[] | null;
+  packs_titulo: string | null;
+  packs_mostrar_descuento: boolean;
+  packs_porcentaje_descuento: number | null;
   banner: StrapiImage | null;
   secreto_imagen: StrapiImage | null;
   packs_destacados: PackDestacado[] | null;
   perfiles_usuario: PerfilUsuario[] | null;
+  ayuda_titulo: string | null;
+  ayuda_subtitulo: string | null;
+  ayuda_cta: { id: number; texto: string; url: string; nueva_ventana: boolean } | null;
 }
 
 export interface RecetasPage {
@@ -236,7 +295,14 @@ export interface RecetasPage {
   documentId: string;
   titulo: string;
   descripcion: string;
+  hero_titulo: string | null;
+  hero_subtitulo: string | null;
   banner: StrapiImage | null;
+  filtro_tipo_receta_label: string | null;
+  filtro_region_label: string | null;
+  filtro_dieta_label: string | null;
+  testimonios_titulo: string | null;
+  testimonios: Testimonio[] | null;
 }
 
 export interface BlogPage {
@@ -244,7 +310,20 @@ export interface BlogPage {
   documentId: string;
   titulo: string;
   descripcion: string;
+  hero_titulo: string;
+  hero_subtitulo: string;
+  publicaciones_titulo: string;
+  cta_cargar_mas: string;
+  relacionadas_cta_ver_todas: string | null;
+  newsletter_titulo: string;
+  newsletter_descripcion: string;
+  newsletter_placeholder: string;
+  newsletter_cta_texto: string;
+  meta_title: string;
+  meta_description: string;
   banner: StrapiImage | null;
+  hero_imagen: StrapiImage | null;
+  hero_imagen_mobile: StrapiImage | null;
 }
 
 export interface FaqPage {
@@ -252,6 +331,13 @@ export interface FaqPage {
   documentId: string;
   titulo: string;
   descripcion: string;
+  hero_etiqueta: string | null;
+  hero_titulo: string | null;
+  hero_descripcion: string | null;
+  hero_imagen: StrapiImage | null;
+  meta_title: string | null;
+  meta_description: string | null;
+  cta_cargar_mas: string | null;
 }
 
 export interface ProcesoProduccion {
@@ -261,6 +347,18 @@ export interface ProcesoProduccion {
   descripcion: string;
   contenido: string | null;
   pasos: string | null;
+  imagen: StrapiImage | null;
+}
+
+export interface ContactoPage {
+  id: number;
+  documentId: string;
+  titulo: string;
+  descripcion: string;
+  formulario_boton: string;
+  whatsapp_texto: string | null;
+  whatsapp_url: string | null;
+  whatsapp_cta_texto: string | null;
   imagen: StrapiImage | null;
 }
 
@@ -281,4 +379,25 @@ export interface HomePage {
   id: number;
   documentId: string;
   slider: HeroSlide[];
+  intro_texto: string;
+  productos_titulo: string;
+  productos_cta: { texto: string; url: string; nueva_ventana: boolean } | null;
+  natural_titulo: string;
+  natural_descripcion: string;
+  natural_frase_q: string;
+  natural_cta: { texto: string; url: string; nueva_ventana: boolean } | null;
+  secreto_titulo: string;
+  secreto_descripcion: string;
+  secreto_chef_frase_q: string;
+  secreto_cta: { texto: string; url: string; nueva_ventana: boolean } | null;
+  secreto_chef_cta: { texto: string; url: string; nueva_ventana: boolean } | null;
+  historia_descripcion: string;
+  historia_frase_q: string;
+  historia_cta: { texto: string; url: string; nueva_ventana: boolean } | null;
+  amazon_titulo: string;
+  amazon_descripcion: string;
+  amazon_cta: { texto: string; url: string; nueva_ventana: boolean } | null;
+  recetas_titulo: string;
+  recetas_cta: { texto: string; url: string; nueva_ventana: boolean } | null;
+  testimonios_titulo: string;
 }

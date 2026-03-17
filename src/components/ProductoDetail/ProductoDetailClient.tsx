@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import type { Badge, Categoria } from "@/types";
 import { COLOR_MAP } from "@/lib/constants";
+import { useCart } from "@/context/CartContext";
 import Accordion from "@/components/Accordion/Accordion";
 import styles from "./ProductoDetailClient.module.css";
 
@@ -15,6 +16,7 @@ const PACK_SIZES = [
 ];
 
 function formatPrice(precio: number, moneda: string): string {
+  if (!precio && precio !== 0) return "";
   if (moneda === "PEN") return `S/ ${precio.toFixed(2)}`;
   return `${precio.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ".")} COP`;
 }
@@ -23,11 +25,14 @@ function getTitleColor(nombre: string, categoriaSlug: string | null): string {
   const text = `${nombre} ${categoriaSlug ?? ""}`.toLowerCase();
   if (text.includes("roj")) return COLOR_MAP.rojo;
   if (text.includes("verd")) return COLOR_MAP.verde;
-  if (text.includes("amarill")) return COLOR_MAP.amarillo;
+  if (text.includes("amarill")) return "#CE171C";
   return COLOR_MAP.rojo;
 }
 
 interface Props {
+  id: number;
+  documentId: string;
+  slug: string;
   nombre: string;
   descripcionCorta: string;
   descripcionLarga: string | null;
@@ -36,11 +41,15 @@ interface Props {
   precio: number;
   precioMoneda: string;
   allImages: string[];
+  imagenPrincipal: string | null;
   categoria: Categoria | null;
   badges: Badge[];
 }
 
 export default function ProductoDetailClient({
+  id,
+  documentId,
+  slug,
   nombre,
   descripcionCorta,
   descripcionLarga,
@@ -49,9 +58,11 @@ export default function ProductoDetailClient({
   precio,
   precioMoneda,
   allImages,
+  imagenPrincipal,
   categoria,
   badges,
 }: Props) {
+  const { addItem } = useCart();
   const [selectedImg, setSelectedImg] = useState(0);
   const [cantidad, setCantidad] = useState(1);
   const [packSize, setPackSize] = useState("Unidad");
@@ -72,6 +83,7 @@ export default function ProductoDetailClient({
               style={{ objectFit: "contain" }}
               sizes="(max-width: 768px) 100vw, 50vw"
               priority
+              unoptimized
             />
           )}
         </div>
@@ -91,6 +103,7 @@ export default function ProductoDetailClient({
                   fill
                   style={{ objectFit: "cover" }}
                   sizes="80px"
+                  unoptimized
                 />
               </button>
             ))}
@@ -203,7 +216,17 @@ export default function ProductoDetailClient({
           ]}
         />
 
-        <button className={styles.addToCart}>Añadir al carrito</button>
+        <button
+          className={styles.addToCart}
+          onClick={() =>
+            addItem(
+              { id, documentId, slug, nombre, descripcionCorta, precio, precioMoneda, imagen: imagenPrincipal },
+              cantidad * (PACK_SIZES.find((p) => p.label === packSize)?.multiplier ?? 1)
+            )
+          }
+        >
+          Añadir al carrito
+        </button>
       </div>
     </div>
   );

@@ -1,0 +1,155 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 539px;
+}
+
+.input {
+  width: 100%;
+  height: 45px;
+  background: #ffffff;
+  border: none;
+  border-radius: 100px;
+  padding: 12px 24px;
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #1a1a1a;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.input::placeholder {
+  color: #999999;
+}
+
+.textarea {
+  height: 45px;
+  border-radius: 100px;
+  resize: none;
+  overflow: hidden;
+}
+
+.submitRow {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 6px;
+}
+
+.submitBtn {
+  background-color: #f4a910;
+  color: #000000;
+  border: none;
+  border-radius: 100px;
+  padding: 12px 40px;
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.submitBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  background: #1a1a1a;
+  color: #fff;
+  border-radius: 16px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-width: 300px;
+  max-width: 380px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  transform: translateY(120%);
+  opacity: 0;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease;
+  pointer-events: none;
+}
+
+.toastVisible {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.toastError {
+  background: #c0392b;
+}
+
+.toastContent {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.toastIcon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #f5b800;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.toastError .toastIcon {
+  background: #fff;
+  color: #c0392b;
+}
+
+.toastTitle {
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  margin: 0;
+  color: #fff;
+}
+
+.toastText {
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.toastClose {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  font-size: 14px;
+  padding: 4px;
+  line-height: 1;
+  transition: color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.toastClose:hover {
+  color: #fff;
+}
+
+@media (max-width: 480px) {
+  .toast {
+    bottom: 16px;
+    right: 16px;
+    left: 16px;
+    min-width: unset;
+    max-width: unset;
+  }
+}

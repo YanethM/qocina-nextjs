@@ -1,4 +1,4 @@
-import { getProductoBySlug, getRecetas, getTestimonios, getStrapiImageUrl } from "@/lib/api";
+import { getProductoBySlug, getRecetaBySlug, getTestimonios, getStrapiImageUrl } from "@/lib/api";
 import { notFound } from "next/navigation";
 import Badges from "@/components/Badges/Badges";
 import ProductoDetailClient from "@/components/ProductoDetail/ProductoDetailClient";
@@ -15,11 +15,7 @@ export default async function ProductoDetailPage({ params }: Props) {
   try {
     const { slug } = await params;
 
-    const [producto, recetasRes, testimoniosRes] = await Promise.all([
-      getProductoBySlug(slug),
-      getRecetas().catch(() => null),
-      getTestimonios().catch(() => null),
-    ]);
+    const producto = await getProductoBySlug(slug);
 
     if (!producto) {
       return notFound();
@@ -36,12 +32,25 @@ export default async function ProductoDetailPage({ params }: Props) {
     const allImages = [imagenPrincipal, ...galeria].filter(Boolean) as string[];
 
     const badges = producto.badges ?? [];
-    const recetas = recetasRes?.data ?? [];
-    const testimonios = testimoniosRes?.data ?? [];
+
+    const productoTestimonioIds = new Set((producto.testimonios ?? []).map((t) => t.id));
+    const testimoniosRes = productoTestimonioIds.size > 0
+      ? await getTestimonios().catch(() => null)
+      : null;
+    const testimonios = (testimoniosRes?.data ?? []).filter((t) => productoTestimonioIds.has(t.id));
+
+    const recetasBase = producto.recetas_relacionadas ?? [];
+    const recetasConImagenes = await Promise.all(
+      recetasBase.map((r) => getRecetaBySlug(r.slug).catch(() => null))
+    );
+    const recetas = recetasConImagenes.filter(Boolean) as NonNullable<typeof recetasConImagenes[0]>[];
 
     return (
       <div className={styles.page}>
         <ProductoDetailClient
+          id={producto.id}
+          documentId={producto.documentId}
+          slug={producto.slug}
           nombre={producto.nombre}
           descripcionCorta={producto.descripcion_corta}
           descripcionLarga={producto.descripcion_larga}
@@ -50,6 +59,7 @@ export default async function ProductoDetailPage({ params }: Props) {
           precio={producto.precio}
           precioMoneda={producto.precio_moneda}
           allImages={allImages}
+          imagenPrincipal={imagenPrincipal}
           categoria={producto.categoria}
           badges={badges}
         />
@@ -68,8 +78,8 @@ export default async function ProductoDetailPage({ params }: Props) {
           style={{ width: "100%", height: "auto" }}
         />
 
-        <ListaRecetas recetas={recetas} hideFilters />
-        <Testimonios testimonios={testimonios} />
+        {recetas.length > 0 && <ListaRecetas recetas={recetas} hideFilters />}
+        {testimonios.length > 0 && <Testimonios testimonios={testimonios} waveImage="/images/web/products/red_waves.svg" />}
         <OtrasBasesCulinarias />
       </div>
     );

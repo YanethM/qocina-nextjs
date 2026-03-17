@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { getRecetasPage, getTestimonios, getRecetas } from "@/lib/api";
+import { getRecetasPage, getRecetas, getStrapiImageUrl } from "@/lib/api";
 import styles from "./page.module.css";
 import BasesCulinarias from "@/components/BasesCulinarias/BasesCulinarias";
 import Testimonios from "@/components/Testimonios/Testimonios";
@@ -11,26 +11,40 @@ export const metadata = {
 };
 
 export default async function RecetasPage() {
-  const [, testimoniosRes, recetasRes] = await Promise.all([
+  const [recetasPageRes, recetasRes] = await Promise.all([
     getRecetasPage().catch(() => null),
-    getTestimonios().catch(() => null),
     getRecetas().catch(() => null),
   ]);
 
-  const testimonios = testimoniosRes?.data ?? [];
+  const pageData = recetasPageRes?.data;
+  const bannerApiUrl = pageData?.banner ? getStrapiImageUrl(pageData.banner.url) : null;
+  const testimonios = pageData?.testimonios ?? [];
   const recetas = recetasRes?.data ?? [];
 
   return (
     <div className={styles.page}>
       <section className={styles.banner}>
+        {bannerApiUrl && (
+          <Image
+            src={bannerApiUrl}
+            alt="Recetas Q'ocina"
+            fill
+            className={styles.bannerApiBg}
+            style={{ objectFit: "cover" }}
+            priority
+            unoptimized
+          />
+        )}
         <Image
           src="/images/web/recetas/banner.svg"
-          alt="Recetas Q'ocina"
+          alt=""
           fill
-          className={styles.bannerImage}
-          style={{ objectFit: "cover" }}
+          className={styles.bannerSvg}
           priority
         />
+        <div className={styles.bannerText}>
+          <h1 className={styles.bannerTitulo}>{pageData?.hero_titulo}</h1>
+        </div>
       </section>
       <div className={styles.bannerMobileWrapper}>
         <Image
@@ -44,8 +58,13 @@ export default async function RecetasPage() {
       </div>
 
       <BasesCulinarias />
-      <ListaRecetas recetas={recetas} />
-      <Testimonios testimonios={testimonios} />
+      <ListaRecetas
+        recetas={recetas}
+        labelTipoReceta={pageData?.filtro_tipo_receta_label ?? undefined}
+        labelRegion={pageData?.filtro_region_label ?? undefined}
+        labelDieta={pageData?.filtro_dieta_label ?? undefined}
+      />
+      <Testimonios testimonios={testimonios} testimonios_titulo={pageData?.testimonios_titulo ?? undefined} />
     </div>
   );
 }

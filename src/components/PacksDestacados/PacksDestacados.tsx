@@ -2,23 +2,33 @@ import Image from "next/image";
 import Link from "next/link";
 import type { PackDestacado } from "@/types";
 import { getStrapiImageUrl } from "@/lib/api";
+import AddPackToCartButton from "./AddPackToCartButton";
 import styles from "./PacksDestacados.module.css";
 
 function formatPrice(precio: number, moneda: string): string {
+  if (!precio && precio !== 0) return "";
   if (moneda === "PEN") return `S/ ${precio.toFixed(2)}`;
   return `${precio.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ".")} COP`;
 }
 
 interface Props {
   packs: PackDestacado[];
+  titulo?: string | null;
+  mostrarDescuento?: boolean;
+  porcentajeDescuento?: number | null;
 }
 
-export default function PacksDestacados({ packs }: Props) {
+export default function PacksDestacados({
+  packs,
+  titulo,
+  mostrarDescuento = false,
+  porcentajeDescuento,
+}: Props) {
   const sorted = [...packs].sort((a, b) => a.orden - b.orden);
 
   return (
     <section className={styles.section}>
-      <h2 className={styles.title}>¡Llévate tu pack favorito!</h2>
+      {titulo && <h2 className={styles.title}>{titulo}</h2>}
 
       <div className={styles.grid}>
         {sorted.map((pack, index) => {
@@ -46,13 +56,16 @@ export default function PacksDestacados({ packs }: Props) {
                     sizes="(max-width: 768px) 90vw, 424px"
                     style={{ objectFit: "contain" }}
                     className={styles.image}
+                    unoptimized
                   />
                 )}
 
-                <div className={styles.discountBadge}>
-                  <span className={styles.discountPercent}>50%</span>
-                  <span className={styles.discountLabel}>dto</span>
-                </div>
+                {mostrarDescuento && porcentajeDescuento && (
+                  <div className={styles.discountBadge}>
+                    <span className={styles.discountPercent}>{porcentajeDescuento}%</span>
+                    <span className={styles.discountLabel}>dto</span>
+                  </div>
+                )}
               </div>
 
               <div className={styles.cardBody}>
@@ -70,15 +83,24 @@ export default function PacksDestacados({ packs }: Props) {
                   {formatPrice(pack.precio, pack.precio_moneda)}
                 </p>
 
+                <p className={styles.packSlug}>{pack.slug}</p>
+
                 <p className={styles.descripcion}>{pack.descripcion}</p>
 
                 <div className={styles.actions}>
-                  <button
-                    className={`${styles.btnPrimary} ${isFeatured ? styles.btnPrimaryFeatured : ""}`}>
-                    Añadir al carrito
-                  </button>
+                  <AddPackToCartButton
+                    id={pack.id}
+                    documentId={pack.documentId}
+                    slug={pack.slug}
+                    nombre={pack.nombre}
+                    descripcion={pack.descripcion}
+                    precio={pack.precio}
+                    precioMoneda={pack.precio_moneda}
+                    imagen={imagenUrl}
+                    className={`${styles.btnPrimary} ${isFeatured ? styles.btnPrimaryFeatured : ""}`}
+                  />
                   <Link
-                    href={`/productos/${pack.slug}`}
+                    href={`/packs/${pack.slug}`}
                     className={`${styles.btnSecondary} ${isFeatured ? styles.btnSecondaryFeatured : ""}`}>
                     Más información
                     <Image

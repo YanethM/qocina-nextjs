@@ -1,0 +1,220 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.numberedCard {
+  border: 1px solid #e0e0e0;
+  border-radius: 24px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 32px;
+}
+
+.numberedCard:last-child {
+  margin-bottom: 0;
+}
+
+.ol {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin: 0 0 16px;
+  padding: 0;
+}
+
+.li {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.numImg {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.numFallback {
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  flex-shrink: 0;
+  min-width: 40px;
+}
+
+.liContent {
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 140%;
+}
+
+.numberedItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.numberedItem:last-child {
+  margin-bottom: 0;
+}
+
+.numberedTextBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.numberedLabel {
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 140%;
+  color: #1a1a1a;
+}
+
+.h2 {
+  font-family: var(--font-palmer), sans-serif;
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 60%;
+  letter-spacing: 0;
+  color: #1a1a1a;
+  margin: 0 0 24px;
+}
+
+.h2:first-child {
+  margin-top: 0;
+}
+
+.h3 {
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 130%;
+  margin: 20px 0 6px;
+  color: #1a1a1a;
+}
+
+.h3:first-child {
+  margin-top: 0;
+}
+
+.normalSection .p {
+  margin: 0 0 16px;
+}
+
+.normalSection .p:last-child {
+  margin-bottom: 0;
+}
+
+.numberedCard .p {
+  margin: 0 0 8px;
+}
+
+.numberedCard .p:last-child {
+  margin-bottom: 0;
+}
+
+.blockquote {
+  margin: 0 0 16px;
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+.p {
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 140%;
+  margin: 0;
+  color: #1a1a1a;
+}
+
+.ul {
+  list-style-position: inside;
+  padding-left: 0;
+  margin: 0 0 16px;
+}
+
+.ulCard {
+  border: 1px solid #e0e0e0;
+  border-radius: 24px;
+  padding: 32px;
+  margin: 0 0 32px;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ulLi {
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 140%;
+  margin-bottom: 8px;
+  color: #1a1a1a;
+}
+
+.ulCard .ulLi {
+  margin-bottom: 0;
+  padding-left: 20px;
+  position: relative;
+}
+
+.ulCard .ulLi::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #1a1a1a;
+}
+
+.strong {
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .h2 {
+    font-size: 48px;
+    line-height: 115%;
+    margin-bottom: 16px;
+  }
+
+  .h3 {
+    font-size: 17px;
+    margin: 16px 0 6px;
+  }
+
+  .p,
+  .liContent,
+  .numberedLabel,
+  .ulLi {
+    font-size: 16px;
+  }
+
+  .numberedCard,
+  .ulCard {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .h2 {
+    font-size: 40px;
+    line-height: 115%;
+  }
+
+  .numImg {
+    width: 32px;
+    height: 32px;
+  }
+}

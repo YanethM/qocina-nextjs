@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
+import CartToast from "@/components/CartToast/CartToast";
+import CookieBanner from "@/components/CookieBanner/CookieBanner";
+import { CartProvider } from "@/context/CartContext";
 import localFont from "next/font/local";
 import "./globals.css";
 
@@ -47,9 +50,13 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className={`${montserrat.variable} ${palmer.variable}`} suppressHydrationWarning>
-        <Header />
-        <main>{children}</main>
-        <Footer />
+        <CartProvider>
+          <Header />
+          <main>{children}</main>
+          <Footer />
+          <CartToast />
+          <CookieBanner />
+        </CartProvider>
       </body>
     </html>
   );

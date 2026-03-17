@@ -1,80 +1,608 @@
 .page {
-  min-height: 60vh;
+  width: 100%;
+  overflow-x: hidden;
 }
 
-.hero {
-  text-align: center;
-  padding: 4rem 1.5rem;
-  background-color: var(--color-bg-alt);
-}
-
-.title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-
-.subtitle {
-  font-size: 1.1rem;
-  color: var(--color-text-light);
-}
-
-.content {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 3rem 1.5rem;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-  align-items: center;
-  margin-bottom: 3rem;
-}
-
-.imageWrapper {
-  border-radius: 12px;
+.bannerSection {
+  width: 100%;
+  height: 629px;
+  line-height: 0;
+  position: relative;
   overflow: hidden;
 }
 
-.text {
-  font-size: 1rem;
-  line-height: 1.8;
-  color: var(--color-text-light);
+.bannerImage {
+  display: block;
+  position: relative;
+  z-index: 0;
+  width: 100% !important;
+  height: 629px !important;
+  object-fit: cover;
 }
 
-.values {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
-  margin-top: 2rem;
+.bannerTextContainer {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1500px;
+  height: 100%;
+  padding: 0 8px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 8px;
+  z-index: 2;
+  pointer-events: none;
 }
 
-.valueCard {
-  background: var(--color-bg-alt);
-  border-radius: 12px;
-  padding: 2rem;
+.bannerTextInner {
+  width: 485px;
+  max-width: 40%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.valueCard h3 {
-  font-size: 1.2rem;
-  margin-bottom: 0.75rem;
-  color: var(--color-primary);
+.heroTitulo {
+  margin: 0;
+  color: #ffffff;
+  opacity: 1;
+  font-family: var(--font-palmer), cursive;
+  font-weight: 400;
+  font-size: 90px;
+  line-height: 50%;
 }
 
-.valueCard p {
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: var(--color-text-light);
+.heroSubtitulo {
+  margin: 0;
+  color: #ffffff;
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 120%;
+  letter-spacing: 0%;
+}
+
+.bannerOverlay {
+  position: absolute;
+  top: 0;
+  left: -100px;
+  width: calc(100% + 100px) !important;
+  height: 629px !important;
+  object-fit: fill;
+  opacity: 1;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.secondSection {
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 50px 8px 50px;
+  box-sizing: border-box;
+  line-height: 0;
+  position: relative;
+}
+
+.secondTextOverlay {
+  position: absolute;
+  top: 50%;
+  right: 55.25px;
+  transform: translateY(-50%);
+  width: 592px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  opacity: 1;
+}
+
+.queEsTitulo {
+  margin: 0;
+  color: #ffffff;
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 120%;
+  letter-spacing: 0%;
+}
+
+.queEsDescripcion {
+  color: #ffffff;
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 140%;
+  letter-spacing: 0%;
+}
+
+.queEsDescripcionP {
+  margin: 0 0 12px;
+  color: #ffffff;
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 140%;
+}
+
+.queEsDescripcionP:last-child {
+  margin-bottom: 0;
+}
+
+.queEsDescripcionStrong {
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.beneficiosSection {
+  display: flex;
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 48px 8px;
+  gap: 17px;
+  box-sizing: border-box;
+}
+
+.beneficioCard {
+  flex: 1;
+  height: 471px;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+}
+
+.beneficioImageTop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 70%;
+}
+
+.beneficioBottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60%;
+  z-index: 1;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.beneficioText {
+  position: absolute;
+  inset: 0;
+  padding: 60px 20px 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.beneficioTitulo {
+  margin: 0;
+  font-family: var(--font-palmer), cursive;
+  font-weight: 400;
+  font-size: 70px;
+  line-height: 50%;
+  letter-spacing: 0%;
+  text-align: center;
+}
+
+.beneficioDescripcion {
+  margin: 0;
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 140%;
+  letter-spacing: 0%;
+  text-align: center;
+}
+
+@media (max-width: 1024px) {
+  .beneficiosSection {
+    padding: 48px 2rem;
+  }
+  .procesoContainer {
+    padding: 0 2rem;
+  }
 }
 
 @media (max-width: 768px) {
-  .grid {
-    grid-template-columns: 1fr;
+  .beneficiosSection {
+    padding: 48px 1rem;
+    flex-direction: column;
+  }
+  .procesoContainer {
+    padding: 0 1rem;
+  }
+  .beneficioCard {
+    height: 480px;
+  }
+}
+
+@media (max-width: 480px) {
+  .beneficiosSection {
+    padding: 48px 16px;
+  }
+  .procesoContainer {
+    padding: 0 16px;
+  }
+}
+
+.gastonSection {
+  width: 100%;
+  line-height: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.gastonContainer {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1500px;
+  padding: 0 8px;
+  box-sizing: border-box;
+  pointer-events: none;
+  height: 100%;
+}
+
+.gastonTextOverlay {
+  position: absolute;
+  top: 0;
+  left: 8px;
+  padding-top: 89px;
+  padding-left: 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.gastonNombre {
+  margin: 0;
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 120%;
+  letter-spacing: 0%;
+  color: #e8b84b;
+}
+
+.gastonTitulo {
+  margin: 0;
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 120%;
+  letter-spacing: 0%;
+  color: #000000;
+}
+
+.gastonDescripcionOverlay {
+  position: absolute;
+  top: 150px;
+  right: 8px;
+  width: 480px;
+  height: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  pointer-events: auto;
+}
+
+.gastonCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 270px;
+  height: 46px;
+  min-width: 170px;
+  padding: 12px 32px;
+  gap: 16px;
+  border-radius: 100px;
+  background-color: #000000;
+  color: #ffffff;
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.gastonDescripcion {
+  margin: 0;
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 140%;
+  letter-spacing: 0%;
+  color: #ffffff;
+}
+
+.gastonImage {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.premiosSection {
+  width: 100%;
+  line-height: 0;
+  margin-top: -80px;
+  position: relative;
+  z-index: 1;
+}
+
+.premiosTituloOverlay {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1500px;
+  padding: 0 8px;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.premiosTitulo {
+  margin: 0;
+  padding-top: 60px;
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 120%;
+  letter-spacing: 0%;
+  color: #000000;
+}
+
+.procesoSection {
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+  line-height: 0;
+  position: relative;
+}
+
+.procesoContainer {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 100%;
+  max-width: 1500px;
+  padding: 0 8px;
+  box-sizing: border-box;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+}
+
+.procesoOverlay {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  pointer-events: auto;
+  margin-left: 60px;
+  margin-top: 40px;
+}
+
+.procesoTitulo {
+  margin: 0;
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 120%;
+  letter-spacing: 0%;
+  color: #ffffff;
+}
+
+.procesoCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 170px;
+  height: 46px;
+  padding: 12px 32px;
+  border-radius: 100px;
+  background-color: #f4a910;
+  color: #000000;
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  gap: 16px;
+  white-space: nowrap;
+  align-self: flex-start;
+}
+
+.desktopOnly {
+  display: block;
+}
+
+.mobileOnly {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .desktopOnly {
+    display: none !important;
   }
 
-  .title {
-    font-size: 2rem;
+  .mobileOnly {
+    display: block !important;
+  }
+
+  .bannerSection {
+    height: 680px;
+  }
+
+  .bannerImage {
+    height: 680px !important;
+    object-position: center top;
+  }
+
+  .bannerOverlay {
+    top: auto !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    object-fit: fill;
+  }
+
+  .bannerTextContainer {
+    justify-content: flex-end;
+    padding-bottom: 90px;
+  }
+
+  .bannerTextInner {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .heroTitulo {
+    font-size: 56px;
+  }
+
+  .heroSubtitulo {
+    font-size: 24px;
+  }
+
+  .beneficiosSection {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap;
+    padding: 24px 16px;
+    gap: 12px;
+    scrollbar-width: none;
+  }
+
+  .beneficiosSection::-webkit-scrollbar {
+    display: none;
+  }
+
+  .beneficioCard {
+    min-width: calc(85vw);
+    flex: 0 0 auto;
+    scroll-snap-align: center;
+    height: 471px;
+  }
+
+  .secondSection {
+    padding: 30px 16px;
+  }
+
+  .secondTextOverlay {
+    top: 0;
+    right: 0;
+    left: 0;
+    transform: none;
+    width: 100%;
+    padding: 50px 40px 0;
+    box-sizing: border-box;
+  }
+
+  .queEsTitulo {
+    font-size: 25px;
+  }
+
+  .queEsDescripcionP {
+    font-size: 15px;
+  }
+
+  .procesoContainer {
+    align-items: flex-start;
+    padding-top: 32px;
+  }
+
+  .gastonSection {
+    display: flex;
+    flex-direction: column;
+    isolation: isolate;
+  }
+
+  .premiosSection {
+    position: relative;
+    z-index: 1;
+  }
+
+  .gastonPrevWrapper {
+    position: relative;
+    width: 100%;
+    line-height: 0;
+    z-index: 2;
+  }
+
+  .gastonMainWrapper {
+    position: relative;
+    width: 100%;
+    line-height: 0;
+    margin-top: -20%;
+    z-index: 1;
+  }
+
+  .gastonMobileTop {
+    flex-direction: column;
+    gap: 8px;
+    padding: 50px 16px;
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .gastonMobileTop .gastonNombre {
+    font-size: 40px;
+    color: #f4a910;
+  }
+
+  .gastonMobileTop .gastonTitulo {
+            font-size: 20px;
+    color: #000000;
+  }
+
+  .gastonMobileBottom {
+    position: absolute;
+    top: 22%;
+    left: 0;
+    right: 0;
+    padding: 0px 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    pointer-events: auto;
+  }
+
+  .gastonMobileBottom .gastonDescripcion {
+    font-size: 15px;
+    color: #ffffff;
+  }
+
+  .productosQuienes > div:first-child > p:first-child {
+    font-size: 30px;
+  }
+
+  .productosQuienes > div:first-child > h2 {
+    font-size: 30px;
   }
 }

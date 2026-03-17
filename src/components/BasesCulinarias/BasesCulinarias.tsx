@@ -10,21 +10,39 @@ const bases = [
     src: "/images/web/recetas/base_verde.svg",
     srcActive: "/images/web/recetas/base_verde_detail.svg",
     srcOtherActive: undefined,
+    srcMobile: "/images/mobile/recetas/base_verde.svg",
+    srcMobileActive: "/images/mobile/recetas/base_verde_detail.svg",
     alt: "Base Verde",
+    label: "Base culinaria Verde",
+    labelColor: "#fff",
+    description: "Perfecto para mariscos, arroces y platos frescos.",
+    descriptionColor: "#fff",
   },
   {
     id: "amarilla",
     src: "/images/web/recetas/base_amarilla.svg",
     srcActive: "/images/web/recetas/base_amarilla_detail.svg",
     srcOtherActive: "/images/web/recetas/base_amarilla_verde_detail.svg",
+    srcMobile: "/images/mobile/recetas/base_amarilla.svg",
+    srcMobileActive: "/images/mobile/recetas/base_amarilla_detail.svg",
     alt: "Base Amarilla",
+    label: "Base culinaria Amarilla",
+    labelColor: "#000",
+    description: "Perfecto para mariscos, arroces y platos frescos.",
+    descriptionColor: "#000",
   },
   {
     id: "roja",
     src: "/images/web/recetas/base_roja.svg",
     srcActive: "/images/web/recetas/base_roja_detail.svg",
     srcOtherActive: undefined,
+    srcMobile: "/images/mobile/recetas/base_roja.svg",
+    srcMobileActive: "/images/mobile/recetas/base_roja_detail.svg",
     alt: "Base Roja",
+    label: "Base culinaria Roja",
+    labelColor: "#fff",
+    description: "Perfecto para mariscos, arroces y platos frescos.",
+    descriptionColor: "#fff",
   },
 ];
 
@@ -41,6 +59,8 @@ export default function BasesCulinarias() {
             : activeId !== null && base.srcOtherActive
             ? base.srcOtherActive
             : base.src;
+        const mobileImageSrc = isActive ? base.srcMobileActive : base.srcMobile;
+
         return (
           <div
             key={base.id}
@@ -54,7 +74,18 @@ export default function BasesCulinarias() {
               style={{ objectFit: "cover" }}
               sizes="(max-width: 640px) 100vw, 33vw"
               priority
+              className={styles.desktopImage}
             />
+            <div className={styles.mobileImage}>
+              <Image
+                src={mobileImageSrc}
+                alt={base.alt}
+                width={390}
+                height={480}
+                style={{ width: "100%", height: "auto", display: "block" }}
+                priority
+              />
+            </div>
           </div>
         );
       })}

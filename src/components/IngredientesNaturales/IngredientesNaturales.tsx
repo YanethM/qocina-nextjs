@@ -6,12 +6,14 @@ import { useCarousel } from "@/hooks/useCarousel";
 import styles from "./IngredientesNaturales.module.css";
 
 interface IngredientesNaturalesProps {
+  natural_titulo?: string;
+  natural_descripcion?: string;
+  natural_frase_q?: string;
   natural_cta?: {
-    id: number;
     texto: string;
     url: string;
     nueva_ventana: boolean;
-  };
+  } | null;
 }
 
 const images = [
@@ -26,15 +28,18 @@ const images = [
 ];
 
 export default function IngredientesNaturales({
+  natural_titulo,
+  natural_descripcion,
+  natural_frase_q,
   natural_cta,
 }: IngredientesNaturalesProps) {
   const { current, goTo, handleTouchStart, handleTouchEnd } = useCarousel(
     images.length,
   );
 
-  const ctaText = natural_cta?.texto || "Explora nuestras bases culinarias";
-  const ctaUrl = natural_cta?.url || "/productos";
-  const ctaNuevaVentana = natural_cta?.nueva_ventana || false;
+  const ctaText = natural_cta?.texto;
+  const ctaUrl = natural_cta?.url ?? "/productos";
+  const ctaNuevaVentana = natural_cta?.nueva_ventana ?? false;
 
   return (
     <section className={styles.section}>
@@ -44,9 +49,13 @@ export default function IngredientesNaturales({
             src="/images/web/home/ingredientes_naturales/image1.svg"
             alt="Ingredientes naturales 1"
             fill
+            sizes="(max-width: 768px) 100vw, 50vw"
             className={styles.gridImage}
             priority
           />
+          {natural_frase_q && (
+            <p className={styles.naturalFraseQ}>{natural_frase_q}</p>
+          )}
         </div>
 
         <div className={styles.imageWrapper2}>
@@ -56,21 +65,17 @@ export default function IngredientesNaturales({
             className={styles.image2}
           />
           <div className={styles.contentOverlay}>
-            <h2 className={styles.overlayTitle}>
-              Ingredientes y procesos a la altura de los grandes sabores.
-            </h2>
-            <p className={styles.overlayDescription}>
-              Nuestras bases culinarias están elaboradas con verduras 100%
-              naturales y se procesan bajo los más altos estándares de calidad,
-              como en los restaurantes de alta cocina.
-            </p>
-            <Link
-              href={ctaUrl}
-              className={styles.ctaButton}
-              target={ctaNuevaVentana ? "_blank" : "_self"}
-              rel={ctaNuevaVentana ? "noopener noreferrer" : undefined}>
-              {ctaText}
-            </Link>
+            {natural_titulo && <h2 className={styles.overlayTitle}>{natural_titulo}</h2>}
+            {natural_descripcion && <p className={styles.overlayDescription}>{natural_descripcion}</p>}
+            {ctaText && (
+              <Link
+                href={ctaUrl}
+                className={styles.ctaButton} data-btn="dark"
+                target={ctaNuevaVentana ? "_blank" : "_self"}
+                rel={ctaNuevaVentana ? "noopener noreferrer" : undefined}>
+                {ctaText}
+              </Link>
+            )}
           </div>
         </div>
       </div>
@@ -97,36 +102,34 @@ export default function IngredientesNaturales({
                     style={{ height: "auto" }}
                   />
                   <div className={styles.mobileContentOverlay}>
-                    <h2 className={styles.mobileOverlayTitle}>
-                      Ingredientes y procesos a la altura de los grandes
-                      sabores.
-                    </h2>
-                    <p className={styles.mobileOverlayDescription}>
-                      Nuestras bases culinarias están elaboradas con verduras
-                      100% naturales y se procesan bajo los más altos estándares
-                      de calidad, como en los restaurantes de alta cocina.
-                    </p>
-                    <Link
-                      href={ctaUrl}
-                      className={styles.ctaButton}
-                      target={ctaNuevaVentana ? "_blank" : "_self"}
-                      rel={
-                        ctaNuevaVentana ? "noopener noreferrer" : undefined
-                      }>
-                      {ctaText}
-                    </Link>
+                    {natural_titulo && <h2 className={styles.mobileOverlayTitle}>{natural_titulo}</h2>}
+                    {natural_descripcion && <p className={styles.mobileOverlayDescription}>{natural_descripcion}</p>}
+                    {ctaText && (
+                      <Link
+                        href={ctaUrl}
+                        className={styles.ctaButton} data-btn="dark"
+                        target={ctaNuevaVentana ? "_blank" : "_self"}
+                        rel={ctaNuevaVentana ? "noopener noreferrer" : undefined}>
+                        {ctaText}
+                      </Link>
+                    )}
                   </div>
                 </div>
               ) : (
-                <Image
-                  src={image.src}
-                  alt={image.alt}
-                  width={660}
-                  height={887}
-                  className={styles.slideImage}
-                  style={{ height: "auto" }}
-                  priority
-                />
+                <div className={styles.mobileImageContainer}>
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    width={660}
+                    height={887}
+                    className={styles.slideImage}
+                    style={{ height: "auto" }}
+                    priority
+                  />
+                  {natural_frase_q && (
+                    <p className={styles.naturalFraseQ}>{natural_frase_q}</p>
+                  )}
+                </div>
               )}
             </div>
           ))}
