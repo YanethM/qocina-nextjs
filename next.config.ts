@@ -7,14 +7,12 @@ const buildRemotePatterns = () => {
     port?: string;
     pathname: string;
   }[] = [
-    // Wildcard para cualquier instancia EC2 en compute-1.amazonaws.com con puerto 1337
     {
       protocol: "http",
       hostname: "*.compute-1.amazonaws.com",
       port: "1337",
       pathname: "/uploads/**",
     },
-    // Wildcard para HTTPS también (por si migran)
     {
       protocol: "https",
       hostname: "*.compute-1.amazonaws.com",
@@ -22,7 +20,6 @@ const buildRemotePatterns = () => {
     },
   ];
 
-  // Si hay una URL personalizada en env, también agregarla
   if (process.env.NEXT_PUBLIC_API_URL) {
     try {
       const apiUrl = new URL(process.env.NEXT_PUBLIC_API_URL);
@@ -38,7 +35,7 @@ const buildRemotePatterns = () => {
         });
       }
     } catch {
-      // URL inválida, ignorar
+      return patterns;
     }
   }
 
