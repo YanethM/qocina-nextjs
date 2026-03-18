@@ -15,6 +15,7 @@ interface TestimoniosProps {
 
 export default function Testimonios({ testimonios, testimonios_titulo, waveImage = "/images/web/home/testimonials/testimonials.svg" }: TestimoniosProps) {
   const [imageErrors, setImageErrors] = useState<Record<number, boolean>>({});
+  const hasSingleRow = testimonios.length <= 2;
   const { current, goTo, handleTouchStart, handleTouchEnd } = useCarousel(
     testimonios.length,
   );
@@ -36,70 +37,78 @@ export default function Testimonios({ testimonios, testimonios_titulo, waveImage
 
   return (
     <section className={styles.section}>
-      <div className={styles.bgImage}>
-        <Image
-          src={waveImage}
-          alt=""
-          width={1920}
-          height={900}
-          className={styles.bgImg}
-          priority={false}
-          unoptimized
-        />
-      </div>
+      {testimonios_titulo && <h2 className={styles.sectionTitle}>{testimonios_titulo}</h2>}
 
-      <div className={styles.contentLayer}>
-        {testimonios_titulo && <h2 className={styles.sectionTitle}>{testimonios_titulo}</h2>}
+      <div className={styles.visualLayer}>
+        <div className={styles.bgImage}>
+          <Image
+            src={waveImage}
+            alt=""
+            width={1920}
+            height={900}
+            className={styles.bgImg}
+            priority={false}
+            unoptimized
+          />
+        </div>
 
-      <div className={styles.backgroundWrapper}>
-        <div className={styles.gridWrapper}>
-          <div className={styles.grid} data-count={testimonios.length}>
-            {testimonios.map((testimonio, index) => {
-              const fotoUrl = getStrapiImageUrl(testimonio.foto_usuario?.url);
-              const showImage = fotoUrl && !imageErrors[testimonio.id];
+        <div className={styles.contentLayer}>
+          <div
+            className={styles.backgroundWrapper}
+            data-single-row={hasSingleRow ? "true" : "false"}>
+            <div className={styles.gridWrapper}>
+              <div
+                className={styles.grid}
+                data-count={testimonios.length}
+                data-single-row={hasSingleRow ? "true" : "false"}>
+                {testimonios.map((testimonio, index) => {
+                  const fotoUrl = getStrapiImageUrl(testimonio.foto_usuario?.url);
+                  const showImage = fotoUrl && !imageErrors[testimonio.id];
 
-              return (
-                <div key={testimonio.id} className={styles.card}>
-                  <div className={styles.cardBg}>
-                    {showImage ? (
-                      <Image
-                        src={fotoUrl}
-                        alt={testimonio.nombre_usuario}
-                        fill
-                        className={styles.cardBgImage}
-                        sizes="424px"
-                        priority={index < 2}
-                        onError={() => handleImageError(testimonio.id)}
-                        unoptimized
-                      />
-                    ) : (
-                      <div className={styles.cardPlaceholder}>
-                        <span className={styles.initials}>
-                          {getInitials(testimonio.nombre_usuario)}
-                        </span>
+                  return (
+                    <div key={testimonio.id} className={styles.card}>
+                      <div className={styles.cardBg}>
+                        {showImage ? (
+                          <Image
+                            src={fotoUrl}
+                            alt={testimonio.nombre_usuario}
+                            fill
+                            className={styles.cardBgImage}
+                            sizes="424px"
+                            priority={index < 2}
+                            onError={() => handleImageError(testimonio.id)}
+                            unoptimized
+                          />
+                        ) : (
+                          <div className={styles.cardPlaceholder}>
+                            <span className={styles.initials}>
+                              {getInitials(testimonio.nombre_usuario)}
+                            </span>
+                          </div>
+                        )}
                       </div>
-                    )}
-                  </div>
 
-                  <div className={styles.cardText}>
-                    <div className={styles.stars}>
-                      {Array.from({ length: testimonio.rating }, (_, i) => (
-                        <span key={i} className={styles.starFilled}>★</span>
-                      ))}
-                      {Array.from({ length: 5 - testimonio.rating }, (_, i) => (
-                        <span key={`empty-${i}`} className={styles.starEmpty}>☆</span>
-                      ))}
+                      <div className={styles.cardText}>
+                        <div className={styles.stars}>
+                          {Array.from({ length: testimonio.rating }, (_, i) => (
+                            <span key={i} className={styles.starFilled}>★</span>
+                          ))}
+                          {Array.from({ length: 5 - testimonio.rating }, (_, i) => (
+                            <span key={`empty-${i}`} className={styles.starEmpty}>☆</span>
+                          ))}
+                        </div>
+                        <p className={styles.author}>{abbreviateName(testimonio.nombre_usuario)}</p>
+                        <p className={styles.content}>
+                          &ldquo;{testimonio.texto_testimonio}&rdquo;
+                        </p>
+                      </div>
+
+                      <div className={styles.cardRight} />
                     </div>
-                    <p className={styles.author}>{abbreviateName(testimonio.nombre_usuario)}</p>
-                    <p className={styles.content}>
-                      &ldquo;{testimonio.texto_testimonio}&rdquo;
-                    </p>
-                  </div>
-
-                  <div className={styles.cardRight} />
-                </div>
-              );
-            })}
+                  );
+                })}
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -179,7 +188,6 @@ export default function Testimonios({ testimonios, testimonios_titulo, waveImage
             ))}
           </div>
         </div>
-      </div>
       </div>
 
     </section>

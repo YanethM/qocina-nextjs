@@ -81,10 +81,7 @@ function CardItem({
         <p className={styles.descripcion}>{producto.descripcion_corta}</p>
         <button
           className={styles.addToCartBtn}
-          data-btn={btnVariant}
-          onClick={(e) => {
-            e.preventDefault();
-          }}>
+          data-btn={btnVariant}>
           Añadir al carrito
         </button>
       </div>

@@ -98,7 +98,6 @@ export default async function NuestroSecreto({ secreto_titulo, secreto_descripci
             width={390}
             height={700}
             className={styles.mobileSecretoImage}
-            style={{ height: "auto" }}
             priority={false}
           />
           {secreto_chef_frase_q && (

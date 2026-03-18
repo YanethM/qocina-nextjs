@@ -1,10 +1,11 @@
-import { getProductoBySlug, getRecetaBySlug, getTestimonios, getStrapiImageUrl } from "@/lib/api";
+import { getProductoBySlug, getProductos, getRecetaBySlug, getTestimonios, getStrapiImageUrl } from "@/lib/api";
 import { notFound } from "next/navigation";
 import Badges from "@/components/Badges/Badges";
 import ProductoDetailClient from "@/components/ProductoDetail/ProductoDetailClient";
 import ListaRecetas from "@/components/ListaRecetas/ListaRecetas";
 import Testimonios from "@/components/Testimonios/Testimonios";
 import OtrasBasesCulinarias from "@/components/OtrasBasesCulinarias/OtrasBasesCulinarias";
+import { getLocale } from "@/lib/locale";
 import styles from "./page.module.css";
 
 interface Props {
@@ -14,12 +15,20 @@ interface Props {
 export default async function ProductoDetailPage({ params }: Props) {
   try {
     const { slug } = await params;
+    const locale = await getLocale();
 
-    const producto = await getProductoBySlug(slug);
+    const [producto, todosProductosRes] = await Promise.all([
+      getProductoBySlug(slug),
+      getProductos().catch(() => null),
+    ]);
 
     if (!producto) {
       return notFound();
     }
+
+    const otrasBasesProductos = (todosProductosRes?.data ?? []).filter(
+      (p) => p.id !== producto.id
+    );
 
     const imagenPrincipal = producto.imagen_principal?.url 
       ? getStrapiImageUrl(producto.imagen_principal.url)
@@ -79,8 +88,14 @@ export default async function ProductoDetailPage({ params }: Props) {
         />
 
         {recetas.length > 0 && <ListaRecetas recetas={recetas} hideFilters />}
-        {testimonios.length > 0 && <Testimonios testimonios={testimonios} waveImage="/images/web/products/red_waves.svg" />}
-        <OtrasBasesCulinarias />
+        {testimonios.length > 0 && (
+          <Testimonios
+            testimonios={testimonios}
+            testimonios_titulo={locale === "es" ? "Testimonios" : "Testimonials"}
+            waveImage="/images/web/products/red_waves.svg"
+          />
+        )}
+        <OtrasBasesCulinarias productos={otrasBasesProductos} />
       </div>
     );
   } catch (error) {

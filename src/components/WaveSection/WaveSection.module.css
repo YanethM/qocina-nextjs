@@ -33,13 +33,29 @@
   padding: 20px 48px;
 }
 
-@media (max-width: 900px) and (min-width: 481px) {
+@media (max-width: 1024px) and (min-width: 481px) {
+  .wrapper {
+    width: calc(100% + 96px);
+    max-width: none;
+    margin: 48px -48px;
+  }
+
   .waveImg {
     height: 420px;
   }
+
+  .content {
+    padding: 20px 72px;
+  }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 718px) {
+  .wrapper {
+    width: calc(100% + 40px);
+    max-width: none;
+    margin: 40px -20px;
+  }
+
   .waveImgDesktop {
     display: none;
   }
@@ -48,14 +64,18 @@
     display: block;
   }
 
+  .waveImg {
+    height: 560px;
+  }
+
   .content {
-    padding: 20px 16px;
+    padding: 24px 28px;
   }
 }
 
 @media (max-width: 480px) {
   .waveImg {
-    height: 420px;
+    height: 480px;
   }
 
   .content {

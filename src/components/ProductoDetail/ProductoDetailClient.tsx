@@ -64,7 +64,26 @@ export default function ProductoDetailClient({
 }: Props) {
   const { addItem } = useCart();
   const [selectedImg, setSelectedImg] = useState(0);
+  const [fading, setFading] = useState(false);
+  const [zoom, setZoom] = useState(false);
+  const [zoomPos, setZoomPos] = useState({ x: 50, y: 50 });
   const [cantidad, setCantidad] = useState(1);
+
+  const changeImage = (i: number) => {
+    if (i === selectedImg) return;
+    setFading(true);
+    setTimeout(() => {
+      setSelectedImg(i);
+      setFading(false);
+    }, 180);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    setZoomPos({ x, y });
+  };
   const [packSize, setPackSize] = useState("Unidad");
   const titleColor = getTitleColor(nombre, categoria?.slug ?? null);
   const selectedMultiplier =
@@ -74,18 +93,33 @@ export default function ProductoDetailClient({
   return (
     <div className={styles.grid}>
       <div className={styles.imageSection}>
-        <div className={styles.mainImageWrapper}>
-          {allImages[selectedImg] && (
-            <Image
-              src={allImages[selectedImg]}
-              alt={nombre}
-              fill
-              style={{ objectFit: "contain" }}
-              sizes="(max-width: 768px) 100vw, 50vw"
-              priority
-              unoptimized
-            />
-          )}
+        <div
+          className={styles.mainImageWrapper}
+          onMouseEnter={() => setZoom(true)}
+          onMouseLeave={() => setZoom(false)}
+          onMouseMove={handleMouseMove}
+        >
+          <div
+            className={styles.zoomInner}
+            style={{
+              transformOrigin: `${zoomPos.x}% ${zoomPos.y}%`,
+              transform: zoom ? "scale(2)" : "scale(1)",
+              transition: zoom ? "transform 0.1s ease" : "transform 0.3s ease",
+            }}
+          >
+            {allImages[selectedImg] && (
+              <Image
+                src={allImages[selectedImg]}
+                alt={nombre}
+                fill
+                style={{ objectFit: "cover" }}
+                sizes="(max-width: 768px) 100vw, 50vw"
+                priority
+                unoptimized
+                className={fading ? styles.imgFadeOut : styles.imgFadeIn}
+              />
+            )}
+          </div>
         </div>
 
         {allImages.length > 1 && (
@@ -94,8 +128,9 @@ export default function ProductoDetailClient({
               <button
                 key={i}
                 className={`${styles.thumbnail} ${i === selectedImg ? styles.thumbnailActive : ""}`}
-                onClick={() => setSelectedImg(i)}
+                onClick={() => changeImage(i)}
                 aria-label={`Ver imagen ${i + 1}`}
+                style={{ borderColor: i === selectedImg ? titleColor : "transparent" }}
               >
                 <Image
                   src={img}

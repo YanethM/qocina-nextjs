@@ -204,7 +204,7 @@
   width: 24px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
   .section {
     padding: 40px 0 40px 16px;
   }

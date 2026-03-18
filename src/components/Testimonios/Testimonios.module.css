@@ -1,8 +1,12 @@
 .section {
   width: 100%;
+  overflow: hidden;
+}
+
+.visualLayer {
+  width: 100%;
   display: grid;
   grid-template-columns: 1fr;
-  overflow: hidden;
 }
 
 .bgImage {
@@ -41,6 +45,31 @@
   text-transform: uppercase;
 }
 
+.section:has(.grid[data-single-row="true"]) .sectionTitle {
+  padding-bottom: 60px;
+  margin-bottom: 0;
+}
+
+.section:has(.grid[data-single-row="true"]) .visualLayer {
+  display: flex;
+  flex-direction: column;
+}
+
+.section:has(.grid[data-single-row="true"]) .contentLayer {
+  order: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  position: relative;
+}
+
+.section:has(.grid[data-single-row="true"]) .bgImage {
+  order: 2;
+  margin-top: -150px;
+  z-index: 1;
+}
+
 .backgroundWrapper {
   position: relative;
   width: 100%;
@@ -49,9 +78,14 @@
   padding-bottom: 153px;
 }
 
-.backgroundWrapper:has(.grid[data-count="1"]),
-.backgroundWrapper:has(.grid[data-count="2"]) {
-  min-height: auto;
+.backgroundWrapper[data-single-row="true"] {
+  padding: 0;
+  margin: 0;
+}
+
+.backgroundWrapper[data-single-row="true"] .gridWrapper {
+  margin-top: 0;
+  justify-content: center;
 }
 
 .backgroundImage {
@@ -76,7 +110,7 @@
   z-index: 2;
   width: 100%;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 96px auto 0;
   padding: 0;
   display: flex;
   justify-content: center;
@@ -147,6 +181,23 @@
 
 .grid[data-count="1"] {
   grid-template-columns: 424px;
+}
+
+.grid[data-single-row="true"] {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: start;
+  gap: 24px;
+  width: 100%;
+}
+
+.grid[data-count="1"][data-single-row="true"] {
+  justify-content: center;
+}
+
+.grid[data-count="2"][data-single-row="true"] {
+  justify-content: center;
 }
 
 .cardBg {
@@ -387,7 +438,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .section {
     display: block;
     padding: 60px 0 0;
@@ -434,7 +485,7 @@
   .mobileSlider {
     position: relative;
     z-index: 1;
-    padding: 40px 0;
+    padding: 40px 16px;
     overflow: hidden;
     width: 100%;
     box-sizing: border-box;
@@ -456,8 +507,8 @@
 
   .mobileCard {
     position: relative;
-    width: 289px;
-    height: 428px;
+    width: min(88vw, 360px);
+    height: clamp(440px, 62vw, 520px);
     border-radius: 24px;
     overflow: hidden;
     flex-shrink: 0;
@@ -470,12 +521,15 @@
     right: 0;
     padding: 20px;
     background: rgba(255, 255, 255, 0.35);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(22px) saturate(190%);
+    -webkit-backdrop-filter: blur(22px) saturate(190%);
+    will-change: backdrop-filter;
+    transform: translateZ(0);
     border-radius: 0 0 24px 24px;
     display: flex;
     flex-direction: column;
     gap: 6px;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
   }
 
   .dotsContainer {

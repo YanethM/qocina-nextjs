@@ -2,17 +2,56 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { Producto } from "@/types";
+import { getStrapiImageUrl } from "@/lib/api";
 import { useCarousel } from "@/hooks/useCarousel";
 import styles from "./OtrasBasesCulinarias.module.css";
 
-const mobileSlides = [
-  { src: "/images/mobile/products/product_detail/card_verde.svg", alt: "Base Verde" },
-  { src: "/images/mobile/products/product_detail/card_amarillo.svg", alt: "Base Amarillo" },
-  { src: "/images/mobile/products/product_detail/card_rojo.svg", alt: "Base Roja" },
+interface Props {
+  productos: Producto[];
+}
+
+const cardConfigs = [
+  {
+    bgSrc: "/images/web/products/product_detail/card_verde.svg",
+    mobileBgSrc: "/images/mobile/products/product_detail/card_verde.svg",
+    rowClass: styles.cardVerde,
+    wrapperClass: styles.productWrapperVerde,
+    textDark: false,
+    arrowSrc: "/images/web/home/white_arrow_right.svg",
+    reversed: false,
+  },
+  {
+    bgSrc: "/images/web/products/product_detail/card_amarillo.svg",
+    mobileBgSrc: "/images/mobile/products/product_detail/card_amarillo.svg",
+    rowClass: styles.cardAmarillo,
+    wrapperClass: styles.productWrapperVerde,
+    textDark: true,
+    arrowSrc: "/images/web/home/arrow_right.svg",
+    reversed: true,
+  },
+  {
+    bgSrc: "/images/web/products/product_detail/card_rojo.svg",
+    mobileBgSrc: "/images/mobile/products/product_detail/card_rojo.svg",
+    rowClass: styles.cardRojo,
+    wrapperClass: styles.productWrapperVerde,
+    textDark: false,
+    arrowSrc: "/images/web/home/white_arrow_right.svg",
+    reversed: false,
+  },
 ];
 
-export default function OtrasBasesCulinarias() {
-  const { current, goTo, handleTouchStart, handleTouchEnd } = useCarousel(mobileSlides.length);
+function getConfigIndex(producto: Producto): number {
+  const slug = producto.slug.toLowerCase();
+  if (slug.includes("chupe")) return 0;
+  if (slug.includes("sofrito")) return 1;
+  return 2;
+}
+
+export default function OtrasBasesCulinarias({ productos }: Props) {
+  const { current, goTo, handleTouchStart, handleTouchEnd } = useCarousel(productos.length);
+
+  if (productos.length === 0) return null;
 
   return (
     <section className={styles.section}>
@@ -30,23 +69,59 @@ export default function OtrasBasesCulinarias() {
             className={styles.mobileTrack}
             style={{ transform: `translateX(-${current * 100}%)` }}
           >
-            {mobileSlides.map((slide, i) => (
-              <div key={i} className={styles.mobileSlide}>
-                <Image
-                  src={slide.src}
-                  alt={slide.alt}
-                  width={335}
-                  height={200}
-                  className={styles.mobileCard}
-                  style={{ width: "100%", height: "auto" }}
-                />
-              </div>
-            ))}
+            {productos.map((producto) => {
+              const config = cardConfigs[getConfigIndex(producto)];
+              const imgSrc = producto.imagen_principal?.url
+                ? getStrapiImageUrl(producto.imagen_principal.url)
+                : null;
+              return (
+                <div key={producto.id} className={styles.mobileSlide}>
+                  <div className={`${styles.mobileCard} ${config.rowClass}`}>
+                    <Image
+                      src={config.mobileBgSrc}
+                      alt=""
+                      fill
+                      className={styles.cardBg}
+                      style={{ objectFit: "fill" }}
+                      aria-hidden
+                    />
+                    {imgSrc && (
+                      <div className={styles.mobileImgWrapper}>
+                        <Image
+                          src={imgSrc}
+                          alt={producto.nombre}
+                          width={220}
+                          height={270}
+                          className={styles.mobileProductImg}
+                          style={{ objectFit: "contain" }}
+                          unoptimized
+                        />
+                      </div>
+                    )}
+                    <div className={styles.mobileCardContent}>
+                      <h3 className={`${styles.mobileCardTitulo} ${config.textDark ? styles.cardTextDark : ""}`}>
+                        {producto.nombre}
+                      </h3>
+                      <p className={`${styles.mobileCardDescripcion} ${config.textDark ? styles.cardTextDark : ""}`}>
+                        {producto.descripcion_corta}
+                      </p>
+                      <Link
+                        href={`/productos/${producto.slug}`}
+                        className={`${styles.ctaBtn} ${config.textDark ? styles.ctaBtnDark : ""}`}
+                      >
+                        Ver producto
+                        <Image src={config.arrowSrc} alt="" width={16} height={16} aria-hidden />
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
 
         <div className={styles.mobileDots}>
-          {mobileSlides.map((_, i) => (
+          {productos.map((_, i) => (
             <button
               key={i}
               className={`${styles.mobileDot} ${i === current ? styles.mobileDotActive : ""}`}
@@ -58,135 +133,77 @@ export default function OtrasBasesCulinarias() {
       </div>
 
       <div className={styles.cards}>
+        {productos.map((producto) => {
+          const config = cardConfigs[getConfigIndex(producto)];
+          const imgSrc = producto.imagen_principal?.url
+            ? getStrapiImageUrl(producto.imagen_principal.url)
+            : null;
 
-        <div className={`${styles.cardRow} ${styles.cardVerde}`}>
-          <Image
-            src="/images/web/products/product_detail/card_verde.svg"
-            alt=""
-            fill
-            sizes="(max-width: 768px) 100vw, 50vw"
-            className={styles.cardBg}
-            style={{ objectFit: "fill" }}
-            aria-hidden
-          />
-
-          <div className={`${styles.productWrapper} ${styles.productWrapperVerde}`}>
-            <Image
-              src="/images/web/products/product_detail/product1.svg"
-              alt="Base verde"
-              width={209}
-              height={263}
-              className={styles.productImg}
-            />
-          </div>
-
-          <div className={styles.cardText}>
-            <h3 className={styles.cardTitulo}>Base Verde</h3>
-            <p className={styles.cardDescripcion}>
-              La más clásica. Concentra el sabor casero con ajos y cebollas
-              caramelizadas, cilantro fresco, ají amarillo peruano, chicha de
-              jora y zapallo loche.
-            </p>
-          </div>
-
-          <Link href="/productos" className={styles.ctaBtn}>
-            Ver producto
-            <Image
-              src="/images/web/home/white_arrow_right.svg"
-              alt=""
-              width={20}
-              height={20}
-              aria-hidden
-            />
-          </Link>
-        </div>
-
-        <div className={`${styles.cardRow} ${styles.cardAmarillo}`}>
-          <Image
-            src="/images/web/products/product_detail/card_amarillo.svg"
-            alt=""
-            fill
-            sizes="(max-width: 768px) 100vw, 50vw"
-            className={styles.cardBg}
-            style={{ objectFit: "fill" }}
-            aria-hidden
-          />
-
-          <div className={styles.cardContentAmarillo}>
-            <div className={`${styles.cardText} ${styles.cardTextDark}`}>
-              <h3 className={styles.cardTitulo}>Base Amarillo</h3>
-              <p className={styles.cardDescripcion}>
-                La más atrevida. Concentra el sabor casero con ajos y cebollas
-                caramelizadas, ají amarillo peruano, ají mirasol y orégano para
-                sorprender al primer bocado.
-              </p>
+          const productImg = (
+            <div className={`${styles.productWrapper} ${config.wrapperClass}`}>
+              {imgSrc && (
+                <Image
+                  src={imgSrc}
+                  alt={producto.nombre}
+                  width={209}
+                  height={263}
+                  className={styles.productImg}
+                  style={{ objectFit: "contain" }}
+                  unoptimized
+                />
+              )}
             </div>
+          );
 
-            <Link href="/productos" className={`${styles.ctaBtn} ${styles.ctaBtnDark}`}>
-              Ver producto
+          const textAndBtn = config.reversed ? (
+            <div className={styles.cardContentAmarillo}>
+              <div className={`${styles.cardText} ${config.textDark ? styles.cardTextDark : ""}`}>
+                <h3 className={styles.cardTitulo}>{producto.nombre}</h3>
+                <p className={styles.cardDescripcion}>{producto.descripcion_corta}</p>
+              </div>
+              <Link href={`/productos/${producto.slug}`} className={`${styles.ctaBtn} ${config.textDark ? styles.ctaBtnDark : ""}`}>
+                Ver producto
+                <Image src={config.arrowSrc} alt="" width={20} height={20} aria-hidden />
+              </Link>
+            </div>
+          ) : (
+            <>
+              <div className={`${styles.cardText} ${config.textDark ? styles.cardTextDark : ""}`}>
+                <h3 className={styles.cardTitulo}>{producto.nombre}</h3>
+                <p className={styles.cardDescripcion}>{producto.descripcion_corta}</p>
+              </div>
+              <Link href={`/productos/${producto.slug}`} className={`${styles.ctaBtn} ${config.textDark ? styles.ctaBtnDark : ""}`}>
+                Ver producto
+                <Image src={config.arrowSrc} alt="" width={20} height={20} aria-hidden />
+              </Link>
+            </>
+          );
+
+          return (
+            <div key={producto.id} className={`${styles.cardRow} ${config.rowClass}`}>
               <Image
-                src="/images/web/home/arrow_right.svg"
+                src={config.bgSrc}
                 alt=""
-                width={20}
-                height={20}
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className={styles.cardBg}
+                style={{ objectFit: "fill" }}
                 aria-hidden
               />
-            </Link>
-          </div>
-
-          <div className={styles.productWrapper}>
-            <Image
-              src="/images/web/products/product_detail/product2.svg"
-              alt="Base amarillo"
-              width={209}
-              height={263}
-              className={styles.productImg}
-            />
-          </div>
-        </div>
-
-        <div className={`${styles.cardRow} ${styles.cardRojo}`}>
-          <Image
-            src="/images/web/products/product_detail/card_rojo.svg"
-            alt=""
-            fill
-            sizes="(max-width: 768px) 100vw, 50vw"
-            className={styles.cardBg}
-            style={{ objectFit: "fill" }}
-            aria-hidden
-          />
-
-          <div className={`${styles.productWrapper} ${styles.productWrapperVerde}`}>
-            <Image
-              src="/images/web/products/product_detail/product3.svg"
-              alt="Base roja"
-              width={209}
-              height={263}
-              className={styles.productImg}
-            />
-          </div>
-
-          <div className={styles.cardText}>
-            <h3 className={styles.cardTitulo}>Base Roja</h3>
-            <p className={styles.cardDescripcion}>
-              La más versátil. Concentra del delicioso sabor del tomate, achiote
-              y ají panka, cocidos sobre ajos y cebollas sofritas a punto de
-              caramelización y su toque de orégano.
-            </p>
-          </div>
-
-          <Link href="/productos" className={styles.ctaBtn}>
-            Ver producto
-            <Image
-              src="/images/web/home/white_arrow_right.svg"
-              alt=""
-              width={20}
-              height={20}
-              aria-hidden
-            />
-          </Link>
-        </div>
-
+              {config.reversed ? (
+                <>
+                  {textAndBtn}
+                  {productImg}
+                </>
+              ) : (
+                <>
+                  {productImg}
+                  {textAndBtn}
+                </>
+              )}
+            </div>
+          );
+        })}
       </div>
     </section>
   );
