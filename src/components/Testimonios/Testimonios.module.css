@@ -485,7 +485,7 @@
   .mobileSlider {
     position: relative;
     z-index: 1;
-    padding: 40px 16px;
+    padding: 50px 0px;
     overflow: hidden;
     width: 100%;
     box-sizing: border-box;

@@ -10,6 +10,7 @@
   grid-template-columns: 3fr 2fr;
   gap: 48px;
   align-items: center;
+  padding: 0 40px;
 }
 
 .textSide {

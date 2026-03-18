@@ -56,7 +56,7 @@ export default function Footer() {
             rel="noopener noreferrer"
             aria-label="TikTok">
             <Image
-              src="/images/web/footer/tiktok.png"
+              src="/images/web/footer/tiktok.svg"
               alt="TikTok"
               width={28}
               height={28}
@@ -68,7 +68,7 @@ export default function Footer() {
             rel="noopener noreferrer"
             aria-label="YouTube">
             <Image
-              src="/images/web/footer/youtube.png"
+              src="/images/web/footer/youtube.svg"
               alt="YouTube"
               width={28}
               height={28}
@@ -80,7 +80,7 @@ export default function Footer() {
             rel="noopener noreferrer"
             aria-label="Facebook">
             <Image
-              src="/images/web/footer/facebook.png"
+              src="/images/web/footer/facebook.svg"
               alt="Facebook"
               width={28}
               height={28}
@@ -92,7 +92,7 @@ export default function Footer() {
             rel="noopener noreferrer"
             aria-label="WhatsApp">
             <Image
-              src="/images/web/footer/whatsapp.png"
+              src="/images/web/footer/whatsapp.svg"
               alt="WhatsApp"
               width={28}
               height={28}
@@ -104,7 +104,7 @@ export default function Footer() {
             rel="noopener noreferrer"
             aria-label="Instagram">
             <Image
-              src="/images/web/footer/instagram.png"
+              src="/images/web/footer/instagram.svg"
               alt="Instagram"
               width={28}
               height={28}

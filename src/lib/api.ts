@@ -239,7 +239,16 @@ export async function getQuienesSomos(locale?: string) {
     "populate[chef_cta]": "*",
     "populate[proceso_cta]": "*",
     "populate[productos_cta]": "*",
-    "populate[premios]": "*",
+    "populate[premios][populate][imagen_premio][fields][0]": "url",
+    "populate[premios][populate][imagen_premio][fields][1]": "alternativeText",
+    "populate[premios][populate][imagen_premio][fields][2]": "width",
+    "populate[premios][populate][imagen_premio][fields][3]": "height",
+    "populate[premios][populate][imagen_premio][fields][4]": "formats",
+    "populate[premios][populate][logo_organizacion][fields][0]": "url",
+    "populate[premios][populate][logo_organizacion][fields][1]": "alternativeText",
+    "populate[premios][populate][logo_organizacion][fields][2]": "width",
+    "populate[premios][populate][logo_organizacion][fields][3]": "height",
+    "populate[premios][populate][logo_organizacion][fields][4]": "formats",
   }, locale);
 }
 

@@ -209,10 +209,12 @@ export interface Valor {
 
 export interface Premio {
   id: number;
-  titulo?: string | null;
+  nombre?: string | null;
   descripcion?: string | null;
-  imagen?: StrapiImage | null;
+  anio?: string | null;
   orden?: number;
+  imagen_premio?: StrapiImage | null;
+  logo_organizacion?: StrapiImage | null;
 }
 
 export interface QuienesSomos {

@@ -237,13 +237,13 @@
     line-height: 1.35;
     text-align: center;
     color: #ffffff;
-    padding-top: 0;
+    padding-top: 15px;
   }
 
   .mobileFraseQ {
     font-family: var(--font-montserrat), sans-serif;
     color: #fff;
-    text-align: left;
+    text-align: center;
     align-self: flex-start;
     width: clamp(130px, 18vw, 170px);
     margin-top: 0;
@@ -343,8 +343,8 @@
   }
 
   .mobileFraseQ {
-    width: 132px;
-    margin-left: 24px;
+    width: 105px;
+    margin-left: 25px;
     font-size: 14px;
   }
 
