@@ -50,13 +50,36 @@
 .bannerMobileWrapper {
   display: none;
   width: 100%;
+  position: relative;
+  isolation: isolate;
 }
 
-.bannerMobileImg {
+.bannerMobileApiBg {
+  object-fit: cover;
+  object-position: center top;
+  z-index: 0;
+  height: 55% !important;
+}
+
+.bannerMobileSvg {
+  display: block;
   width: 100%;
   height: auto;
-  display: block;
+  position: relative;
+  z-index: 1;
 }
+
+.bannerMobileText {
+  position: absolute;
+  top: 52%;
+  left: 0;
+  width: 100%;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  padding: 0 24px;
+}
+
 
 .content {
   padding: 0 24px 60px;
@@ -191,6 +214,13 @@
 
   .bannerMobileWrapper {
     display: block;
+  }
+
+  .bannerTitulo {
+    font-size: 60px;
+    transform: rotate(-4deg);
+    color: #fff;
+    text-align: center;
   }
 }
 

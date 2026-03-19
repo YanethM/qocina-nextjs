@@ -16,6 +16,7 @@ import type {
   BlogPage,
   FaqPage,
   ProcesoProduccion,
+  PasoProceso,
   HomePage,
   ContactoPage,
   Site,
@@ -55,6 +56,7 @@ async function fetchAPI<T>(
     headers: {
       "X-Site": SITE_CODE,
     },
+    signal: AbortSignal.timeout(10000),
   });
 
   console.log(`[API] ${res.status} ${path}`);
@@ -306,6 +308,8 @@ export async function getPack(slug: string, locale?: string) {
 
 export async function getRecetasPage(locale?: string) {
   return fetchAPI<StrapiSingleResponse<RecetasPage>>("/api/recetas-page", {
+    ...imgFields("hero_imagen"),
+    ...imgFields("hero_imagen_mobile"),
     "populate[testimonios][fields][0]": "nombre_usuario",
     "populate[testimonios][fields][1]": "rating",
     "populate[testimonios][fields][2]": "texto_testimonio",
@@ -332,7 +336,26 @@ export async function getFaqPage(locale?: string) {
 }
 
 export async function getProcesoProduccion(locale?: string) {
-  return fetchAPI<StrapiSingleResponse<ProcesoProduccion>>("/api/proceso-produccion", {}, locale);
+  return fetchAPI<StrapiSingleResponse<ProcesoProduccion>>("/api/proceso-produccion", {
+    ...imgFields("hero_imagen"),
+    "populate[hero_cta_primario]": "*",
+    "populate[hero_cta_secundario]": "*",
+    "populate[productos_cta]": "*",
+    "populate[cta_final_primario]": "*",
+    "populate[cta_final_secundario]": "*",
+    "populate[productos_destacados][populate][imagen_principal][fields][0]": "url",
+    "populate[productos_destacados][populate][imagen_principal][fields][1]": "alternativeText",
+    "populate[productos_destacados][populate][imagen_principal][fields][2]": "width",
+    "populate[productos_destacados][populate][imagen_principal][fields][3]": "height",
+    "populate[productos_destacados][populate][imagen_principal][fields][4]": "formats",
+    "populate[productos_destacados][populate][tamanos_disponibles]": "*",
+    "populate[productos_destacados][populate][sitios][populate][site]": "*",
+    "populate[pasos][populate][imagen][fields][0]": "url",
+    "populate[pasos][populate][imagen][fields][1]": "alternativeText",
+    "populate[pasos][populate][imagen][fields][2]": "width",
+    "populate[pasos][populate][imagen][fields][3]": "height",
+    "populate[pasos][populate][imagen][fields][4]": "formats",
+  }, locale);
 }
 
 export async function getHomePage(locale?: string) {

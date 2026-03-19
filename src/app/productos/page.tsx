@@ -39,6 +39,7 @@ export default async function ProductosPage() {
 
   const pageData = productosPageRes?.data;
   const productos = pageData?.productos_destacados ?? [];
+  console.log("[productos] ids:", productos.map((p) => ({ id: p.id, documentId: (p as any).documentId, nombre: p.nombre })));
   const rawPacks = pageData?.packs_destacados;
   const packsDestacados = (Array.isArray(rawPacks) ? rawPacks : []).sort(
     (a, b) => a.orden - b.orden,

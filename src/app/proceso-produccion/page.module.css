@@ -120,6 +120,10 @@
   height: auto;
 }
 
+.connectWaveMobile {
+  display: none;
+}
+
 .connectContent {
   position: absolute;
   inset: 0;
@@ -159,6 +163,12 @@
   text-align: center;
   color: #ffffff;
   margin: 0;
+}
+
+.productosCta {
+  display: flex;
+  justify-content: center;
+  padding: 80px 0;
 }
 
 .greenWave {
@@ -212,6 +222,29 @@
   color: #000000;
 }
 
+@media (max-width: 1024px) {
+  .section {
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+
+  .pasoTitulo {
+    font-size: 120px;
+  }
+
+  .pasoSubtitulo {
+    font-size: 36px;
+  }
+
+  .connectInner {
+    width: 90%;
+  }
+
+  .connectTitle {
+    font-size: 36px;
+  }
+}
+
 @media (max-width: 768px) {
   .heroSubtitle {
     font-size: 14px;
@@ -222,7 +255,81 @@
   }
 
   .heroBtns {
-    flex-direction: column;
+    flex-direction: row;
     gap: 12px;
+  }
+
+  .section {
+    height: auto;
+    padding: 40px 24px;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .sectionContent {
+    height: auto;
+    padding: 0;
+    gap: 16px;
+    order: 1;
+  }
+
+  .sectionImageWrapper {
+    height: 220px;
+    order: 2;
+  }
+
+  .pasoTitulo {
+    font-size: 72px;
+    line-height: 60%;
+  }
+
+  .pasoSubtitulo {
+    font-size: 24px;
+  }
+
+  .pasoTexto {
+    font-size: 16px;
+  }
+
+  .connectInner {
+    width: 100%;
+    height: auto;
+    padding: 32px 24px;
+    gap: 20px;
+  }
+
+  .connectTitle {
+    font-size: 26px;
+  }
+
+  .connectText {
+    font-size: 15px;
+  }
+
+  .connectBackground {
+    margin-top: -40px;
+  }
+
+  .connectWaveDesktop {
+    display: none;
+  }
+
+  .connectWaveMobile {
+    display: block;
+  }
+
+  .productosCta {
+    padding: 48px 24px;
+  }
+
+  .heroBtns {
+    width: 100%;
+  }
+
+  .heroBtns .btnVerProductos,
+  .heroBtns .btnConoceMas {
+    flex: 1;
+    min-width: unset;
+    padding: 12px 8px;
   }
 }

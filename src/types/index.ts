@@ -299,7 +299,8 @@ export interface RecetasPage {
   descripcion: string;
   hero_titulo: string | null;
   hero_subtitulo: string | null;
-  banner: StrapiImage | null;
+  hero_imagen: StrapiImage | null;
+  hero_imagen_mobile: StrapiImage | null;
   filtro_tipo_receta_label: string | null;
   filtro_region_label: string | null;
   filtro_dieta_label: string | null;
@@ -342,13 +343,37 @@ export interface FaqPage {
   cta_cargar_mas: string | null;
 }
 
+export interface PasoProceso {
+  id: number;
+  numero: number;
+  etiqueta: string;
+  titulo: string;
+  descripcion: string;
+  alineacion: "izquierda" | "derecha";
+  imagen: StrapiImage | null;
+}
+
 export interface ProcesoProduccion {
   id: number;
   documentId: string;
   titulo: string;
   descripcion: string;
   contenido: string | null;
-  pasos: string | null;
+  meta_title: string | null;
+  meta_description: string | null;
+  hero_titulo: string | null;
+  hero_subtitulo: string | null;
+  hero_imagen: StrapiImage | null;
+  hero_cta_primario: { id: number; texto: string; url: string; nueva_ventana: boolean } | null;
+  hero_cta_secundario: { id: number; texto: string; url: string; nueva_ventana: boolean } | null;
+  productos_titulo: string | null;
+  productos_destacados: Producto[];
+  productos_cta: { id: number; texto: string; url: string; nueva_ventana: boolean } | null;
+  cta_final_titulo: string | null;
+  cta_final_descripcion: string | null;
+  cta_final_primario: { id: number; texto: string; url: string; nueva_ventana: boolean } | null;
+  cta_final_secundario: { id: number; texto: string; url: string; nueva_ventana: boolean } | null;
+  pasos: PasoProceso[];
   imagen: StrapiImage | null;
 }
 

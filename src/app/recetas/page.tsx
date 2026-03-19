@@ -17,16 +17,17 @@ export default async function RecetasPage() {
   ]);
 
   const pageData = recetasPageRes?.data;
-  const bannerApiUrl = pageData?.banner ? getStrapiImageUrl(pageData.banner.url) : null;
+  const heroImageUrl = pageData?.hero_imagen ? getStrapiImageUrl(pageData.hero_imagen.url) : null;
+  const heroImageMobileUrl = pageData?.hero_imagen_mobile ? getStrapiImageUrl(pageData.hero_imagen_mobile.url) : null;
   const testimonios = pageData?.testimonios ?? [];
   const recetas = recetasRes?.data ?? [];
 
   return (
     <div className={styles.page}>
       <section className={styles.banner}>
-        {bannerApiUrl && (
+        {heroImageUrl && (
           <Image
-            src={bannerApiUrl}
+            src={heroImageUrl}
             alt="Recetas Q'ocina"
             fill
             className={styles.bannerApiBg}
@@ -47,14 +48,30 @@ export default async function RecetasPage() {
         </div>
       </section>
       <div className={styles.bannerMobileWrapper}>
+        {heroImageMobileUrl && (
+          <Image
+            src={heroImageMobileUrl}
+            alt="Recetas Q'ocina"
+            fill
+            className={styles.bannerMobileApiBg}
+            style={{ objectFit: "cover", objectPosition: "center top" }}
+            priority
+            unoptimized
+          />
+        )}
         <Image
-          src="/images/web/recetas/banner_mobile.svg"
-          alt="Recetas Q'ocina"
+          src="/images/mobile/recetas/hero.svg"
+          alt=""
           width={390}
-          height={600}
-          className={styles.bannerMobileImg}
+          height={780}
+          className={styles.bannerMobileSvg}
           priority
         />
+        {pageData?.hero_titulo && (
+          <div className={styles.bannerMobileText}>
+            <h1 className={styles.bannerTitulo}>{pageData.hero_titulo}</h1>
+          </div>
+        )}
       </div>
 
       <BasesCulinarias />

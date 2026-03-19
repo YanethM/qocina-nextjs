@@ -10,6 +10,7 @@ export async function POST(req: NextRequest) {
   try {
     const { siteCode: _ignored, ...body } = await req.json();
 
+    console.log("[prepare] body enviado al backend:", JSON.stringify(body, null, 2));
     const res = await fetch(`${API_URL}/api/orders/prepare`, {
       method: "POST",
       headers: {
