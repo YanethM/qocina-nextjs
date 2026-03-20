@@ -18,160 +18,25 @@
 
 .heroImageWrapper {
   position: relative;
-  width: 360px;
-  height: 360px;
+  width: 400px;
+  height: 400px;
   flex-shrink: 0;
   background: #fff;
   border-radius: 24px;
   overflow: hidden;
 }
 
-
-.productosSection {
-  padding: 0 60px 80px;
+.badgesWrapper {
+  padding: 0 60px;
   max-width: 1320px;
   margin: 0 auto;
-}
-
-.productosTitle {
-  font-family: Montserrat, sans-serif;
-  font-weight: 700;
-  font-size: 36px;
-  line-height: 120%;
-  color: #1a1a1a;
-  margin: 0 0 48px;
-  text-align: center;
-}
-
-.productosGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-}
-
-.productoCard {
-  border-radius: 24px;
-  overflow: visible;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 136px 32px 32px;
-  position: relative;
-  margin-top: 231px;
-  transition: transform 0.2s ease;
-  text-decoration: none;
-  color: inherit;
-}
-
-.productoCard:hover {
-  transform: translateY(-5px);
-}
-
-.productoCardGreen {
-  background: #6a892c;
-  color: #fff;
-}
-
-.productoCardYellow {
-  background: #f4a910;
-  color: #000;
-}
-
-.productoCardRed {
-  background: #ce171c;
-  color: #fff;
-}
-
-.productoImageWrapper {
-  position: absolute;
-  top: -231px;
-  left: 0;
   width: 100%;
-  height: 343px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2;
+  box-sizing: border-box;
 }
 
-.productoImage {
-  object-fit: contain;
-  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.12));
-}
-
-.productoBody {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-  position: relative;
-  z-index: 3;
-}
-
-.productoNombre {
-  font-family: Montserrat, sans-serif;
-  font-weight: 700;
-  font-size: 28px;
-  line-height: 1.2;
-  margin: 0;
-  color: inherit;
-}
-
-.productoPresentacion {
-  font-family: Montserrat, sans-serif;
-  font-weight: 700;
-  font-size: 16px;
-  margin: 0;
-  color: inherit;
-}
-
-.productoDesc {
-  font-family: Montserrat, sans-serif;
-  font-size: 14px;
-  line-height: 1.5;
-  margin: 0;
-  opacity: 0.9;
-  max-width: 280px;
-  color: inherit;
-}
-
-.productoBtn {
-  display: inline-block;
-  padding: 12px 40px;
-  background: #fff;
-  color: #1a1a1a;
-  border: none;
-  border-radius: 999px;
-  font-family: Montserrat, sans-serif;
-  font-weight: 700;
-  font-size: 15px;
-  text-decoration: none;
-  transition:
-    background-color 0.3s ease,
-    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
-    box-shadow 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-@media (hover: hover) {
-  .productoBtn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-  }
-}
-
-.productoBtn:active {
-  transform: scale(0.97);
-  box-shadow: none;
-  transition:
-    transform 0.1s ease,
-    box-shadow 0.1s ease;
-}
-
-.productoCardYellow .productoBtn {
-  background: #1a1a1a;
-  color: #fff;
+.waveBottom {
+  display: block;
+  margin-top: 0;
 }
 
 @media (max-width: 1024px) {
@@ -183,8 +48,8 @@
     gap: 48px;
   }
 
-  .productosSection {
-    padding: 60px 40px;
+  .badgesWrapper {
+    padding: 0 40px;
   }
 }
 
@@ -204,41 +69,7 @@
     align-self: center;
   }
 
-  .productosSection {
-    padding: 48px 24px;
-  }
-
-  .productosTitle {
-    font-size: 28px;
-    margin-bottom: 32px;
-  }
-
-  .productosGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .productoCard {
-    padding: 110px 20px 24px;
-    margin-top: 185px;
-  }
-
-  .productoImageWrapper {
-    top: -185px;
-    height: 274px;
-  }
-
-  .productoNombre {
-    font-size: 20px;
-  }
-}
-
-@media (max-width: 480px) {
-  .productosGrid {
-    grid-template-columns: 1fr;
-  }
-
-  .productoCard {
-    max-width: 380px;
-    width: 100%;
+  .badgesWrapper {
+    padding: 0 24px;
   }
 }

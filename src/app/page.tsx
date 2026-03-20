@@ -19,6 +19,14 @@ import { getLocale } from "@/lib/locale";
 import BeneficiosWaveSection from "@/components/BeneficiosWaveSection/BeneficiosWaveSection";
 import IngredientesNaturales from "@/components/IngredientesNaturales/IngredientesNaturales";
 
+export async function generateMetadata() {
+  const res = await getHomePage().catch(() => null);
+  return {
+    title: res?.data?.meta_title ?? "Q'ocina En Casa",
+    description: res?.data?.meta_description ?? "Bases culinarias artesanales con el toque de Gastón Acurio",
+  };
+}
+
 export default async function Home() {
   const locale = await getLocale();
   const [

@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import type { Producto } from "@/types";
 import { useCart } from "@/context/CartContext";
+import Accordion from "@/components/Accordion/Accordion";
 import styles from "./PackDetailClient.module.css";
 
 function formatPrice(precio: number, moneda: string): string {
@@ -23,6 +25,8 @@ interface Props {
   imagen: string | null;
   mostrarDescuento: boolean;
   porcentajeDescuento: number | null;
+  productos?: Producto[];
+  firstProduct?: Producto | null;
 }
 
 export default function PackDetailClient({
@@ -33,10 +37,11 @@ export default function PackDetailClient({
   descripcion,
   precio,
   precioMoneda,
-  sku,
   imagen,
   mostrarDescuento,
   porcentajeDescuento,
+  productos = [],
+  firstProduct,
 }: Props) {
   const { addItem } = useCart();
   const [cantidad, setCantidad] = useState(1);
@@ -48,33 +53,30 @@ export default function PackDetailClient({
   const precioFinal = precioConDescuento ?? precio;
   const totalPrice = precioFinal * cantidad;
 
+  const packNumber = nombre.match(/\d+/)?.[0] ?? null;
+  const packPrefix = packNumber ? nombre.replace(/\s*\d+\s*$/, "").trim() : nombre;
+
+  const contenidoMap = new Map<string, number>();
+  productos.forEach((p) => {
+    contenidoMap.set(p.nombre, (contenidoMap.get(p.nombre) ?? 0) + 1);
+  });
+  const contenido = Array.from(contenidoMap.entries())
+    .map(([n, c]) => `${c} ${n}`)
+    .join(", ");
+
+  const productRef = firstProduct ?? productos[0] ?? null;
+  const presentacion = productRef?.presentacion ?? null;
+  const rinde = productRef?.rinde ?? null;
+  const descripcionLarga = productRef?.descripcion_larga ?? null;
+  const badges = productRef?.badges ?? [];
+
   return (
     <div className={styles.infoSection}>
-      <h1 className={styles.title}>{nombre}</h1>
+      <h1 className={styles.title}>
+        {packPrefix}{" "}
+        {packNumber && <span className={styles.numberBadge}>{packNumber}</span>}
+      </h1>
       <p className={styles.descripcion}>{descripcion}</p>
-
-      {sku && <p className={styles.sku}>SKU: {sku}</p>}
-
-      <div className={styles.priceRow}>
-        {precioConDescuento !== null && (
-          <span className={styles.priceOriginal}>
-            {formatPrice(precio * cantidad, precioMoneda)}
-          </span>
-        )}
-        <div className={styles.priceRight}>
-          <span className={styles.price}>
-            {formatPrice(totalPrice, precioMoneda)}
-          </span>
-          {mostrarDescuento && porcentajeDescuento && (
-            <div className={styles.discountBadge}>
-              <span className={styles.discountPercent}>
-                {porcentajeDescuento}%
-              </span>
-              <span className={styles.discountLabel}>dto</span>
-            </div>
-          )}
-        </div>
-      </div>
 
       <div className={styles.fieldGroup}>
         <span className={styles.fieldLabel}>Cantidad:</span>
@@ -110,6 +112,94 @@ export default function PackDetailClient({
           </button>
         </div>
       </div>
+
+      <div className={styles.fieldGroup}>
+        <span className={styles.fieldLabel}>Tamaño del paquete:</span>
+        <div className={styles.packSelector}>
+          <button className={`${styles.packBtn} ${styles.packBtnActive}`}>
+            <Image
+              src="/images/web/products/product_detail/pack_image.svg"
+              alt=""
+              width={28}
+              height={30}
+              className={styles.packIcon}
+              aria-hidden
+            />
+            <span className={styles.packLabel}>{nombre}</span>
+          </button>
+        </div>
+      </div>
+
+      <div className={styles.details}>
+        {contenido && (
+          <p className={styles.detail}>
+            <strong>Contenido del Pack</strong>: ({contenido})
+          </p>
+        )}
+        {presentacion && (
+          <p className={styles.detail}>
+            <strong>Presentación</strong>: {presentacion}
+          </p>
+        )}
+        {rinde && (
+          <p className={styles.detail}>
+            <strong>Rinde</strong>: {rinde}
+          </p>
+        )}
+        <p className={styles.detail}>
+          <strong>Precio</strong>: {formatPrice(totalPrice, precioMoneda)}
+        </p>
+      </div>
+
+      {precioConDescuento !== null && (
+        <div className={styles.priceRow}>
+          <span className={styles.priceOriginal}>
+            {formatPrice(precio * cantidad, precioMoneda)}
+          </span>
+          <div className={styles.priceRight}>
+            <span className={styles.price}>
+              {formatPrice(totalPrice, precioMoneda)}
+            </span>
+            {mostrarDescuento && porcentajeDescuento && (
+              <div className={styles.discountBadge}>
+                <span className={styles.discountPercent}>{porcentajeDescuento}%</span>
+                <span className={styles.discountLabel}>dto</span>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      <Accordion
+        items={[
+          ...(descripcionLarga
+            ? [
+                {
+                  key: "uso",
+                  label: "¿Cómo se usa este sofrito?",
+                  content: (
+                    <p style={{ whiteSpace: "pre-wrap" }}>{descripcionLarga}</p>
+                  ),
+                },
+              ]
+            : []),
+          ...(badges.length > 0
+            ? [
+                {
+                  key: "beneficios",
+                  label: "Beneficios que se sienten en el paladar de toda la familia",
+                  content: (
+                    <ul className={styles.beneficiosList}>
+                      {badges.map((b) => (
+                        <li key={b.id}>{b.nombre}</li>
+                      ))}
+                    </ul>
+                  ),
+                },
+              ]
+            : []),
+        ]}
+      />
 
       <button
         className={styles.addToCart}

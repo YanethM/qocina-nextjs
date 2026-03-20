@@ -5,10 +5,13 @@ import BasesCulinarias from "@/components/BasesCulinarias/BasesCulinarias";
 import Testimonios from "@/components/Testimonios/Testimonios";
 import ListaRecetas from "@/components/ListaRecetas/ListaRecetas";
 
-export const metadata = {
-  title: "Recetas - Q'ocina",
-  description: "Descubre nuestras mejores recetas",
-};
+export async function generateMetadata() {
+  const res = await getRecetasPage().catch(() => null);
+  return {
+    title: res?.data?.meta_title ?? "Recetas - Q'ocina",
+    description: res?.data?.meta_description ?? "Descubre nuestras mejores recetas",
+  };
+}
 
 export default async function RecetasPage() {
   const [recetasPageRes, recetasRes] = await Promise.all([

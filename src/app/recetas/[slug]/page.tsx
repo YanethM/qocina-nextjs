@@ -8,6 +8,15 @@ interface Props {
 
 export const dynamic = "force-dynamic";
 
+export async function generateMetadata({ params }: Props) {
+  const { slug } = await params;
+  const receta = await getRecetaBySlug(slug).catch(() => null);
+  return {
+    title: receta?.meta_title ?? receta?.titulo ?? "Receta - Q'ocina",
+    description: receta?.meta_description ?? receta?.descripcion_corta ?? "Descubre esta receta",
+  };
+}
+
 export default async function RecetaDetailPage({ params }: Props) {
   const { slug } = await params;
 

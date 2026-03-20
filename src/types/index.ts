@@ -98,6 +98,8 @@ export interface Producto {
   badges: Badge[] | null;
   recetas_relacionadas: Receta[] | null;
   testimonios: Testimonio[] | null;
+  meta_title: string | null;
+  meta_description: string | null;
 }
 
 export interface RecetaIngrediente {
@@ -153,6 +155,8 @@ export interface Receta {
   texto_base_utilizada?: string | null;
   destacada?: boolean;
   video_url?: string | null;
+  meta_title?: string | null;
+  meta_description?: string | null;
 }
 
 export interface CategoriaBlog {
@@ -179,6 +183,8 @@ export interface Articulo {
   destacado: boolean;
   orden: number;
   categoria_blog: CategoriaBlog | null;
+  meta_title?: string | null;
+  meta_description?: string | null;
 }
 
 export interface CategoriaFaq {
@@ -261,6 +267,8 @@ export interface PackDestacado {
   orden: number;
   productos: Producto[] | null;
   imagen: StrapiImage | null;
+  meta_title: string | null;
+  meta_description: string | null;
 }
 
 export interface PerfilUsuario {
@@ -290,6 +298,8 @@ export interface ProductosPage {
   ayuda_titulo: string | null;
   ayuda_subtitulo: string | null;
   ayuda_cta: { id: number; texto: string; url: string; nueva_ventana: boolean } | null;
+  meta_title: string | null;
+  meta_description: string | null;
 }
 
 export interface RecetasPage {
@@ -306,6 +316,8 @@ export interface RecetasPage {
   filtro_dieta_label: string | null;
   testimonios_titulo: string | null;
   testimonios: Testimonio[] | null;
+  meta_title: string | null;
+  meta_description: string | null;
 }
 
 export interface BlogPage {
@@ -387,6 +399,8 @@ export interface ContactoPage {
   whatsapp_url: string | null;
   whatsapp_cta_texto: string | null;
   imagen: StrapiImage | null;
+  meta_title: string | null;
+  meta_description: string | null;
 }
 
 export interface HeroSlide {
@@ -427,4 +441,6 @@ export interface HomePage {
   recetas_titulo: string;
   recetas_cta: { texto: string; url: string; nueva_ventana: boolean } | null;
   testimonios_titulo: string;
+  meta_title: string | null;
+  meta_description: string | null;
 }

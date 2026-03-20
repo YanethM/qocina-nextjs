@@ -3,6 +3,14 @@ import ContactForm from "@/components/ContactForm/ContactForm";
 import { getContactoPage, getStrapiImageUrl } from "@/lib/api";
 import styles from "./page.module.css";
 
+export async function generateMetadata() {
+  const res = await getContactoPage().catch(() => null);
+  return {
+    title: res?.data?.meta_title ?? "Contacto - Q'ocina",
+    description: res?.data?.meta_description ?? "Contáctanos y resolvemos tus dudas",
+  };
+}
+
 export default async function ContactoPage() {
   const res = await getContactoPage().catch(() => null);
   const data = res?.data ?? null;

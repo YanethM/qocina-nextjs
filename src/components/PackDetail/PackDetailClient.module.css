@@ -12,6 +12,25 @@
   line-height: 120%;
   color: #1a1a1a;
   margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.numberBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #1a1a1a;
+  color: #fff;
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  flex-shrink: 0;
 }
 
 .descripcion {
@@ -140,6 +159,71 @@
   font-size: 18px;
   line-height: 1;
   text-align: center;
+}
+
+.packSelector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.packBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: 1.5px solid #ccc;
+  border-radius: 12px;
+  background: #fff;
+  cursor: pointer;
+  font-family: Montserrat, sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: #1a1a1a;
+  transition: border-color 0.2s;
+}
+
+.packBtnActive {
+  border-color: #1a1a1a;
+  background: #f5f5f5;
+  font-weight: 700;
+}
+
+.packIcon {
+  object-fit: contain;
+}
+
+.packLabel {
+  white-space: nowrap;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 20px;
+  background: #f9f9f9;
+  border-radius: 16px;
+}
+
+.detail {
+  font-family: Montserrat, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.beneficiosList {
+  margin: 0;
+  padding: 0 0 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-family: Montserrat, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #444;
 }
 
 .addToCart {

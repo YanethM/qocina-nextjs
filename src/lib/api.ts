@@ -301,6 +301,7 @@ export async function getPack(slug: string, locale?: string) {
   const pack = data?.packs_destacados?.find((p) => p.slug === slug) ?? null;
   return {
     pack,
+    allPacks: data?.packs_destacados ?? [],
     mostrarDescuento: data?.packs_mostrar_descuento ?? false,
     porcentajeDescuento: data?.packs_porcentaje_descuento ?? null,
   };

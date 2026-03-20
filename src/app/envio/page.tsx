@@ -16,159 +16,23 @@ const STEPS = [
 
 const PREFIJOS = ["+57", "+51", "+54", "+52", "+56", "+34", "+1", "+593"];
 
-const ESTADOS: Record<string, { name: string; code: string }[]> = {
-  pe: [
-    { name: "Amazonas", code: "AMA" }, { name: "Áncash", code: "ANC" },
-    { name: "Apurímac", code: "APU" }, { name: "Arequipa", code: "ARE" },
-    { name: "Ayacucho", code: "AYA" }, { name: "Cajamarca", code: "CAJ" },
-    { name: "Callao", code: "CAL" }, { name: "Cusco", code: "CUS" },
-    { name: "Huancavelica", code: "HUV" }, { name: "Huánuco", code: "HUC" },
-    { name: "Ica", code: "ICA" }, { name: "Junín", code: "JUN" },
-    { name: "La Libertad", code: "LAL" }, { name: "Lambayeque", code: "LAM" },
-    { name: "Lima", code: "LIM" }, { name: "Loreto", code: "LOR" },
-    { name: "Madre de Dios", code: "MDD" }, { name: "Moquegua", code: "MOQ" },
-    { name: "Pasco", code: "PAS" }, { name: "Piura", code: "PIU" },
-    { name: "Puno", code: "PUN" }, { name: "San Martín", code: "SAM" },
-    { name: "Tacna", code: "TAC" }, { name: "Tumbes", code: "TUM" },
-    { name: "Ucayali", code: "UCA" },
-  ],
-  us: [
-    { name: "Alabama", code: "AL" }, { name: "Alaska", code: "AK" },
-    { name: "Arizona", code: "AZ" }, { name: "Arkansas", code: "AR" },
-    { name: "California", code: "CA" }, { name: "Colorado", code: "CO" },
-    { name: "Connecticut", code: "CT" }, { name: "Delaware", code: "DE" },
-    { name: "Florida", code: "FL" }, { name: "Georgia", code: "GA" },
-    { name: "Hawaii", code: "HI" }, { name: "Idaho", code: "ID" },
-    { name: "Illinois", code: "IL" }, { name: "Indiana", code: "IN" },
-    { name: "Iowa", code: "IA" }, { name: "Kansas", code: "KS" },
-    { name: "Kentucky", code: "KY" }, { name: "Louisiana", code: "LA" },
-    { name: "Maine", code: "ME" }, { name: "Maryland", code: "MD" },
-    { name: "Massachusetts", code: "MA" }, { name: "Michigan", code: "MI" },
-    { name: "Minnesota", code: "MN" }, { name: "Mississippi", code: "MS" },
-    { name: "Missouri", code: "MO" }, { name: "Montana", code: "MT" },
-    { name: "Nebraska", code: "NE" }, { name: "Nevada", code: "NV" },
-    { name: "New Hampshire", code: "NH" }, { name: "New Jersey", code: "NJ" },
-    { name: "New Mexico", code: "NM" }, { name: "New York", code: "NY" },
-    { name: "North Carolina", code: "NC" }, { name: "North Dakota", code: "ND" },
-    { name: "Ohio", code: "OH" }, { name: "Oklahoma", code: "OK" },
-    { name: "Oregon", code: "OR" }, { name: "Pennsylvania", code: "PA" },
-    { name: "Rhode Island", code: "RI" }, { name: "South Carolina", code: "SC" },
-    { name: "South Dakota", code: "SD" }, { name: "Tennessee", code: "TN" },
-    { name: "Texas", code: "TX" }, { name: "Utah", code: "UT" },
-    { name: "Vermont", code: "VT" }, { name: "Virginia", code: "VA" },
-    { name: "Washington", code: "WA" }, { name: "West Virginia", code: "WV" },
-    { name: "Wisconsin", code: "WI" }, { name: "Wyoming", code: "WY" },
-  ],
-  es: [
-    { name: "Álava", code: "VI" }, { name: "Albacete", code: "AB" },
-    { name: "Alicante", code: "A" }, { name: "Almería", code: "AL" },
-    { name: "Asturias", code: "O" }, { name: "Ávila", code: "AV" },
-    { name: "Badajoz", code: "BA" }, { name: "Barcelona", code: "B" },
-    { name: "Burgos", code: "BU" }, { name: "Cáceres", code: "CC" },
-    { name: "Cádiz", code: "CA" }, { name: "Cantabria", code: "S" },
-    { name: "Castellón", code: "CS" }, { name: "Ciudad Real", code: "CR" },
-    { name: "Córdoba", code: "CO" }, { name: "Cuenca", code: "CU" },
-    { name: "Girona", code: "GI" }, { name: "Granada", code: "GR" },
-    { name: "Guadalajara", code: "GU" }, { name: "Guipúzcoa", code: "SS" },
-    { name: "Huelva", code: "H" }, { name: "Huesca", code: "HU" },
-    { name: "Islas Baleares", code: "PM" }, { name: "Jaén", code: "J" },
-    { name: "La Rioja", code: "LO" }, { name: "Las Palmas", code: "GC" },
-    { name: "León", code: "LE" }, { name: "Lleida", code: "L" },
-    { name: "Lugo", code: "LU" }, { name: "Madrid", code: "M" },
-    { name: "Málaga", code: "MA" }, { name: "Murcia", code: "MU" },
-    { name: "Navarra", code: "NA" }, { name: "Ourense", code: "OR" },
-    { name: "Palencia", code: "P" }, { name: "Pontevedra", code: "PO" },
-    { name: "Salamanca", code: "SA" }, { name: "Santa Cruz de Tenerife", code: "TF" },
-    { name: "Segovia", code: "SG" }, { name: "Sevilla", code: "SE" },
-    { name: "Soria", code: "SO" }, { name: "Tarragona", code: "T" },
-    { name: "Teruel", code: "TE" }, { name: "Toledo", code: "TO" },
-    { name: "Valencia", code: "V" }, { name: "Valladolid", code: "VA" },
-    { name: "Vizcaya", code: "BI" }, { name: "Zamora", code: "ZA" },
-    { name: "Zaragoza", code: "Z" },
-  ],
-  mx: [
-    { name: "Aguascalientes", code: "AGU" }, { name: "Baja California", code: "BCN" },
-    { name: "Baja California Sur", code: "BCS" }, { name: "Campeche", code: "CAM" },
-    { name: "Chiapas", code: "CHP" }, { name: "Chihuahua", code: "CHH" },
-    { name: "Ciudad de México", code: "CMX" }, { name: "Coahuila", code: "COA" },
-    { name: "Colima", code: "COL" }, { name: "Durango", code: "DUR" },
-    { name: "Guanajuato", code: "GUA" }, { name: "Guerrero", code: "GRO" },
-    { name: "Hidalgo", code: "HID" }, { name: "Jalisco", code: "JAL" },
-    { name: "México", code: "MEX" }, { name: "Michoacán", code: "MIC" },
-    { name: "Morelos", code: "MOR" }, { name: "Nayarit", code: "NAY" },
-    { name: "Nuevo León", code: "NLE" }, { name: "Oaxaca", code: "OAX" },
-    { name: "Puebla", code: "PUE" }, { name: "Querétaro", code: "QUE" },
-    { name: "Quintana Roo", code: "ROO" }, { name: "San Luis Potosí", code: "SLP" },
-    { name: "Sinaloa", code: "SIN" }, { name: "Sonora", code: "SON" },
-    { name: "Tabasco", code: "TAB" }, { name: "Tamaulipas", code: "TAM" },
-    { name: "Tlaxcala", code: "TLA" }, { name: "Veracruz", code: "VER" },
-    { name: "Yucatán", code: "YUC" }, { name: "Zacatecas", code: "ZAC" },
-  ],
-  ar: [
-    { name: "Buenos Aires", code: "BA" }, { name: "Catamarca", code: "CT" },
-    { name: "Chaco", code: "CC" }, { name: "Chubut", code: "CH" },
-    { name: "Ciudad Autónoma de Buenos Aires", code: "CF" },
-    { name: "Córdoba", code: "CB" }, { name: "Corrientes", code: "CN" },
-    { name: "Entre Ríos", code: "ER" }, { name: "Formosa", code: "FO" },
-    { name: "Jujuy", code: "JY" }, { name: "La Pampa", code: "LP" },
-    { name: "La Rioja", code: "LR" }, { name: "Mendoza", code: "MZ" },
-    { name: "Misiones", code: "MN" }, { name: "Neuquén", code: "NQ" },
-    { name: "Río Negro", code: "RN" }, { name: "Salta", code: "SA" },
-    { name: "San Juan", code: "SJ" }, { name: "San Luis", code: "SL" },
-    { name: "Santa Cruz", code: "SC" }, { name: "Santa Fe", code: "SF" },
-    { name: "Santiago del Estero", code: "SE" },
-    { name: "Tierra del Fuego", code: "TF" }, { name: "Tucumán", code: "TM" },
-  ],
-  co: [
-    { name: "Amazonas", code: "AMA" }, { name: "Antioquia", code: "ANT" },
-    { name: "Arauca", code: "ARA" }, { name: "Atlántico", code: "ATL" },
-    { name: "Bolívar", code: "BOL" }, { name: "Boyacá", code: "BOY" },
-    { name: "Caldas", code: "CAL" }, { name: "Caquetá", code: "CAQ" },
-    { name: "Casanare", code: "CAS" }, { name: "Cauca", code: "CAU" },
-    { name: "Cesar", code: "CES" }, { name: "Chocó", code: "CHO" },
-    { name: "Córdoba", code: "COR" }, { name: "Cundinamarca", code: "CUN" },
-    { name: "Guainía", code: "GUA" }, { name: "Guaviare", code: "GUV" },
-    { name: "Huila", code: "HUI" }, { name: "La Guajira", code: "LAG" },
-    { name: "Magdalena", code: "MAG" }, { name: "Meta", code: "MET" },
-    { name: "Nariño", code: "NAR" }, { name: "Norte de Santander", code: "NSA" },
-    { name: "Putumayo", code: "PUT" }, { name: "Quindío", code: "QUI" },
-    { name: "Risaralda", code: "RIS" }, { name: "San Andrés y Providencia", code: "SAP" },
-    { name: "Santander", code: "SAN" }, { name: "Sucre", code: "SUC" },
-    { name: "Tolima", code: "TOL" }, { name: "Valle del Cauca", code: "VAC" },
-    { name: "Vaupés", code: "VAU" }, { name: "Vichada", code: "VID" },
-  ],
-  ec: [
-    { name: "Azuay", code: "A" }, { name: "Bolívar", code: "B" },
-    { name: "Cañar", code: "F" }, { name: "Carchi", code: "C" },
-    { name: "Chimborazo", code: "H" }, { name: "Cotopaxi", code: "X" },
-    { name: "El Oro", code: "O" }, { name: "Esmeraldas", code: "E" },
-    { name: "Galápagos", code: "W" }, { name: "Guayas", code: "G" },
-    { name: "Imbabura", code: "I" }, { name: "Loja", code: "L" },
-    { name: "Los Ríos", code: "R" }, { name: "Manabí", code: "M" },
-    { name: "Morona Santiago", code: "S" }, { name: "Napo", code: "N" },
-    { name: "Orellana", code: "D" }, { name: "Pastaza", code: "Y" },
-    { name: "Pichincha", code: "P" }, { name: "Santa Elena", code: "SE" },
-    { name: "Santo Domingo de los Tsáchilas", code: "SD" },
-    { name: "Sucumbíos", code: "U" }, { name: "Tungurahua", code: "T" },
-    { name: "Zamora Chinchipe", code: "Z" },
-  ],
-  cl: [
-    { name: "Arica y Parinacota", code: "AP" }, { name: "Tarapacá", code: "TA" },
-    { name: "Antofagasta", code: "AN" }, { name: "Atacama", code: "AT" },
-    { name: "Coquimbo", code: "CO" }, { name: "Valparaíso", code: "VS" },
-    { name: "Metropolitana de Santiago", code: "RM" },
-    { name: "O'Higgins", code: "LI" }, { name: "Maule", code: "ML" },
-    { name: "Ñuble", code: "NB" }, { name: "Biobío", code: "BI" },
-    { name: "La Araucanía", code: "AR" }, { name: "Los Ríos", code: "LR" },
-    { name: "Los Lagos", code: "LL" }, { name: "Aysén", code: "AI" },
-    { name: "Magallanes", code: "MA" },
-  ],
-};
+type Nivel1Option = { regionCode: string; regionName: string };
+type Nivel2Option = { cityCode: string; cityName: string };
+type Nivel3Option = { districtCode: string; districtName: string };
 
 function formatPrice(precio: number, moneda: string): string {
   if (!precio && precio !== 0) return "";
   if (moneda === "PEN") return `S/ ${precio.toFixed(2)}`;
   return `$ ${precio.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ".")} ${moneda}`;
+}
+
+async function fetchOfix(action: string, params: Record<string, string> = {}) {
+  const res = await fetch("/api/ofix", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ action, ...params }),
+  });
+  return res.json();
 }
 
 export default function EnvioPage() {
@@ -184,13 +48,24 @@ export default function EnvioPage() {
   const [telefono, setTelefono] = useState("");
   const [documento, setDocumento] = useState("");
   const [cuit, setCuit] = useState("");
+  const [facturaType, setFacturaType] = useState("8");
   const [direccion, setDireccion] = useState("");
   const [numeroCalle, setNumeroCalle] = useState("");
   const [referencia, setReferencia] = useState("");
-  const [ciudad, setCiudad] = useState("");
-  const [estado, setEstado] = useState("");
-  const [codigoEstado, setCodigoEstado] = useState("");
   const [codigoPostal, setCodigoPostal] = useState("");
+  const [ciudadUS, setCiudadUS] = useState("");
+
+  const [niveles, setNiveles] = useState(0);
+  const [isUS, setIsUS] = useState(false);
+  const [nivel1Options, setNivel1Options] = useState<Nivel1Option[]>([]);
+  const [nivel2Options, setNivel2Options] = useState<Nivel2Option[]>([]);
+  const [nivel3Options, setNivel3Options] = useState<Nivel3Option[]>([]);
+  const [nivel1, setNivel1] = useState("");
+  const [nivel2, setNivel2] = useState("");
+  const [nivel3, setNivel3] = useState("");
+  const [loadingUbigeo, setLoadingUbigeo] = useState(false);
+  const [ubigeoError, setUbigeoError] = useState(false);
+
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
@@ -202,6 +77,71 @@ export default function EnvioPage() {
       .catch(() => {});
   }, []);
 
+  useEffect(() => {
+    if (!pais || sites.length === 0) return;
+    const selectedSite = sites.find((s) => s.code === pais);
+    const countryCode = selectedSite?.ofix_country_code ?? pais.toUpperCase();
+    const usCountry = countryCode === "US";
+
+    setIsUS(usCountry);
+    setNivel1(""); setNivel2(""); setNivel3("");
+    setNivel1Options([]); setNivel2Options([]); setNivel3Options([]);
+    setNiveles(0);
+    setCiudadUS("");
+    setUbigeoError(false);
+    setLoadingUbigeo(true);
+
+    (async () => {
+      try {
+        if (usCountry) {
+          const data = await fetchOfix("getNivel1", { countryCode });
+          setNivel1Options(Array.isArray(data) ? data : []);
+        } else {
+          const [nivelesData, nivel1Data] = await Promise.all([
+            fetchOfix("getNiveles", { countryCode }),
+            fetchOfix("getNivel1", { countryCode }),
+          ]);
+          setNiveles(nivelesData?.nivels ?? 1);
+          setNivel1Options(Array.isArray(nivel1Data) ? nivel1Data : []);
+        }
+      } catch {
+        setUbigeoError(true);
+      } finally {
+        setLoadingUbigeo(false);
+      }
+    })();
+  }, [pais, sites]);
+
+  useEffect(() => {
+    if (!nivel1 || isUS || niveles < 2) return;
+    const selectedSite = sites.find((s) => s.code === pais);
+    const countryCode = selectedSite?.ofix_country_code ?? pais.toUpperCase();
+
+    setNivel2(""); setNivel3("");
+    setNivel2Options([]); setNivel3Options([]);
+
+    fetchOfix("getNivel2", { countryCode, departament: nivel1 })
+      .then((data) => setNivel2Options(Array.isArray(data) ? data : []))
+      .catch(() => {});
+  }, [nivel1]);
+
+  useEffect(() => {
+    if (!nivel2 || isUS || niveles < 3) return;
+    const selectedSite = sites.find((s) => s.code === pais);
+    const countryCode = selectedSite?.ofix_country_code ?? pais.toUpperCase();
+
+    setNivel3(""); setNivel3Options([]);
+
+    fetchOfix("getNivel3", { countryCode, departament: nivel1, city: nivel2 })
+      .then((data) => setNivel3Options(Array.isArray(data) ? data : []))
+      .catch(() => {});
+  }, [nivel2]);
+
+  const selectedSite = sites.find((s) => s.code === pais);
+  const countryCode = selectedSite?.ofix_country_code ?? pais.toUpperCase();
+  const isAR = countryCode === "AR";
+  const zipRequired = isUS || countryCode === "MX";
+
   const validate = () => {
     const e: Record<string, string> = {};
     if (!pais) e.pais = "Requerido";
@@ -210,11 +150,14 @@ export default function EnvioPage() {
     if (!correo) e.correo = "Requerido";
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) e.correo = "Error";
     if (!telefono) e.telefono = "Requerido";
-    if (!documento) e.documento = "Requerido";
+    if (!isUS && !documento) e.documento = "Requerido";
     if (!direccion) e.direccion = "Requerido";
     if (!numeroCalle) e.numeroCalle = "Requerido";
-    if (!ciudad) e.ciudad = "Requerido";
-    if (!codigoPostal) e.codigoPostal = "Requerido";
+    if (!nivel1) e.nivel1 = "Requerido";
+    if (isUS && !ciudadUS) e.ciudadUS = "Requerido";
+    if (!isUS && niveles >= 2 && !nivel2) e.nivel2 = "Requerido";
+    if (!isUS && niveles >= 3 && !nivel3) e.nivel3 = "Requerido";
+    if (zipRequired && !codigoPostal) e.codigoPostal = "Requerido";
     return e;
   };
 
@@ -227,8 +170,56 @@ export default function EnvioPage() {
     setApiError(null);
 
     try {
-      const selectedSite = sites.find((s) => s.code === pais);
-      const countryCode = selectedSite?.ofix_country_code ?? pais.toUpperCase();
+      let shippingAddress: Record<string, string>;
+
+      if (isUS) {
+        const nivel1Item = nivel1Options.find((o) => o.regionCode === nivel1);
+        shippingAddress = {
+          street: direccion,
+          streetNumber: numeroCalle,
+          reference: referencia,
+          city: ciudadUS,
+          state: nivel1Item?.regionCode ?? nivel1,
+          zip: codigoPostal,
+          country: countryCode,
+        };
+      } else {
+        const nivel1Item = nivel1Options.find((o) => o.regionCode === nivel1);
+        const nivel2Item = nivel2Options.find((o) => o.cityCode === nivel2);
+        const nivel3Item = nivel3Options.find((o) => o.districtCode === nivel3);
+
+        const ofixStateCode = nivel1.includes("|") ? nivel1.split("|")[1] : nivel1;
+
+        let ofixLevel2Name = "";
+        let ofixLevel3Name = "";
+        let ofixAddress3 = "";
+
+        if (niveles >= 3 && nivel3Item) {
+          ofixLevel2Name = nivel2Item?.cityName ?? "";
+          ofixLevel3Name = nivel3Item.districtName;
+          ofixAddress3 = nivel3.includes("|") ? nivel3.split("|")[0] : nivel3;
+        } else if (niveles >= 2 && nivel2Item) {
+          ofixLevel2Name = nivel2Item.cityName;
+          ofixLevel3Name = nivel2Item.cityName;
+          ofixAddress3 = nivel2.includes("|") ? nivel2.split("|")[0] : nivel2;
+        } else if (nivel1Item) {
+          ofixLevel2Name = nivel1Item.regionName;
+          ofixLevel3Name = nivel1Item.regionName;
+          ofixAddress3 = nivel1.includes("|") ? nivel1.split("|")[0] : nivel1;
+        }
+
+        shippingAddress = {
+          street: direccion,
+          streetNumber: numeroCalle,
+          reference: referencia,
+          zip: codigoPostal,
+          country: countryCode,
+          ofixStateCode,
+          ofixLevel2Name,
+          ofixLevel3Name,
+          ofixAddress3,
+        };
+      }
 
       const prepareRes = await fetch(`/api/orders/prepare`, {
         method: "POST",
@@ -239,22 +230,15 @@ export default function EnvioPage() {
           customerName: `${nombre} ${apellido}`,
           customerEmail: correo,
           customerPhone: `${prefijo}${telefono}`,
-          taxId: documento,
+          ...(!isUS ? { taxId: documento } : {}),
           ...(cuit ? { cuit } : {}),
-          shippingAddress: {
-            street: direccion,
-            streetNumber: numeroCalle,
-            reference: referencia,
-            district: ciudad,
-            zip: codigoPostal,
-            country: countryCode,
-          },
+          ...(isAR ? { facturaType } : {}),
+          shippingAddress,
         }),
       });
 
       if (!prepareRes.ok) {
         const err = await prepareRes.json();
-        console.error("[orders/prepare] error:", JSON.stringify(err, null, 2));
         const msg = err?.error?.details?.errors?.map((e: { message: string }) => e.message).join(", ")
           ?? err?.error?.message
           ?? "Error al preparar la orden";
@@ -275,7 +259,6 @@ export default function EnvioPage() {
       }
 
       const { data: session } = await sessionRes.json();
-
       sessionStorage.setItem("qocina_checkout_email", correo);
       window.location.href = session.checkoutUrl;
     } catch (err) {
@@ -310,7 +293,7 @@ export default function EnvioPage() {
               <select
                 className={`${styles.select} ${errors.pais ? styles.inputError : ""}`}
                 value={pais}
-                onChange={(e) => { setPais(e.target.value); setEstado(""); setCodigoEstado(""); }}
+                onChange={(e) => setPais(e.target.value)}
               >
                 <option value="">País*</option>
                 {sites.map((s) => (
@@ -378,25 +361,44 @@ export default function EnvioPage() {
                   />
                 </div>
               </div>
-              <div className={styles.field}>
-                <label className={styles.label}>Número de documento*</label>
-                <input
-                  className={`${styles.input} ${errors.documento ? styles.inputError : ""}`}
-                  placeholder="DNI, Pasaporte o Cédula"
-                  value={documento}
-                  onChange={(e) => setDocumento(e.target.value)}
-                />
-              </div>
-              <div className={styles.field}>
-                <label className={styles.label}>Número de CUIT (11 dígitos)</label>
-                <input
-                  className={styles.input}
-                  placeholder="01020304050"
-                  value={cuit}
-                  onChange={(e) => setCuit(e.target.value)}
-                  maxLength={11}
-                />
-              </div>
+              {!isUS && (
+                <div className={styles.field}>
+                  <label className={styles.label}>Número de documento*</label>
+                  <input
+                    className={`${styles.input} ${errors.documento ? styles.inputError : ""}`}
+                    placeholder="DNI, Pasaporte o Cédula"
+                    value={documento}
+                    onChange={(e) => setDocumento(e.target.value)}
+                  />
+                </div>
+              )}
+              {isAR && (
+                <>
+                  <div className={styles.field}>
+                    <label className={styles.label}>Número de CUIT (11 dígitos)</label>
+                    <input
+                      className={styles.input}
+                      placeholder="01020304050"
+                      value={cuit}
+                      onChange={(e) => setCuit(e.target.value)}
+                      maxLength={11}
+                    />
+                  </div>
+                  <div className={styles.field}>
+                    <label className={styles.label}>Tipo de factura*</label>
+                    <div className={styles.selectWrapper}>
+                      <select
+                        className={styles.select}
+                        value={facturaType}
+                        onChange={(e) => setFacturaType(e.target.value)}
+                      >
+                        <option value="8">Factura B</option>
+                        <option value="7">Factura A</option>
+                      </select>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           </div>
 
@@ -405,6 +407,11 @@ export default function EnvioPage() {
               <span className={styles.sectionNum}>3. Domicilio de entrega</span>
               <hr className={styles.sectionLine} />
             </div>
+
+            {ubigeoError && (
+              <p className={styles.apiError}>No se pudieron cargar las opciones de ubicación. Verifica tu conexión e intenta de nuevo.</p>
+            )}
+
             <div className={styles.fieldGrid}>
               <div className={`${styles.field} ${styles.fieldFull}`}>
                 <label className={styles.label}>Calle*</label>
@@ -433,52 +440,82 @@ export default function EnvioPage() {
                   onChange={(e) => setReferencia(e.target.value)}
                 />
               </div>
+
               <div className={styles.field}>
-                <label className={styles.label}>Distrito / Barrio*</label>
-                <input
-                  className={`${styles.input} ${errors.ciudad ? styles.inputError : ""}`}
-                  placeholder="Ej: San Nicolás, Chapinero"
-                  value={ciudad}
-                  onChange={(e) => setCiudad(e.target.value)}
-                />
-              </div>
-            </div>
-            <div className={styles.fieldGrid3}>
-              <div className={styles.field}>
-                <label className={styles.label}>Estado / Provincia</label>
+                <label className={styles.label}>{isUS ? "Estado*" : "Región / Departamento*"}</label>
                 <div className={styles.selectWrapper}>
                   <select
-                    className={`${styles.select} ${errors.estado ? styles.inputError : ""}`}
-                    value={estado}
-                    disabled={!pais}
-                    onChange={(e) => {
-                      const selected = (ESTADOS[pais] ?? []).find(s => s.name === e.target.value);
-                      setEstado(e.target.value);
-                      setCodigoEstado(selected?.code ?? "");
-                    }}
+                    className={`${styles.select} ${errors.nivel1 ? styles.inputError : ""}`}
+                    value={nivel1}
+                    disabled={!pais || loadingUbigeo || nivel1Options.length === 0}
+                    onChange={(e) => setNivel1(e.target.value)}
                   >
-                    <option value="">{pais ? "Selecciona tu región" : "Primero elige un país"}</option>
-                    {(ESTADOS[pais] ?? [])
-                      .slice()
-                      .sort((a, b) => a.name.localeCompare(b.name, "es"))
-                      .map((s) => (
-                        <option key={s.code} value={s.name}>{s.name}</option>
-                      ))}
+                    <option value="">
+                      {loadingUbigeo ? "Cargando..." : !pais ? "Primero elige un país" : "Selecciona una opción"}
+                    </option>
+                    {nivel1Options.map((o) => (
+                      <option key={o.regionCode} value={o.regionCode}>{o.regionName}</option>
+                    ))}
                   </select>
                 </div>
               </div>
+
+              {isUS && (
+                <div className={styles.field}>
+                  <label className={styles.label}>Ciudad*</label>
+                  <input
+                    className={`${styles.input} ${errors.ciudadUS ? styles.inputError : ""}`}
+                    placeholder="Ej: Dallas"
+                    value={ciudadUS}
+                    onChange={(e) => setCiudadUS(e.target.value)}
+                  />
+                </div>
+              )}
+
+              {!isUS && niveles >= 2 && (
+                <div className={styles.field}>
+                  <label className={styles.label}>Ciudad / Provincia*</label>
+                  <div className={styles.selectWrapper}>
+                    <select
+                      className={`${styles.select} ${errors.nivel2 ? styles.inputError : ""}`}
+                      value={nivel2}
+                      disabled={!nivel1 || nivel2Options.length === 0}
+                      onChange={(e) => setNivel2(e.target.value)}
+                    >
+                      <option value="">
+                        {!nivel1 ? "Primero elige región" : nivel2Options.length === 0 ? "Cargando..." : "Selecciona una opción"}
+                      </option>
+                      {nivel2Options.map((o) => (
+                        <option key={o.cityCode} value={o.cityCode}>{o.cityName}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              )}
+
+              {!isUS && niveles >= 3 && (
+                <div className={styles.field}>
+                  <label className={styles.label}>Distrito / Barrio*</label>
+                  <div className={styles.selectWrapper}>
+                    <select
+                      className={`${styles.select} ${errors.nivel3 ? styles.inputError : ""}`}
+                      value={nivel3}
+                      disabled={!nivel2 || nivel3Options.length === 0}
+                      onChange={(e) => setNivel3(e.target.value)}
+                    >
+                      <option value="">
+                        {!nivel2 ? "Primero elige ciudad" : nivel3Options.length === 0 ? "Cargando..." : "Selecciona una opción"}
+                      </option>
+                      {nivel3Options.map((o) => (
+                        <option key={o.districtCode} value={o.districtCode}>{o.districtName}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              )}
+
               <div className={styles.field}>
-                <label className={styles.label}>Código de estado / provincia</label>
-                <input
-                  className={styles.input}
-                  placeholder="Ej: NY, BA, MD (Solo 2 o 3 letras)"
-                  value={codigoEstado}
-                  onChange={(e) => setCodigoEstado(e.target.value)}
-                  maxLength={3}
-                />
-              </div>
-              <div className={styles.field}>
-                <label className={styles.label}>Código postal*</label>
+                <label className={styles.label}>Código postal{zipRequired ? "*" : ""}</label>
                 <input
                   className={`${styles.input} ${errors.codigoPostal ? styles.inputError : ""}`}
                   placeholder="Ej: 28001 o 110111"

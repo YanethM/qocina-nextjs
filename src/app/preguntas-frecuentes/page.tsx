@@ -11,6 +11,14 @@ import {
 } from "@/lib/api";
 import styles from "./page.module.css";
 
+export async function generateMetadata() {
+  const res = await getFaqPage().catch(() => null);
+  return {
+    title: res?.data?.meta_title ?? "Preguntas Frecuentes - Q'ocina",
+    description: res?.data?.meta_description ?? "Encuentra respuestas a tus preguntas sobre Q'ocina",
+  };
+}
+
 export default async function PreguntasFrecuentesPage() {
   const [pageRes, categoriasRes] = await Promise.all([
     getFaqPage().catch(() => null),

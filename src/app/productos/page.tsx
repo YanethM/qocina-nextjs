@@ -7,10 +7,13 @@ import PacksDestacados from "@/components/PacksDestacados/PacksDestacados";
 import ProductosCarousel from "@/components/ProductosCarousel/ProductosCarousel";
 import { Button } from "@/components/ui";
 
-export const metadata = {
-  title: "Productos - Q'ocina",
-  description: "Explora nuestra variedad de productos artesanales",
-};
+export async function generateMetadata() {
+  const res = await getProductosPage().catch(() => null);
+  return {
+    title: res?.data?.meta_title ?? "Productos - Q'ocina",
+    description: res?.data?.meta_description ?? "Explora nuestra variedad de productos artesanales",
+  };
+}
 
 const CARD_COLORS = [styles.cardGreen, styles.cardYellow, styles.cardRed];
 

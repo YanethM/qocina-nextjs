@@ -4,6 +4,14 @@ import { getBlogPage, getArticulos, getStrapiImageUrl } from "@/lib/api";
 import BlogGrid from "./BlogGrid";
 import styles from "./page.module.css";
 
+export async function generateMetadata() {
+  const res = await getBlogPage().catch(() => null);
+  return {
+    title: res?.data?.meta_title ?? "Blog y Noticias - Q'ocina",
+    description: res?.data?.meta_description ?? "Artículos y noticias de Q'ocina",
+  };
+}
+
 export default async function BlogYNoticiasPage() {
   const [pageRes, articulosRes] = await Promise.all([
     getBlogPage().catch(() => null),

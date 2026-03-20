@@ -12,6 +12,15 @@ interface Props {
   params: Promise<{ slug: string }>;
 }
 
+export async function generateMetadata({ params }: Props) {
+  const { slug } = await params;
+  const articulo = await getArticuloBySlug(slug).catch(() => null);
+  return {
+    title: articulo?.meta_title ?? articulo?.titulo ?? "Artículo - Q'ocina",
+    description: articulo?.meta_description ?? articulo?.descripcion_corta ?? articulo?.descripcion ?? "Lee este artículo",
+  };
+}
+
 export default async function ArticuloDetailPage({ params }: Props) {
   const { slug } = await params;
   const [articulo, articulosRes, blogPageRes] = await Promise.all([
