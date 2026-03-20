@@ -3,6 +3,11 @@
   background: #fff;
 }
 
+.hero {
+  background: #1a1a1a;
+  padding: 80px 60px 72px;
+}
+
 .container {
   max-width: 900px;
   margin: 0 auto;
@@ -28,10 +33,13 @@
   margin: 0 0 16px;
 }
 
-.updated {
+.subtitle {
   font-family: var(--font-montserrat), sans-serif;
+  font-weight: 700;
   font-size: 13px;
-  color: #888;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #000;
   margin: 0 0 56px;
   padding-bottom: 40px;
   border-bottom: 1px solid #e5e5e5;
@@ -54,6 +62,27 @@
   margin-bottom: 0;
 }
 
+.notice {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: #000;
+  background: #f7f7f5;
+  padding: 20px 24px;
+  border-radius: 8px;
+  margin-top: 8px;
+}
+
+.important {
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.4;
+  color: #000;
+  margin: 0 0 18px !important;
+}
+
 .heading {
   font-family: var(--font-montserrat), sans-serif;
   font-weight: 700;
@@ -65,6 +94,15 @@
   margin: 0 0 20px;
   padding-bottom: 14px;
   border-bottom: 1px solid #e5e5e5;
+}
+
+.subheading {
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.4;
+  color: #000;
+  margin: 28px 0 12px;
 }
 
 .list {
@@ -122,12 +160,21 @@
     font-size: 32px;
   }
 
+  .subtitle {
+    font-size: 11px;
+    margin-bottom: 40px;
+    padding-bottom: 28px;
+  }
+
   .heading {
     font-size: 16px;
   }
 
   .section p,
-  .list {
+  .list,
+  .notice,
+  .important,
+  .subheading {
     font-size: 16px;
   }
 }

@@ -1,7 +1,7 @@
 import styles from "./page.module.css";
 
 export const metadata = {
-  title: "Políticas de Cookies | Q'ocina en Casa",
+  title: "Política de Cookies | Q'ocina en Casa",
   description: "Conoce cómo Q'ocina en Casa utiliza cookies en su sitio web.",
 };
 
@@ -9,177 +9,112 @@ export default function PoliticasCookiesPage() {
   return (
     <div className={styles.page}>
       <div className={styles.container}>
-        <h1 className={styles.title}>Políticas de Cookies</h1>
-        <p className={styles.updated}>Última actualización: marzo 2025</p>
+        <p className={styles.company}>QOCINA EN CASA</p>
+        <h1 className={styles.title}>Política de cookies</h1>
+        <p className={styles.updated}>Última actualización: 19 de marzo de 2026</p>
 
         <section className={styles.section}>
-          <h2 className={styles.heading}>¿Qué son las cookies?</h2>
           <p>
-            Las cookies son pequeños archivos de texto que se almacenan en tu dispositivo (ordenador,
-            tablet o móvil) cuando visitas un sitio web. Permiten que el sitio recuerde tus acciones
-            y preferencias durante un período de tiempo, para que no tengas que volver a introducirlas
-            cada vez que regreses al sitio.
+            En Qocina en Casa, creemos que las mejores recetas salen bien cuando hay transparencia
+            en los ingredientes. Por eso, queremos explicarte cómo usamos las &ldquo;cookies&rdquo;
+            en nuestro sitio web{" "}
+            <a href="https://qocinaencasa.com/us/" className={styles.link}>
+              https://qocinaencasa.com/us/
+            </a>
+            .
+          </p>
+          <p>
+            Al igual que una pizca de sal realza el sabor, nuestras cookies están aquí para que tu
+            experiencia de navegación sea mucho más sabrosa y fluida.
           </p>
         </section>
 
         <section className={styles.section}>
-          <h2 className={styles.heading}>¿Qué cookies utilizamos?</h2>
-
-          <h3 className={styles.subheading}>Cookies estrictamente necesarias</h3>
+          <h2 className={styles.heading}>1. ¿Qué es una cookie?</h2>
           <p>
-            Son imprescindibles para el funcionamiento del sitio web. Sin ellas, servicios como el
-            carrito de compras o el proceso de pago no podrían funcionar correctamente. No requieren
-            tu consentimiento para ser activadas.
+            No, no son las de chocolate que salen del horno (aunque nos encantaría). Una cookie es
+            un pequeño archivo de texto que se descarga en tu equipo al acceder a ciertas páginas
+            web. Permiten a un sitio, entre otras cosas, recordar tus preferencias, saber si ya nos
+            has visitado y mejorar la velocidad de carga.
           </p>
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th>Nombre</th>
-                <th>Proveedor</th>
-                <th>Finalidad</th>
-                <th>Duración</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>qocina_cart</td>
-                <td>Q'ocina en Casa</td>
-                <td>Almacena los productos añadidos al carrito de compra</td>
-                <td>Sesión / persistente</td>
-              </tr>
-              <tr>
-                <td>qocina_cookie_consent</td>
-                <td>Q'ocina en Casa</td>
-                <td>Guarda tu preferencia de consentimiento de cookies</td>
-                <td>1 año</td>
-              </tr>
-              <tr>
-                <td>locale</td>
-                <td>Q'ocina en Casa</td>
-                <td>Recuerda el idioma seleccionado por el usuario</td>
-                <td>1 año</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <h3 className={styles.subheading}>Cookies analíticas</h3>
-          <p>
-            Nos permiten conocer cómo interactúan los visitantes con el sitio web, recopilando
-            información de forma anónima. Con estos datos podemos mejorar el funcionamiento del
-            sitio.
-          </p>
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th>Nombre</th>
-                <th>Proveedor</th>
-                <th>Finalidad</th>
-                <th>Duración</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>_ga</td>
-                <td>Google Analytics</td>
-                <td>Registra un identificador único para generar datos estadísticos</td>
-                <td>2 años</td>
-              </tr>
-              <tr>
-                <td>_ga_*</td>
-                <td>Google Analytics</td>
-                <td>Mantiene el estado de sesión</td>
-                <td>2 años</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <h3 className={styles.subheading}>Cookies de marketing</h3>
-          <p>
-            Se utilizan para rastrear a los visitantes en los sitios web y mostrar anuncios
-            relevantes y atractivos para el usuario individual. Estas cookies solo se activarán si
-            aceptas todas las cookies.
-          </p>
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th>Nombre</th>
-                <th>Proveedor</th>
-                <th>Finalidad</th>
-                <th>Duración</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>_fbp</td>
-                <td>Meta (Facebook)</td>
-                <td>Identifica navegadores para proporcionar servicios publicitarios</td>
-                <td>3 meses</td>
-              </tr>
-              <tr>
-                <td>_ttp</td>
-                <td>TikTok</td>
-                <td>Mide el rendimiento de campañas publicitarias en TikTok</td>
-                <td>13 meses</td>
-              </tr>
-            </tbody>
-          </table>
         </section>
 
         <section className={styles.section}>
-          <h2 className={styles.heading}>¿Cómo gestionar las cookies?</h2>
+          <h2 className={styles.heading}>2. ¿Qué tipos de cookies utilizamos?</h2>
           <p>
-            Puedes controlar y/o eliminar las cookies cuando lo desees. Tienes la opción de eliminar
-            todas las cookies que ya están en tu equipo y configurar la mayoría de los navegadores
-            para que no se almacenen. Sin embargo, si haces esto, es posible que tengas que ajustar
-            manualmente algunas preferencias cada vez que visites un sitio y que algunos servicios y
-            funcionalidades no funcionen correctamente.
+            Para que nuestra cocina digital funcione a la perfección, usamos los siguientes tipos:
           </p>
-          <p>A continuación encontrarás los enlaces para gestionar las cookies en los principales navegadores:</p>
+          <p>
+            <strong>Cookies Técnicas (Esenciales):</strong> Son los ingredientes básicos. Sin ellas,
+            el sitio no funcionaría (por ejemplo, para mantener tu sesión abierta o recordar los
+            productos en tu carrito).
+          </p>
+          <p>
+            <strong>Cookies de Personalización:</strong> Nos ayudan a recordar tus preferencias
+            (como el idioma o tu región en US) para que no tengas que configurar todo cada vez que
+            entres.
+          </p>
+          <p>
+            <strong>Cookies de Análisis:</strong> Estas nos dicen qué recetas o secciones son las
+            favoritas de nuestra comunidad. Usamos herramientas como Google Analytics para entender
+            cómo mejorar el servicio.
+          </p>
+          <p>
+            <strong>Cookies de Publicidad/Marketing:</strong> Si alguna vez ves un anuncio nuestro
+            en redes sociales sobre ese kit de cocina que tanto te gustó, es gracias a estas
+            cookies.
+          </p>
+        </section>
+
+        <section className={styles.section}>
+          <h2 className={styles.heading}>3. ¿Cómo puedes controlar tus cookies?</h2>
+          <p>
+            Tú tienes el sartén por el mango. Puedes bloquear o eliminar las cookies instaladas en
+            tu equipo mediante la configuración de las opciones de tu navegador:
+          </p>
           <ul className={styles.list}>
             <li>
-              <strong>Google Chrome:</strong>{" "}
-              Configuración &gt; Privacidad y seguridad &gt; Cookies y otros datos de sitios
+              <strong>Chrome:</strong> Configuración &rarr; Privacidad y seguridad &rarr; Cookies y
+              otros datos de sitios.
             </li>
             <li>
-              <strong>Mozilla Firefox:</strong>{" "}
-              Opciones &gt; Privacidad &amp; Seguridad &gt; Cookies y datos del sitio
+              <strong>Safari:</strong> Preferencias &rarr; Privacidad &rarr; Bloquear todas las
+              cookies.
             </li>
             <li>
-              <strong>Safari:</strong>{" "}
-              Preferencias &gt; Privacidad &gt; Gestionar datos de sitios web
-            </li>
-            <li>
-              <strong>Microsoft Edge:</strong>{" "}
-              Configuración &gt; Privacidad, búsqueda y servicios &gt; Cookies
+              <strong>Firefox:</strong> Opciones &rarr; Privacidad y Seguridad &rarr; Cookies y
+              datos del sitio.
             </li>
           </ul>
           <p>
-            También puedes gestionar tu preferencia en cualquier momento haciendo clic en el banner
-            de cookies que aparece al visitar nuestro sitio.
+            Ten en cuenta que, si decides desactivar algunas cookies, es posible que algunas
+            funciones de nuestra web no se sirvan &ldquo;en su punto&rdquo; o dejen de funcionar
+            correctamente.
           </p>
         </section>
 
         <section className={styles.section}>
-          <h2 className={styles.heading}>Actualizaciones de esta política</h2>
+          <h2 className={styles.heading}>4. Actualizaciones de la Política</h2>
           <p>
-            Podemos actualizar nuestra política de cookies de vez en cuando para reflejar cambios en
-            las cookies que utilizamos o por otras razones operativas, legales o reglamentarias.
-            Te recomendamos que revises esta página periódicamente para mantenerte informado sobre el
-            uso de cookies.
+            A veces ajustamos nuestra receta. Cualquier cambio en esta política será publicado aquí
+            con la fecha de la última actualización.
           </p>
         </section>
 
         <section className={styles.section}>
-          <h2 className={styles.heading}>Contacto</h2>
+          <h2 className={styles.heading}>5. ¿Tienes dudas?</h2>
           <p>
-            Si tienes alguna pregunta sobre nuestro uso de cookies, puedes ponerte en contacto con
-            nosotros a través de nuestra{" "}
-            <a href="/contacto" className={styles.link}>
-              página de contacto
+            Si quieres saber más sobre cómo manejamos tus datos, puedes comunicarte con nuestro
+            Servicio al cliente de lunes a viernes desde las 09:00 a 18:00 horas y los sábados de
+            9:00 a 14:00 horas, mediante el chat de whatsapp al número{" "}
+            <a href="https://wa.me/51986867611" className={styles.link}>
+              986 867 611
             </a>
             .
           </p>
         </section>
+
+        <p className={styles.footer}>QOCINA EN CASA</p>
       </div>
     </div>
   );
