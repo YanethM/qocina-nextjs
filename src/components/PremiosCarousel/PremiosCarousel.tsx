@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import { Premio } from "@/types";
-import { getStrapiImageUrl } from "@/lib/api";
+import { getStrapiImageUrl } from "@/lib/strapi";
 import styles from "./PremiosCarousel.module.css";
 
 interface PremiosCarouselProps {

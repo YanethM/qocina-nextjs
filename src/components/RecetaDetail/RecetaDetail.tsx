@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { getStrapiImageUrl } from "@/lib/api";
+import { getStrapiImageUrl } from "@/lib/strapi";
 import type { Receta } from "@/types";
 import styles from "./RecetaDetail.module.css";
 

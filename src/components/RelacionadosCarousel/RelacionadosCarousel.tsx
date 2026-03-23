@@ -4,7 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import BlogCard from "@/components/BlogCard/BlogCard";
-import { getStrapiImageUrl } from "@/lib/api";
+import { getStrapiImageUrl } from "@/lib/strapi";
+import { useSiteCode } from "@/hooks/useSiteCode";
 import type { Articulo } from "@/types";
 import styles from "./RelacionadosCarousel.module.css";
 
@@ -17,6 +18,7 @@ const MAX_SLIDES = 3;
 
 export default function RelacionadosCarousel({ articulos, ctaVerTodas }: Props) {
   const [current, setCurrent] = useState(0);
+  const siteCode = useSiteCode();
   const visible = articulos.slice(0, MAX_SLIDES);
   const hasMore = articulos.length > MAX_SLIDES;
   const total = visible.length;
@@ -69,7 +71,7 @@ export default function RelacionadosCarousel({ articulos, ctaVerTodas }: Props) 
 
       {hasMore && ctaVerTodas && (
         <div className={styles.verMasWrapper}>
-          <Link href="/blog-y-noticias" className={styles.verMasBtn}>
+          <Link href={`/${siteCode}/blog-y-noticias`} className={styles.verMasBtn}>
             {ctaVerTodas}
           </Link>
         </div>

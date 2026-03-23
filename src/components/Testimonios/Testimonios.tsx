@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { Testimonio } from "@/types";
-import { getStrapiImageUrl } from "@/lib/api";
+import { getStrapiImageUrl } from "@/lib/strapi";
 import styles from "./Testimonios.module.css";
 import { useState } from "react";
 import { useCarousel } from "@/hooks/useCarousel";

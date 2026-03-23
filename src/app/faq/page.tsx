@@ -19,7 +19,7 @@ export default async function FaqPage() {
   ]);
 
   const pageData = pageRes?.data;
-  const preguntas = preguntasRes?.data ?? [];
+  const todas = preguntasRes?.data ?? [];
   const categorias = (categoriasRes?.data ?? []).sort((a, b) => (a.orden ?? 0) - (b.orden ?? 0));
 
   return (
@@ -34,7 +34,7 @@ export default async function FaqPage() {
       </section>
 
       <section className={styles.content}>
-        <FaqClient categorias={categorias} preguntas={preguntas} />
+        <FaqClient categorias={categorias} todas={todas} preguntasPorCategoria={{}} ctaCargarMas="Cargar más" />
       </section>
     </div>
   );

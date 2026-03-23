@@ -2,10 +2,12 @@
 
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
+import { useSiteCode } from "@/hooks/useSiteCode";
 import styles from "./CartToast.module.css";
 
 export default function CartToast() {
   const { toastVisible, toastNombre, dismissToast } = useCart();
+  const siteCode = useSiteCode();
 
   return (
     <div className={`${styles.toast} ${toastVisible ? styles.visible : ""}`}>
@@ -17,7 +19,7 @@ export default function CartToast() {
         </div>
       </div>
       <div className={styles.actions}>
-        <Link href="/carrito" className={styles.verCarrito} onClick={dismissToast}>
+        <Link href={`/${siteCode}/carrito`} className={styles.verCarrito} onClick={dismissToast}>
           Ver carrito
         </Link>
         <button className={styles.close} onClick={dismissToast} aria-label="Cerrar">

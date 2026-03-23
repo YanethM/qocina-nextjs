@@ -1,0 +1,335 @@
+.heroText {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  color: #fff;
+}
+
+.heroSubtitle {
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 400;
+  font-size: 22px;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.heroTitle {
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 120%;
+  letter-spacing: 0;
+  margin: 0;
+}
+
+.heroBtns {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.btnVerProductos {
+  min-width: 170px;
+  height: 46px;
+  padding: 12px 32px;
+  border-radius: 100px;
+  border: 1px solid #ffffff;
+  background: #000000;
+  color: #ffffff;
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.btnConoceMas {
+  min-width: 170px;
+  height: 46px;
+  padding: 12px 32px;
+  border-radius: 100px;
+  border: 1px solid #000000;
+  background: #ffffff;
+  color: #000000;
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.section {
+  width: 100%;
+  height: 444px;
+  padding-left: 171px;
+  padding-right: 171px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 25px;
+}
+
+.sectionWhite {
+  background: #ffffff;
+}
+
+.sectionGray {
+  background: #ededed;
+}
+
+.sectionContent {
+  height: 422px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  justify-content: center;
+}
+
+.sectionImageWrapper {
+  height: 422px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.sectionImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.connectSection {
+  position: relative;
+  width: 100%;
+  line-height: 0;
+}
+
+.connectWaveImg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.connectWaveMobile {
+  display: none;
+}
+
+.connectContent {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: normal;
+}
+
+.connectInner {
+  width: 647px;
+  height: 251px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 36px;
+}
+
+.connectTitle {
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 120%;
+  letter-spacing: 0;
+  text-align: center;
+  color: #ffffff;
+  margin: 0;
+}
+
+.connectText {
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 140%;
+  letter-spacing: 0;
+  text-align: center;
+  color: #ffffff;
+  margin: 0;
+}
+
+.productosCta {
+  display: flex;
+  justify-content: center;
+  padding: 80px 0;
+}
+
+.greenWave {
+  width: 100%;
+  line-height: 0;
+}
+
+.greenWaveImg {
+  display: block;
+  width: 100%;
+}
+
+.connectBackground {
+  width: 100%;
+  line-height: 0;
+  margin-top: -80px;
+  position: relative;
+  z-index: -1;
+}
+
+.connectBackgroundImg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.pasoTitulo {
+  font-family: var(--font-palmer), sans-serif;
+  font-weight: 400;
+  font-size: 176px;
+  line-height: 50%;
+  letter-spacing: 0;
+  color: #A89074;
+}
+
+.pasoSubtitulo {
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 120%;
+  letter-spacing: 0;
+  color: #000000;
+}
+
+.pasoTexto {
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 140%;
+  letter-spacing: 0;
+  color: #000000;
+}
+
+@media (max-width: 1024px) {
+  .section {
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+
+  .pasoTitulo {
+    font-size: 120px;
+  }
+
+  .pasoSubtitulo {
+    font-size: 36px;
+  }
+
+  .connectInner {
+    width: 90%;
+  }
+
+  .connectTitle {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 768px) {
+  .heroSubtitle {
+    font-size: 14px;
+  }
+
+  .heroTitle {
+    font-size: 24px;
+  }
+
+  .heroBtns {
+    flex-direction: row;
+    gap: 12px;
+  }
+
+  .section {
+    height: auto;
+    padding: 40px 24px;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .sectionContent {
+    height: auto;
+    padding: 0;
+    gap: 16px;
+    order: 1;
+  }
+
+  .sectionImageWrapper {
+    height: 220px;
+    order: 2;
+  }
+
+  .pasoTitulo {
+    font-size: 72px;
+    line-height: 60%;
+  }
+
+  .pasoSubtitulo {
+    font-size: 24px;
+  }
+
+  .pasoTexto {
+    font-size: 16px;
+  }
+
+  .connectInner {
+    width: 100%;
+    height: auto;
+    padding: 32px 24px;
+    gap: 20px;
+  }
+
+  .connectTitle {
+    font-size: 26px;
+  }
+
+  .connectText {
+    font-size: 15px;
+  }
+
+  .connectBackground {
+    margin-top: -40px;
+  }
+
+  .connectWaveDesktop {
+    display: none;
+  }
+
+  .connectWaveMobile {
+    display: block;
+  }
+
+  .productosCta {
+    padding: 48px 24px;
+  }
+
+  .heroBtns {
+    width: 100%;
+  }
+
+  .heroBtns .btnVerProductos,
+  .heroBtns .btnConoceMas {
+    flex: 1;
+    min-width: unset;
+    padding: 12px 8px;
+  }
+}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { API_URL } from "@/lib/api";
+import { API_URL } from "@/lib/strapi";
 import styles from "./ContactForm.module.css";
 
 type Status = "idle" | "loading" | "success" | "error";

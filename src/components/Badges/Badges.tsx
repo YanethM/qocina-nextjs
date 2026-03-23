@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Badge } from "@/types";
-import { getStrapiImageUrl } from "@/lib/api";
+import { getStrapiImageUrl } from "@/lib/strapi";
 import styles from "./Badges.module.css";
 
 interface BadgesProps {

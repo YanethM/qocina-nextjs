@@ -1,0 +1,614 @@
+.page {
+  min-height: 100vh;
+}
+
+:root {
+  --page-px: 60px;
+}
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  padding: 0;
+  margin: 0;
+}
+
+.heroImage {
+  object-fit: cover;
+}
+
+.heroText {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 16px;
+  padding: 0 40px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.heroTitulo {
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+  font-size: 64px;
+  line-height: 120%;
+  letter-spacing: 0%;
+  color: #fff;
+  margin: 0;
+}
+
+.heroSubtitulo {
+  letter-spacing: 0%;
+  color: #fff;
+  margin: 0;
+  font-family: Montserrat, sans-serif;
+  font-size: 55px;
+  font-weight: 600;
+  line-height: 100%;
+}
+
+.content {
+  padding: 80px var(--page-px);
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.sectionTitle {
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 120%;
+  letter-spacing: 0%;
+  text-align: center;
+  color: #1a1a1a;
+  margin-bottom: 4rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.gridFew {
+  grid-template-columns: repeat(auto-fit, calc((100% - 48px) / 3));
+  justify-content: center;
+}
+
+.card {
+  border-radius: 24px;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 136px 32px 32px;
+  position: relative;
+  margin-top: 231px;
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.cardGreen {
+  background: #6a892c;
+  color: #fff;
+}
+.cardYellow {
+  background: #f4a910;
+  color: #000;
+}
+.cardRed {
+  background: #ce171c;
+  color: #fff;
+}
+
+.cardImageWrapper {
+  position: absolute;
+  top: -231px;
+  left: 0;
+  width: 100%;
+  height: 343px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.cardImage {
+  object-fit: contain;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.12));
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  position: relative;
+  z-index: 3;
+}
+
+.cardTitle {
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 1.2;
+  margin: 0;
+  color: inherit;
+}
+
+.cardPrice {
+  font-family: Montserrat, sans-serif;
+  font-size: 30px;
+  font-weight: 400;
+  margin: 0;
+  color: inherit;
+}
+
+.cardPresentacion {
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  margin: 0;
+  color: inherit;
+}
+
+.cardDescription {
+  font-family: Montserrat, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0;
+  opacity: 0.9;
+  max-width: 280px;
+  color: inherit;
+}
+
+.cardButton {
+  display: inline-block;
+  padding: 12px 40px;
+  background: #fff;
+  color: #1a1a1a;
+  border: none;
+  border-radius: 999px;
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  text-decoration: none;
+  transition:
+    background-color 0.3s ease,
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@media (hover: hover) {
+  .cardButton:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.cardButton:active {
+  transform: scale(0.97);
+  box-shadow: none;
+  transition:
+    transform 0.1s ease,
+    box-shadow 0.1s ease;
+}
+
+.cardYellow .cardButton {
+  background: #1a1a1a;
+  color: #fff;
+}
+
+.paraQuien {
+  overflow: hidden;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 80px 60px;
+}
+
+.paraQuienTitle {
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 120%;
+  text-align: center;
+  color: #1a1a1a;
+  margin-bottom: 48px;
+  padding: 0;
+}
+
+.paraQuienContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.paraQuienRow {
+  position: relative;
+  width: 100%;
+  height: clamp(270px, 30vw, 431px);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.paraQuienRowReversed {
+  flex-direction: row-reverse;
+}
+
+.paraQuienRectWrapper {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: clamp(135px, 15vw, 215px);
+  right: 0;
+  z-index: 0;
+}
+
+.paraQuienRectWrapperReversed {
+  left: 0;
+  right: clamp(135px, 15vw, 215px);
+}
+
+.paraQuienRect {
+  object-fit: fill;
+}
+
+.paraQuienMobileCard {
+  display: none;
+}
+
+.paraQuienCircle {
+  width: clamp(270px, 30vw, 431px);
+  height: clamp(270px, 30vw, 431px);
+  flex-shrink: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #e0e0e0;
+  position: relative;
+  z-index: 2;
+
+  -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
+  mask-image: radial-gradient(circle, white 100%, black 100%);
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+.paraQuienText {
+  flex: 1;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0 48px;
+}
+
+.paraQuienItemTitle {
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 1.2;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.paraQuienItemDesc {
+  font-family: Montserrat, sans-serif;
+  font-size: 18px;
+  line-height: 1.6;
+  color: #444;
+  margin: 0;
+  max-width: 600px;
+}
+
+.tieneDudas {
+  width: 100%;
+  position: relative;
+}
+
+.tieneDudasImgWrapper {
+  max-width: 1440px;
+  margin: 0 auto;
+  line-height: 0;
+}
+
+.tieneDudasCard {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding-left: 64px;
+  gap: 24px;
+  z-index: 1;
+}
+
+.tieneDudasContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  max-width: 600px;
+  text-align: left;
+}
+
+.tieneDudasTitle {
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 120%;
+  letter-spacing: 0%;
+  text-align: left;
+  color: #ffffff;
+  margin: 0;
+}
+
+.tieneDudasDescription {
+  font-family: Montserrat, sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 140%;
+  letter-spacing: 0%;
+  text-align: left;
+  color: #ffffff;
+  margin: 0;
+}
+
+.tieneDudasMobileImg {
+  display: none;
+}
+
+@media (max-width: 1200px) {
+  :root {
+    --page-px: 40px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .sectionTitle {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --page-px: 20px;
+  }
+
+  .hero {
+    height: 400px;
+  }
+
+  .heroTitulo {
+    font-size: 40px;
+  }
+
+  .heroSubtitulo {
+    font-size: 20px;
+  }
+
+  .sectionTitle {
+    font-size: 28px;
+    margin-bottom: 3rem;
+  }
+
+  .card {
+    padding: 110px 20px 24px;
+    margin-top: 185px;
+  }
+
+  .cardImageWrapper {
+    top: -185px;
+    height: 274px;
+  }
+
+  .cardTitle {
+    font-size: 20px;
+  }
+
+  .cardPrice {
+    font-size: 22px;
+  }
+
+  .paraQuienTitle {
+    font-size: 32px;
+    margin-bottom: 32px;
+  }
+
+  .paraQuienContainer {
+    padding-top: 32px;
+    gap: 0;
+    align-items: center;
+  }
+
+  .paraQuienRow,
+  .paraQuienRowReversed {
+    width: 100%;
+    max-width: 329px;
+    height: 500px;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: visible;
+  }
+
+  .paraQuienRectWrapper,
+  .paraQuienRectWrapperReversed {
+    display: none;
+  }
+
+  .paraQuienMobileCardWrapper {
+    display: block;
+    position: absolute;
+    top: 110px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+  }
+
+  .paraQuienMobileCard {
+    display: block;
+  }
+
+  .paraQuienCircle {
+    flex-shrink: 0;
+    z-index: 2;
+    margin-top: -60px;
+  }
+
+  .paraQuienText {
+    flex: none;
+    position: absolute;
+    top: 230px;
+    bottom: 40px;
+    left: 24px;
+    right: 24px;
+    padding: 0;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    overflow: hidden;
+  }
+
+  .paraQuienItemTitle {
+    font-size: 22px;
+  }
+
+  .paraQuienItemDesc {
+    font-size: 14px;
+    max-width: 100%;
+  }
+
+  .tieneDudasImgWrapper {
+    display: none;
+  }
+
+  .tieneDudasCard {
+    position: static;
+    max-width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #000000;
+    padding: 48px 24px;
+    gap: 24px;
+  }
+
+  .tieneDudasContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    width: 327px;
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .tieneDudasTitle {
+    font-family: Montserrat, sans-serif;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 120%;
+    letter-spacing: 0%;
+    text-align: center;
+    color: #ffffff;
+    margin: 0;
+  }
+
+  .tieneDudasDescription {
+    font-family: Montserrat, sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 140%;
+    letter-spacing: 0%;
+    text-align: center;
+    color: #ffffff;
+    margin: 0;
+  }
+
+  .tieneDudasBtn {
+    white-space: nowrap;
+    width: 100%;
+    max-width: 327px;
+  }
+
+  .tieneDudasMobileImg {
+    display: block;
+    line-height: 0;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 768px) {
+  .paraQuienCircle {
+    width: 270px;
+    height: 270px;
+  }
+}
+
+@media (max-width: 640px) {
+  .paraQuienMobileCardWrapper {
+    top: 90px;
+  }
+
+  .paraQuienText {
+    top: 200px;
+  }
+}
+
+@media (max-width: 640px) {
+  .heroTitulo {
+    font-size: 28px;
+  }
+
+  .heroSubtitulo {
+    font-size: 16px;
+  }
+
+  .heroText {
+    padding: 0 24px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  .card {
+    max-width: 380px;
+    width: 100%;
+  }
+
+  .hero {
+    height: 280px;
+  }
+
+  .paraQuienCircle {
+    width: 204px;
+    height: 204px;
+    margin-top: 0;
+  }
+}

@@ -8,6 +8,15 @@ export interface Site {
   ofix_country_code: string;
 }
 
+export interface ProductoSitio {
+  id: number;
+  precio: number;
+  disponible: boolean;
+  stock: number;
+  mostrar_stock: boolean;
+  site: Site;
+}
+
 export interface StrapiImage {
   id: number;
   url: string;
@@ -98,6 +107,7 @@ export interface Producto {
   badges: Badge[] | null;
   recetas_relacionadas: Receta[] | null;
   testimonios: Testimonio[] | null;
+  sitios: ProductoSitio[] | null;
   meta_title: string | null;
   meta_description: string | null;
 }

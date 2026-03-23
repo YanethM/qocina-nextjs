@@ -1,0 +1,75 @@
+.page {
+  min-height: 100vh;
+  background: #fff;
+}
+
+.hero {
+  background: #f5f5f5;
+  padding: 80px 60px;
+}
+
+.heroContent {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 80px;
+}
+
+.heroImageWrapper {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  flex-shrink: 0;
+  background: #fff;
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+.badgesWrapper {
+  padding: 0 60px;
+  max-width: 1320px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.waveBottom {
+  display: block;
+  margin-top: 0;
+}
+
+@media (max-width: 1024px) {
+  .hero {
+    padding: 60px 40px;
+  }
+
+  .heroContent {
+    gap: 48px;
+  }
+
+  .badgesWrapper {
+    padding: 0 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 48px 24px;
+  }
+
+  .heroContent {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .heroImageWrapper {
+    width: 280px;
+    height: 280px;
+    align-self: center;
+  }
+
+  .badgesWrapper {
+    padding: 0 24px;
+  }
+}

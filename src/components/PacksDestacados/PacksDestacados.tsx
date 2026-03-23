@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { PackDestacado } from "@/types";
-import { getStrapiImageUrl } from "@/lib/api";
+import { getStrapiImageUrl } from "@/lib/strapi";
 import AddPackToCartButton from "./AddPackToCartButton";
 import styles from "./PacksDestacados.module.css";
 

@@ -2,7 +2,8 @@
 
 import { useState, useRef, useEffect } from "react";
 import RecetaCard from "@/components/RecetaCard/RecetaCard";
-import { getStrapiImageUrl, getRecetas } from "@/lib/api";
+import { getStrapiImageUrl } from "@/lib/strapi";
+import { getRecetas } from "@/lib/api";;
 import type { Receta } from "@/types";
 import styles from "./ListaRecetas.module.css";
 

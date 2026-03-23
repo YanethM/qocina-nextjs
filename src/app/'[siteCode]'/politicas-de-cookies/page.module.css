@@ -1,0 +1,133 @@
+.page {
+  width: 100%;
+  background: #fff;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 64px 60px 96px;
+}
+
+.company {
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #888;
+  margin: 0 0 16px;
+}
+
+.title {
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 700;
+  font-size: 56px;
+  line-height: 1.1;
+  color: #1a1a1a;
+  margin: 0 0 16px;
+}
+
+.updated {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 13px;
+  color: #888;
+  margin: 0 0 56px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.section {
+  margin-bottom: 52px;
+}
+
+.section p {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: #000;
+  margin: 0 0 18px;
+}
+
+.section p:last-child {
+  margin-bottom: 0;
+}
+
+.heading {
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.4;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #000;
+  margin: 0 0 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.list {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: #000;
+  padding-left: 24px;
+  margin: 0 0 18px;
+}
+
+.list li {
+  margin-bottom: 8px;
+}
+
+.link {
+  color: #5a7a2e;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.link:hover {
+  color: #3d5a1e;
+}
+
+.footer {
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #888;
+  margin: 40px 0 0;
+  padding-top: 28px;
+  border-top: 1px solid #e5e5e5;
+}
+
+@media (max-width: 1024px) {
+  .container {
+    padding: 56px 40px 80px;
+  }
+
+  .title {
+    font-size: 44px;
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 40px 20px 64px;
+  }
+
+  .title {
+    font-size: 32px;
+  }
+
+  .heading {
+    font-size: 16px;
+  }
+
+  .section p,
+  .list {
+    font-size: 16px;
+  }
+}

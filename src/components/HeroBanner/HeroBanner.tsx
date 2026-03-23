@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import type { HeroSlide } from "@/types";
-import { getStrapiImageUrl } from "@/lib/api";
+import { getStrapiImageUrl } from "@/lib/strapi";
 import styles from "./HeroBanner.module.css";
 export default function HeroBanner({ slides = [] }: { slides?: HeroSlide[] }) {
   const [current, setCurrent] = useState(0);

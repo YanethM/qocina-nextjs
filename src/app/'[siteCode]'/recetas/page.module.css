@@ -1,0 +1,233 @@
+.page {
+  min-height: 100vh;
+}
+
+.banner {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  isolation: isolate;
+}
+
+.bannerApiBg {
+  object-fit: cover;
+  z-index: 0;
+}
+
+.bannerSvg {
+  object-fit: contain;
+  object-position: left center;
+  z-index: 1;
+}
+
+.bannerText {
+  z-index: 10;
+  pointer-events: none;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 40px;
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 800px;
+  height: 100%;
+}
+
+.bannerTitulo {
+  font-family: var(--font-palmer), cursive;
+  font-weight: 400;
+  font-size: 150px;
+  line-height: 1;
+  letter-spacing: 0;
+  color: #000;
+  margin: 0;
+  transform: rotate(-4deg);
+  transform-origin: center center;
+}
+
+.bannerMobileWrapper {
+  display: none;
+  width: 100%;
+  position: relative;
+  isolation: isolate;
+}
+
+.bannerMobileApiBg {
+  object-fit: cover;
+  object-position: center top;
+  z-index: 0;
+  height: 55% !important;
+}
+
+.bannerMobileSvg {
+  display: block;
+  width: 100%;
+  height: auto;
+  position: relative;
+  z-index: 1;
+}
+
+.bannerMobileText {
+  position: absolute;
+  top: 52%;
+  left: 0;
+  width: 100%;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  padding: 0 24px;
+}
+
+
+.content {
+  padding: 0 24px 60px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
+  overflow: hidden;
+  text-decoration: none;
+  color: #fff;
+  background-color: #fff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
+}
+
+.cardImage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
+.cardImage img {
+  transition: transform 0.4s ease;
+}
+
+.card:hover .cardImage img {
+  transform: scale(1.05);
+}
+
+.wave {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  z-index: 2;
+  -webkit-mask-image: url("/images/web/home/wave.png");
+  mask-image: url("/images/web/home/wave.png");
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: bottom;
+  mask-position: bottom;
+}
+
+.cardBody {
+  padding: 20px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex-grow: 1;
+  text-align: center;
+}
+
+.cardTitle {
+  font-size: 1.35rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.cardDescription {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0;
+  opacity: 0.92;
+}
+
+.cardCta {
+  margin-top: auto;
+  padding-top: 12px;
+}
+
+.ctaButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 14px 24px;
+  border-radius: 999px;
+  background-color: #fff;
+  color: #1a1a1a;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background-color 0.2s ease;
+}
+
+.card:hover .ctaButton {
+  background-color: #1a1a1a;
+  color: #fff;
+}
+
+.ctaArrow {
+  font-size: 1.15rem;
+  transition: transform 0.2s ease;
+}
+
+.card:hover .ctaArrow {
+  transform: translateX(4px);
+}
+
+@media (max-width: 960px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .banner {
+    display: none;
+  }
+
+  .bannerMobileWrapper {
+    display: block;
+  }
+
+  .bannerTitulo {
+    font-size: 60px;
+    transform: rotate(-4deg);
+    color: #fff;
+    text-align: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+}

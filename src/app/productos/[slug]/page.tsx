@@ -31,7 +31,7 @@ export default async function ProductoDetailPage({ params }: Props) {
       getProductos().catch(() => null),
     ]);
 
-    if (!producto) {
+    if (!producto || !producto.disponible) {
       return notFound();
     }
 

@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRef, useState, useEffect } from "react";
 import { Receta } from "@/types";
-import { getStrapiImageUrl } from "@/lib/api";
+import { getStrapiImageUrl } from "@/lib/strapi";
 import { COLOR_MAP, WAVE_MAP, DEFAULT_COLOR, DEFAULT_WAVE } from "@/lib/constants";
 import { useCarousel } from "@/hooks/useCarousel";
 import styles from "./RecetasCarousel.module.css";

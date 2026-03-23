@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Producto } from "@/types";
-import { getStrapiImageUrl } from "@/lib/api";
+import { getStrapiImageUrl } from "@/lib/strapi";
 import { useCarousel } from "@/hooks/useCarousel";
 import styles from "./OtrasBasesCulinarias.module.css";
 

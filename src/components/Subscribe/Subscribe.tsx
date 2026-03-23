@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import WaveSection from "@/components/WaveSection/WaveSection";
-import { API_URL } from "@/lib/api";
+import { API_URL } from "@/lib/strapi";
 import styles from "./Subscribe.module.css";
 
 interface SubscribeProps {

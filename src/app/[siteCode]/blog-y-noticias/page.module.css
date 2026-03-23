@@ -1,0 +1,130 @@
+.heroTitulo {
+  width: 108.7px;
+  letter-spacing: 0%;
+  color: #fff;
+  pointer-events: none;
+  margin: 0;
+  padding-left: 395px;
+  font-family: Montserrat, sans-serif;
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 140%;
+  position: absolute;
+  bottom: 95px;
+  left: 65px;
+}
+
+.heroLogoWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.heroLogo {
+  width: auto;
+  max-width: 400px;
+  height: auto;
+}
+
+.publicacionesSection {
+  width: 100%;
+  max-width: 1550px;
+  margin: 0 auto;
+  padding: 96px 24px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 42px;
+}
+
+.publicacionesTitulo {
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 120%;
+  letter-spacing: 0;
+  margin: 0;
+}
+
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 639px;
+  gap: 24px;
+}
+
+.verTodasWrapper {
+  display: flex;
+  justify-content: center;
+  padding-top: 16px;
+}
+
+.verTodasBtn {
+  height: 52px;
+  padding: 0 40px;
+  border-radius: 100px;
+  border: 2px solid #000000;
+  background: transparent;
+  color: #000000;
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.verTodasBtn:hover {
+  background: #000000;
+  color: #ffffff;
+}
+
+.card {
+  width: 100%;
+  height: 639px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+  background: #ededed;
+}
+
+@media (max-width: 768px) {
+  .heroLogoWrapper {
+    justify-content: flex-start;
+    padding: 0 24px;
+  }
+
+  .heroLogo {
+    max-width: 260px;
+  }
+
+  .publicacionesSection {
+    height: auto;
+    padding: 48px 16px 32px;
+    gap: 28px;
+  }
+
+  .publicacionesTitulo {
+    font-size: 32px;
+  }
+
+  .cardsGrid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
+    height: auto;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .heroLogo {
+    max-width: 200px;
+  }
+
+  .publicacionesSection {
+    padding: 32px 16px 24px;
+    gap: 20px;
+  }
+
+  .publicacionesTitulo {
+    font-size: 26px;
+  }
+}

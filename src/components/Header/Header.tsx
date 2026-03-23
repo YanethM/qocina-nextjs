@@ -5,14 +5,15 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useCart } from "@/context/CartContext";
+import { useSiteCode } from "@/hooks/useSiteCode";
 import styles from "./Header.module.css";
 
-const navLinks = [
-  { href: "/quienes-somos", label: "Nosotros" },
-  { href: "/productos", label: "Tienda" },
-  { href: "/recetas", label: "Recetas" },
-  { href: "/blog-y-noticias", label: "Blog y Noticias" },
-  { href: "/contacto", label: "Contacto" },
+const NAV_PATHS = [
+  { path: "/quienes-somos", label: "Nosotros" },
+  { path: "/productos", label: "Tienda" },
+  { path: "/recetas", label: "Recetas" },
+  { path: "/blog-y-noticias", label: "Blog y Noticias" },
+  { path: "/contacto", label: "Contacto" },
 ];
 
 export default function Header() {
@@ -21,6 +22,9 @@ export default function Header() {
   const { count } = useCart();
   const router = useRouter();
   const pathname = usePathname();
+  const siteCode = useSiteCode();
+
+  const navLinks = NAV_PATHS.map((n) => ({ href: `/${siteCode}${n.path}`, label: n.label, path: n.path }));
 
   const closeMenu = () => setMenuOpen(false);
 
@@ -39,7 +43,7 @@ export default function Header() {
     <>
       <header className={styles.header}>
         <div className={styles.container}>
-          <Link href="/" className={styles.logoWrapper} onClick={closeMenu}>
+          <Link href={`/${siteCode}`} className={styles.logoWrapper} onClick={closeMenu}>
             <Image
               src="/images/web/header/logo_white.svg"
               alt="Q'ocina en casa"
@@ -56,7 +60,7 @@ export default function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`${styles.navLink} ${pathname.startsWith(link.href) ? styles.navLinkActive : ""}`}>
+                  className={`${styles.navLink} ${pathname.includes(link.path) ? styles.navLinkActive : ""}`}>
                   {link.label}
                 </Link>
               ))}
@@ -76,7 +80,7 @@ export default function Header() {
                 EN
               </button>
             </div>
-            <Link href="/carrito" className={styles.cartWrapper}>
+            <Link href={`/${siteCode}/carrito`} className={styles.cartWrapper}>
               <div className={styles.cartIconWrapper}>
                 <Image
                   src="/images/web/header/shopping_white.svg"
@@ -93,7 +97,7 @@ export default function Header() {
           </div>
 
           <div className={styles.mobileActions}>
-            <Link href="/carrito" className={styles.cartWrapper} onClick={closeMenu}>
+            <Link href={`/${siteCode}/carrito`} className={styles.cartWrapper} onClick={closeMenu}>
               <div className={styles.cartIconWrapper}>
                 <Image
                   src="/images/web/header/shopping_white.svg"
@@ -127,7 +131,7 @@ export default function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className={`${styles.mobileNavLink} ${pathname.startsWith(link.href) ? styles.mobileNavLinkActive : ""}`}
+              className={`${styles.mobileNavLink} ${pathname.includes(link.path) ? styles.mobileNavLinkActive : ""}`}
               onClick={closeMenu}
             >
               {link.label}
