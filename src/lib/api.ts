@@ -46,6 +46,20 @@ function imgFields(field: string): Record<string, string> {
   };
 }
 
+function normalizeProducto(producto: Producto, siteCode?: string): Producto {
+  const resolvedSiteCode = resolveSiteCode(siteCode);
+  const sitioActual =
+    producto.sitios?.find((sitio) => sitio.site?.code === resolvedSiteCode) ??
+    producto.sitios?.[0];
+
+  return {
+    ...producto,
+    precio: producto.precio ?? sitioActual?.precio ?? 0,
+    precio_moneda:
+      producto.precio_moneda ?? sitioActual?.site?.moneda ?? process.env.NEXT_PUBLIC_DEFAULT_CURRENCY ?? "COP",
+  };
+}
+
 async function fetchAPI<T>(
   path: string,
   params?: Record<string, string>,
@@ -108,11 +122,16 @@ export async function getProductos(locale?: string, siteCode?: string) {
     "populate[tamanos_disponibles]": "*",
     "populate[sitios][populate][site]": "*",
   }, locale, siteCode);
-  return { ...res, data: res.data.filter((p) => p.disponible) };
+  return {
+    ...res,
+    data: res.data
+      .filter((p) => p.disponible)
+      .map((p) => normalizeProducto(p, siteCode)),
+  };
 }
 
 export async function getProducto(id: string, locale?: string, siteCode?: string) {
-  return fetchAPI<StrapiSingleResponse<Producto>>(`/api/productos/${id}`, {
+  const res = await fetchAPI<StrapiSingleResponse<Producto>>(`/api/productos/${id}`, {
     ...imgFields("imagen_principal"),
     "populate[galeria_imagenes][fields][0]": "url",
     "populate[galeria_imagenes][fields][1]": "alternativeText",
@@ -125,6 +144,10 @@ export async function getProducto(id: string, locale?: string, siteCode?: string
     "populate[testimonios][fields][0]": "id",
     "populate[sitios][populate][site]": "*",
   }, locale, siteCode);
+  return {
+    ...res,
+    data: normalizeProducto(res.data, siteCode),
+  };
 }
 
 export async function getRecetas(
@@ -182,7 +205,7 @@ export async function getProductoBySlug(slug: string, locale?: string, siteCode?
     "populate[testimonios][fields][0]": "id",
     "populate[sitios][populate][site]": "*",
   }, locale, siteCode);
-  return res.data?.[0] ?? null;
+  return res.data?.[0] ? normalizeProducto(res.data[0], siteCode) : null;
 }
 
 export async function getArticulos(locale?: string, siteCode?: string) {
@@ -236,8 +259,9 @@ export async function getPreguntaFrecuente(id: string, locale?: string, siteCode
 }
 
 export async function getQuienesSomos(locale?: string, siteCode?: string) {
-  return fetchAPI<StrapiSingleResponse<QuienesSomos>>("/api/quienes-somos", {
+  return fetchAPI<StrapiListResponse<QuienesSomos>>("/api/quienes-somos-page", {
     ...imgFields("hero_imagen"),
+    ...imgFields("chef_imagen"),
     "populate[valores][populate][imagen][fields][0]": "url",
     "populate[valores][populate][imagen][fields][1]": "alternativeText",
     "populate[valores][populate][imagen][fields][2]": "width",
@@ -256,11 +280,14 @@ export async function getQuienesSomos(locale?: string, siteCode?: string) {
     "populate[premios][populate][logo_organizacion][fields][2]": "width",
     "populate[premios][populate][logo_organizacion][fields][3]": "height",
     "populate[premios][populate][logo_organizacion][fields][4]": "formats",
-  }, locale, siteCode);
+  }, locale, siteCode).then((res) => ({
+    data: res.data?.[0] ?? null,
+    meta: res.meta,
+  })) as Promise<StrapiSingleResponse<QuienesSomos>>;
 }
 
 export async function getProductosPage(locale?: string, siteCode?: string) {
-  return fetchAPI<StrapiSingleResponse<ProductosPage>>("/api/productos-page", {
+  const res = await fetchAPI<StrapiSingleResponse<ProductosPage>>("/api/productos-page", {
     "populate[perfiles_usuario][populate][imagen][fields][0]": "url",
     "populate[perfiles_usuario][populate][imagen][fields][1]": "alternativeText",
     "populate[perfiles_usuario][populate][imagen][fields][2]": "width",
@@ -269,6 +296,7 @@ export async function getProductosPage(locale?: string, siteCode?: string) {
     "populate[secreto_imagen][fields][1]": "alternativeText",
     "populate[secreto_imagen][fields][2]": "width",
     "populate[secreto_imagen][fields][3]": "height",
+    "populate[secreto_imagen][fields][4]": "formats",
     "populate[packs_destacados][populate][imagen][fields][0]": "url",
     "populate[packs_destacados][populate][imagen][fields][1]": "alternativeText",
     "populate[packs_destacados][populate][imagen][fields][2]": "width",
@@ -283,8 +311,24 @@ export async function getProductosPage(locale?: string, siteCode?: string) {
     "populate[productos_destacados][populate][imagen_principal][fields][3]": "height",
     "populate[productos_destacados][populate][imagen_principal][fields][4]": "formats",
     "populate[productos_destacados][populate][sitios][populate][site]": "*",
+    "populate[ayuda_imagen][fields][0]": "url",
+    "populate[ayuda_imagen][fields][1]": "alternativeText",
+    "populate[ayuda_imagen][fields][2]": "width",
+    "populate[ayuda_imagen][fields][3]": "height",
+    "populate[ayuda_imagen][fields][4]": "formats",
     "populate[ayuda_cta]": "*",
   }, locale, siteCode);
+  return {
+    ...res,
+    data: res.data
+      ? {
+          ...res.data,
+          productos_destacados: res.data.productos_destacados?.map((producto) =>
+            normalizeProducto(producto, siteCode),
+          ) ?? null,
+        }
+      : res.data,
+  };
 }
 
 export async function getPack(slug: string, locale?: string, siteCode?: string) {
@@ -340,6 +384,7 @@ export async function getBlogPage(locale?: string, siteCode?: string) {
 export async function getFaqPage(locale?: string, siteCode?: string) {
   return fetchAPI<StrapiSingleResponse<FaqPage>>("/api/faq-page", {
     ...imgFields("hero_imagen"),
+    ...imgFields("hero_imagen_mobile"),
   }, locale, siteCode);
 }
 

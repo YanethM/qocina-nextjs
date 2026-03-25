@@ -30,68 +30,104 @@ export default async function RecetasPage({ params }: Props) {
   const pageData = recetasPageRes?.data;
   const heroImageUrl = pageData?.hero_imagen ? getStrapiImageUrl(pageData.hero_imagen.url) : null;
   const heroImageMobileUrl = pageData?.hero_imagen_mobile ? getStrapiImageUrl(pageData.hero_imagen_mobile.url) : null;
+  const showBanner = Boolean(pageData?.hero_titulo || pageData?.hero_imagen || pageData?.hero_imagen_mobile);
   const testimonios = pageData?.testimonios ?? [];
   const recetas = recetasRes?.data ?? [];
 
   return (
     <div className={styles.page}>
-      <section className={styles.banner}>
-        {heroImageUrl && (
-          <Image
-            src={heroImageUrl}
-            alt="Recetas Q'ocina"
-            fill
-            className={styles.bannerApiBg}
-            style={{ objectFit: "cover" }}
-            priority
-            unoptimized
-          />
-        )}
-        <Image
-          src="/images/web/recetas/banner.svg"
-          alt=""
-          fill
-          className={styles.bannerSvg}
-          priority
-        />
-        <div className={styles.bannerText}>
-          <h1 className={styles.bannerTitulo}>{pageData?.hero_titulo}</h1>
-        </div>
-      </section>
-      <div className={styles.bannerMobileWrapper}>
-        {heroImageMobileUrl && (
-          <Image
-            src={heroImageMobileUrl}
-            alt="Recetas Q'ocina"
-            fill
-            className={styles.bannerMobileApiBg}
-            style={{ objectFit: "cover", objectPosition: "center top" }}
-            priority
-            unoptimized
-          />
-        )}
-        <Image
-          src="/images/mobile/recetas/hero.svg"
-          alt=""
-          width={390}
-          height={780}
-          className={styles.bannerMobileSvg}
-          priority
-        />
-        {pageData?.hero_titulo && (
-          <div className={styles.bannerMobileText}>
-            <h1 className={styles.bannerTitulo}>{pageData.hero_titulo}</h1>
+      {showBanner && (
+        <>
+          <section className={styles.banner}>
+            {heroImageUrl && (
+              <Image
+                src={heroImageUrl}
+                alt="Recetas Q'ocina"
+                fill
+                className={styles.bannerApiBg}
+                style={{ objectFit: "cover" }}
+                priority
+                unoptimized
+              />
+            )}
+            <Image
+              src="/images/web/recetas/banner.svg"
+              alt=""
+              fill
+              className={styles.bannerSvg}
+              priority
+            />
+            <div className={styles.bannerText}>
+              <h1 className={styles.bannerTitulo}>{pageData?.hero_titulo}</h1>
+              {pageData?.hero_subtitulo && (
+                <>
+                  <Image
+                    src="/images/web/recetas/logo.svg"
+                    alt=""
+                    width={180}
+                    height={54}
+                    className={styles.bannerLogo}
+                    aria-hidden={true}
+                  />
+                  <p className={styles.bannerSubtitulo}>{pageData.hero_subtitulo}</p>
+                </>
+              )}
+            </div>
+          </section>
+          <div className={styles.bannerMobileWrapper}>
+            {heroImageMobileUrl && (
+              <Image
+                src={heroImageMobileUrl}
+                alt="Recetas Q'ocina"
+                fill
+                className={styles.bannerMobileApiBg}
+                style={{ objectFit: "cover", objectPosition: "center top" }}
+                priority
+                unoptimized
+              />
+            )}
+            <Image
+              src="/images/mobile/recetas/hero.svg"
+              alt=""
+              width={390}
+              height={780}
+              className={styles.bannerMobileSvg}
+              priority
+            />
+            {pageData?.hero_titulo && (
+              <div className={styles.bannerMobileText}>
+                <h1 className={styles.bannerTitulo}>{pageData.hero_titulo}</h1>
+                {pageData?.hero_subtitulo && (
+                  <>
+                    <Image
+                      src="/images/web/recetas/logo.svg"
+                      alt=""
+                      width={180}
+                      height={54}
+                      className={styles.bannerLogo}
+                      aria-hidden={true}
+                    />
+                    <p className={styles.bannerSubtitulo}>{pageData.hero_subtitulo}</p>
+                  </>
+                )}
+              </div>
+            )}
           </div>
-        )}
-      </div>
+        </>
+      )}
 
       <BasesCulinarias />
-      <ListaRecetas
-        recetas={recetas}
-        labelTipoReceta={pageData?.filtro_tipo_receta_label ?? undefined}
-        labelRegion={pageData?.filtro_region_label ?? undefined}
-        labelDieta={pageData?.filtro_dieta_label ?? undefined}
-      />
+      {recetas.length > 0 && (
+        <ListaRecetas
+          recetas={recetas}
+          labelTipoReceta={pageData?.filtro_tipo_receta_label ?? undefined}
+          labelRegion={pageData?.filtro_region_label ?? undefined}
+          labelDieta={pageData?.filtro_dieta_label ?? undefined}
+          ctaCargarMas={pageData?.cta_cargar_mas ?? undefined}
+          locale={locale}
+          siteCode={siteCode}
+        />
+      )}
       <Testimonios testimonios={testimonios} testimonios_titulo={pageData?.testimonios_titulo ?? undefined} />
     </div>
   );

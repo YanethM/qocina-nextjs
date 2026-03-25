@@ -49,8 +49,20 @@ export default async function ProductosPage({ params }: Props) {
   const productosPageRes = await getProductosPage(locale, siteCode).catch(() => null);
 
   const pageData = productosPageRes?.data;
+  const ayudaImagen = pageData?.ayuda_imagen;
+  const showAyudaSection = Boolean(
+    pageData?.ayuda_titulo || pageData?.ayuda_subtitulo || pageData?.ayuda_cta,
+  );
+  const ayudaImagenUrl = ayudaImagen
+    ? getStrapiImageUrl(
+      ayudaImagen.formats?.large?.url ??
+        ayudaImagen.formats?.medium?.url ??
+        ayudaImagen.formats?.small?.url ??
+        ayudaImagen.url,
+    )
+    : null;
   const productos = (pageData?.productos_destacados ?? []).filter((p) => p.disponible);
-  console.log("[productos] ids:", productos.map((p) => ({ id: p.id, documentId: (p as any).documentId, nombre: p.nombre })));
+  console.log("[productos] ids:", productos.map((p) => ({ id: p.id, documentId: p.documentId, nombre: p.nombre })));
   const rawPacks = pageData?.packs_destacados;
   const packsDestacados = (Array.isArray(rawPacks) ? rawPacks : []).sort(
     (a, b) => a.orden - b.orden,
@@ -62,24 +74,26 @@ export default async function ProductosPage({ params }: Props) {
 
   return (
     <div className={styles.page}>
-      <section className={styles.hero}>
-        <Image
-          src="/images/web/products/container.svg"
-          alt="Productos Q'ocina"
-          fill
-          className={styles.heroImage}
-          style={{ objectFit: "cover" }}
-          priority
-        />
-        <div className={styles.heroText}>
-          {pageData?.hero_titulo && (
-            <p className={styles.heroTitulo}>{pageData.hero_titulo}</p>
-          )}
-          {pageData?.hero_subtitulo && (
-            <p className={styles.heroSubtitulo}>{pageData.hero_subtitulo}</p>
-          )}
-        </div>
-      </section>
+      {(pageData?.hero_titulo || pageData?.hero_subtitulo) && (
+        <section className={styles.hero}>
+          <Image
+            src="/images/web/products/container.svg"
+            alt="Productos Q'ocina"
+            fill
+            className={styles.heroImage}
+            style={{ objectFit: "cover" }}
+            priority
+          />
+          <div className={styles.heroText}>
+            {pageData?.hero_titulo && (
+              <p className={styles.heroTitulo}>{pageData.hero_titulo}</p>
+            )}
+            {pageData?.hero_subtitulo && (
+              <p className={styles.heroSubtitulo}>{pageData.hero_subtitulo}</p>
+            )}
+          </div>
+        </section>
+      )}
 
       <section className={styles.content}>
         {pageData?.productos_titulo && (
@@ -150,11 +164,14 @@ export default async function ProductosPage({ params }: Props) {
       )}
 
       <ProductosNuestroSecreto
+        titulo={pageData?.secreto_titulo}
         secretoImagen={pageData?.secreto_imagen ?? null}
       />
 
       <section className={styles.paraQuien}>
-        <h2 className={styles.paraQuienTitle}>¿Para quién es Q&apos;ocina?</h2>
+        {pageData?.para_quien_titulo && (
+          <h2 className={styles.paraQuienTitle}>{pageData.para_quien_titulo}</h2>
+        )}
 
         <div className={styles.paraQuienContainer}>
           {perfilesUsuario.map((perfil, index) => {
@@ -215,44 +232,65 @@ export default async function ProductosPage({ params }: Props) {
         </div>
       </section>
 
-      <section className={styles.tieneDudas}>
-        <div className={styles.tieneDudasCard}>
-          <div className={styles.tieneDudasContent}>
-            <h2 className={styles.tieneDudasTitle}>
-              {pageData?.ayuda_titulo ?? "¿Tienes dudas o necesitas ayuda?"}
-            </h2>
-            <p className={styles.tieneDudasDescription}>
-              {pageData?.ayuda_subtitulo ?? "Resolvemos preguntas rápidas sobre productos, envíos y preparación."}
-            </p>
+      {showAyudaSection && (
+        <section className={styles.tieneDudas}>
+          <div className={styles.tieneDudasCard}>
+            <div className={styles.tieneDudasContent}>
+              {pageData?.ayuda_titulo && (
+                <h2 className={styles.tieneDudasTitle}>
+                  {pageData.ayuda_titulo}
+                </h2>
+              )}
+              {pageData?.ayuda_subtitulo && (
+                <p className={styles.tieneDudasDescription}>
+                  {pageData.ayuda_subtitulo}
+                </p>
+              )}
+            </div>
+            {pageData?.ayuda_cta && (
+              <Button
+                href={pageData.ayuda_cta.url}
+                variant="yellow"
+                target={pageData.ayuda_cta.nueva_ventana ? "_blank" : undefined}
+                className={styles.tieneDudasBtn}>
+                {pageData.ayuda_cta.texto}
+              </Button>
+            )}
           </div>
-          <Button
-            href={pageData?.ayuda_cta?.url ?? "/contacto"}
-            variant="yellow"
-            target={pageData?.ayuda_cta?.nueva_ventana ? "_blank" : undefined}
-            className={styles.tieneDudasBtn}>
-            {pageData?.ayuda_cta?.texto ?? "Resuelve aquí tus dudas"}
-          </Button>
-        </div>
 
-        <div className={styles.tieneDudasImgWrapper}>
-          <Image
-            src="/images/web/products/tienes_dudas_web.svg"
-            alt="¿Tienes dudas?"
-            width={1440}
-            height={400}
-            style={{ width: "100%", height: "auto" }}
-          />
-        </div>
+          <div className={styles.tieneDudasImgWrapper}>
+            {ayudaImagenUrl ? (
+              <Image
+                src={ayudaImagenUrl}
+                alt={ayudaImagen?.alternativeText ?? ""}
+                width={1440}
+                height={400}
+                className={styles.tieneDudasBgImage}
+                style={{ width: "100%", height: "auto" }}
+                unoptimized
+              />
+            ) : (
+              <div className={styles.tieneDudasPlaceholder} />
+            )}
+          </div>
 
-        <Image
-          src="/images/web/products/tienes_dudas_mobile.svg"
-          alt=""
-          width={390}
-          height={400}
-          className={styles.tieneDudasMobileImg}
-          style={{ width: "100%", height: "auto" }}
-        />
-      </section>
+          <div className={styles.tieneDudasMobileImg}>
+            {ayudaImagenUrl ? (
+              <Image
+                src={ayudaImagenUrl}
+                alt={ayudaImagen?.alternativeText ?? ""}
+                width={390}
+                height={400}
+                className={styles.tieneDudasBgImage}
+                style={{ width: "100%", height: "auto" }}
+                unoptimized
+              />
+            ) : (
+              <div className={styles.tieneDudasPlaceholder} />
+            )}
+          </div>
+        </section>
+      )}
     </div>
   );
 }

@@ -19,6 +19,7 @@ const NAV_PATHS = [
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [locale, setLocale] = useState("es");
+  const [mounted, setMounted] = useState(false);
   const { count } = useCart();
   const router = useRouter();
   const pathname = usePathname();
@@ -29,13 +30,16 @@ export default function Header() {
   const closeMenu = () => setMenuOpen(false);
 
   useEffect(() => {
+    const frame = window.requestAnimationFrame(() => setMounted(true));
     const match = document.cookie.match(/(?:^|;\s*)locale=([^;]+)/);
     if (match?.[1]) setLocale(match[1]);
+    return () => window.cancelAnimationFrame(frame);
   }, []);
 
   const changeLocale = (newLocale: string) => {
     document.cookie = `locale=${newLocale}; path=/; max-age=31536000`;
     setLocale(newLocale);
+    window.dispatchEvent(new CustomEvent("qocina:locale-change", { detail: newLocale }));
     router.refresh();
   };
 
@@ -89,7 +93,7 @@ export default function Header() {
                   height={48}
                   className={styles.cartIcon}
                 />
-                {count > 0 && (
+                {mounted && count > 0 && (
                   <span className={styles.cartBadge}>{count > 99 ? "99+" : count}</span>
                 )}
               </div>
@@ -106,7 +110,7 @@ export default function Header() {
                   height={40}
                   className={styles.cartIcon}
                 />
-                {count > 0 && (
+                {mounted && count > 0 && (
                   <span className={styles.cartBadge}>{count > 99 ? "99+" : count}</span>
                 )}
               </div>

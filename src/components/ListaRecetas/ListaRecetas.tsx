@@ -13,6 +13,9 @@ interface ListaRecetasProps {
   labelTipoReceta?: string;
   labelRegion?: string;
   labelDieta?: string;
+  ctaCargarMas?: string;
+  locale?: string;
+  siteCode?: string;
 }
 
 /* ── Filter options ── */
@@ -93,29 +96,40 @@ function Dropdown({
 }
 
 /* ── Main component ── */
-export default function ListaRecetas({ recetas, hideFilters = false, labelTipoReceta, labelRegion, labelDieta }: ListaRecetasProps) {
+export default function ListaRecetas({
+  recetas,
+  hideFilters = false,
+  labelTipoReceta,
+  labelRegion,
+  labelDieta,
+  ctaCargarMas,
+  locale,
+  siteCode,
+}: ListaRecetasProps) {
   const [filters, setFilters] = useState({ tipoReceta: "", cocina: "", dieta: "" });
   const [visible, setVisible] = useState(PAGE_SIZE);
-  const [resultado, setResultado] = useState<Receta[]>(recetas);
+  const [resultadoFiltrado, setResultadoFiltrado] = useState<Receta[] | null>(null);
   const [loading, setLoading] = useState(false);
+  const showFilters = !hideFilters && Boolean(labelTipoReceta || labelRegion || labelDieta);
 
   const hasActiveFilters = !!(filters.tipoReceta || filters.cocina || filters.dieta);
+  const resultado = hasActiveFilters ? (resultadoFiltrado ?? []) : recetas;
 
   const applyFilter = (next: { tipoReceta: string; cocina: string; dieta: string }) => {
     setFilters(next);
     setVisible(PAGE_SIZE);
     if (!next.tipoReceta && !next.cocina && !next.dieta) {
-      setResultado(recetas);
+      setResultadoFiltrado(null);
       return;
     }
     setLoading(true);
-    getRecetas(undefined, {
+    getRecetas(locale, {
       tipo_receta: next.tipoReceta || undefined,
       cocina_region: next.cocina || undefined,
       tipo_dieta: next.dieta || undefined,
-    })
-      .then((res) => setResultado(res.data ?? []))
-      .catch(() => setResultado([]))
+    }, siteCode)
+      .then((res) => setResultadoFiltrado(res.data ?? []))
+      .catch(() => setResultadoFiltrado([]))
       .finally(() => setLoading(false));
   };
 
@@ -140,26 +154,28 @@ export default function ListaRecetas({ recetas, hideFilters = false, labelTipoRe
             </p>
           </div>
 
-          <div className={styles.filters}>
-            <Dropdown
-              label={labelTipoReceta ?? "Tipo de Receta"}
-              options={TIPOS_RECETA}
-              value={filters.tipoReceta}
-              onChange={(v) => applyFilter({ ...filters, tipoReceta: v })}
-            />
-            <Dropdown
-              label={labelRegion ?? "Cocina por Región"}
-              options={COCINA_REGION}
-              value={filters.cocina}
-              onChange={(v) => applyFilter({ ...filters, cocina: v })}
-            />
-            <Dropdown
-              label={labelDieta ?? "Tipo de dieta"}
-              options={TIPOS_DIETA}
-              value={filters.dieta}
-              onChange={(v) => applyFilter({ ...filters, dieta: v })}
-            />
-          </div>
+          {showFilters && (
+            <div className={styles.filters}>
+              <Dropdown
+                label={labelTipoReceta ?? "Tipo de Receta"}
+                options={TIPOS_RECETA}
+                value={filters.tipoReceta}
+                onChange={(v) => applyFilter({ ...filters, tipoReceta: v })}
+              />
+              <Dropdown
+                label={labelRegion ?? "Cocina por Región"}
+                options={COCINA_REGION}
+                value={filters.cocina}
+                onChange={(v) => applyFilter({ ...filters, cocina: v })}
+              />
+              <Dropdown
+                label={labelDieta ?? "Tipo de dieta"}
+                options={TIPOS_DIETA}
+                value={filters.dieta}
+                onChange={(v) => applyFilter({ ...filters, dieta: v })}
+              />
+            </div>
+          )}
         </div>
       )}
 
@@ -203,7 +219,7 @@ export default function ListaRecetas({ recetas, hideFilters = false, labelTipoRe
             className={styles.loadMoreBtn}
             onClick={() => setVisible((v) => v + PAGE_SIZE)}
           >
-            Cargar más recetas
+            {ctaCargarMas ?? "Cargar más recetas"}
           </button>
         </div>
       )}

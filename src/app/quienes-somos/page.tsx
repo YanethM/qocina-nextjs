@@ -39,70 +39,88 @@ export default async function NosotrosPage() {
 
   const heroWidth = heroImagen?.formats?.large?.width ?? heroImagen?.width ?? 1440;
   const heroHeight = heroImagen?.formats?.large?.height ?? heroImagen?.height ?? 600;
+  const chefImagen = data?.chef_imagen;
+  const showChefBackground = Boolean(
+    chefImagen || data?.chef_nombre || data?.chef_titulo || data?.chef_descripcion,
+  );
+  const chefImageSrc = chefImagen?.formats?.large?.url
+    ? getStrapiImageUrl(chefImagen.formats.large.url)
+    : chefImagen?.formats?.medium?.url
+    ? getStrapiImageUrl(chefImagen.formats.medium.url)
+    : chefImagen?.formats?.small?.url
+    ? getStrapiImageUrl(chefImagen.formats.small.url)
+    : chefImagen?.formats?.thumbnail?.url
+    ? getStrapiImageUrl(chefImagen.formats.thumbnail.url)
+    : chefImagen?.url
+    ? getStrapiImageUrl(chefImagen.url)
+    : "/images/web/nosotros/gaston.svg";
+  const chefImageAlt = chefImagen?.alternativeText ?? data?.chef_nombre ?? "Gastón Acurio";
 
   return (
     <div className={styles.page}>
-      <section className={styles.bannerSection}>
-        <picture>
-          <source media="(max-width: 500px)" srcSet={heroSrcSmall} />
-          <source media="(max-width: 800px)" srcSet={heroSrcMedium} />
+      {(data?.hero_titulo || data?.hero_subtitulo) && (
+        <section className={styles.bannerSection}>
+          <picture>
+            <source media="(max-width: 500px)" srcSet={heroSrcSmall} />
+            <source media="(max-width: 800px)" srcSet={heroSrcMedium} />
+            <Image
+              src={heroSrc}
+              alt={heroImagen?.alternativeText ?? data?.hero_titulo ?? "Nosotros"}
+              width={heroWidth}
+              height={heroHeight}
+              className={styles.bannerImage}
+              priority
+              style={{ width: "100%", height: "auto" }}
+              unoptimized
+            />
+          </picture>
           <Image
-            src={heroSrc}
-            alt={heroImagen?.alternativeText ?? data?.hero_titulo ?? "Nosotros"}
-            width={heroWidth}
-            height={heroHeight}
-            className={styles.bannerImage}
-            priority
-            style={{ width: "100%", height: "auto" }}
+            src="/images/web/nosotros/banner.svg"
+            alt=""
+            width={1957}
+            height={1047}
+            className={`${styles.bannerOverlay} ${styles.desktopOnly}`}
             unoptimized
           />
-        </picture>
-        <Image
-          src="/images/web/nosotros/banner.svg"
-          alt=""
-          width={1957}
-          height={1047}
-          className={`${styles.bannerOverlay} ${styles.desktopOnly}`}
-          unoptimized
-        />
-        <Image
-          src="/images/mobile/nosotros/banner.svg"
-          alt=""
-          width={390}
-          height={629}
-          className={`${styles.bannerOverlay} ${styles.mobileOnly}`}
-          unoptimized
-        />
-        <div className={styles.bannerTextContainer}>
-          <div className={styles.bannerTextInner}>
-            {data?.hero_titulo && (
-              <p className={styles.heroTitulo}>{data.hero_titulo}</p>
-            )}
-            {data?.hero_subtitulo && (
-              <p className={styles.heroSubtitulo}>{data.hero_subtitulo}</p>
-            )}
+          <Image
+            src="/images/mobile/nosotros/banner.svg"
+            alt=""
+            width={390}
+            height={629}
+            className={`${styles.bannerOverlay} ${styles.mobileOnly}`}
+            unoptimized
+          />
+          <div className={styles.bannerTextContainer}>
+            <div className={styles.bannerTextInner}>
+              {data?.hero_titulo && (
+                <p className={styles.heroTitulo}>{data.hero_titulo}</p>
+              )}
+              {data?.hero_subtitulo && (
+                <p className={styles.heroSubtitulo}>{data.hero_subtitulo}</p>
+              )}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      <section className={styles.secondSection}>
-        <Image
-          src="/images/web/nosotros/second_section.svg"
-          alt=""
-          width={1440}
-          height={600}
-          className={styles.desktopOnly}
-          style={{ width: "100%", height: "auto" }}
-        />
-        <Image
-          src="/images/mobile/nosotros/second_section.svg"
-          alt=""
-          width={390}
-          height={600}
-          className={styles.mobileOnly}
-          style={{ width: "100%", height: "auto" }}
-        />
-        {(data?.que_es_titulo || data?.que_es_descripcion) && (
+      {(data?.que_es_titulo || data?.que_es_descripcion) && (
+        <section className={styles.secondSection}>
+          <Image
+            src="/images/web/nosotros/second_section.svg"
+            alt=""
+            width={1440}
+            height={600}
+            className={styles.desktopOnly}
+            style={{ width: "100%", height: "auto" }}
+          />
+          <Image
+            src="/images/mobile/nosotros/second_section.svg"
+            alt=""
+            width={390}
+            height={600}
+            className={styles.mobileOnly}
+            style={{ width: "100%", height: "auto" }}
+          />
           <div className={styles.secondTextOverlay}>
             {data.que_es_titulo && (
               <h2 className={styles.queEsTitulo}>{data.que_es_titulo}</h2>
@@ -120,8 +138,8 @@ export default async function NosotrosPage() {
               </div>
             )}
           </div>
-        )}
-      </section>
+        </section>
+      )}
 
       {data?.valores && data.valores.length > 0 && (
         <section className={styles.beneficiosSection}>
@@ -169,16 +187,18 @@ export default async function NosotrosPage() {
       )}
 
       <section className={styles.gastonSection}>
-        <Image
-          src="/images/web/nosotros/gaston.svg"
-          alt={data?.chef_nombre ?? "Gastón Acurio"}
-          width={1440}
-          height={800}
-          className={`${styles.gastonImage} ${styles.desktopOnly}`}
-          loading="lazy"
-          unoptimized
-          style={{ width: "100%", height: "auto" }}
-        />
+        {showChefBackground && (
+          <Image
+            src={chefImageSrc}
+            alt={chefImageAlt}
+            width={1440}
+            height={620}
+            className={`${styles.gastonImage} ${styles.desktopOnly}`}
+            loading="lazy"
+            unoptimized
+            style={{ width: "100%", height: "620px", objectFit: "cover" }}
+          />
+        )}
 
         <div className={`${styles.gastonPrevWrapper} ${styles.mobileOnly}`}>
           <Image
@@ -203,15 +223,17 @@ export default async function NosotrosPage() {
         </div>
 
         <div className={`${styles.gastonMainWrapper} ${styles.mobileOnly}`}>
-          <Image
-            src="/images/mobile/nosotros/gaston.svg"
-            alt={data?.chef_nombre ?? "Gastón Acurio"}
-            width={390}
-            height={800}
-            style={{ width: "100%", height: "auto", display: "block" }}
-            loading="lazy"
-            unoptimized
-          />
+          {showChefBackground && (
+            <Image
+              src={chefImageSrc}
+              alt={chefImageAlt}
+              width={390}
+              height={800}
+              style={{ width: "100%", height: "auto", display: "block" }}
+              loading="lazy"
+              unoptimized
+            />
+          )}
           {(data?.chef_descripcion || data?.chef_cta) && (
             <div className={styles.gastonMobileBottom}>
               {data.chef_descripcion && (
@@ -297,24 +319,24 @@ export default async function NosotrosPage() {
         className={styles.productosQuienes}
       />
 
-      <section className={styles.procesoSection}>
-        <Image
-          src="/images/web/nosotros/proceso.svg"
-          alt={data?.proceso_titulo ?? "Proceso"}
-          width={1440}
-          height={600}
-          className={`${styles.gastonImage} ${styles.desktopOnly}`}
-          style={{ width: "100%", height: "auto" }}
-        />
-        <Image
-          src="/images/mobile/nosotros/proceso.svg"
-          alt={data?.proceso_titulo ?? "Proceso"}
-          width={390}
-          height={600}
-          className={`${styles.gastonImage} ${styles.mobileOnly}`}
-          style={{ width: "100%", height: "auto" }}
-        />
-        {(data?.proceso_titulo || data?.proceso_cta) && (
+      {(data?.proceso_titulo || data?.proceso_cta) && (
+        <section className={styles.procesoSection}>
+          <Image
+            src="/images/web/nosotros/proceso.svg"
+            alt={data?.proceso_titulo ?? "Proceso"}
+            width={1440}
+            height={600}
+            className={`${styles.gastonImage} ${styles.desktopOnly}`}
+            style={{ width: "100%", height: "auto" }}
+          />
+          <Image
+            src="/images/mobile/nosotros/proceso.svg"
+            alt={data?.proceso_titulo ?? "Proceso"}
+            width={390}
+            height={600}
+            className={`${styles.gastonImage} ${styles.mobileOnly}`}
+            style={{ width: "100%", height: "auto" }}
+          />
           <div className={styles.procesoContainer}>
             <div className={styles.procesoOverlay}>
               {data.proceso_titulo && (
@@ -333,8 +355,8 @@ export default async function NosotrosPage() {
               )}
             </div>
           </div>
-        )}
-      </section>
+        </section>
+      )}
     </div>
   );
 }

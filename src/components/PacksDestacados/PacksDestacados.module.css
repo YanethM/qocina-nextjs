@@ -22,6 +22,11 @@
   padding-top: 174px;
 }
 
+.gridFew {
+  grid-template-columns: repeat(auto-fit, minmax(320px, 424px));
+  justify-content: center;
+}
+
 .card {
   position: relative;
   border-radius: 24px;

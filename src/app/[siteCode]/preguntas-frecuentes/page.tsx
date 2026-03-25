@@ -58,6 +58,16 @@ export default async function PreguntasFrecuentesPage({ params }: Props) {
   const heroImageUrl = pageData?.hero_imagen?.url
     ? getStrapiImageUrl(pageData.hero_imagen.url)
     : null;
+  const heroImageMobileUrl = pageData?.hero_imagen_mobile?.url
+    ? getStrapiImageUrl(pageData.hero_imagen_mobile.url)
+    : null;
+  const showHero = Boolean(
+    pageData?.hero_imagen ||
+      pageData?.hero_imagen_mobile ||
+      pageData?.hero_titulo ||
+      pageData?.hero_descripcion,
+  );
+  const showSubscribe = Boolean(pageData?.meta_title && pageData?.meta_description);
 
   const heroText = (
     <>
@@ -75,39 +85,43 @@ export default async function PreguntasFrecuentesPage({ params }: Props) {
 
   return (
     <>
-      <div className={styles.desktopHero}>
-        <PageHero
-          backgroundImage={heroImageUrl ?? undefined}
-          backgroundAlt={pageData?.hero_imagen?.alternativeText ?? "Preguntas Frecuentes"}
-          overlayContent={
-            <div className={styles.heroLogoWrapper}>{heroText}</div>
-          }
-        />
-      </div>
-
-      <div className={styles.mobileHero}>
-        {heroImageUrl && (
-          <div className={styles.heroImageWrapper}>
-            <Image
-              src={heroImageUrl}
-              alt={pageData?.hero_imagen?.alternativeText ?? ""}
-              fill
-              className={styles.heroImage}
-              priority
-              unoptimized
-            />
-          </div>
-        )}
-        <div className={styles.heroBannerWrapper}>
-          <img
-            src="/images/mobile/faq/banner.svg"
-            alt=""
-            className={styles.heroBanner}
-            aria-hidden
+      {showHero && (
+        <div className={styles.desktopHero}>
+          <PageHero
+            backgroundImage={heroImageUrl ?? undefined}
+            backgroundAlt={pageData?.hero_imagen?.alternativeText ?? "Preguntas Frecuentes"}
+            overlayContent={
+              <div className={styles.heroLogoWrapper}>{heroText}</div>
+            }
           />
-          <div className={styles.heroText}>{heroText}</div>
         </div>
-      </div>
+      )}
+
+      {showHero && (
+        <div className={styles.mobileHero}>
+          {heroImageMobileUrl && (
+            <div className={styles.heroImageWrapper}>
+              <Image
+                src={heroImageMobileUrl}
+                alt={pageData?.hero_imagen_mobile?.alternativeText ?? ""}
+                fill
+                className={styles.heroImage}
+                priority
+                unoptimized
+              />
+            </div>
+          )}
+          <div className={styles.heroBannerWrapper}>
+            <img
+              src="/images/mobile/faq/banner.svg"
+              alt=""
+              className={styles.heroBanner}
+              aria-hidden
+            />
+            <div className={styles.heroText}>{heroText}</div>
+          </div>
+        </div>
+      )}
 
       <section className={styles.faqSection}>
         <FaqClient
@@ -118,12 +132,14 @@ export default async function PreguntasFrecuentesPage({ params }: Props) {
         />
       </section>
 
-      <Subscribe
-        variant="contact"
-        title={pageData?.meta_title || "¿TIENES ALGUNA DUDA?"}
-        description={pageData?.meta_description || ""}
-        mobileWaveImage="/images/mobile/faq/union.svg"
-      />
+      {showSubscribe && (
+        <Subscribe
+          variant="contact"
+          title={pageData.meta_title}
+          description={pageData.meta_description}
+          mobileWaveImage="/images/mobile/faq/union.svg"
+        />
+      )}
     </>
   );
 }

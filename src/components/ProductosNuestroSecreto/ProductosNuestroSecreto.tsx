@@ -52,36 +52,42 @@ const items = [
 ];
 
 interface Props {
+  titulo?: string | null;
   secretoImagen?: StrapiImage | null;
 }
 
-export default function ProductosNuestroSecreto({ secretoImagen }: Props) {
+export default function ProductosNuestroSecreto({ titulo, secretoImagen }: Props) {
   const [openId, setOpenId] = useState<number>(1);
 
   const toggle = (id: number) => {
     setOpenId((prev) => (prev === id ? 0 : id));
   };
 
-  const imageSrc = secretoImagen
-    ? getStrapiImageUrl(secretoImagen.url)
-    : "/images/web/products/nuestro_secreto.svg";
+  const imageUrl =
+    secretoImagen?.formats?.large?.url ??
+    secretoImagen?.formats?.medium?.url ??
+    secretoImagen?.formats?.small?.url ??
+    secretoImagen?.url;
+  const imageSrc = imageUrl ? getStrapiImageUrl(imageUrl) : null;
   const imageAlt = secretoImagen?.alternativeText ?? "Nuestro secreto del sabor";
 
   return (
     <section className={styles.section}>
-      <h2 className={styles.title}>Nuestro secreto del sabor</h2>
+      {titulo && <h2 className={styles.title}>{titulo}</h2>}
 
       <div className={styles.body}>
-        <div className={styles.imageWrapper}>
-          <Image
-            src={imageSrc}
-            alt={imageAlt}
-            fill
-            sizes="(max-width: 640px) 100vw, (max-width: 900px) 100vw, (max-width: 1200px) 480px, 611px"
-            className={styles.image}
-            unoptimized
-          />
-        </div>
+        {imageSrc && (
+          <div className={styles.imageWrapper}>
+            <Image
+              src={imageSrc}
+              alt={imageAlt}
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 900px) 100vw, (max-width: 1200px) 480px, 611px"
+              className={styles.image}
+              unoptimized
+            />
+          </div>
+        )}
 
         <div className={styles.accordion}>
           {items.map((item) => {

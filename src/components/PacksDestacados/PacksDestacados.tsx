@@ -30,7 +30,10 @@ export default function PacksDestacados({
     <section className={styles.section}>
       {titulo && <h2 className={styles.title}>{titulo}</h2>}
 
-      <div className={styles.grid}>
+      <div
+        className={`${styles.grid} ${
+          sorted.length <= 2 ? styles.gridFew : ""
+        }`}>
         {sorted.map((pack, index) => {
           const isFeatured = index === 1;
           const imagenUrl = pack.imagen

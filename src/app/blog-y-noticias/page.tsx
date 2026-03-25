@@ -25,19 +25,30 @@ export default async function BlogYNoticiasPage() {
   const heroImageUrl = pageData?.hero_imagen?.url
     ? getStrapiImageUrl(pageData.hero_imagen.url)
     : undefined;
+  const showHero = Boolean(
+    pageData?.hero_titulo || pageData?.hero_imagen || pageData?.hero_imagen_mobile,
+  );
+  const showSubscribe = Boolean(
+    pageData?.newsletter_titulo &&
+      pageData?.newsletter_descripcion &&
+      pageData?.newsletter_placeholder &&
+      pageData?.newsletter_cta_texto,
+  );
 
   return (
     <>
-      <PageHero
-        backgroundImage={heroImageUrl}
-        backgroundAlt="Blog y Noticias"
-        waveImage="/images/web/noticias/hero_wave.svg"
-        overlayContent={
-          pageData?.hero_titulo ? (
-            <p className={styles.heroTitulo}>{pageData.hero_titulo}</p>
-          ) : undefined
-        }
-      />
+      {showHero && (
+        <PageHero
+          backgroundImage={heroImageUrl}
+          backgroundAlt="Blog y Noticias"
+          waveImage="/images/web/noticias/hero_wave.svg"
+          overlayContent={
+            pageData?.hero_titulo ? (
+              <p className={styles.heroTitulo}>{pageData.hero_titulo}</p>
+            ) : undefined
+          }
+        />
+      )}
 
       <section className={styles.publicacionesSection}>
         {pageData?.publicaciones_titulo && (
@@ -52,12 +63,14 @@ export default async function BlogYNoticiasPage() {
         />
       </section>
 
-      <Subscribe
-        title={pageData?.newsletter_titulo ?? undefined}
-        description={pageData?.newsletter_descripcion ?? undefined}
-        placeholder={pageData?.newsletter_placeholder ?? undefined}
-        formulario_boton={pageData?.newsletter_cta_texto ?? undefined}
-      />
+      {showSubscribe && (
+        <Subscribe
+          title={pageData.newsletter_titulo}
+          description={pageData.newsletter_descripcion}
+          placeholder={pageData.newsletter_placeholder}
+          formulario_boton={pageData.newsletter_cta_texto}
+        />
+      )}
     </>
   );
 }

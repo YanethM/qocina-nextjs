@@ -248,6 +248,7 @@ export interface QuienesSomos {
   hero_imagen: StrapiImage | null;
   que_es_titulo: string | null;
   que_es_descripcion: string | null;
+  chef_imagen: StrapiImage | null;
   chef_nombre: string | null;
   chef_titulo: string | null;
   chef_descripcion: string | null;
@@ -302,11 +303,14 @@ export interface ProductosPage {
   packs_mostrar_descuento: boolean;
   packs_porcentaje_descuento: number | null;
   banner: StrapiImage | null;
+  secreto_titulo: string | null;
   secreto_imagen: StrapiImage | null;
   packs_destacados: PackDestacado[] | null;
+  para_quien_titulo: string | null;
   perfiles_usuario: PerfilUsuario[] | null;
   ayuda_titulo: string | null;
   ayuda_subtitulo: string | null;
+  ayuda_imagen: StrapiImage | null;
   ayuda_cta: { id: number; texto: string; url: string; nueva_ventana: boolean } | null;
   meta_title: string | null;
   meta_description: string | null;
@@ -360,6 +364,7 @@ export interface FaqPage {
   hero_titulo: string | null;
   hero_descripcion: string | null;
   hero_imagen: StrapiImage | null;
+  hero_imagen_mobile: StrapiImage | null;
   meta_title: string | null;
   meta_description: string | null;
   cta_cargar_mas: string | null;

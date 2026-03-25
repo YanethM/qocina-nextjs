@@ -28,19 +28,59 @@ interface CartContextValue {
 }
 
 const CartContext = createContext<CartContextValue | null>(null);
+const DEFAULT_CURRENCY = "COP";
+
+function normalizeCartItem(item: Partial<CartItem>): CartItem | null {
+  if (
+    typeof item.id !== "number" ||
+    typeof item.documentId !== "string" ||
+    typeof item.slug !== "string" ||
+    typeof item.nombre !== "string" ||
+    typeof item.descripcionCorta !== "string" ||
+    typeof item.precio !== "number"
+  ) {
+    return null;
+  }
+
+  return {
+    id: item.id,
+    documentId: item.documentId,
+    slug: item.slug,
+    nombre: item.nombre,
+    descripcionCorta: item.descripcionCorta,
+    precio: item.precio,
+    precioMoneda:
+      typeof item.precioMoneda === "string" && item.precioMoneda.trim()
+        ? item.precioMoneda
+        : DEFAULT_CURRENCY,
+    imagen: typeof item.imagen === "string" || item.imagen === null ? item.imagen : null,
+    cantidad: typeof item.cantidad === "number" && item.cantidad > 0 ? item.cantidad : 1,
+  };
+}
+
+function loadInitialCartItems(): CartItem[] {
+  if (typeof window === "undefined") return [];
+
+  try {
+    const stored = localStorage.getItem("qocina_cart");
+    if (!stored) return [];
+
+    const parsed = JSON.parse(stored);
+    return Array.isArray(parsed)
+      ? parsed
+          .map((item) => normalizeCartItem(item))
+          .filter((item): item is CartItem => item !== null)
+      : [];
+  } catch {
+    return [];
+  }
+}
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const [items, setItems] = useState<CartItem[]>([]);
+  const [items, setItems] = useState<CartItem[]>(loadInitialCartItems);
   const [toastVisible, setToastVisible] = useState(false);
   const [toastNombre, setToastNombre] = useState("");
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  useEffect(() => {
-    try {
-      const stored = localStorage.getItem("qocina_cart");
-      if (stored) setItems(JSON.parse(stored));
-    } catch {}
-  }, []);
 
   useEffect(() => {
     localStorage.setItem("qocina_cart", JSON.stringify(items));
@@ -52,16 +92,23 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const addItem = useCallback((item: Omit<CartItem, "cantidad">, cantidad = 1) => {
+    const normalizedItem = {
+      ...item,
+      precioMoneda:
+        typeof item.precioMoneda === "string" && item.precioMoneda.trim()
+          ? item.precioMoneda
+          : DEFAULT_CURRENCY,
+    };
     setItems((prev) => {
-      const existing = prev.find((i) => i.id === item.id);
+      const existing = prev.find((i) => i.id === normalizedItem.id);
       if (existing) {
         return prev.map((i) =>
-          i.id === item.id ? { ...i, cantidad: i.cantidad + cantidad } : i
+          i.id === normalizedItem.id ? { ...i, cantidad: i.cantidad + cantidad } : i
         );
       }
-      return [...prev, { ...item, cantidad }];
+      return [...prev, { ...normalizedItem, cantidad }];
     });
-    setToastNombre(item.nombre);
+    setToastNombre(normalizedItem.nombre);
     setToastVisible(true);
     if (toastTimer.current) clearTimeout(toastTimer.current);
     toastTimer.current = setTimeout(() => setToastVisible(false), 4000);
