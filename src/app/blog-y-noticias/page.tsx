@@ -63,7 +63,7 @@ export default async function BlogYNoticiasPage() {
         />
       </section>
 
-      {showSubscribe && (
+      {showSubscribe && pageData && (
         <Subscribe
           title={pageData.newsletter_titulo}
           description={pageData.newsletter_descripcion}

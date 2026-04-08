@@ -71,7 +71,7 @@ export default async function BlogYNoticiasPage({ params }: Props) {
         />
       </section>
 
-      {showSubscribe && (
+      {showSubscribe && pageData && (
         <Subscribe
           title={pageData.newsletter_titulo}
           description={pageData.newsletter_descripcion}

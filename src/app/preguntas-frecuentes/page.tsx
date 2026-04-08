@@ -124,12 +124,12 @@ export default async function PreguntasFrecuentesPage() {
         />
       </section>
 
-      {showSubscribe && (
+      {showSubscribe && pageData && (
         <Subscribe
           variant="contact"
           buttonVariant="red"
-          title={pageData.meta_title}
-          description={pageData.meta_description}
+          title={pageData.meta_title ?? undefined}
+          description={pageData.meta_description ?? undefined}
           mobileWaveImage="/images/mobile/faq/union.svg"
         />
       )}

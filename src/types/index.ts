@@ -330,6 +330,7 @@ export interface RecetasPage {
   filtro_dieta_label: string | null;
   testimonios_titulo: string | null;
   testimonios: Testimonio[] | null;
+  cta_cargar_mas: string | null;
   meta_title: string | null;
   meta_description: string | null;
 }
