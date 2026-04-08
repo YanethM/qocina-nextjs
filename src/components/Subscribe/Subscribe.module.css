@@ -75,8 +75,8 @@
   min-width: 170px;
   height: 49px;
   padding: 12px 32px;
-  background-color: #CE171C;
-  color: #fff;
+  background-color: #F4A910;
+  color: #000;
   border: none;
   border-radius: 100px;
   font-family: var(--font-montserrat), sans-serif;
@@ -87,12 +87,22 @@
   white-space: nowrap;
   transition:
     background-color 0.2s ease,
+    color 0.2s ease,
     transform 0.2s ease;
 }
 
 .button:hover {
-  background-color: #a81216;
+  background-color: #000;
+  color: #fff;
   transform: scale(1.03);
+}
+
+.buttonRed {
+  background-color: #CE171C;
+}
+
+.buttonRed:hover {
+  background-color: #a81216;
 }
 
 .alert {

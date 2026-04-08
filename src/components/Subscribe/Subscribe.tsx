@@ -12,9 +12,10 @@ interface SubscribeProps {
   formulario_boton?: string;
   variant?: "email" | "contact";
   mobileWaveImage?: string;
+  buttonVariant?: "yellow" | "red";
 }
 
-export default function Subscribe({ title, description, placeholder, formulario_boton, variant = "email", mobileWaveImage }: SubscribeProps = {}) {
+export default function Subscribe({ title, description, placeholder, formulario_boton, variant = "email", mobileWaveImage, buttonVariant = "yellow" }: SubscribeProps = {}) {
   const [email, setEmail] = useState("");
   const [contact, setContact] = useState({ nombre: "", email: "", mensaje: "" });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
@@ -88,7 +89,7 @@ export default function Subscribe({ title, description, placeholder, formulario_
                   required
                 />
                 <div className={styles.submitRowContact}>
-                  <button type="submit" className={styles.button} disabled={status === "loading"}>
+                  <button type="submit" className={`${styles.button} ${buttonVariant === "red" ? styles.buttonRed : ""}`} disabled={status === "loading"}>
                     {status === "loading" ? "Enviando..." : (formulario_boton ?? "Enviar")}
                   </button>
                 </div>
@@ -103,7 +104,7 @@ export default function Subscribe({ title, description, placeholder, formulario_
                   onChange={(e) => setEmail(e.target.value)}
                   required
                 />
-                <button type="submit" className={styles.button} disabled={status === "loading"}>
+                <button type="submit" className={`${styles.button} ${buttonVariant === "red" ? styles.buttonRed : ""}`} disabled={status === "loading"}>
                   {status === "loading" ? "..." : (formulario_boton ?? "Suscribirme")}
                 </button>
               </form>

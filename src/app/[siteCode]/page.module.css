@@ -147,9 +147,10 @@
   height: 100%;
   width: min(549px, 45%);
   padding-left: clamp(24px, 4%, 64px);
+  padding-bottom: 80px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
   gap: 12px;
   opacity: 1;
 }
@@ -161,6 +162,7 @@
   font-size: clamp(18px, 2.6vw, 48px);
   line-height: 115%;
   letter-spacing: 0%;
+  color: #000;
 }
 
 .amazonDescripcion {
@@ -170,6 +172,7 @@
   font-size: clamp(12px, 1.3vw, 20px);
   line-height: 140%;
   letter-spacing: 0%;
+  color: #000;
 }
 
 .amazonCta {
@@ -433,6 +436,7 @@
     width: 340px;
     min-height: 264px;
     padding-top: 80px;
+    padding-bottom: 0;
     padding-left: clamp(24px, 4%, 64px);
     gap: 15px;
     align-items: flex-start;

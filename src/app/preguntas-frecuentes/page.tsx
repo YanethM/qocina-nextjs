@@ -127,6 +127,7 @@ export default async function PreguntasFrecuentesPage() {
       {showSubscribe && (
         <Subscribe
           variant="contact"
+          buttonVariant="red"
           title={pageData.meta_title}
           description={pageData.meta_description}
           mobileWaveImage="/images/mobile/faq/union.svg"
