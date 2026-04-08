@@ -23,18 +23,19 @@
 
 .historiaFraseQ {
   position: absolute;
-  top: clamp(178px, 14.7vw, 240px);
-  left: clamp(220px, 18.1vw, 360px);
-  width: clamp(138px, 13.4vw, 162.61px);
+  top: 15.5vw;
+  left: 19vw;
+  width: 11.3vw;
   height: auto;
   opacity: 1;
   z-index: 6;
   font-family: var(--font-montserrat), sans-serif;
   font-weight: 400;
-  font-size: clamp(18px, 2vw, 24px);
+  font-size: 24px;
   line-height: 130%;
   color: #ffffff;
   margin: 0;
+  text-align: center;
   transform: rotate(-10deg);
   transform-origin: 0 0;
 }
@@ -173,6 +174,12 @@
   align-items: center;
   justify-content: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+@media (min-width: 1424px) {
+  .historiaFraseQ {
+    font-size: 1.2vw;
+  }
 }
 
 @media (min-width: 772px) and (max-width: 1024px) {
