@@ -2,11 +2,13 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useSiteCode } from "@/hooks/useSiteCode";
 import styles from "./CookieBanner.module.css";
 
 const STORAGE_KEY = "qocina_cookie_consent";
 
 export default function CookieBanner() {
+  const siteCode = useSiteCode();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -33,7 +35,7 @@ export default function CookieBanner() {
           Usamos cookies propias y de terceros para mejorar tu experiencia de navegación y
           mostrarte contenido personalizado. Puedes aceptarlas o rechazarlas. Más información en
           nuestra{" "}
-          <Link href="/politicas-de-cookies" className={styles.link}>
+          <Link href={`/${siteCode}/politicas-de-cookies`} className={styles.link}>
             política de cookies
           </Link>
           .

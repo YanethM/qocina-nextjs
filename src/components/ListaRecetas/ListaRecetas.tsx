@@ -3,7 +3,8 @@
 import { useState, useRef, useEffect } from "react";
 import RecetaCard from "@/components/RecetaCard/RecetaCard";
 import { getStrapiImageUrl } from "@/lib/strapi";
-import { getRecetas } from "@/lib/api";;
+import { getRecetas } from "@/lib/api";
+import { useSiteCode } from "@/hooks/useSiteCode";
 import type { Receta } from "@/types";
 import styles from "./ListaRecetas.module.css";
 
@@ -106,6 +107,8 @@ export default function ListaRecetas({
   locale,
   siteCode,
 }: ListaRecetasProps) {
+  const urlSiteCode = useSiteCode();
+  const sc = siteCode ?? urlSiteCode;
   const [filters, setFilters] = useState({ tipoReceta: "", cocina: "", dieta: "" });
   const [visible, setVisible] = useState(PAGE_SIZE);
   const [resultadoFiltrado, setResultadoFiltrado] = useState<Receta[] | null>(null);
@@ -193,7 +196,7 @@ export default function ListaRecetas({
             return (
               <RecetaCard
                 key={receta.id}
-                href={`/recetas/${receta.slug}`}
+                href={`/${sc}/recetas/${receta.slug}`}
                 titulo={receta.titulo}
                 descripcion={receta.descripcion_corta ?? receta.descripcion}
                 imagenUrl={imgUrl}

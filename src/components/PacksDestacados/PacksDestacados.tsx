@@ -1,7 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import type { PackDestacado } from "@/types";
 import { getStrapiImageUrl } from "@/lib/strapi";
+import { useSiteCode } from "@/hooks/useSiteCode";
 import AddPackToCartButton from "./AddPackToCartButton";
 import styles from "./PacksDestacados.module.css";
 
@@ -24,6 +27,7 @@ export default function PacksDestacados({
   mostrarDescuento = false,
   porcentajeDescuento,
 }: Props) {
+  const siteCode = useSiteCode();
   const sorted = [...packs].sort((a, b) => a.orden - b.orden);
 
   return (
@@ -103,7 +107,7 @@ export default function PacksDestacados({
                     className={`${styles.btnPrimary} ${isFeatured ? styles.btnPrimaryFeatured : ""}`}
                   />
                   <Link
-                    href={`/packs/${pack.slug}`}
+                    href={`/${siteCode}/packs/${pack.slug}`}
                     className={`${styles.btnSecondary} ${isFeatured ? styles.btnSecondaryFeatured : ""}`}>
                     Más información
                     <Image

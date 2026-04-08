@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Producto } from "@/types";
 import { getStrapiImageUrl } from "@/lib/strapi";
 import { useCarousel } from "@/hooks/useCarousel";
+import { useSiteCode } from "@/hooks/useSiteCode";
 import styles from "./OtrasBasesCulinarias.module.css";
 
 interface Props {
@@ -49,6 +50,7 @@ function getConfigIndex(producto: Producto): number {
 }
 
 export default function OtrasBasesCulinarias({ productos }: Props) {
+  const siteCode = useSiteCode();
   const { current, goTo, handleTouchStart, handleTouchEnd } = useCarousel(productos.length);
 
   if (productos.length === 0) return null;
@@ -106,7 +108,7 @@ export default function OtrasBasesCulinarias({ productos }: Props) {
                         {producto.descripcion_corta}
                       </p>
                       <Link
-                        href={`/productos/${producto.slug}`}
+                        href={`/${siteCode}/productos/${producto.slug}`}
                         className={`${styles.ctaBtn} ${config.textDark ? styles.ctaBtnDark : ""}`}
                       >
                         Ver producto
@@ -161,7 +163,7 @@ export default function OtrasBasesCulinarias({ productos }: Props) {
                 <h3 className={styles.cardTitulo}>{producto.nombre}</h3>
                 <p className={styles.cardDescripcion}>{producto.descripcion_corta}</p>
               </div>
-              <Link href={`/productos/${producto.slug}`} className={`${styles.ctaBtn} ${config.textDark ? styles.ctaBtnDark : ""}`}>
+              <Link href={`/${siteCode}/productos/${producto.slug}`} className={`${styles.ctaBtn} ${config.textDark ? styles.ctaBtnDark : ""}`}>
                 Ver producto
                 <Image src={config.arrowSrc} alt="" width={20} height={20} aria-hidden />
               </Link>
@@ -172,7 +174,7 @@ export default function OtrasBasesCulinarias({ productos }: Props) {
                 <h3 className={styles.cardTitulo}>{producto.nombre}</h3>
                 <p className={styles.cardDescripcion}>{producto.descripcion_corta}</p>
               </div>
-              <Link href={`/productos/${producto.slug}`} className={`${styles.ctaBtn} ${config.textDark ? styles.ctaBtnDark : ""}`}>
+              <Link href={`/${siteCode}/productos/${producto.slug}`} className={`${styles.ctaBtn} ${config.textDark ? styles.ctaBtnDark : ""}`}>
                 Ver producto
                 <Image src={config.arrowSrc} alt="" width={20} height={20} aria-hidden />
               </Link>

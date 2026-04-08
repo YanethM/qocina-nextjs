@@ -7,17 +7,19 @@ import { Receta } from "@/types";
 import { getStrapiImageUrl } from "@/lib/strapi";
 import { COLOR_MAP, WAVE_MAP, DEFAULT_COLOR, DEFAULT_WAVE } from "@/lib/constants";
 import { useCarousel } from "@/hooks/useCarousel";
+import { useSiteCode } from "@/hooks/useSiteCode";
 import styles from "./RecetasCarousel.module.css";
 
 const GAP = 16;
 
 function CardItem({ receta }: { receta: Receta }) {
+  const siteCode = useSiteCode();
   const cardColor = COLOR_MAP[receta.color_card] ?? DEFAULT_COLOR;
   const waveSrc = WAVE_MAP[receta.color_card] ?? DEFAULT_WAVE;
 
   return (
     <Link
-      href={`/recetas/${receta.slug}`}
+      href={`/${siteCode}/recetas/${receta.slug}`}
       className={styles.card}
       data-card
       data-color={receta.color_card}>
@@ -71,6 +73,7 @@ interface Props {
 }
 
 export default function RecetasCarousel({ recetas, recetas_titulo, recetas_cta }: Props) {
+  const siteCode = useSiteCode();
   const { current, goTo, handleTouchStart, handleTouchEnd } = useCarousel(recetas.length);
   const carouselRef = useRef<HTMLDivElement>(null);
   const [containerWidth, setContainerWidth] = useState(0);
@@ -135,7 +138,7 @@ export default function RecetasCarousel({ recetas, recetas_titulo, recetas_cta }
       {recetas_cta && (
         <div className={styles.verTodas}>
           <Link
-            href={recetas_cta.url}
+            href={recetas_cta.url?.startsWith("/") ? `/${siteCode}${recetas_cta.url}` : recetas_cta.url}
             target={recetas_cta.nueva_ventana ? "_blank" : "_self"}
             rel={recetas_cta.nueva_ventana ? "noopener noreferrer" : undefined}
             className={styles.verTodasBtn}

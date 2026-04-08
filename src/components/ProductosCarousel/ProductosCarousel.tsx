@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { getStrapiImageUrl } from "@/lib/strapi";
 import type { Producto } from "@/types";
+import { useSiteCode } from "@/hooks/useSiteCode";
 import styles from "./ProductosCarousel.module.css";
 
 const CARD_COLORS = [styles.cardGreen, styles.cardYellow, styles.cardRed];
@@ -21,6 +22,7 @@ export default function ProductosCarousel({
 }: {
   productos: Producto[];
 }) {
+  const siteCode = useSiteCode();
   const [page, setPage] = useState(0);
   const [dir, setDir] = useState<"next" | "prev">("next");
   const totalPages = Math.ceil(productos.length / ITEMS_PER_PAGE);
@@ -81,7 +83,7 @@ export default function ProductosCarousel({
                   {producto.descripcion_corta}
                 </p>
                 <Link
-                  href={`/productos/${producto.slug}`}
+                  href={`/${siteCode}/productos/${producto.slug}`}
                   className={styles.cardButton}>
                   Añadir al carrito
                 </Link>

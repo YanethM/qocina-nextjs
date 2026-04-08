@@ -40,7 +40,7 @@ export default function RelacionadosCarousel({ articulos, ctaVerTodas }: Props) 
               <BlogCard
                 titulo={a.titulo}
                 descripcion_corta={a.descripcion_corta}
-                href={`/blog-y-noticias/${a.slug}`}
+                href={`/${siteCode}/blog-y-noticias/${a.slug}`}
                 imagenUrl={a.imagen_principal?.url ? getStrapiImageUrl(a.imagen_principal.url) : undefined}
               />
             </div>

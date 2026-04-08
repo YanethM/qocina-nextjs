@@ -65,10 +65,10 @@ export default async function BlogYNoticiasPage() {
 
       {showSubscribe && pageData && (
         <Subscribe
-          title={pageData.newsletter_titulo}
-          description={pageData.newsletter_descripcion}
-          placeholder={pageData.newsletter_placeholder}
-          formulario_boton={pageData.newsletter_cta_texto}
+          title={pageData?.newsletter_titulo}
+          description={pageData?.newsletter_descripcion}
+          placeholder={pageData?.newsletter_placeholder}
+          formulario_boton={pageData?.newsletter_cta_texto}
         />
       )}
     </>

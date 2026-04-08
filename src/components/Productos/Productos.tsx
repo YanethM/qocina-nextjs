@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Producto } from "@/types";
 import { getStrapiImageUrl } from "@/lib/strapi";
 import { useCarousel } from "@/hooks/useCarousel";
+import { useSiteCode } from "@/hooks/useSiteCode";
 import styles from "./Productos.module.css";
 
 interface ProductosProps {
@@ -51,11 +52,12 @@ function CardItem({
   colorClass: string;
   priority?: boolean;
 }) {
+  const siteCode = useSiteCode();
   const btnVariant = colorClass === styles.cardYellow ? "dark" : "white";
 
   return (
     <Link
-      href={`/productos/${producto.slug}`}
+      href={`/${siteCode}/productos/${producto.slug}`}
       className={`${styles.card} ${colorClass}`}>
       <div className={styles.imageWrapper}>
         {producto.imagen_principal && (
@@ -101,6 +103,8 @@ export default function Productos({
   ctaNuevaVentana,
   className,
 }: ProductosProps) {
+  const siteCode = useSiteCode();
+  const resolvedCtaUrl = ctaUrl?.startsWith("/") ? `/${siteCode}${ctaUrl}` : ctaUrl;
   const { current, goTo, handleTouchStart, handleTouchEnd } = useCarousel(
     productos.length,
   );
@@ -173,10 +177,10 @@ export default function Productos({
         </div>
       </div>
 
-      {ctaUrl && ctaText && (
+      {resolvedCtaUrl && ctaText && (
         <div className={styles.verTodas}>
           <Link
-            href={ctaUrl}
+            href={resolvedCtaUrl}
             className={styles.verTodasBtn}
             data-btn="dark"
             target={ctaNuevaVentana ? "_blank" : "_self"}
