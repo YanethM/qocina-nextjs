@@ -2,6 +2,7 @@ import Image from "next/image";
 import PageHero from "@/components/PageHero/PageHero";
 import FaqClient from "@/components/FaqClient/FaqClient";
 import Subscribe from "@/components/Subscribe/Subscribe";
+import ComingSoon from "@/components/ComingSoon/ComingSoon";
 import { getLocale } from "@/lib/locale";
 import {
   getPreguntasFrecuentes,
@@ -46,6 +47,8 @@ export default async function PreguntasFrecuentesPage({ params }: Props) {
   ]);
 
   const todas = (todasRes?.data ?? []).sort((a, b) => (a.orden ?? 0) - (b.orden ?? 0));
+
+  if (!pageData && categorias.length === 0 && todas.length === 0) return <ComingSoon />;
 
   const preguntasPorCategoria: Record<string, typeof todas> = {};
   categorias.forEach((cat, i) => {

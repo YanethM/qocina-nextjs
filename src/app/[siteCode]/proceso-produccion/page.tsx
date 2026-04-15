@@ -5,6 +5,7 @@ import Productos from "@/components/Productos/Productos";
 import { getProcesoProduccion, getStrapiImageUrl } from "@/lib/api";
 import { getLocale } from "@/lib/locale";
 import type { PasoProceso } from "@/types";
+import ComingSoon from "@/components/ComingSoon/ComingSoon";
 import styles from "./page.module.css";
 
 interface Props {
@@ -24,6 +25,9 @@ export default async function NuestroProcesoPage({ params }: Props) {
   const { siteCode } = await params;
   const locale = await getLocale();
   const procesoRes = await getProcesoProduccion(locale, siteCode).catch(() => null);
+
+  if (!procesoRes?.data) return <ComingSoon />;
+
   const pasos: PasoProceso[] = procesoRes?.data?.pasos ?? [];
   const productosDestacados = procesoRes?.data?.productos_destacados ?? [];
   const productosCta = procesoRes?.data?.productos_cta;

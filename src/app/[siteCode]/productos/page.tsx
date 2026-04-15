@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { getProductosPage, getStrapiImageUrl } from "@/lib/api";
 import { getLocale } from "@/lib/locale";
+import ComingSoon from "@/components/ComingSoon/ComingSoon";
 import styles from "./page.module.css";
 import ProductosNuestroSecreto from "@/components/ProductosNuestroSecreto/ProductosNuestroSecreto";
 import PacksDestacados from "@/components/PacksDestacados/PacksDestacados";
@@ -49,6 +50,9 @@ export default async function ProductosPage({ params }: Props) {
   const productosPageRes = await getProductosPage(locale, siteCode).catch(() => null);
 
   const pageData = productosPageRes?.data;
+
+  if (!pageData) return <ComingSoon />;
+
   const ayudaImagen = pageData?.ayuda_imagen;
   const showAyudaSection = Boolean(
     pageData?.ayuda_titulo || pageData?.ayuda_subtitulo || pageData?.ayuda_cta,

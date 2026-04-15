@@ -18,6 +18,7 @@ import {
 import { getLocale } from "@/lib/locale";
 import BeneficiosWaveSection from "@/components/BeneficiosWaveSection/BeneficiosWaveSection";
 import IngredientesNaturales from "@/components/IngredientesNaturales/IngredientesNaturales";
+import ComingSoon from "@/components/ComingSoon/ComingSoon";
 
 interface Props {
   params: Promise<{ siteCode: string }>;
@@ -75,11 +76,22 @@ export default async function Home({ params }: Props) {
   const recetas = recetasRes?.data?.slice(0, 3) ?? [];
   const testimonios = testimoniosRes?.data ?? [];
 
+  const hasPageContent =
+    homeRes?.data != null ||
+    badges.length > 0 ||
+    productos.length > 0 ||
+    recetas.length > 0 ||
+    testimonios.length > 0;
+
+  if (!hasPageContent) return <ComingSoon />;
+
   return (
     <>
       <div className="versionclass">v1</div>
       <HeroBanner slides={slides} />
-      <BeneficiosWaveSection badges={badges} textoBeneficios={introTexto} />
+      {(badges.length > 0 || introTexto) && (
+        <BeneficiosWaveSection badges={badges} textoBeneficios={introTexto} />
+      )}
 
       <Productos
         productos={productos}
@@ -89,12 +101,17 @@ export default async function Home({ params }: Props) {
         ctaNuevaVentana={productosCta?.nueva_ventana}
       />
 
-      <IngredientesNaturales
-        natural_titulo={homeRes?.data?.natural_titulo}
-        natural_descripcion={homeRes?.data?.natural_descripcion}
-        natural_frase_q={homeRes?.data?.natural_frase_q}
-        natural_cta={homeRes?.data?.natural_cta}
-      />
+      {(homeRes?.data?.natural_titulo ||
+        homeRes?.data?.natural_descripcion ||
+        homeRes?.data?.natural_frase_q ||
+        homeRes?.data?.natural_cta) && (
+        <IngredientesNaturales
+          natural_titulo={homeRes.data.natural_titulo}
+          natural_descripcion={homeRes.data.natural_descripcion}
+          natural_frase_q={homeRes.data.natural_frase_q}
+          natural_cta={homeRes.data.natural_cta}
+        />
+      )}
 
       <NuestroSecreto
         secreto_titulo={homeRes?.data?.secreto_titulo}
@@ -112,25 +129,26 @@ export default async function Home({ params }: Props) {
         siteCode={siteCode}
       />
 
-      <section className={styles.amazonBanner}>
-        <Image
-          src="/images/web/home/amazon/amazon.svg"
-          alt="Disponible en Amazon"
-          width={1920}
-          height={400}
-          className={styles.amazonWeb}
-          priority={false}
-        />
-        <Image
-          src="/images/mobile/amazon/amazon.svg"
-          alt="Disponible en Amazon"
-          width={390}
-          height={400}
-          className={styles.amazonMobile}
-          loading="eager"
-        />
-        {(homeRes?.data?.amazon_titulo ||
-          homeRes?.data?.amazon_descripcion) && (
+      {(homeRes?.data?.amazon_titulo ||
+        homeRes?.data?.amazon_descripcion ||
+        homeRes?.data?.amazon_cta) && (
+        <section className={styles.amazonBanner}>
+          <Image
+            src="/images/web/home/amazon/amazon.svg"
+            alt="Disponible en Amazon"
+            width={1920}
+            height={400}
+            className={styles.amazonWeb}
+            priority={false}
+          />
+          <Image
+            src="/images/mobile/amazon/amazon.svg"
+            alt="Disponible en Amazon"
+            width={390}
+            height={400}
+            className={styles.amazonMobile}
+            loading="eager"
+          />
           <div className={styles.amazonOverlay}>
             {homeRes.data.amazon_titulo && (
               <h2 className={styles.amazonTitulo}>
@@ -159,8 +177,8 @@ export default async function Home({ params }: Props) {
               </a>
             )}
           </div>
-        )}
-      </section>
+        </section>
+      )}
 
       <RecetasCarousel
         recetas={recetas}
@@ -173,11 +191,15 @@ export default async function Home({ params }: Props) {
         testimonios_titulo={homeRes?.data?.testimonios_titulo}
       />
 
-      <Subscribe
-        title={contactoRes?.data?.titulo}
-        description={contactoRes?.data?.descripcion}
-        formulario_boton={contactoRes?.data?.formulario_boton}
-      />
+      {(contactoRes?.data?.titulo ||
+        contactoRes?.data?.descripcion ||
+        contactoRes?.data?.formulario_boton) && (
+        <Subscribe
+          title={contactoRes.data.titulo}
+          description={contactoRes.data.descripcion}
+          formulario_boton={contactoRes.data.formulario_boton}
+        />
+      )}
     </>
   );
 }

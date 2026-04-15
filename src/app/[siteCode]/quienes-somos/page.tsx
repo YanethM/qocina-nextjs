@@ -4,6 +4,7 @@ import Productos from "@/components/Productos/Productos";
 import PremiosCarousel from "@/components/PremiosCarousel/PremiosCarousel";
 import { getProductos, getQuienesSomos, getStrapiImageUrl } from "@/lib/api";
 import { getLocale } from "@/lib/locale";
+import ComingSoon from "@/components/ComingSoon/ComingSoon";
 import styles from "./page.module.css";
 
 interface Props {
@@ -29,6 +30,8 @@ export default async function NosotrosPage({ params }: Props) {
 
   const productos = productosRes?.data?.slice(0, 3) ?? [];
   const data = quienesSomosRes?.data;
+
+  if (!data && productos.length === 0) return <ComingSoon />;
 
   const heroImagen = data?.hero_imagen;
   const heroSrc = heroImagen?.formats?.large?.url

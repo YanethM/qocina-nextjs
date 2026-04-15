@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { getRecetasPage, getRecetas, getStrapiImageUrl } from "@/lib/api";
 import { getLocale } from "@/lib/locale";
+import ComingSoon from "@/components/ComingSoon/ComingSoon";
 import styles from "./page.module.css";
 import BasesCulinarias from "@/components/BasesCulinarias/BasesCulinarias";
 import Testimonios from "@/components/Testimonios/Testimonios";
@@ -28,11 +29,14 @@ export default async function RecetasPage({ params }: Props) {
   ]);
 
   const pageData = recetasPageRes?.data;
+  const recetas = recetasRes?.data ?? [];
+
+  if (!pageData && recetas.length === 0) return <ComingSoon />;
+
   const heroImageUrl = pageData?.hero_imagen ? getStrapiImageUrl(pageData.hero_imagen.url) : null;
   const heroImageMobileUrl = pageData?.hero_imagen_mobile ? getStrapiImageUrl(pageData.hero_imagen_mobile.url) : null;
   const showBanner = Boolean(pageData?.hero_titulo || pageData?.hero_imagen || pageData?.hero_imagen_mobile);
   const testimonios = pageData?.testimonios ?? [];
-  const recetas = recetasRes?.data ?? [];
 
   return (
     <div className={styles.page}>

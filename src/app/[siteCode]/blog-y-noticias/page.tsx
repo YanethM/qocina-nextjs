@@ -2,6 +2,7 @@ import PageHero from "@/components/PageHero/PageHero";
 import Subscribe from "@/components/Subscribe/Subscribe";
 import { getBlogPage, getArticulos, getStrapiImageUrl } from "@/lib/api";
 import { getLocale } from "@/lib/locale";
+import ComingSoon from "@/components/ComingSoon/ComingSoon";
 import BlogGrid from "./BlogGrid";
 import styles from "./page.module.css";
 
@@ -30,6 +31,9 @@ export default async function BlogYNoticiasPage({ params }: Props) {
   const articulos = (articulosRes?.data ?? []).sort(
     (a, b) => a.orden - b.orden
   );
+
+  if (!pageData && articulos.length === 0) return <ComingSoon />;
+
   const heroImageUrl = pageData?.hero_imagen?.url
     ? getStrapiImageUrl(pageData.hero_imagen.url)
     : undefined;

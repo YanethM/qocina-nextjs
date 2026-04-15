@@ -13,6 +13,8 @@ export default function CocinarConQ({
   historia_cta?: { texto: string; url: string; nueva_ventana: boolean } | null;
   siteCode?: string;
 }) {
+  if (!historia_descripcion && !historia_frase_q && !historia_cta) return null;
+
   return (
     <section className={styles.cocinarConQ}>
       <div className={styles.imageWrapper}>

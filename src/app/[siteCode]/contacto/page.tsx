@@ -2,6 +2,7 @@ import Image from "next/image";
 import ContactForm from "@/components/ContactForm/ContactForm";
 import { getContactoPage, getStrapiImageUrl } from "@/lib/api";
 import { getLocale } from "@/lib/locale";
+import ComingSoon from "@/components/ComingSoon/ComingSoon";
 import styles from "./page.module.css";
 
 interface Props {
@@ -22,6 +23,9 @@ export default async function ContactoPage({ params }: Props) {
   const locale = await getLocale();
   const res = await getContactoPage(locale, siteCode).catch(() => null);
   const data = res?.data ?? null;
+
+  if (!data) return <ComingSoon />;
+
   const showMainSection = Boolean(
     data?.titulo || data?.descripcion || data?.formulario_boton || data?.imagen,
   );

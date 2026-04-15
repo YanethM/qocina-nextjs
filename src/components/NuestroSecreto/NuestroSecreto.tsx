@@ -28,6 +28,9 @@ interface NuestroSecretoProps {
 }
 
 export default async function NuestroSecreto({ secreto_titulo, secreto_descripcion, secreto_chef_frase_q, secreto_cta, secreto_chef_cta, siteCode = "pe" }: NuestroSecretoProps) {
+  const hasContent = secreto_titulo || secreto_descripcion || secreto_chef_frase_q || secreto_cta || secreto_chef_cta;
+  if (!hasContent) return null;
+
   const badges = await getBadges();
 
   return (
