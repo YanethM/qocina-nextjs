@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useCarousel } from "@/hooks/useCarousel";
+import { useSiteCode } from "@/hooks/useSiteCode";
 import styles from "./IngredientesNaturales.module.css";
 
 interface IngredientesNaturalesProps {
@@ -33,12 +34,14 @@ export default function IngredientesNaturales({
   natural_frase_q,
   natural_cta,
 }: IngredientesNaturalesProps) {
+  const siteCode = useSiteCode();
   const { current, goTo, handleTouchStart, handleTouchEnd } = useCarousel(
     images.length,
   );
 
   const ctaText = natural_cta?.texto;
-  const ctaUrl = natural_cta?.url ?? "/productos";
+  const rawCtaUrl = natural_cta?.url ?? "/productos";
+  const ctaUrl = rawCtaUrl.startsWith("/") ? `/${siteCode}${rawCtaUrl}` : rawCtaUrl;
   const ctaNuevaVentana = natural_cta?.nueva_ventana ?? false;
 
   return (

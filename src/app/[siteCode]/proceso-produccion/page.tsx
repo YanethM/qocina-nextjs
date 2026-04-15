@@ -41,7 +41,7 @@ export default async function NuestroProcesoPage({ params }: Props) {
           <div className={styles.heroBtns}>
             {procesoRes?.data?.hero_cta_primario && (
               <Link
-                href={procesoRes.data.hero_cta_primario.url}
+                href={procesoRes.data.hero_cta_primario.url?.startsWith("/") ? `/${siteCode}${procesoRes.data.hero_cta_primario.url}` : procesoRes.data.hero_cta_primario.url}
                 className={styles.btnVerProductos}
                 data-btn="dark"
                 target={procesoRes.data.hero_cta_primario.nueva_ventana ? "_blank" : undefined}
@@ -51,7 +51,7 @@ export default async function NuestroProcesoPage({ params }: Props) {
             )}
             {procesoRes?.data?.hero_cta_secundario && (
               <Link
-                href={procesoRes.data.hero_cta_secundario.url}
+                href={procesoRes.data.hero_cta_secundario.url?.startsWith("/") ? `/${siteCode}${procesoRes.data.hero_cta_secundario.url}` : procesoRes.data.hero_cta_secundario.url}
                 className={styles.btnConoceMas}
                 data-btn="white"
                 target={procesoRes.data.hero_cta_secundario.nueva_ventana ? "_blank" : undefined}
@@ -129,7 +129,7 @@ export default async function NuestroProcesoPage({ params }: Props) {
       {productosDestacados.length === 0 && productosCta && (
         <div className={styles.productosCta}>
           <Link
-            href={productosCta.url}
+            href={productosCta.url?.startsWith("/") ? `/${siteCode}${productosCta.url}` : productosCta.url}
             className={styles.btnVerProductos}
             data-btn="dark"
             target={productosCta.nueva_ventana ? "_blank" : undefined}
@@ -163,7 +163,7 @@ export default async function NuestroProcesoPage({ params }: Props) {
             <div className={styles.heroBtns}>
               {procesoRes?.data?.cta_final_primario && (
                 <Link
-                  href={procesoRes.data.cta_final_primario.url}
+                  href={procesoRes.data.cta_final_primario.url?.startsWith("/") ? `/${siteCode}${procesoRes.data.cta_final_primario.url}` : procesoRes.data.cta_final_primario.url}
                   className={styles.btnVerProductos}
                   data-btn="dark"
                   target={procesoRes.data.cta_final_primario.nueva_ventana ? "_blank" : undefined}
@@ -173,7 +173,7 @@ export default async function NuestroProcesoPage({ params }: Props) {
               )}
               {procesoRes?.data?.cta_final_secundario && (
                 <Link
-                  href={procesoRes.data.cta_final_secundario.url}
+                  href={procesoRes.data.cta_final_secundario.url?.startsWith("/") ? `/${siteCode}${procesoRes.data.cta_final_secundario.url}` : procesoRes.data.cta_final_secundario.url}
                   className={styles.btnConoceMas}
                   data-btn="white"
                   target={procesoRes.data.cta_final_secundario.nueva_ventana ? "_blank" : undefined}

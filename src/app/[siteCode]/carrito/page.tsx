@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { useCart } from "@/context/CartContext";
 import { getStrapiImageUrl } from "@/lib/strapi";
 import { getProductos } from "@/lib/api";;
+import { useSiteCode } from "@/hooks/useSiteCode";
 import type { Producto } from "@/types";
 import styles from "./page.module.css";
 
@@ -23,6 +24,7 @@ const STEPS = [
 ];
 
 export default function CarritoPage() {
+  const siteCode = useSiteCode();
   const { items, removeItem, updateCantidad, addItem, total } = useCart();
   const [codigoPromo, setCodigoPromo] = useState("");
   const [descuento, setDescuento] = useState(0);
@@ -79,7 +81,7 @@ export default function CarritoPage() {
             Aún no has añadido ningún producto.<br />
             ¡Explora nuestras bases culinarias y empieza a cocinar como un experto!
           </p>
-          <Link href="/productos" className={styles.emptyBtn}>
+          <Link href={`/${siteCode}/productos`} className={styles.emptyBtn}>
             Ver productos →
           </Link>
         </div>

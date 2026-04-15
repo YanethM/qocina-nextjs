@@ -100,7 +100,7 @@ export default async function ArticuloDetailPage({ params }: Props) {
           <div className={styles.relacionadosHeader}>
             <h2 className={styles.relacionadosTitulo}>Noticias relacionadas</h2>
             {blogPage?.relacionadas_cta_ver_todas && (
-              <Link href="/blog-y-noticias" className={styles.relacionadosBtn}>
+              <Link href={`/${siteCode}/blog-y-noticias`} className={styles.relacionadosBtn}>
                 {blogPage.relacionadas_cta_ver_todas}
               </Link>
             )}
@@ -111,7 +111,7 @@ export default async function ArticuloDetailPage({ params }: Props) {
                 key={a.id}
                 titulo={a.titulo}
                 descripcion_corta={a.descripcion_corta}
-                href={`/blog-y-noticias/${a.slug}`}
+                href={`/${siteCode}/blog-y-noticias/${a.slug}`}
                 imagenUrl={a.imagen_principal?.url ? getStrapiImageUrl(a.imagen_principal.url) : undefined}
               />
             ))}

@@ -256,7 +256,7 @@ export default async function NosotrosPage({ params }: Props) {
               )}
               {data.chef_cta && (
                 <a
-                  href={data.chef_cta.url}
+                  href={data.chef_cta.url?.startsWith("/") ? `/${siteCode}${data.chef_cta.url}` : data.chef_cta.url}
                   className={styles.gastonCta}
                   data-btn="dark"
                   target={data.chef_cta.nueva_ventana ? "_blank" : "_self"}
@@ -294,7 +294,7 @@ export default async function NosotrosPage({ params }: Props) {
               )}
               {data.chef_cta && (
                 <a
-                  href={data.chef_cta.url}
+                  href={data.chef_cta.url?.startsWith("/") ? `/${siteCode}${data.chef_cta.url}` : data.chef_cta.url}
                   className={styles.gastonCta}
                   data-btn="dark"
                   target={data.chef_cta.nueva_ventana ? "_blank" : "_self"}
@@ -352,7 +352,7 @@ export default async function NosotrosPage({ params }: Props) {
               )}
               {data.proceso_cta && (
                 <a
-                  href={data.proceso_cta.url}
+                  href={data.proceso_cta.url?.startsWith("/") ? `/${siteCode}${data.proceso_cta.url}` : data.proceso_cta.url}
                   className={styles.procesoCta}
                   data-btn="yellow"
                   target={data.proceso_cta.nueva_ventana ? "_blank" : "_self"}

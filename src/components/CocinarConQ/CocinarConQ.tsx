@@ -6,10 +6,12 @@ export default function CocinarConQ({
   historia_descripcion,
   historia_frase_q,
   historia_cta,
+  siteCode = "pe",
 }: {
   historia_descripcion?: string;
   historia_frase_q?: string;
   historia_cta?: { texto: string; url: string; nueva_ventana: boolean } | null;
+  siteCode?: string;
 }) {
   return (
     <section className={styles.cocinarConQ}>
@@ -40,7 +42,7 @@ export default function CocinarConQ({
             <p className={styles.description}>{historia_descripcion}</p>
             {historia_cta && (
               <Button
-                href={historia_cta.url}
+                href={historia_cta.url?.startsWith("/") ? `/${siteCode}${historia_cta.url}` : historia_cta.url}
                 variant="yellow"
                 className={styles.desktopBtn}>
                 {historia_cta.texto}
@@ -58,7 +60,7 @@ export default function CocinarConQ({
           </div>
           {historia_cta && (
             <div className={styles.buttonWrapper}>
-              <Button href={historia_cta.url} variant="yellow" className={styles.mobileBtn}>
+              <Button href={historia_cta.url?.startsWith("/") ? `/${siteCode}${historia_cta.url}` : historia_cta.url} variant="yellow" className={styles.mobileBtn}>
                 {historia_cta.texto}
               </Button>
             </div>

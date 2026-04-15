@@ -24,9 +24,10 @@ interface NuestroSecretoProps {
   secreto_chef_frase_q?: string;
   secreto_cta?: { texto: string; url: string; nueva_ventana: boolean } | null;
   secreto_chef_cta?: { texto: string; url: string; nueva_ventana: boolean } | null;
+  siteCode?: string;
 }
 
-export default async function NuestroSecreto({ secreto_titulo, secreto_descripcion, secreto_chef_frase_q, secreto_cta, secreto_chef_cta }: NuestroSecretoProps) {
+export default async function NuestroSecreto({ secreto_titulo, secreto_descripcion, secreto_chef_frase_q, secreto_cta, secreto_chef_cta, siteCode = "pe" }: NuestroSecretoProps) {
   const badges = await getBadges();
 
   return (
@@ -73,7 +74,7 @@ export default async function NuestroSecreto({ secreto_titulo, secreto_descripci
           {secreto_cta && (
             <div className={styles.btnContainer}>
               <Button
-                href={secreto_cta.url}
+                href={secreto_cta.url?.startsWith("/") ? `/${siteCode}${secreto_cta.url}` : secreto_cta.url}
                 variant="primary"
                 className={styles.procesoBtn}
               >
@@ -105,7 +106,7 @@ export default async function NuestroSecreto({ secreto_titulo, secreto_descripci
           )}
           {secreto_chef_cta && (
             <Button
-              href={secreto_chef_cta.url}
+              href={secreto_chef_cta.url?.startsWith("/") ? `/${siteCode}${secreto_chef_cta.url}` : secreto_chef_cta.url}
               variant="yellow"
               className={styles.gastonBtn}
             >

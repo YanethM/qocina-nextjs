@@ -102,12 +102,14 @@ export default async function Home({ params }: Props) {
         secreto_chef_frase_q={homeRes?.data?.secreto_chef_frase_q}
         secreto_cta={homeRes?.data?.secreto_cta}
         secreto_chef_cta={homeRes?.data?.secreto_chef_cta}
+        siteCode={siteCode}
       />
 
       <CocinarConQ
         historia_descripcion={homeRes?.data?.historia_descripcion}
         historia_frase_q={homeRes?.data?.historia_frase_q}
         historia_cta={homeRes?.data?.historia_cta}
+        siteCode={siteCode}
       />
 
       <section className={styles.amazonBanner}>

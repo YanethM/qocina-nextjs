@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import type { CartItem } from "@/context/CartContext";
+import { useSiteCode } from "@/hooks/useSiteCode";
 import styles from "./page.module.css";
 
 const STEPS = [
@@ -31,6 +32,7 @@ function formatDate(d: Date): string {
 }
 
 function SuccessContent() {
+  const siteCode = useSiteCode();
   const { items, total, clearCart } = useCart();
   const cleared = useRef(false);
   const [snapshot, setSnapshot] = useState<CartItem[]>([]);
@@ -95,10 +97,10 @@ function SuccessContent() {
             </p>
           )}
           <div className={styles.actions}>
-            <Link href="/productos" className={styles.btnPrimary}>
+            <Link href={`/${siteCode}/productos`} className={styles.btnPrimary}>
               Seguir comprando
             </Link>
-            <Link href="/" className={styles.btnSecondary}>
+            <Link href={`/${siteCode}`} className={styles.btnSecondary}>
               Ir al inicio
             </Link>
           </div>

@@ -3,8 +3,10 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import type { HeroSlide } from "@/types";
 import { getStrapiImageUrl } from "@/lib/strapi";
+import { useSiteCode } from "@/hooks/useSiteCode";
 import styles from "./HeroBanner.module.css";
 export default function HeroBanner({ slides = [] }: { slides?: HeroSlide[] }) {
+  const siteCode = useSiteCode();
   const [current, setCurrent] = useState(0);
 
   useEffect(() => {
@@ -37,7 +39,7 @@ export default function HeroBanner({ slides = [] }: { slides?: HeroSlide[] }) {
 
           {slide.cta && (
             <Link
-              href={slide.cta.url}
+              href={slide.cta.url?.startsWith("/") ? `/${siteCode}${slide.cta.url}` : slide.cta.url}
               className={styles.heroBtn}
               data-btn="yellow"
               target={slide.cta.nueva_ventana ? "_blank" : "_self"}>

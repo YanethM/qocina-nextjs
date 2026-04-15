@@ -142,7 +142,7 @@ export default async function ProductosPage({ params }: Props) {
                       {producto.descripcion_corta}
                     </p>
                     <Link
-                      href={`/productos/${producto.slug}`}
+                      href={`/${siteCode}/productos/${producto.slug}`}
                       className={styles.cardButton}>
                       Añadir al carrito
                     </Link>
@@ -249,7 +249,7 @@ export default async function ProductosPage({ params }: Props) {
             </div>
             {pageData?.ayuda_cta && (
               <Button
-                href={pageData.ayuda_cta.url}
+                href={pageData.ayuda_cta.url?.startsWith("/") ? `/${siteCode}${pageData.ayuda_cta.url}` : pageData.ayuda_cta.url}
                 variant="yellow"
                 target={pageData.ayuda_cta.nueva_ventana ? "_blank" : undefined}
                 className={styles.tieneDudasBtn}>
