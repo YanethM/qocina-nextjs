@@ -9,6 +9,17 @@ import styles from "./page.module.css";
 
 const PREFIJOS = ["+57", "+51", "+54", "+52", "+56", "+34", "+1", "+593"];
 
+const PAIS_PREFIJO: Record<string, string> = {
+  co: "+57",
+  pe: "+51",
+  ar: "+54",
+  mx: "+52",
+  cl: "+56",
+  es: "+34",
+  us: "+1",
+  ec: "+593",
+};
+
 type Nivel1Option = { regionCode: string; regionName: string };
 type Nivel2Option = { cityCode: string; cityName: string };
 type Nivel3Option = { districtCode: string; districtName: string };
@@ -224,9 +235,13 @@ export default function EnvioPage() {
   }, []);
 
   useEffect(() => {
-    if (!pais || sites.length === 0) return;
+    if (pais && PAIS_PREFIJO[pais]) setPrefijo(PAIS_PREFIJO[pais]);
+  }, [pais]);
+
+  useEffect(() => {
+    if (!pais) return;
     const selectedSite = sites.find((s) => s.code === pais);
-    const countryCode = selectedSite?.ofix_country_code ?? pais.toUpperCase();
+    const countryCode = selectedSite?.ofix_country_code || pais.toUpperCase();
     const usCountry = countryCode === "US";
 
     setIsUS(usCountry);
@@ -589,21 +604,30 @@ export default function EnvioPage() {
 
               <div className={styles.field}>
                 <label className={styles.label}>{isUS ? t.stateUs : t.stateDefault}</label>
-                <div className={styles.selectWrapper}>
-                  <select
-                    className={`${styles.select} ${errors.nivel1 ? styles.inputError : ""}`}
+                {pais && !loadingUbigeo && nivel1Options.length === 0 ? (
+                  <input
+                    className={`${styles.input} ${errors.nivel1 ? styles.inputError : ""}`}
+                    placeholder={isUS ? t.stateUs : t.stateDefault}
                     value={nivel1}
-                    disabled={!pais || loadingUbigeo || nivel1Options.length === 0}
                     onChange={(e) => setNivel1(e.target.value)}
-                  >
-                    <option value="">
-                      {loadingUbigeo ? t.loading : !pais ? t.selectCountryFirst : t.selectOption}
-                    </option>
-                    {nivel1Options.map((o) => (
-                      <option key={o.regionCode} value={o.regionCode}>{o.regionName}</option>
-                    ))}
-                  </select>
-                </div>
+                  />
+                ) : (
+                  <div className={styles.selectWrapper}>
+                    <select
+                      className={`${styles.select} ${errors.nivel1 ? styles.inputError : ""}`}
+                      value={nivel1}
+                      disabled={!pais || loadingUbigeo}
+                      onChange={(e) => setNivel1(e.target.value)}
+                    >
+                      <option value="">
+                        {loadingUbigeo ? t.loading : !pais ? t.selectCountryFirst : t.selectOption}
+                      </option>
+                      {nivel1Options.map((o) => (
+                        <option key={o.regionCode} value={o.regionCode}>{o.regionName}</option>
+                      ))}
+                    </select>
+                  </div>
+                )}
               </div>
 
               {isUS && (
