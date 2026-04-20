@@ -23,16 +23,17 @@ import type {
 } from "@/types";
 export { API_URL, getStrapiImageUrl } from "@/lib/strapi";
 import { API_URL } from "@/lib/strapi";
+import { VALID_SITE_CODES, SITE_CURRENCY, type SiteCode } from "@/lib/constants";
 
-const VALID_SITE_CODES = ["pe", "us", "es", "mx", "ar", "co", "ec", "cl"];
-
+/** Resuelve el siteCode sin asumir ningún país por defecto.
+ *  Prioridad: parámetro → URL (client) → null */
 function resolveSiteCode(siteCode?: string): string {
-  if (siteCode && VALID_SITE_CODES.includes(siteCode)) return siteCode;
+  if (siteCode && (VALID_SITE_CODES as readonly string[]).includes(siteCode)) return siteCode;
   if (typeof window !== "undefined") {
     const seg = window.location.pathname.split("/")[1];
-    if (VALID_SITE_CODES.includes(seg)) return seg;
+    if ((VALID_SITE_CODES as readonly string[]).includes(seg)) return seg;
   }
-  return process.env.NEXT_PUBLIC_SITE_CODE || "pe";
+  return "";
 }
 
 function imgFields(field: string): Record<string, string> {
@@ -48,15 +49,20 @@ function imgFields(field: string): Record<string, string> {
 
 function normalizeProducto(producto: Producto, siteCode?: string): Producto {
   const resolvedSiteCode = resolveSiteCode(siteCode);
-  const sitioActual =
-    producto.sitios?.find((sitio) => sitio.site?.code === resolvedSiteCode) ??
-    producto.sitios?.[0];
+  const sitioActual = resolvedSiteCode
+    ? producto.sitios?.find((sitio) => sitio.site?.code === resolvedSiteCode)
+    : undefined;
+
+  const monedaFallback = resolvedSiteCode
+    ? (SITE_CURRENCY[resolvedSiteCode as SiteCode] ?? "COP")
+    : "COP";
 
   return {
     ...producto,
-    precio: producto.precio ?? sitioActual?.precio ?? 0,
-    precio_moneda:
-      producto.precio_moneda ?? sitioActual?.site?.moneda ?? process.env.NEXT_PUBLIC_DEFAULT_CURRENCY ?? "COP",
+    precio: sitioActual?.precio ?? producto.precio ?? 0,
+    precio_moneda: sitioActual?.site?.moneda ?? producto.precio_moneda ?? monedaFallback,
+    disponible: sitioActual?.disponible ?? producto.disponible ?? false,
+    stock: sitioActual?.stock ?? producto.stock ?? 0,
   };
 }
 
@@ -74,11 +80,12 @@ async function fetchAPI<T>(
     .join("&");
   const urlStr = `${new URL(path, API_URL).toString()}?${qs}`;
 
+  const extraHeaders: Record<string, string> = {};
+  if (resolvedSiteCode) extraHeaders["X-Site"] = resolvedSiteCode;
+
   const res = await fetch(urlStr, {
     cache: "no-store",
-    headers: {
-      "X-Site": resolvedSiteCode,
-    },
+    headers: extraHeaders,
     signal: AbortSignal.timeout(10000),
   });
 

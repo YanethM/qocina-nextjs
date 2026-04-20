@@ -1,11 +1,17 @@
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
+import CountryModal from "@/components/CountryModal/CountryModal";
+import { VALID_SITE_CODES, SITE_CODE_COOKIE } from "@/lib/constants";
 
-const VALID_SITES = new Set(["pe", "us", "es", "mx", "ar", "co", "ec", "cl"]);
+const VALID = new Set<string>(VALID_SITE_CODES);
 
 export default async function RootPage() {
   const cookieStore = await cookies();
-  const siteCode = cookieStore.get("site-code")?.value;
-  const target = siteCode && VALID_SITES.has(siteCode) ? siteCode : "pe";
-  redirect(`/${target}`);
+  const siteCode = cookieStore.get(SITE_CODE_COOKIE)?.value;
+
+  if (siteCode && VALID.has(siteCode)) {
+    redirect(`/${siteCode}`);
+  }
+
+  return <CountryModal forceVisible />;
 }

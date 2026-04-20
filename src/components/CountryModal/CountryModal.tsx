@@ -4,10 +4,18 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import type { Site } from "@/types";
+import {
+  VALID_SITE_CODES,
+  SITE_CODE_COOKIE,
+  LOCALE_COOKIE,
+  COUNTRY_SELECTED_KEY,
+  SITE_DEFAULT_LOCALE,
+  type SiteCode,
+} from "@/lib/constants";
 import styles from "./CountryModal.module.css";
 
-const STORAGE_KEY = "qocina_country_selected";
-const COOKIE_KEY = "site-code";
+const VALID = new Set<string>(VALID_SITE_CODES);
+const COOKIE_MAX_AGE = 60 * 60 * 24 * 30;
 
 const FLAG_EMOJI: Record<string, string> = {
   pe: "🇵🇪",
@@ -20,16 +28,37 @@ const FLAG_EMOJI: Record<string, string> = {
   cl: "🇨🇱",
 };
 
-export default function CountryModal() {
+function setCookie(name: string, value: string) {
+  document.cookie = `${name}=${value}; path=/; max-age=${COOKIE_MAX_AGE}; samesite=lax`;
+}
+
+interface Props {
+  /** Si es true, muestra el modal sin importar si ya hay un país en localStorage */
+  forceVisible?: boolean;
+}
+
+export default function CountryModal({ forceVisible = false }: Props) {
   const router = useRouter();
   const [visible, setVisible] = useState(false);
   const [sites, setSites] = useState<Site[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
+    if (forceVisible) {
+      const saved = localStorage.getItem(COUNTRY_SELECTED_KEY);
+      if (saved && VALID.has(saved)) {
+        setCookie(SITE_CODE_COOKIE, saved);
+        setCookie(LOCALE_COOKIE, SITE_DEFAULT_LOCALE[saved as SiteCode]);
+        router.replace(`/${saved}`);
+        return;
+      }
+      setVisible(true);
+      return;
+    }
+
+    const saved = localStorage.getItem(COUNTRY_SELECTED_KEY);
     if (!saved) setVisible(true);
-  }, []);
+  }, [forceVisible, router]);
 
   useEffect(() => {
     if (!visible) return;
@@ -43,8 +72,12 @@ export default function CountryModal() {
   }, [visible]);
 
   const handleSelect = (code: string) => {
-    localStorage.setItem(STORAGE_KEY, code);
-    document.cookie = `${COOKIE_KEY}=${code}; path=/; max-age=${60 * 60 * 24 * 30}; samesite=lax`;
+    const locale = SITE_DEFAULT_LOCALE[code as SiteCode] ?? "es";
+
+    setCookie(SITE_CODE_COOKIE, code);
+    setCookie(LOCALE_COOKIE, locale);
+    localStorage.setItem(COUNTRY_SELECTED_KEY, code);
+
     setVisible(false);
     router.push(`/${code}`);
   };

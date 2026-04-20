@@ -12,3 +12,20 @@ export const WAVE_MAP: Record<string, string> = {
 
 export const DEFAULT_COLOR = COLOR_MAP.rojo;
 export const DEFAULT_WAVE = WAVE_MAP.rojo;
+
+export const VALID_SITE_CODES = ["pe", "us", "es", "mx", "ar", "co", "ec", "cl"] as const;
+export type SiteCode = typeof VALID_SITE_CODES[number];
+
+export const SITE_CODE_COOKIE = "site-code";
+export const LOCALE_COOKIE = "locale";
+export const COUNTRY_SELECTED_KEY = "qocina_country_selected";
+
+/** Locale por defecto según país */
+export const SITE_DEFAULT_LOCALE: Record<SiteCode, "es" | "en"> = {
+  pe: "es", co: "es", ar: "es", mx: "es", cl: "es", ec: "es", es: "es", us: "en",
+};
+
+/** Moneda oficial por país */
+export const SITE_CURRENCY: Record<SiteCode, string> = {
+  pe: "PEN", co: "COP", ar: "ARS", mx: "MXN", cl: "CLP", ec: "USD", es: "EUR", us: "USD",
+};

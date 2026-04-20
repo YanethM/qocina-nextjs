@@ -1,38 +1,60 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import {
+  VALID_SITE_CODES,
+  SITE_CODE_COOKIE,
+  LOCALE_COOKIE,
+  SITE_DEFAULT_LOCALE,
+  type SiteCode,
+} from "@/lib/constants";
 
-const VALID_SITE_CODES = new Set(["pe", "us", "es", "mx", "ar", "co", "ec", "cl"]);
-const DEFAULT_SITE = "pe";
-const SITE_CODE_COOKIE = "site-code";
+const VALID = new Set<string>(VALID_SITE_CODES);
+const COOKIE_MAX_AGE = 60 * 60 * 24 * 30;
 
 export function middleware(request: NextRequest) {
-  const pathname = request.nextUrl.pathname;
+  const { pathname } = request.nextUrl;
   const firstSegment = pathname.split("/")[1];
-  const hasSiteCode = VALID_SITE_CODES.has(firstSegment);
-  const siteCode = hasSiteCode ? firstSegment : DEFAULT_SITE;
+  const hasSiteCode = VALID.has(firstSegment);
 
-  const requestHeaders = new Headers(request.headers);
-  requestHeaders.set("x-site-code", siteCode);
+  if (hasSiteCode) {
+    const siteCode = firstSegment as SiteCode;
 
-  if (!hasSiteCode) {
-    const cookieSiteCode = request.cookies.get(SITE_CODE_COOKIE)?.value;
-    const targetSite = (cookieSiteCode && VALID_SITE_CODES.has(cookieSiteCode))
-      ? cookieSiteCode
-      : DEFAULT_SITE;
+    const requestHeaders = new Headers(request.headers);
+    requestHeaders.set("x-site-code", siteCode);
 
-    const redirectPath = pathname === "/" ? `/${targetSite}` : `/${targetSite}${pathname}`;
+    const response = NextResponse.next({ request: { headers: requestHeaders } });
+
+    response.cookies.set(SITE_CODE_COOKIE, siteCode, {
+      path: "/",
+      maxAge: COOKIE_MAX_AGE,
+      sameSite: "lax",
+    });
+
+    const existingLocale = request.cookies.get(LOCALE_COOKIE)?.value;
+    if (!existingLocale) {
+      response.cookies.set(LOCALE_COOKIE, SITE_DEFAULT_LOCALE[siteCode], {
+        path: "/",
+        maxAge: COOKIE_MAX_AGE,
+        sameSite: "lax",
+      });
+    }
+
+    return response;
+  }
+
+  const cookieSiteCode = request.cookies.get(SITE_CODE_COOKIE)?.value;
+
+  if (cookieSiteCode && VALID.has(cookieSiteCode)) {
+    const redirectPath =
+      pathname === "/" ? `/${cookieSiteCode}` : `/${cookieSiteCode}${pathname}`;
     return NextResponse.redirect(new URL(redirectPath, request.url));
   }
 
-  const response = NextResponse.next({
-    request: { headers: requestHeaders },
-  });
-  response.cookies.set(SITE_CODE_COOKIE, siteCode, {
-    path: "/",
-    maxAge: 60 * 60 * 24 * 30, // 30 days
-    sameSite: "lax",
-  });
-  return response;
+  if (pathname !== "/") {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
+
+  return NextResponse.next();
 }
 
 export const config = {
