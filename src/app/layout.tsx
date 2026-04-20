@@ -3,7 +3,6 @@ import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 import CartToast from "@/components/CartToast/CartToast";
 import CookieBanner from "@/components/CookieBanner/CookieBanner";
-import CountryModal from "@/components/CountryModal/CountryModal";
 import { CartProvider } from "@/context/CartContext";
 import localFont from "next/font/local";
 import "./globals.css";
@@ -56,7 +55,6 @@ export default function RootLayout({
           <main>{children}</main>
           <Footer />
           <CartToast />
-          <CountryModal />
           <CookieBanner />
         </CartProvider>
       </body>

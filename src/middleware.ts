@@ -5,11 +5,11 @@ import {
   SITE_CODE_COOKIE,
   LOCALE_COOKIE,
   SITE_DEFAULT_LOCALE,
+  COOKIE_MAX_AGE,
   type SiteCode,
 } from "@/lib/constants";
 
 const VALID = new Set<string>(VALID_SITE_CODES);
-const COOKIE_MAX_AGE = 60 * 60 * 24 * 30;
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -28,6 +28,7 @@ export function middleware(request: NextRequest) {
       path: "/",
       maxAge: COOKIE_MAX_AGE,
       sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
     });
 
     const existingLocale = request.cookies.get(LOCALE_COOKIE)?.value;
@@ -36,6 +37,7 @@ export function middleware(request: NextRequest) {
         path: "/",
         maxAge: COOKIE_MAX_AGE,
         sameSite: "lax",
+        secure: process.env.NODE_ENV === "production",
       });
     }
 

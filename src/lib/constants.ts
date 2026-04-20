@@ -13,6 +13,9 @@ export const WAVE_MAP: Record<string, string> = {
 export const DEFAULT_COLOR = COLOR_MAP.rojo;
 export const DEFAULT_WAVE = WAVE_MAP.rojo;
 
+export const COOKIE_MAX_AGE = 60 * 60 * 24 * 30;
+export const SITE_BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://qocina.com";
+
 export const VALID_SITE_CODES = ["pe", "us", "es", "mx", "ar", "co", "ec", "cl"] as const;
 export type SiteCode = typeof VALID_SITE_CODES[number];
 

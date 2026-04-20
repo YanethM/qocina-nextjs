@@ -1,7 +1,12 @@
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import CountryModal from "@/components/CountryModal/CountryModal";
 import { VALID_SITE_CODES, SITE_CODE_COOKIE } from "@/lib/constants";
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+};
 
 const VALID = new Set<string>(VALID_SITE_CODES);
 

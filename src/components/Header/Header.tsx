@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import { useSiteCode } from "@/hooks/useSiteCode";
+import { COOKIE_MAX_AGE } from "@/lib/constants";
 import styles from "./Header.module.css";
 
 const NAV_PATHS = [
@@ -37,7 +38,7 @@ export default function Header() {
   }, []);
 
   const changeLocale = (newLocale: string) => {
-    document.cookie = `locale=${newLocale}; path=/; max-age=31536000`;
+    document.cookie = `locale=${newLocale}; path=/; max-age=${COOKIE_MAX_AGE}; SameSite=Lax${process.env.NODE_ENV === "production" ? "; Secure" : ""}`;
     setLocale(newLocale);
     window.dispatchEvent(new CustomEvent("qocina:locale-change", { detail: newLocale }));
     router.refresh();

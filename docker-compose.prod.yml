@@ -9,3 +9,8 @@ services:
     restart: unless-stopped
     ports:
       - "3000:3000"
+    environment:
+      OFIX_API_BASE_URL: ${OFIX_API_BASE_URL}
+      OFIX_USER: ${OFIX_USER}
+      OFIX_PASSWORD: ${OFIX_PASSWORD}
+      OFIX_API_KEY: ${OFIX_API_KEY}

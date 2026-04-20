@@ -609,30 +609,21 @@ export default function EnvioPage() {
 
               <div className={styles.field}>
                 <label className={styles.label}>{isUS ? t.stateUs : t.stateDefault}</label>
-                {pais && !loadingUbigeo && nivel1Options.length === 0 ? (
-                  <input
-                    className={`${styles.input} ${errors.nivel1 ? styles.inputError : ""}`}
-                    placeholder={isUS ? t.stateUs : t.stateDefault}
+                <div className={styles.selectWrapper}>
+                  <select
+                    className={`${styles.select} ${errors.nivel1 ? styles.inputError : ""}`}
                     value={nivel1}
+                    disabled={!pais || loadingUbigeo || ubigeoError}
                     onChange={(e) => setNivel1(e.target.value)}
-                  />
-                ) : (
-                  <div className={styles.selectWrapper}>
-                    <select
-                      className={`${styles.select} ${errors.nivel1 ? styles.inputError : ""}`}
-                      value={nivel1}
-                      disabled={!pais || loadingUbigeo}
-                      onChange={(e) => setNivel1(e.target.value)}
-                    >
-                      <option value="">
-                        {loadingUbigeo ? t.loading : !pais ? t.selectCountryFirst : t.selectOption}
-                      </option>
-                      {nivel1Options.map((o) => (
-                        <option key={o.regionCode} value={o.regionCode}>{o.regionName}</option>
-                      ))}
-                    </select>
-                  </div>
-                )}
+                  >
+                    <option value="">
+                      {loadingUbigeo ? t.loading : !pais ? t.selectCountryFirst : ubigeoError ? t.selectOption : t.selectOption}
+                    </option>
+                    {nivel1Options.map((o) => (
+                      <option key={o.regionCode} value={o.regionCode}>{o.regionName}</option>
+                    ))}
+                  </select>
+                </div>
               </div>
 
               {isUS && (

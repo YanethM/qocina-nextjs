@@ -10,12 +10,12 @@ import {
   LOCALE_COOKIE,
   COUNTRY_SELECTED_KEY,
   SITE_DEFAULT_LOCALE,
+  COOKIE_MAX_AGE,
   type SiteCode,
 } from "@/lib/constants";
 import styles from "./CountryModal.module.css";
 
 const VALID = new Set<string>(VALID_SITE_CODES);
-const COOKIE_MAX_AGE = 60 * 60 * 24 * 30;
 
 const FLAG_EMOJI: Record<string, string> = {
   pe: "🇵🇪",
