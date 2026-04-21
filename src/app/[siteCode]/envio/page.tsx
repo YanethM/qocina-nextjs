@@ -340,12 +340,15 @@ export default function EnvioPage() {
 
       if (isUS) {
         const nivel1Item = nivel1Options.find((o) => o.regionCode === nivel1);
+        const stateCode = (nivel1Item?.regionCode ?? nivel1).includes("|")
+          ? (nivel1Item?.regionCode ?? nivel1).split("|")[1]
+          : (nivel1Item?.regionCode ?? nivel1);
         shippingAddress = {
           street: direccion,
           streetNumber: numeroCalle,
           reference: referencia,
           city: ciudadUS,
-          state: nivel1Item?.regionCode ?? nivel1,
+          state: stateCode,
           zip: codigoPostal,
           country: countryCode,
         };
