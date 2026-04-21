@@ -1,21 +1,30 @@
 import { NextRequest, NextResponse } from "next/server";
+import { VALID_SITE_CODES } from "@/lib/constants";
 
 const API_URL =
   process.env.NEXT_PUBLIC_API_URL ||
   "http://ec2-23-23-186-243.compute-1.amazonaws.com:1337";
 
-const SITE_CODE = process.env.NEXT_PUBLIC_SITE_CODE || "pe";
+const VALID = new Set<string>(VALID_SITE_CODES);
 
 export async function POST(req: NextRequest) {
   try {
-    const { siteCode: _ignored, ...body } = await req.json();
+    const { siteCode, ...body } = await req.json();
 
-    console.log("[prepare] body enviado al backend:", JSON.stringify(body, null, 2));
+    if (!siteCode || !VALID.has(siteCode)) {
+      return NextResponse.json(
+        { error: { message: `siteCode inválido o ausente: "${siteCode}"` } },
+        { status: 400 }
+      );
+    }
+
+    console.log("[prepare] siteCode:", siteCode, "body:", JSON.stringify(body, null, 2));
+
     const res = await fetch(`${API_URL}/api/orders/prepare`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "X-Site": SITE_CODE,
+        "X-Site": siteCode,
       },
       body: JSON.stringify(body),
     });
