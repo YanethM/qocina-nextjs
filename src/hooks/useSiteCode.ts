@@ -1,14 +1,20 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { VALID_SITE_CODES, type SiteCode } from "@/lib/constants";
+import { VALID_SITE_CODES, SITE_CODE_COOKIE, type SiteCode } from "@/lib/constants";
 
 const VALID = new Set<string>(VALID_SITE_CODES);
 
-/** Devuelve el siteCode del path actual o "" si no hay ninguno.
- *  Nunca asume un país por defecto. */
 export function useSiteCode(): SiteCode | "" {
   const pathname = usePathname();
   const firstSegment = pathname?.split("/")[1] ?? "";
-  return VALID.has(firstSegment) ? (firstSegment as SiteCode) : "";
+  if (VALID.has(firstSegment)) return firstSegment as SiteCode;
+
+  if (typeof document !== "undefined") {
+    const match = document.cookie.match(new RegExp(`(?:^|;\\s*)${SITE_CODE_COOKIE}=([^;]+)`));
+    const fromCookie = match?.[1] ?? "";
+    if (VALID.has(fromCookie)) return fromCookie as SiteCode;
+  }
+
+  return "";
 }

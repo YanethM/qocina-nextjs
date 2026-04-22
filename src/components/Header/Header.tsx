@@ -26,7 +26,8 @@ export default function Header() {
   const pathname = usePathname();
   const siteCode = useSiteCode();
 
-  const navLinks = NAV_PATHS.map((n) => ({ href: `/${siteCode}${n.path}`, label: n.label, path: n.path }));
+  const base = siteCode ? `/${siteCode}` : "";
+  const navLinks = NAV_PATHS.map((n) => ({ href: `${base}${n.path}`, label: n.label, path: n.path }));
 
   const closeMenu = () => setMenuOpen(false);
 
@@ -48,7 +49,7 @@ export default function Header() {
     <>
       <header className={styles.header}>
         <div className={styles.container}>
-          <Link href={`/${siteCode}`} className={styles.logoWrapper} onClick={closeMenu}>
+          <Link href={siteCode ? `/${siteCode}` : "/"} className={styles.logoWrapper} onClick={closeMenu}>
             <Image
               src="/images/web/header/logo_white.svg"
               alt="Q'ocina en casa"
@@ -85,7 +86,7 @@ export default function Header() {
                 EN
               </button>
             </div>
-            <Link href={`/${siteCode}/carrito`} className={styles.cartWrapper}>
+            <Link href={siteCode ? `/${siteCode}/carrito` : "/"} className={styles.cartWrapper}>
               <div className={styles.cartIconWrapper}>
                 <Image
                   src="/images/web/header/shopping_white.svg"
@@ -102,7 +103,7 @@ export default function Header() {
           </div>
 
           <div className={styles.mobileActions}>
-            <Link href={`/${siteCode}/carrito`} className={styles.cartWrapper} onClick={closeMenu}>
+            <Link href={siteCode ? `/${siteCode}/carrito` : "/"} className={styles.cartWrapper} onClick={closeMenu}>
               <div className={styles.cartIconWrapper}>
                 <Image
                   src="/images/web/header/shopping_white.svg"
