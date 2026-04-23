@@ -9,9 +9,9 @@ interface Props {
   params: Promise<{ siteCode: string }>;
 }
 
-export async function generateMetadata({ params }: Props) {
-  const { siteCode } = await params;
-  const res = await getContactoPage(undefined, siteCode).catch(() => null);
+export async function generateMetadata(_: Props) {
+  const locale = await getLocale();
+  const res = await getContactoPage(locale).catch(() => null);
   return {
     title: res?.data?.meta_title ?? "Contacto - Q'ocina",
     description: res?.data?.meta_description ?? "Contáctanos y resolvemos tus dudas",
@@ -19,9 +19,9 @@ export async function generateMetadata({ params }: Props) {
 }
 
 export default async function ContactoPage({ params }: Props) {
-  const { siteCode } = await params;
+  const { siteCode: _siteCode } = await params;
   const locale = await getLocale();
-  const res = await getContactoPage(locale, siteCode).catch(() => null);
+  const res = await getContactoPage(locale).catch(() => null);
   const data = res?.data ?? null;
 
   if (!data) return <ComingSoon />;

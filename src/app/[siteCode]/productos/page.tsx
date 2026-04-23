@@ -15,7 +15,8 @@ interface Props {
 
 export async function generateMetadata({ params }: Props) {
   const { siteCode } = await params;
-  const res = await getProductosPage(undefined, siteCode).catch(() => null);
+  const locale = await getLocale();
+  const res = await getProductosPage(locale, siteCode).catch(() => null);
   return {
     title: res?.data?.meta_title ?? "Productos - Q'ocina",
     description: res?.data?.meta_description ?? "Explora nuestra variedad de productos artesanales",

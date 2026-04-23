@@ -324,7 +324,7 @@ export async function getProductosPage(locale?: string, siteCode?: string) {
     "populate[ayuda_imagen][fields][3]": "height",
     "populate[ayuda_imagen][fields][4]": "formats",
     "populate[ayuda_cta]": "*",
-  }, locale, siteCode);
+  }, locale);
   return {
     ...res,
     data: res.data
@@ -353,7 +353,6 @@ export async function getPack(slug: string, locale?: string, siteCode?: string) 
       "populate[packs_destacados][populate][productos][populate][imagen_principal][fields][4]": "formats",
     },
     locale,
-    siteCode,
   );
   const data = res?.data;
   const pack = data?.packs_destacados?.find((p) => p.slug === slug) ?? null;
@@ -366,6 +365,7 @@ export async function getPack(slug: string, locale?: string, siteCode?: string) 
 }
 
 export async function getRecetasPage(locale?: string, siteCode?: string) {
+  void siteCode;
   return fetchAPI<StrapiSingleResponse<RecetasPage>>("/api/recetas-page", {
     ...imgFields("hero_imagen"),
     ...imgFields("hero_imagen_mobile"),
@@ -378,25 +378,27 @@ export async function getRecetasPage(locale?: string, siteCode?: string) {
     "populate[testimonios][populate][foto_usuario][fields][1]": "alternativeText",
     "populate[testimonios][populate][foto_usuario][fields][2]": "width",
     "populate[testimonios][populate][foto_usuario][fields][3]": "height",
-  }, locale, siteCode);
+  }, locale);
 }
 
 export async function getBlogPage(locale?: string, siteCode?: string) {
+  void siteCode;
   return fetchAPI<StrapiSingleResponse<BlogPage>>("/api/blog-page", {
     ...imgFields("hero_imagen"),
     ...imgFields("hero_imagen_mobile"),
-  }, locale, siteCode);
+  }, locale);
 }
 
 export async function getFaqPage(locale?: string, siteCode?: string) {
+  void siteCode;
   return fetchAPI<StrapiSingleResponse<FaqPage>>("/api/faq-page", {
     ...imgFields("hero_imagen"),
     ...imgFields("hero_imagen_mobile"),
-  }, locale, siteCode);
+  }, locale);
 }
 
 export async function getProcesoProduccion(locale?: string, siteCode?: string) {
-  return fetchAPI<StrapiSingleResponse<ProcesoProduccion>>("/api/proceso-produccion", {
+  const res = await fetchAPI<StrapiSingleResponse<ProcesoProduccion>>("/api/proceso-produccion", {
     ...imgFields("hero_imagen"),
     "populate[hero_cta_primario]": "*",
     "populate[hero_cta_secundario]": "*",
@@ -415,10 +417,21 @@ export async function getProcesoProduccion(locale?: string, siteCode?: string) {
     "populate[pasos][populate][imagen][fields][2]": "width",
     "populate[pasos][populate][imagen][fields][3]": "height",
     "populate[pasos][populate][imagen][fields][4]": "formats",
-  }, locale, siteCode);
+  }, locale);
+  return {
+    ...res,
+    data: res.data
+      ? {
+          ...res.data,
+          productos_destacados: res.data.productos_destacados?.map((p: Producto) =>
+            normalizeProducto(p, siteCode),
+          ) ?? null,
+        }
+      : res.data,
+  };
 }
 
-export async function getHomePage(locale?: string, siteCode?: string) {
+export async function getHomePage(locale?: string) {
   return fetchAPI<StrapiSingleResponse<HomePage>>("/api/home-page", {
     "populate[slider][populate][imagen][fields][0]": "url",
     "populate[slider][populate][imagen][fields][1]": "alternativeText",
@@ -436,13 +449,13 @@ export async function getHomePage(locale?: string, siteCode?: string) {
     "populate[historia_cta]": "*",
     "populate[amazon_cta]": "*",
     "populate[recetas_cta]": "*",
-  }, locale, siteCode);
+  }, locale);
 }
 
-export async function getContactoPage(locale?: string, siteCode?: string) {
+export async function getContactoPage(locale?: string) {
   return fetchAPI<StrapiSingleResponse<ContactoPage>>("/api/contacto-page", {
     ...imgFields("imagen"),
-  }, locale, siteCode);
+  }, locale);
 }
 
 export async function getSites() {
