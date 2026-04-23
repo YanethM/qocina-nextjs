@@ -25,8 +25,10 @@ interface Props {
 }
 
 export async function generateMetadata({ params }: Props) {
-  const { siteCode } = await params;
-  const res = await getHomePage(undefined, siteCode).catch(() => null);
+  const { siteCode: _siteCode } = await params;
+  const locale = await getLocale();
+  let res = await getHomePage(locale).catch(() => null);
+  if (!res?.data && locale !== "en") res = await getHomePage("en").catch(() => null);
   return {
     title: res?.data?.meta_title ?? "Q'ocina En Casa",
     description: res?.data?.meta_description ?? "Bases culinarias artesanales con el toque de Gastón Acurio",
@@ -36,36 +38,30 @@ export async function generateMetadata({ params }: Props) {
 export default async function Home({ params }: Props) {
   const { siteCode } = await params;
   const locale = await getLocale();
-  const [
-    homeRes,
-    badgesRes,
-    productosRes,
-    recetasRes,
-    testimoniosRes,
-    contactoRes,
-  ] = await Promise.all([
-    getHomePage(locale, siteCode).catch((e) => {
-      console.error("getHomePage error:", e);
-      return null;
-    }),
-    getBadges(locale, siteCode).catch((e) => {
-      console.error("getBadges error:", e);
-      return null;
-    }),
-    getProductos(locale, siteCode).catch((e) => {
-      console.error("getProductos error:", e);
-      return null;
-    }),
-    getRecetas(locale, undefined, siteCode).catch((e) => {
-      console.error("getRecetas error:", e);
-      return null;
-    }),
-    getTestimonios(locale, siteCode).catch((e) => {
-      console.error("getTestimonios error:", e);
-      return null;
-    }),
-    getContactoPage(locale, siteCode).catch(() => null),
+
+  let [homeRes, badgesRes, productosRes, recetasRes, testimoniosRes, contactoRes] = await Promise.all([
+    getHomePage(locale).catch((e) => { console.error("getHomePage error:", e); return null; }),
+    getBadges(locale).catch((e) => { console.error("getBadges error:", e); return null; }),
+    getProductos(locale, siteCode).catch((e) => { console.error("getProductos error:", e); return null; }),
+    getRecetas(locale, undefined, siteCode).catch((e) => { console.error("getRecetas error:", e); return null; }),
+    getTestimonios(locale).catch((e) => { console.error("getTestimonios error:", e); return null; }),
+    getContactoPage(locale).catch(() => null),
   ]);
+
+  if (locale !== "en") {
+    const [homeFb, badgesFb, recetasFb, testimoniosFb, contactoFb] = await Promise.all([
+      !homeRes?.data ? getHomePage("en").catch(() => null) : null,
+      !badgesRes?.data?.length ? getBadges("en").catch(() => null) : null,
+      !recetasRes?.data?.length ? getRecetas("en", undefined, siteCode).catch(() => null) : null,
+      !testimoniosRes?.data?.length ? getTestimonios("en").catch(() => null) : null,
+      !contactoRes?.data ? getContactoPage("en").catch(() => null) : null,
+    ]);
+    if (homeFb) homeRes = homeFb;
+    if (badgesFb) badgesRes = badgesFb;
+    if (recetasFb) recetasRes = recetasFb;
+    if (testimoniosFb) testimoniosRes = testimoniosFb;
+    if (contactoFb) contactoRes = contactoFb;
+  }
 
   const slides = homeRes?.data?.slider ?? [];
   const introTexto = homeRes?.data?.intro_texto ?? "";
