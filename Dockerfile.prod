@@ -14,9 +14,11 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# NEXT_PUBLIC_API_URL se pasa como build argument porque Next.js lo embebe en el bundle del cliente
 ARG NEXT_PUBLIC_API_URL
 ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
+
+ARG NEXT_PUBLIC_SECURE_COOKIES
+ENV NEXT_PUBLIC_SECURE_COOKIES=$NEXT_PUBLIC_SECURE_COOKIES
 
 RUN npm run build
 

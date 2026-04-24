@@ -91,9 +91,20 @@ Contenido del archivo:
 
 ```env
 NEXT_PUBLIC_API_URL=http://ec2-23-23-186-243.compute-1.amazonaws.com:1337
+NEXT_PUBLIC_SECURE_COOKIES=false
+
+OFIX_API_BASE_URL=https://api-artics.fuxion.com/api-fuxion
+OFIX_USER=usr_External
+OFIX_PASSWORD=QkDZAQTM
+OFIX_API_KEY=cwBlAGMAcgBlAHQAXwBFAHgAdABlAHIAbgBhAGwA
+
+NEXT_PUBLIC_OFIX_API_BASE_URL=https://api-artics.fuxion.com/api-fuxion
+NEXT_PUBLIC_OFIX_USER=usr_External
+NEXT_PUBLIC_OFIX_PASSWORD=QkDZAQTM
+NEXT_PUBLIC_OFIX_API_KEY=cwBlAGMAcgBlAHQAXwBFAHgAdABlAHIAbgBhAGwA
 ```
 
-> **Nota:** `NEXT_PUBLIC_API_URL` es una variable de build-time en Next.js. Se embebe en el bundle del cliente durante la compilación, por lo que se pasa como `build arg` al Docker y también debe estar en `.env.prod` para que docker compose la lea.
+> **Nota:** Las variables `NEXT_PUBLIC_*` son de build-time en Next.js. Se embeben en el bundle del cliente durante la compilación, por lo que se pasan como `build args` al Docker y también deben estar en `.env.prod` para que docker compose las lea.
 
 ### Paso 5 — Construir y levantar el contenedor
 
@@ -219,13 +230,15 @@ La opción `output: "standalone"` en `next.config.ts` genera un bundle autoconte
 
 ### `docker-compose.prod.yml`
 
-Orquesta el contenedor de Next.js en producción. Pasa `NEXT_PUBLIC_API_URL` como build argument para que quede embebido en el bundle del cliente.
+Orquesta el contenedor de Next.js en producción. Pasa `NEXT_PUBLIC_API_URL` y `NEXT_PUBLIC_SECURE_COOKIES` como build arguments para que queden embebidos en el bundle del cliente.
+
+### `.dockerignore`
+
+Evita que `.env.local` y otros archivos de desarrollo entren al contexto de build de Docker. Sin este archivo, `COPY . .` en el Dockerfile copiaría `.env.local` al contenedor, y Next.js lo leería en build-time con valores de desarrollo.
 
 ### `.env.prod` (crear en el servidor, no versionar)
 
-```env
-NEXT_PUBLIC_API_URL=http://ec2-23-23-186-243.compute-1.amazonaws.com:1337
-```
+Ver contenido completo en el Paso 4.
 
 ---
 
@@ -249,17 +262,20 @@ NEXT_PUBLIC_API_URL=http://ec2-23-23-186-243.compute-1.amazonaws.com:1337
 
 ## Notas Importantes
 
-1. **`NEXT_PUBLIC_API_URL` es build-time**: Al cambiar la URL del backend, hay que reconstruir la imagen Docker completa.
+1. **Variables `NEXT_PUBLIC_*` son build-time**: Al cambiar cualquiera de estas variables, hay que reconstruir la imagen Docker completa.
 
-2. **`output: standalone`**: Esta opción en `next.config.ts` es necesaria para que el Dockerfile funcione. Genera un servidor Node.js autocontenido en `.next/standalone/`.
+2. **`NEXT_PUBLIC_SECURE_COOKIES`**: Controla si las cookies `site-code` y `locale` se marcan con la flag `Secure`. Debe ser `false` mientras el sitio corra en HTTP. Si se activa HTTPS en el futuro, cambiar a `true` y reconstruir. **No usar `NODE_ENV` para esto**: en `localhost` el browser acepta cookies `Secure` en HTTP (excepción de desarrollo), pero en un dominio HTTP real las rechaza — lo que rompe el cambio de idioma en producción.
 
-3. **Puerto 3000**: Next.js corre en el puerto 3000 por defecto. Asegurarse de abrirlo en el Security Group de AWS.
+3. **`output: standalone`**: Esta opción en `next.config.ts` es necesaria para que el Dockerfile funcione. Genera un servidor Node.js autocontenido en `.next/standalone/`.
 
-4. **HTTPS/SSL**: Actualmente el frontend corre en HTTP. Para producción se recomienda:
+4. **Puerto 3000**: Next.js corre en el puerto 3000 por defecto. Asegurarse de abrirlo en el Security Group de AWS.
+
+5. **HTTPS/SSL**: Actualmente el frontend corre en HTTP. Para producción se recomienda:
    - AWS Application Load Balancer con certificado ACM (termina SSL en el ALB)
    - Nginx como proxy reverso con Let's Encrypt
+   - Al activar HTTPS, recordar cambiar `NEXT_PUBLIC_SECURE_COOKIES=true` en `.env.prod`
 
-5. **La llave PEM**: Guardar `fx-qec-web-pem.pem` en un lugar seguro. Se necesita para cualquier acceso SSH al servidor.
+6. **La llave PEM**: Guardar `fx-qec-web-pem.pem` en un lugar seguro. Se necesita para cualquier acceso SSH al servidor.
 
 ---
 
