@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { useCart } from "@/context/CartContext";
@@ -157,11 +158,12 @@ export default function EnvioPage() {
   const [mounted, setMounted] = useState(false);
   const [locale, setLocale] = useState<"es" | "en">("es");
   const t = locale === "en" ? COPY.en : COPY.es;
+  const ACTIVE_STEP = 1;
   const steps = [
-    { img: "/images/web/shopping/carrito.svg", label: t.steps[0] },
-    { img: "/images/web/shopping/envio.svg", label: t.steps[1] },
-    { img: "/images/web/shopping/pago.svg", label: t.steps[2] },
-    { img: "/images/web/shopping/confirmacion.svg", label: t.steps[3] },
+    { img: "/images/web/shopping/carrito.svg", imgGreen: "/images/web/shopping/carrito_green.svg", label: t.steps[0], backUrl: `/${String(routeParams?.siteCode ?? "")}/carrito` },
+    { img: "/images/web/shopping/envio.svg", imgGreen: "/images/web/shopping/ubicacion_green.svg", label: t.steps[1], backUrl: null },
+    { img: "/images/web/shopping/pago.svg", imgGreen: "/images/web/shopping/seguridad_green.svg", label: t.steps[2], backUrl: null },
+    { img: "/images/web/shopping/confirmacion.svg", imgGreen: "/images/web/shopping/confirmacion_check.svg", label: t.steps[3], backUrl: null },
   ];
   const renderedItems = mounted ? items : [];
   const renderedTotal = mounted ? total : 0;
@@ -439,14 +441,30 @@ export default function EnvioPage() {
   return (
     <div className={styles.page}>
       <div className={styles.steps}>
-        {steps.map((step, i) => (
-          <div key={step.label} className={styles.stepGroup}>
-            <div className={`${styles.step} ${i === 1 ? styles.stepActive : ""}`}>
-              <Image src={step.img} alt={step.label} width={110} height={74} style={{ width: 110, height: 74 }} />
+        {steps.map((step, i) => {
+          const stepClass = `${styles.step} ${i <= ACTIVE_STEP ? styles.stepActive : ""} ${step.backUrl ? styles.stepClickable : ""}`;
+          const content = (
+            <>
+              <Image src={i <= ACTIVE_STEP ? step.imgGreen : step.img} alt={step.label} width={48} height={48} className={styles.stepImg} />
+              <p className={styles.stepLabel}>{step.label}</p>
+            </>
+          );
+          return (
+            <div key={step.label} className={styles.stepGroup}>
+              {step.backUrl ? (
+                <Link href={step.backUrl} className={stepClass}>{content}</Link>
+              ) : (
+                <div className={stepClass}>{content}</div>
+              )}
+              {i < steps.length - 1 && (
+                <Image
+                  src={i <= ACTIVE_STEP ? "/images/web/shopping/linea.svg" : "/images/web/shopping/linea_inactiva.svg"}
+                  alt="" width={72} height={6} className={styles.stepLine}
+                />
+              )}
             </div>
-            {i < steps.length - 1 && <hr className={styles.stepLine} />}
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       <div className={styles.content}>
@@ -704,13 +722,10 @@ export default function EnvioPage() {
             >
               <span>{loading ? t.processing : t.continueToPayment}</span>
               {!loading && (
-                <Image
-                  src="/images/web/home/arrow_right.svg"
-                  alt=""
-                  width={30}
-                  height={18}
-                  style={{ position: "relative", top: "2px", marginLeft: "-6px" }}
-                />
+                <>
+                  <Image src="/images/web/home/arrow_right.svg" alt="" width={30} height={18} className={styles.arrowDark} />
+                  <Image src="/images/web/home/white_arrow_right.svg" alt="" width={30} height={18} className={styles.arrowWhite} />
+                </>
               )}
             </button>
           </div>

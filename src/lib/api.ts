@@ -81,7 +81,7 @@ async function fetchAPI<T>(
   const urlStr = `${new URL(path, API_URL).toString()}?${qs}`;
 
   const extraHeaders: Record<string, string> = {};
-  if (resolvedSiteCode) extraHeaders["X-Site"] = resolvedSiteCode;
+  if (resolvedSiteCode && typeof window === "undefined") extraHeaders["X-Site"] = resolvedSiteCode;
 
   const res = await fetch(urlStr, {
     cache: "no-store",

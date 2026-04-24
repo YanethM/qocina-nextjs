@@ -147,7 +147,7 @@
   height: 100%;
   width: min(549px, 45%);
   padding-left: clamp(24px, 4%, 64px);
-  padding-bottom: 40px;
+  padding-bottom: 80px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -424,7 +424,7 @@
 
   .amazonBanner {
     max-width: 100%;
-    padding: 48px 16px 0;
+    padding: 48px 0 0;
   }
   .amazonWeb {
     display: none;
@@ -433,7 +433,29 @@
     display: block;
   }
   .amazonOverlay {
-    display: none;
+    position: absolute;
+    top: 48px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    height: auto;
+    padding: 32px 48px 0;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .amazonTitulo {
+    font-size: 38.92px;
+    line-height: 106%;
+  }
+  .amazonDescripcion {
+    font-size: 16.38px;
+  }
+  .amazonCta {
+    align-self: flex-start;
+    width: auto;
+    font-size: 16px;
+    line-height: 140%;
   }
 }
 

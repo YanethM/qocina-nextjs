@@ -6,11 +6,13 @@ import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import styles from "./page.module.css";
 
+const ACTIVE_STEP = 2;
+
 const STEPS = [
-  { img: "/images/web/shopping/carrito.svg", label: "Carrito" },
-  { img: "/images/web/shopping/envio.svg", label: "Envío" },
-  { img: "/images/web/shopping/pago.svg", label: "Pago" },
-  { img: "/images/web/shopping/confirmacion.svg", label: "Confirmación" },
+  { img: "/images/web/shopping/carrito.svg", imgGreen: "/images/web/shopping/carrito_green.svg", label: "Carrito" },
+  { img: "/images/web/shopping/envio.svg", imgGreen: "/images/web/shopping/ubicacion_green.svg", label: "Envío" },
+  { img: "/images/web/shopping/pago.svg", imgGreen: "/images/web/shopping/seguridad_green.svg", label: "Pago" },
+  { img: "/images/web/shopping/confirmacion.svg", imgGreen: "/images/web/shopping/confirmacion_check.svg", label: "Confirmación" },
 ];
 
 function formatPrice(precio: number, moneda: string): string {
@@ -28,10 +30,16 @@ function CancelContent() {
       <div className={styles.steps}>
         {STEPS.map((step, i) => (
           <div key={step.label} className={styles.stepGroup}>
-            <div className={`${styles.step} ${i === 2 ? styles.stepActive : ""}`}>
-              <Image src={step.img} alt={step.label} width={110} height={74} style={{ width: 110, height: 74 }} />
+            <div className={`${styles.step} ${i <= ACTIVE_STEP ? styles.stepActive : ""}`}>
+              <Image src={i <= ACTIVE_STEP ? step.imgGreen : step.img} alt={step.label} width={110} height={74} className={styles.stepImg} />
+              <p className={styles.stepLabel}>{step.label}</p>
             </div>
-            {i < STEPS.length - 1 && <hr className={styles.stepLine} />}
+            {i < STEPS.length - 1 && (
+              <Image
+                src={i <= ACTIVE_STEP ? "/images/web/shopping/linea.svg" : "/images/web/shopping/linea_inactiva.svg"}
+                alt="" width={72} height={6} className={styles.stepLine}
+              />
+            )}
           </div>
         ))}
       </div>

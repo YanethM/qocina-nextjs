@@ -25,29 +25,57 @@
   display: flex;
   align-items: center;
   gap: 24px;
+  overflow: visible;
 }
 
 .step {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
-  width: 110px;
-  opacity: 0.4;
+  gap: 8px;
+  width: 48px;
+
+}
+
+.stepImg {
+  opacity: 0.35;
+  width: 48px;
+  height: 48px;
+}
+
+.stepLabel {
+  margin: 0;
+  font-size: 12px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  color: #999;
+  text-align: center;
+}
+
+.stepActive .stepLabel {
+  color: #6A892C;
 }
 
 .stepActive {
-  opacity: 1;
+
+}
+
+.stepClickable {
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.stepClickable:hover {
+  opacity: 0.75;
 }
 
 .stepLine {
-  width: 66px;
-  min-width: 66px;
-  height: 0;
-  border: none;
-  border-top: 1px solid #5a7a2e;
+  width: 72px;
+  min-width: 72px;
+  height: 6px;
   flex-shrink: 0;
-  margin: 0 0 20px;
+  margin: 0 0 22px;
   display: block;
 }
 
@@ -294,12 +322,19 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  transition: opacity 0.2s;
+  transition: background 0.2s, color 0.2s;
 }
 
+.arrowDark { display: block; }
+.arrowWhite { display: none; }
+
 .checkoutBtn:hover:not(:disabled) {
-  opacity: 0.88;
+  background: #000000;
+  color: #ffffff;
 }
+
+.checkoutBtn:hover:not(:disabled) .arrowDark { display: none; }
+.checkoutBtn:hover:not(:disabled) .arrowWhite { display: block; }
 
 .checkoutBtn:disabled {
   opacity: 0.6;
@@ -449,10 +484,27 @@
     padding: 48px 0;
   }
 
-  .stepLine {
-    width: 32px;
-    min-width: 32px;
+  .stepGroup {
+    gap: 8px;
   }
+
+  .step {
+    width: 40px;
+  }
+
+  .stepImg {
+    width: 40px;
+    height: 40px;
+  }
+
+  .stepLine {
+  width: 72px;
+  min-width: 72px;
+  height: 6px;
+  flex-shrink: 0;
+  margin: 0 0 22px;
+  display: block;
+}
 
   .submitRow {
     justify-content: stretch;
@@ -489,4 +541,8 @@
     flex-direction: column;
     align-items: flex-start;
   }
+}
+
+.stepActive .stepImg {
+  opacity: 1;
 }

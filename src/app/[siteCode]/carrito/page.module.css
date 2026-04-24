@@ -228,42 +228,62 @@
   display: flex;
   align-items: center;
   gap: 24px;
+  overflow: visible;
 }
 
 .step {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
-  width: 110px;
-  opacity: 0.4;
+  gap: 8px;
+  width: 48px;
+
+}
+
+.stepImg {
+  opacity: 0.35;
+  width: 48px;
+  height: 48px;
+}
+
+.stepLabel {
+  margin: 0;
+  font-size: 12px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  color: #999;
+  text-align: center;
+}
+
+.stepActive .stepLabel {
+  color: #6A892C;
 }
 
 .stepActive {
-  opacity: 1;
+
 }
 
 .stepLine {
-  width: 66px;
-  min-width: 66px;
-  height: 0;
-  border: none;
-  border-top: 1px solid #5a7a2e;
+  width: 72px;
+  min-width: 72px;
+  height: 6px;
   flex-shrink: 0;
-  margin: 0 0 20px;
+  margin: 0 0 22px;
   display: block;
 }
 
 .content {
   display: grid;
-  grid-template-columns: 1fr 380px;
+  grid-template-columns: 1fr 425px;
   gap: 40px;
   align-items: start;
 }
 
 .title {
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 700;
+  line-height: 120%;
+  letter-spacing: 0;
   margin-bottom: 24px;
 }
 
@@ -358,13 +378,18 @@
 }
 
 .itemNombre {
-  font-size: 18px;
+  font-size: 24px;
   font-weight: 700;
+  line-height: 130%;
+  letter-spacing: 0;
   margin: 0;
 }
 
 .itemDescripcion {
   font-size: 14px;
+  font-weight: 400;
+  line-height: 150%;
+  letter-spacing: 0;
   color: #555;
   margin: 0;
   display: -webkit-box;
@@ -381,8 +406,10 @@
 }
 
 .itemCantidadLabel {
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 140%;
+  letter-spacing: 0;
 }
 
 .cantidadBtn {
@@ -396,9 +423,12 @@
 }
 
 .cantidadNum {
-  font-size: 16px;
+  font-size: 24px;
   font-weight: 700;
-  min-width: 20px;
+  line-height: 130%;
+  letter-spacing: 0;
+  vertical-align: middle;
+  min-width: 24px;
   text-align: center;
 }
 
@@ -413,63 +443,87 @@
 }
 
 .itemPrecio {
-  font-size: 20px;
+  font-size: 32px;
   font-weight: 700;
+  line-height: 120%;
+  letter-spacing: 0;
+  text-align: right;
   white-space: nowrap;
-  padding-top: 4px;
 }
 
 .sidebar {
   background: #f5f5f5;
-  border-radius: 16px;
-  padding: 32px 28px;
+  border-radius: 24px;
+  padding: 32px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 40px;
   position: sticky;
   top: 100px;
+  width: 425px;
+  box-sizing: border-box;
 }
 
 .sidebarTitle {
-  font-size: 20px;
+  font-size: 32px;
   font-weight: 700;
   margin: 0;
+  line-height: 1.1;
 }
 
 .promoLabel {
-  font-size: 14px;
-  font-weight: 500;
-  margin: 0 0 10px;
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0 0 12px;
 }
 
 .promoRow {
   display: flex;
-  gap: 0;
-  border-radius: 50px;
-  overflow: hidden;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 100px;
   border: 1px solid #e0e0e0;
   background: #fff;
+  height: 62px;
+  padding: 8px 8px 8px 14px;
+  box-sizing: border-box;
 }
 
 .promoInput {
   flex: 1;
   border: none;
   outline: none;
-  padding: 12px 16px;
-  font-size: 14px;
+  padding: 0;
+  font-size: 15px;
   background: transparent;
+  font-family: inherit;
 }
 
 .promoBtn {
   background: #1a1a1a;
   color: #fff;
-  border: none;
-  padding: 12px 20px;
-  font-size: 14px;
-  font-weight: 600;
+  border: 1px solid #1a1a1a;
+  width: 170px;
+  height: 45px;
+  min-width: 170px;
+  padding: 12px 8px 12px 12px;
+  gap: 16px;
+  border-radius: 100px;
+  font-size: 15px;
+  font-weight: 700;
   cursor: pointer;
-  border-radius: 0 50px 50px 0;
   white-space: nowrap;
+  font-family: inherit;
+  transition: background 0.2s, color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.promoBtn:hover {
+  background: #fff;
+  color: #1a1a1a;
 }
 
 .divider {
@@ -482,14 +536,26 @@
   display: flex;
   justify-content: space-between;
   font-size: 15px;
-  color: #444;
+  color: #888;
 }
 
 .totalRow {
   display: flex;
   justify-content: space-between;
-  font-size: 20px;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.totalLabel {
+  font-size: 24px;
   font-weight: 700;
+  color: #1a1a1a;
+}
+
+.totalValue {
+  font-size: 32px;
+  font-weight: 700;
+  color: #1a1a1a;
 }
 
 .checkoutBtn {
@@ -504,7 +570,7 @@
   cursor: pointer;
   width: 100%;
   margin-top: 8px;
-  transition: opacity 0.2s;
+  transition: background 0.2s, color 0.2s;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -512,9 +578,16 @@
   text-decoration: none;
 }
 
+.arrowDark { display: block; }
+.arrowWhite { display: none; }
+
 .checkoutBtn:hover {
-  opacity: 0.88;
+  background: #000000;
+  color: #ffffff;
 }
+
+.checkoutBtn:hover .arrowDark { display: none; }
+.checkoutBtn:hover .arrowWhite { display: block; }
 
 @media (max-width: 900px) {
   .content {
@@ -536,9 +609,27 @@
     margin-bottom: 32px;
   }
 
-  .stepLine {
-    width: 48px;
+  .stepGroup {
+    gap: 8px;
   }
+
+  .step {
+    width: 40px;
+  }
+
+  .stepImg {
+    width: 40px;
+    height: 40px;
+  }
+
+  .stepLine {
+  width: 72px;
+  min-width: 72px;
+  height: 6px;
+  flex-shrink: 0;
+  margin: 0 0 22px;
+  display: block;
+}
 
   .item {
     grid-template-columns: 100px 1fr;
@@ -554,4 +645,8 @@
     grid-column: 2;
     font-size: 16px;
   }
+}
+
+.stepActive .stepImg {
+  opacity: 1;
 }

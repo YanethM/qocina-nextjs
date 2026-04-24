@@ -22,29 +22,47 @@
   display: flex;
   align-items: center;
   gap: 24px;
+  overflow: visible;
 }
 
 .step {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
-  width: 110px;
-  opacity: 0.4;
+  gap: 8px;
+  width: 48px;
+
+}
+
+.stepImg {
+  opacity: 0.35;
+  width: 48px;
+  height: 48px;
+}
+
+.stepLabel {
+  margin: 0;
+  font-size: 12px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  color: #999;
+  text-align: center;
+}
+
+.stepActive .stepLabel {
+  color: #6A892C;
 }
 
 .stepActive {
-  opacity: 1;
+
 }
 
 .stepLine {
-  width: 66px;
-  min-width: 66px;
-  height: 0;
-  border: none;
-  border-top: 1px solid #5a7a2e;
+  width: 72px;
+  min-width: 72px;
+  height: 6px;
   flex-shrink: 0;
-  margin: 0 0 20px;
+  margin: 0 0 22px;
   display: block;
 }
 
@@ -264,11 +282,19 @@
   }
 
   .stepLine {
-    width: 32px;
-    min-width: 32px;
-  }
+  width: 72px;
+  min-width: 72px;
+  height: 6px;
+  flex-shrink: 0;
+  margin: 0 0 22px;
+  display: block;
+}
 
   .headerTitle {
     font-size: 28px;
   }
+}
+
+.stepActive .stepImg {
+  opacity: 1;
 }
