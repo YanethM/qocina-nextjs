@@ -27,7 +27,7 @@ interface Props {
 export async function generateMetadata({ params }: Props) {
   const { siteCode: _siteCode } = await params;
   const locale = await getLocale();
-  const res = await getHomePage(locale).catch(() => null);
+  const res = await getHomePage(locale, _siteCode).catch(() => null);
   return {
     title: res?.data?.meta_title ?? "Q'ocina En Casa",
     description: res?.data?.meta_description ?? "Bases culinarias artesanales con el toque de Gastón Acurio",
@@ -39,12 +39,12 @@ export default async function Home({ params }: Props) {
   const locale = await getLocale();
 
   const [homeRes, badgesRes, productosRes, recetasRes, testimoniosRes, contactoRes] = await Promise.all([
-    getHomePage(locale).catch((e) => { console.error("getHomePage error:", e); return null; }),
+    getHomePage(locale, siteCode).catch((e) => { console.error("getHomePage error:", e); return null; }),
     getBadges(locale).catch((e) => { console.error("getBadges error:", e); return null; }),
     getProductos(locale, siteCode).catch((e) => { console.error("getProductos error:", e); return null; }),
     getRecetas(locale, undefined, siteCode).catch((e) => { console.error("getRecetas error:", e); return null; }),
     getTestimonios(locale).catch((e) => { console.error("getTestimonios error:", e); return null; }),
-    getContactoPage(locale).catch(() => null),
+    getContactoPage(locale, siteCode).catch(() => null),
   ]);
 
   const slides = homeRes?.data?.slider ?? [];
@@ -100,6 +100,7 @@ export default async function Home({ params }: Props) {
         secreto_cta={homeRes?.data?.secreto_cta}
         secreto_chef_cta={homeRes?.data?.secreto_chef_cta}
         siteCode={siteCode}
+        locale={locale}
       />
 
       <CocinarConQ

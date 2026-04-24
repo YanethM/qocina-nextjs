@@ -100,7 +100,9 @@ async function fetchAPI<T>(
 }
 
 export async function getBadges(locale?: string, siteCode?: string) {
-  return fetchAPI<StrapiListResponse<Badge>>("/api/badges", {}, locale, siteCode);
+  return fetchAPI<StrapiListResponse<Badge>>("/api/badges", {
+    ...imgFields("icono"),
+  }, locale, siteCode);
 }
 
 export async function getBadge(id: string, locale?: string, siteCode?: string) {
@@ -431,7 +433,7 @@ export async function getProcesoProduccion(locale?: string, siteCode?: string) {
   };
 }
 
-export async function getHomePage(locale?: string) {
+export async function getHomePage(locale?: string, siteCode?: string) {
   return fetchAPI<StrapiSingleResponse<HomePage>>("/api/home-page", {
     "populate[slider][populate][imagen][fields][0]": "url",
     "populate[slider][populate][imagen][fields][1]": "alternativeText",
@@ -449,13 +451,13 @@ export async function getHomePage(locale?: string) {
     "populate[historia_cta]": "*",
     "populate[amazon_cta]": "*",
     "populate[recetas_cta]": "*",
-  }, locale);
+  }, locale, siteCode);
 }
 
-export async function getContactoPage(locale?: string) {
+export async function getContactoPage(locale?: string, siteCode?: string) {
   return fetchAPI<StrapiSingleResponse<ContactoPage>>("/api/contacto-page", {
     ...imgFields("imagen"),
-  }, locale);
+  }, locale, siteCode);
 }
 
 export async function getSites() {

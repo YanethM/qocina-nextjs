@@ -6,7 +6,7 @@ export default function CocinarConQ({
   historia_descripcion,
   historia_frase_q,
   historia_cta,
-  siteCode = "pe",
+  siteCode,
 }: {
   historia_descripcion?: string;
   historia_frase_q?: string;

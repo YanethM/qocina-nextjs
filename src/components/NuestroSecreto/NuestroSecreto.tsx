@@ -1,22 +1,7 @@
 import Image from "next/image";
 import Button from "@/components/ui/Button";
 import styles from "./NuestroSecreto.module.css";
-
-async function getBadges() {
-  try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/badges?populate=icono`, {
-      next: { revalidate: 3600 }
-    });
-    
-    if (!res.ok) throw new Error('Error al cargar badges');
-    
-    const data = await res.json();
-    return data.data || [];
-  } catch (error) {
-    console.error('Error fetching badges:', error);
-    return [];
-  }
-}
+import { getBadges } from "@/lib/api";
 
 interface NuestroSecretoProps {
   secreto_titulo?: string;
@@ -25,13 +10,15 @@ interface NuestroSecretoProps {
   secreto_cta?: { texto: string; url: string; nueva_ventana: boolean } | null;
   secreto_chef_cta?: { texto: string; url: string; nueva_ventana: boolean } | null;
   siteCode?: string;
+  locale?: string;
 }
 
-export default async function NuestroSecreto({ secreto_titulo, secreto_descripcion, secreto_chef_frase_q, secreto_cta, secreto_chef_cta, siteCode = "pe" }: NuestroSecretoProps) {
+export default async function NuestroSecreto({ secreto_titulo, secreto_descripcion, secreto_chef_frase_q, secreto_cta, secreto_chef_cta, siteCode, locale }: NuestroSecretoProps) {
   const hasContent = secreto_titulo || secreto_descripcion || secreto_chef_frase_q || secreto_cta || secreto_chef_cta;
   if (!hasContent) return null;
 
-  const badges = await getBadges();
+  const badgesRes = await getBadges(locale).catch(() => null);
+  const badges = badgesRes?.data ?? [];
 
   return (
     <section className={styles.nuestroSecreto}>
