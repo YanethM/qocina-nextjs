@@ -39,7 +39,8 @@ export default function Header() {
   }, []);
 
   const changeLocale = (newLocale: string) => {
-    document.cookie = `locale=${newLocale}; path=/; max-age=${COOKIE_MAX_AGE}; SameSite=Lax${process.env.NODE_ENV === "production" ? "; Secure" : ""}`;
+    const secureCookies = process.env.NEXT_PUBLIC_SECURE_COOKIES === "true";
+    document.cookie = `locale=${newLocale}; path=/; max-age=${COOKIE_MAX_AGE}; SameSite=Lax${secureCookies ? "; Secure" : ""}`;
     setLocale(newLocale);
     window.dispatchEvent(new CustomEvent("qocina:locale-change", { detail: newLocale }));
     router.refresh();

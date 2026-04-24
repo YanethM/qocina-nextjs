@@ -24,11 +24,13 @@ export function middleware(request: NextRequest) {
 
     const response = NextResponse.next({ request: { headers: requestHeaders } });
 
+    const secureCookies = process.env.NEXT_PUBLIC_SECURE_COOKIES === "true";
+
     response.cookies.set(SITE_CODE_COOKIE, siteCode, {
       path: "/",
       maxAge: COOKIE_MAX_AGE,
       sameSite: "lax",
-      secure: process.env.NODE_ENV === "production",
+      secure: secureCookies,
     });
 
     const existingLocale = request.cookies.get(LOCALE_COOKIE)?.value;
@@ -37,7 +39,7 @@ export function middleware(request: NextRequest) {
         path: "/",
         maxAge: COOKIE_MAX_AGE,
         sameSite: "lax",
-        secure: process.env.NODE_ENV === "production",
+        secure: secureCookies,
       });
     }
 
