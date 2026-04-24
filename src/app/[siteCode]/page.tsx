@@ -18,7 +18,7 @@ import {
 import { getLocale } from "@/lib/locale";
 import BeneficiosWaveSection from "@/components/BeneficiosWaveSection/BeneficiosWaveSection";
 import IngredientesNaturales from "@/components/IngredientesNaturales/IngredientesNaturales";
-import ComingSoon from "@/components/ComingSoon/ComingSoon";
+import ComingSoonGuard from "@/components/ComingSoonGuard/ComingSoonGuard";
 
 interface Props {
   params: Promise<{ siteCode: string }>;
@@ -63,7 +63,7 @@ export default async function Home({ params }: Props) {
     recetas.length > 0 ||
     testimonios.length > 0;
 
-  if (!hasPageContent) return <ComingSoon />;
+  if (!hasPageContent) return <ComingSoonGuard />;
 
   return (
     <>
