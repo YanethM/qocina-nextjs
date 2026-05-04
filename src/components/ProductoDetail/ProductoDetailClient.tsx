@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import type { Badge, Categoria } from "@/types";
 import { COLOR_MAP } from "@/lib/constants";
@@ -44,6 +44,7 @@ interface Props {
   imagenPrincipal: string | null;
   categoria: Categoria | null;
   badges: Badge[];
+  sku: string | null;
 }
 
 export default function ProductoDetailClient({
@@ -61,9 +62,27 @@ export default function ProductoDetailClient({
   imagenPrincipal,
   categoria,
   badges,
+  sku,
 }: Props) {
   const { addItem } = useCart();
   const [selectedImg, setSelectedImg] = useState(0);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.cioanalytics) return;
+    window.cioanalytics.track("Product Viewed", {
+      product_id: String(id),
+      sku: sku ?? slug,
+      name: nombre,
+      category: categoria?.nombre ?? null,
+      price: precio,
+      currency: precioMoneda,
+      brand: "QCocina",
+      quantity: 1,
+      image_url: imagenPrincipal ?? null,
+      url: typeof window !== "undefined" ? window.location.href : null,
+      value: precio,
+    });
+  }, []);
   const [fading, setFading] = useState(false);
   const [zoom, setZoom] = useState(false);
   const [zoomPos, setZoomPos] = useState({ x: 50, y: 50 });
@@ -255,7 +274,18 @@ export default function ProductoDetailClient({
           className={styles.addToCart}
           onClick={() =>
             addItem(
-              { id, documentId, slug, nombre, descripcionCorta, precio, precioMoneda, imagen: imagenPrincipal },
+              {
+                id,
+                documentId,
+                slug,
+                nombre,
+                descripcionCorta,
+                precio,
+                precioMoneda,
+                imagen: imagenPrincipal,
+                sku: sku ?? null,
+                categoria: categoria?.nombre ?? null,
+              },
               cantidad * (PACK_SIZES.find((p) => p.label === packSize)?.multiplier ?? 1)
             )
           }

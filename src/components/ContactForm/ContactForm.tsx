@@ -25,11 +25,16 @@ export default function ContactForm() {
           nombre: form.nombre,
           email: form.correo,
           mensaje: form.mensaje,
+          tipo: "contacto",
         }),
       });
       if (!res.ok) throw new Error();
       setStatus("success");
       setForm({ nombre: "", correo: "", mensaje: "" });
+      if (typeof window !== "undefined" && window.cioanalytics) {
+        window.cioanalytics.identify({ email: form.correo });
+        window.cioanalytics.track("Contact Form Submitted", { inquiry_type: null });
+      }
     } catch {
       setStatus("error");
     }

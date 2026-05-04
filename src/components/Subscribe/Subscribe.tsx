@@ -27,11 +27,15 @@ export default function Subscribe({ title, description, placeholder, formulario_
       const res = await fetch(`${API_URL}/api/contacto/enviar`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, tipo: "newsletter", source: "footer" }),
       });
       if (!res.ok) throw new Error();
       setStatus("success");
       setEmail("");
+      if (typeof window !== "undefined" && window.cioanalytics) {
+        window.cioanalytics.identify({ email });
+        window.cioanalytics.track("Newsletter Subscribed", { email, source: "footer" });
+      }
     } catch {
       setStatus("error");
     }
@@ -44,11 +48,15 @@ export default function Subscribe({ title, description, placeholder, formulario_
       const res = await fetch(`${API_URL}/api/contacto/enviar`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(contact),
+        body: JSON.stringify({ ...contact, tipo: "contacto" }),
       });
       if (!res.ok) throw new Error();
       setStatus("success");
       setContact({ nombre: "", email: "", mensaje: "" });
+      if (typeof window !== "undefined" && window.cioanalytics) {
+        window.cioanalytics.identify({ email: contact.email });
+        window.cioanalytics.track("Contact Form Submitted", { inquiry_type: null });
+      }
     } catch {
       setStatus("error");
     }

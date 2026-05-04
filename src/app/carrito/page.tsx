@@ -260,6 +260,8 @@ export default function CarritoPage() {
                               precio: producto.precio,
                               precioMoneda: producto.precio_moneda,
                               imagen: imgUrl,
+                              sku: producto.sku ?? null,
+                              categoria: producto.categoria?.nombre ?? null,
                             })
                           }
                         >

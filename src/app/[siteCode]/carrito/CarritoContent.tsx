@@ -76,6 +76,25 @@ export default function CarritoPage() {
       .catch(() => {});
   }, []);
 
+  useEffect(() => {
+    if (items.length === 0) return;
+    if (typeof window === "undefined" || !window.cioanalytics) return;
+    const cartId = localStorage.getItem("qocina_cart_id") ?? "";
+    window.cioanalytics.track("Cart Viewed", {
+      cart_id: cartId,
+      products: items.map((i) => ({
+        product_id: String(i.id),
+        sku: i.sku ?? i.slug,
+        name: i.nombre,
+        category: i.categoria ?? null,
+        price: i.precio,
+        quantity: i.cantidad,
+        brand: "QCocina",
+        image_url: i.imagen ?? null,
+      })),
+    });
+  }, []);
+
   const cartIds = new Set(items.map((i) => i.id));
   const sugeridos = productos.filter((p) => !cartIds.has(p.id));
   const VISIBLE = 3;
@@ -304,6 +323,8 @@ export default function CarritoPage() {
                               precio: producto.precio,
                               precioMoneda: producto.precio_moneda,
                               imagen: imgUrl,
+                              sku: producto.sku ?? null,
+                              categoria: producto.categoria?.nombre ?? null,
                             })
                           }
                         >

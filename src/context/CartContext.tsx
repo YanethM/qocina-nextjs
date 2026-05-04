@@ -12,6 +12,8 @@ export interface CartItem {
   precioMoneda: string;
   imagen: string | null;
   cantidad: number;
+  sku: string | null;
+  categoria: string | null;
 }
 
 interface CartContextValue {
@@ -29,6 +31,14 @@ interface CartContextValue {
 
 const CartContext = createContext<CartContextValue | null>(null);
 const DEFAULT_CURRENCY = "COP";
+
+function getOrCreateCartId(): string {
+  const existing = localStorage.getItem("qocina_cart_id");
+  if (existing) return existing;
+  const id = crypto.randomUUID();
+  localStorage.setItem("qocina_cart_id", id);
+  return id;
+}
 
 function normalizeCartItem(item: Partial<CartItem>): CartItem | null {
   if (
@@ -55,6 +65,8 @@ function normalizeCartItem(item: Partial<CartItem>): CartItem | null {
         : DEFAULT_CURRENCY,
     imagen: typeof item.imagen === "string" || item.imagen === null ? item.imagen : null,
     cantidad: typeof item.cantidad === "number" && item.cantidad > 0 ? item.cantidad : 1,
+    sku: typeof item.sku === "string" ? item.sku : null,
+    categoria: typeof item.categoria === "string" ? item.categoria : null,
   };
 }
 
@@ -81,6 +93,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [toastVisible, setToastVisible] = useState(false);
   const [toastNombre, setToastNombre] = useState("");
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const itemsRef = useRef<CartItem[]>(items);
+
+  useEffect(() => {
+    itemsRef.current = items;
+  }, [items]);
 
   useEffect(() => {
     localStorage.setItem("qocina_cart", JSON.stringify(items));
@@ -108,6 +125,22 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       }
       return [...prev, { ...normalizedItem, cantidad }];
     });
+
+    if (typeof window !== "undefined" && window.cioanalytics) {
+      const cartId = getOrCreateCartId();
+      window.cioanalytics.track("Product Added", {
+        cart_id: cartId,
+        product_id: String(normalizedItem.id),
+        sku: normalizedItem.sku ?? normalizedItem.slug,
+        name: normalizedItem.nombre,
+        category: normalizedItem.categoria ?? null,
+        price: normalizedItem.precio,
+        quantity: cantidad,
+        brand: "QCocina",
+        image_url: normalizedItem.imagen ?? null,
+      });
+    }
+
     setToastNombre(normalizedItem.nombre);
     setToastVisible(true);
     if (toastTimer.current) clearTimeout(toastTimer.current);
@@ -115,6 +148,19 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const removeItem = useCallback((id: number) => {
+    const item = itemsRef.current.find((i) => i.id === id);
+    if (item && typeof window !== "undefined" && window.cioanalytics) {
+      const cartId = localStorage.getItem("qocina_cart_id") ?? "";
+      window.cioanalytics.track("Product Removed", {
+        cart_id: cartId,
+        product_id: String(item.id),
+        sku: item.sku ?? item.slug,
+        name: item.nombre,
+        category: item.categoria ?? null,
+        price: item.precio,
+        quantity: item.cantidad,
+      });
+    }
     setItems((prev) => prev.filter((i) => i.id !== id));
   }, []);
 

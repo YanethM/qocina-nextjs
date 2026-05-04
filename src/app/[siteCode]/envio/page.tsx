@@ -214,6 +214,38 @@ export default function EnvioPage() {
   }, []);
 
   useEffect(() => {
+    if (!mounted) return;
+    if (typeof window === "undefined" || !window.cioanalytics) return;
+
+    const cartItems = items.map((i) => ({
+      product_id: String(i.id),
+      sku: i.sku ?? i.slug,
+      name: i.nombre,
+      category: i.categoria ?? null,
+      price: i.precio,
+      quantity: i.cantidad,
+    }));
+
+    window.cioanalytics.track("Checkout Started", {
+      order_id: null,
+      affiliation: "QCocina",
+      revenue: total,
+      shipping: 0,
+      tax: 0,
+      discount: 0,
+      currency: items[0]?.precioMoneda ?? null,
+      products: cartItems,
+    });
+
+    window.cioanalytics.track("Checkout Step Viewed", {
+      checkout_id: null,
+      step: 1,
+      shipping_method: null,
+      payment_method: null,
+    });
+  }, [mounted]);
+
+  useEffect(() => {
     const syncLocale = (event?: Event) => {
       const customEvent = event as CustomEvent<string> | undefined;
       if (customEvent?.detail) {
@@ -417,6 +449,23 @@ export default function EnvioPage() {
       }
 
       const { data: order } = await prepareRes.json();
+
+      if (typeof window !== "undefined" && window.cioanalytics) {
+        if (order.offixCustomerId) {
+          window.cioanalytics.identify(String(order.offixCustomerId), { email: correo });
+        }
+        window.cioanalytics.track("Checkout Step Completed", {
+          checkout_id: order.orderId ?? null,
+          step: 1,
+          shipping_method: "standard",
+        });
+        window.cioanalytics.track("Checkout Step Viewed", {
+          checkout_id: order.orderId ?? null,
+          step: 2,
+          shipping_method: null,
+          payment_method: null,
+        });
+      }
 
       const sessionRes = await fetch(`${API_URL}/api/payments/create-checkout-session`, {
         method: "POST",

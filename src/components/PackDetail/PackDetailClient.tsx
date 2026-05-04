@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import type { Producto } from "@/types";
 import { useCart } from "@/context/CartContext";
@@ -37,6 +37,7 @@ export default function PackDetailClient({
   descripcion,
   precio,
   precioMoneda,
+  sku,
   imagen,
   mostrarDescuento,
   porcentajeDescuento,
@@ -45,6 +46,23 @@ export default function PackDetailClient({
 }: Props) {
   const { addItem } = useCart();
   const [cantidad, setCantidad] = useState(1);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.cioanalytics) return;
+    window.cioanalytics.track("Product Viewed", {
+      product_id: String(id),
+      sku: sku ?? slug,
+      name: nombre,
+      category: null,
+      price: precio,
+      currency: precioMoneda,
+      brand: "QCocina",
+      quantity: 1,
+      image_url: imagen ?? null,
+      url: window.location.href,
+      value: precio,
+    });
+  }, []);
 
   const precioConDescuento =
     mostrarDescuento && porcentajeDescuento
@@ -214,6 +232,8 @@ export default function PackDetailClient({
               precio: precioFinal,
               precioMoneda,
               imagen,
+              sku: sku ?? null,
+              categoria: null,
             },
             cantidad,
           )

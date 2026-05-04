@@ -104,11 +104,25 @@ export default function PacksDestacados({
                     precio={pack.precio}
                     precioMoneda={pack.precio_moneda}
                     imagen={imagenUrl}
+                    sku={pack.sku ?? null}
                     className={`${styles.btnPrimary} ${isFeatured ? styles.btnPrimaryFeatured : ""}`}
                   />
                   <Link
                     href={`/${siteCode}/packs/${pack.slug}`}
-                    className={`${styles.btnSecondary} ${isFeatured ? styles.btnSecondaryFeatured : ""}`}>
+                    className={`${styles.btnSecondary} ${isFeatured ? styles.btnSecondaryFeatured : ""}`}
+                    onClick={() => {
+                      if (typeof window !== "undefined" && window.cioanalytics) {
+                        window.cioanalytics.track("Product Clicked", {
+                          product_id: String(pack.id),
+                          sku: pack.sku ?? pack.slug,
+                          name: pack.nombre,
+                          category: null,
+                          price: pack.precio,
+                          image_url: imagenUrl ?? null,
+                          url: `/${siteCode}/packs/${pack.slug}`,
+                        });
+                      }
+                    }}>
                     Más información
                     <Image
                       src={arrowSrc}

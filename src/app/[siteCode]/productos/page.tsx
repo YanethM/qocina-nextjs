@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Image from "next/image";
 import { getProductosPage, getStrapiImageUrl } from "@/lib/api";
 import { getLocale } from "@/lib/locale";
@@ -7,6 +6,7 @@ import styles from "./page.module.css";
 import ProductosNuestroSecreto from "@/components/ProductosNuestroSecreto/ProductosNuestroSecreto";
 import PacksDestacados from "@/components/PacksDestacados/PacksDestacados";
 import ProductosCarousel from "@/components/ProductosCarousel/ProductosCarousel";
+import ProductCardGrid from "@/components/ProductCardGrid/ProductCardGrid";
 import { Button } from "@/components/ui";
 
 interface Props {
@@ -23,8 +23,6 @@ export async function generateMetadata({ params }: Props) {
   };
 }
 
-const CARD_COLORS = [styles.cardGreen, styles.cardYellow, styles.cardRed];
-
 const RECT_SVGS = [
   "/images/web/products/rectangle1.svg",
   "/images/web/products/rectangle2.svg",
@@ -38,12 +36,6 @@ const MOBILE_CARD_SVGS = [
 ];
 
 const IS_REVERSED = [false, true, false];
-
-function formatPrice(precio: number, moneda: string): string {
-  if (!precio && precio !== 0) return "";
-  if (moneda === "PEN") return `S/ ${precio.toFixed(2)}`;
-  return `${precio.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ".")} COP`;
-}
 
 export default async function ProductosPage({ params }: Props) {
   const { siteCode } = await params;
@@ -107,55 +99,10 @@ export default async function ProductosPage({ params }: Props) {
         {productos.length > 3 ? (
           <ProductosCarousel productos={productos} />
         ) : (
-          <div className={`${styles.grid} ${productos.length <= 2 ? styles.gridFew : ""}`}>
-            {productos.map((producto, index) => {
-              const colorClass = CARD_COLORS[index % 3];
-              const imagenUrl = producto.imagen_principal
-                ? getStrapiImageUrl(producto.imagen_principal.url)
-                : null;
-
-              return (
-                <div key={producto.id} className={`${styles.card} ${colorClass}`}>
-                  <div className={styles.cardImageWrapper}>
-                    {imagenUrl && (
-                      <Image
-                        src={imagenUrl}
-                        alt={
-                          producto.imagen_principal?.alternativeText ??
-                          producto.nombre
-                        }
-                        fill
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        className={styles.cardImage}
-                        style={{ objectFit: "contain" }}
-                        unoptimized
-                      />
-                    )}
-                  </div>
-
-                  <div className={styles.cardBody}>
-                    <h3 className={styles.cardTitle}>{producto.nombre}</h3>
-                    <p className={styles.cardPrice}>
-                      {formatPrice(producto.precio, producto.precio_moneda)}
-                    </p>
-                    {producto.presentacion && (
-                      <p className={styles.cardPresentacion}>
-                        {producto.presentacion}
-                      </p>
-                    )}
-                    <p className={styles.cardDescription}>
-                      {producto.descripcion_corta}
-                    </p>
-                    <Link
-                      href={`/${siteCode}/productos/${producto.slug}`}
-                      className={styles.cardButton}>
-                      Añadir al carrito
-                    </Link>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+          <ProductCardGrid
+            productos={productos}
+            fewClass={productos.length <= 2 ? styles.gridFew : undefined}
+          />
         )}
       </section>
 

@@ -11,6 +11,7 @@ interface Props {
   precio: number;
   precioMoneda: string;
   imagen: string | null;
+  sku: string | null;
   className?: string;
 }
 
@@ -23,6 +24,7 @@ export default function AddPackToCartButton({
   precio,
   precioMoneda,
   imagen,
+  sku,
   className,
 }: Props) {
   const { addItem } = useCart();
@@ -40,6 +42,8 @@ export default function AddPackToCartButton({
           precio,
           precioMoneda,
           imagen,
+          sku: sku ?? null,
+          categoria: null,
         })
       }>
       Añadir al carrito

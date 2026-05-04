@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { getStrapiImageUrl } from "@/lib/strapi";
@@ -25,6 +25,21 @@ export default function ProductosCarousel({
   const siteCode = useSiteCode();
   const [page, setPage] = useState(0);
   const [dir, setDir] = useState<"next" | "prev">("next");
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.cioanalytics) return;
+    window.cioanalytics.track("Product List Viewed", {
+      list_id: "productos",
+      products: productos.map((p) => ({
+        product_id: String(p.id),
+        sku: p.sku ?? p.slug,
+        name: p.nombre,
+        category: p.categoria?.nombre ?? null,
+        price: p.precio,
+        image_url: p.imagen_principal?.url ?? null,
+      })),
+    });
+  }, []);
   const totalPages = Math.ceil(productos.length / ITEMS_PER_PAGE);
 
   const go = (newPage: number) => {
@@ -84,7 +99,20 @@ export default function ProductosCarousel({
                 </p>
                 <Link
                   href={`/${siteCode}/productos/${producto.slug}`}
-                  className={styles.cardButton}>
+                  className={styles.cardButton}
+                  onClick={() => {
+                    if (typeof window !== "undefined" && window.cioanalytics) {
+                      window.cioanalytics.track("Product Clicked", {
+                        product_id: String(producto.id),
+                        sku: producto.sku ?? producto.slug,
+                        name: producto.nombre,
+                        category: producto.categoria?.nombre ?? null,
+                        price: producto.precio,
+                        image_url: imagenUrl ?? null,
+                        url: `/${siteCode}/productos/${producto.slug}`,
+                      });
+                    }
+                  }}>
                   Añadir al carrito
                 </Link>
               </div>

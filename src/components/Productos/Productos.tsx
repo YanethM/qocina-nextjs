@@ -58,7 +58,20 @@ function CardItem({
   return (
     <Link
       href={`/${siteCode}/productos/${producto.slug}`}
-      className={`${styles.card} ${colorClass}`}>
+      className={`${styles.card} ${colorClass}`}
+      onClick={() => {
+        if (typeof window !== "undefined" && window.cioanalytics) {
+          window.cioanalytics.track("Product Clicked", {
+            product_id: String(producto.id),
+            sku: producto.sku ?? producto.slug,
+            name: producto.nombre,
+            category: producto.categoria?.nombre ?? null,
+            price: producto.precio,
+            image_url: producto.imagen_principal?.url ?? null,
+            url: `/${siteCode}/productos/${producto.slug}`,
+          });
+        }
+      }}>
       <div className={styles.imageWrapper}>
         {producto.imagen_principal && (
           <Image

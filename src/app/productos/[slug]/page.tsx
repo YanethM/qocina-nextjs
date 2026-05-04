@@ -80,6 +80,7 @@ export default async function ProductoDetailPage({ params }: Props) {
           imagenPrincipal={imagenPrincipal}
           categoria={producto.categoria}
           badges={badges}
+          sku={producto.sku ?? null}
         />
 
         {badges.length > 0 && (
