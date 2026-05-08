@@ -25,12 +25,15 @@ export default function PageHero({ backgroundImage, backgroundAlt = "", waveImag
         />
       )}
       <div className={styles.waveOverlay}>
-        <img
-          src={waveImage ?? "/images/web/nuestro_proceso/black_wave.svg"}
-          alt=""
-          className={`${styles.blackWave} ${waveFullWidth ? styles.blackWaveFull : ""}`}
-          aria-hidden
-        />
+        <picture>
+          <source media="(max-width: 768px)" srcSet="/images/mobile/nuestro_proceso/wave.svg" />
+          <img
+            src={waveImage ?? "/images/web/nuestro_proceso/black_wave.svg"}
+            alt=""
+            className={`${styles.blackWave} ${waveFullWidth ? styles.blackWaveFull : ""}`}
+            aria-hidden
+          />
+        </picture>
         {overlayContent && (
           <div className={styles.overlayContent}>{overlayContent}</div>
         )}

@@ -601,49 +601,164 @@
 
 @media (max-width: 640px) {
   .page {
-    padding: 32px 16px 60px;
+    padding: 24px 16px 60px;
   }
 
   .steps {
+    padding: 24px 0 8px;
+    margin-bottom: 24px;
     gap: 0;
-    margin-bottom: 32px;
+    width: 100%;
+    overflow: hidden;
   }
 
   .stepGroup {
-    gap: 8px;
+    gap: 4px;
   }
 
   .step {
-    width: 40px;
+    width: 34px;
   }
 
   .stepImg {
-    width: 40px;
-    height: 40px;
+    width: 34px;
+    height: 34px;
+  }
+
+  .stepLabel {
+    font-size: 10px;
   }
 
   .stepLine {
-  width: 72px;
-  min-width: 72px;
-  height: 6px;
-  flex-shrink: 0;
-  margin: 0 0 22px;
-  display: block;
-}
+    width: 36px;
+    min-width: 36px;
+    height: 4px;
+    flex-shrink: 0;
+    margin: 0 0 20px;
+    display: block;
+  }
 
   .item {
-    grid-template-columns: 100px 1fr;
+    grid-template-columns: 90px 1fr;
     grid-template-rows: auto auto;
+    gap: 12px;
+    padding: 16px 0;
   }
 
   .itemImage {
-    width: 100px;
-    height: 100px;
+    width: 90px;
+    height: 90px;
+  }
+
+  .itemNombre {
+    font-size: 15px;
+  }
+
+  .itemCantidadLabel {
+    font-size: 13px;
+  }
+
+  .cantidadNum {
+    font-size: 18px;
   }
 
   .itemPrecio {
     grid-column: 2;
     font-size: 16px;
+    text-align: left;
+  }
+
+  .sidebar {
+    width: 100%;
+    max-width: 100%;
+    padding: 24px 20px;
+    border-radius: 16px;
+    gap: 20px;
+  }
+
+  .sidebarTitle {
+    font-size: 20px;
+  }
+
+  .totalLabel {
+    font-size: 18px;
+  }
+
+  .totalValue {
+    font-size: 22px;
+  }
+
+  .promoBtn {
+    min-width: auto;
+    width: auto;
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+
+  .secondContent {
+    padding: 32px 0 48px;
+  }
+
+  .secondTitle {
+    font-size: 20px;
+    margin-bottom: 20px;
+    padding: 0 16px;
+  }
+
+  .secondCarousel {
+    padding: 0 16px;
+    gap: 0;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .secondCarousel::-webkit-scrollbar {
+    display: none;
+  }
+
+  .cardsRow {
+    flex-wrap: nowrap;
+    gap: 16px;
+    justify-content: flex-start;
+    flex: 0 0 auto;
+  }
+
+  .arrowBtn {
+    display: none;
+  }
+
+  .sugCard {
+    min-width: 240px;
+    width: 240px;
+    height: 360px;
+    flex-shrink: 0;
+  }
+
+  .sugCardImage {
+    width: 160px;
+    height: 140px;
+  }
+
+  .sugCardBody {
+    top: 100px;
+    height: 260px;
+    padding: 70px 16px 16px;
+    gap: 12px;
+  }
+
+  .sugNombre {
+    font-size: 18px;
+  }
+
+  .sugPrecio {
+    font-size: 20px;
+  }
+
+  .sugDesc {
+    font-size: 13px;
   }
 }
 

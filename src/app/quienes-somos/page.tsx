@@ -202,7 +202,7 @@ export default async function NosotrosPage() {
 
         <div className={`${styles.gastonPrevWrapper} ${styles.mobileOnly}`}>
           <Image
-            src="/images/mobile/nosotros/PREV_GASTON.svg"
+            src="/images/mobile/nosotros/prev_gaston.svg"
             alt=""
             width={390}
             height={500}
@@ -329,16 +329,34 @@ export default async function NosotrosPage() {
             className={`${styles.gastonImage} ${styles.desktopOnly}`}
             style={{ width: "100%", height: "auto" }}
           />
-          <Image
-            src="/images/mobile/nosotros/proceso.svg"
-            alt={data?.proceso_titulo ?? "Proceso"}
-            width={390}
-            height={600}
-            className={`${styles.gastonImage} ${styles.mobileOnly}`}
-            style={{ width: "100%", height: "auto" }}
-          />
-          <div className={styles.procesoContainer}>
+          <div className={`${styles.procesoContainer} ${styles.desktopOnly}`}>
             <div className={styles.procesoOverlay}>
+              {data.proceso_titulo && (
+                <p className={styles.procesoTitulo}>{data.proceso_titulo}</p>
+              )}
+              {data.proceso_cta && (
+                <a
+                  href={data.proceso_cta.url}
+                  className={styles.procesoCta}
+                  data-btn="yellow"
+                  target={data.proceso_cta.nueva_ventana ? "_blank" : "_self"}
+                  rel={data.proceso_cta.nueva_ventana ? "noopener noreferrer" : undefined}
+                >
+                  {data.proceso_cta.texto}
+                </a>
+              )}
+            </div>
+          </div>
+
+          <div className={`${styles.procesoMobileWrapper} ${styles.mobileOnly}`}>
+            <Image
+              src="/images/mobile/nosotros/proceso.svg"
+              alt={data?.proceso_titulo ?? "Proceso"}
+              width={390}
+              height={600}
+              style={{ width: "100%", height: "auto", display: "block" }}
+            />
+            <div className={styles.procesoMobileContent}>
               {data.proceso_titulo && (
                 <p className={styles.procesoTitulo}>{data.proceso_titulo}</p>
               )}

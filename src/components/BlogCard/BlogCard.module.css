@@ -135,6 +135,10 @@
     border-radius: 20px;
   }
 
+  .cardOverlay {
+    padding: 40px 24px 100px;
+  }
+
   .cardBtn {
     width: calc(100% - 48px);
     max-width: 320px;
@@ -144,6 +148,21 @@
 @media (max-width: 480px) {
   .card {
     height: 460px;
+  }
+
+  .cardOverlay {
+    padding: 28px 20px 100px;
+    gap: 8px;
+  }
+
+  .cardTitulo {
+    font-size: 20px;
+    -webkit-line-clamp: 2;
+  }
+
+  .cardDescripcion {
+    font-size: 13px;
+    -webkit-line-clamp: 3;
   }
 
   .cardBtn {

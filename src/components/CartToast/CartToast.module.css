@@ -2,7 +2,7 @@
   position: fixed;
   bottom: 24px;
   right: 24px;
-  z-index: 9999;
+  z-index: 10001;
   background: #1a1a1a;
   color: #fff;
   border-radius: 16px;
@@ -113,10 +113,16 @@
 
 @media (max-width: 480px) {
   .toast {
-    bottom: 16px;
+    top: 16px;
+    bottom: auto;
     right: 16px;
     left: 16px;
     min-width: unset;
     max-width: unset;
+    transform: translateY(-120%);
+  }
+
+  .toast.visible {
+    transform: translateY(0);
   }
 }

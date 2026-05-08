@@ -532,14 +532,30 @@
   }
 
   .procesoSection {
-    padding-top: 40px;
-    padding-left: 0;
-    padding-right: 0;
+    padding: 0;
   }
 
   .procesoContainer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    transform: none;
+    width: 100%;
+    padding: 0;
+    display: flex;
     align-items: flex-start;
-    padding-top: 32px;
+  }
+
+  .procesoOverlay {
+    margin-left: 30px;
+    margin-top: 50px;
+  }
+
+  .procesoTitulo {
+    width: 450px;
+    max-width: 100%;
+    font-size: 36px;
+    word-break: break-word;
   }
 
   .gastonSection {

@@ -481,30 +481,37 @@
 
   .steps {
     gap: 0;
-    padding: 48px 0;
+    padding: 24px 0 8px;
+    margin-bottom: 24px;
+    width: 100%;
+    overflow: hidden;
   }
 
   .stepGroup {
-    gap: 8px;
+    gap: 4px;
   }
 
   .step {
-    width: 40px;
+    width: 34px;
   }
 
   .stepImg {
-    width: 40px;
-    height: 40px;
+    width: 34px;
+    height: 34px;
+  }
+
+  .stepLabel {
+    font-size: 10px;
   }
 
   .stepLine {
-  width: 72px;
-  min-width: 72px;
-  height: 6px;
-  flex-shrink: 0;
-  margin: 0 0 22px;
-  display: block;
-}
+    width: 36px;
+    min-width: 36px;
+    height: 4px;
+    flex-shrink: 0;
+    margin: 0 0 20px;
+    display: block;
+  }
 
   .submitRow {
     justify-content: stretch;
@@ -516,30 +523,52 @@
   }
 
   .sidebar {
-    padding: 24px 20px;
-    border-radius: 24px;
+    padding: 20px 16px;
+    border-radius: 16px;
+    gap: 12px;
   }
 
   .sidebarTitle {
-    font-size: 24px;
+    font-size: 18px;
+  }
+
+  .summaryList {
+    gap: 10px;
   }
 
   .summaryItem {
-    grid-template-columns: 88px minmax(0, 1fr);
+    grid-template-columns: 70px 1fr auto;
+    gap: 10px;
+    align-items: center;
   }
 
   .summaryImage {
-    width: 88px;
-    height: 88px;
+    width: 70px;
+    height: 70px;
+  }
+
+  .summaryNombre {
+    font-size: 14px;
   }
 
   .summaryPrecio {
-    grid-column: 2;
+    grid-column: auto;
+    font-size: 14px;
   }
 
   .totalRow {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 8px;
+    justify-content: space-between;
+  }
+
+  .totalLabel {
+    font-size: 16px;
+  }
+
+  .totalValue {
+    font-size: 20px;
   }
 }
 

@@ -333,3 +333,20 @@
     padding: 12px 8px;
   }
 }
+
+@media (max-width: 480px) {
+  .heroSubtitle {
+    font-size: 14px;
+  }
+
+  .heroTitle {
+    font-size: 26px;
+  }
+
+  .heroBtns .btnVerProductos,
+  .heroBtns .btnConoceMas {
+    height: 44px;
+    font-size: 14px;
+    padding: 12px 16px;
+  }
+}
