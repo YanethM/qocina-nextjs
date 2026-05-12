@@ -53,12 +53,15 @@
 
 .titulo {
   font-family: var(--font-palmer), cursive;
+  font-weight: 400;
   font-size: 85.72px;
   line-height: 140%;
+  letter-spacing: 0%;
+  vertical-align: middle;
+  white-space: nowrap;
   color: #1a1a1a;
   margin: 0;
   text-transform: uppercase;
-  font-weight: 400;
 }
 
 .texto {
@@ -66,6 +69,7 @@
   font-weight: 400;
   font-size: 18px;
   line-height: 140%;
+  letter-spacing: 0%;
   color: #1a1a1a;
   margin: 0;
 }
@@ -88,8 +92,10 @@
 .whatsappText {
   font-family: var(--font-montserrat), sans-serif;
   font-weight: 400;
-  font-size: 22px;
-  line-height: 140%;
+  font-size: 24px;
+  line-height: 120%;
+  letter-spacing: 0%;
+  text-align: center;
   color: #1a1a1a;
   margin: 0;
   max-width: 572px;
@@ -102,15 +108,21 @@
 .whatsappBtn {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  width: 196px;
+  height: 49px;
+  min-width: 170px;
+  gap: 16px;
   background-color: #000000;
   color: #ffffff;
   border-radius: 100px;
-  padding: 18px 40px;
+  padding: 12px 32px;
   font-family: var(--font-montserrat), sans-serif;
   font-weight: 700;
   font-size: 16px;
+  line-height: 140%;
+  letter-spacing: 0%;
   text-decoration: none;
+  box-sizing: border-box;
   transition: background-color 0.2s, transform 0.2s;
 }
 

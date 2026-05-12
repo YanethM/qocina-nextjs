@@ -10,6 +10,10 @@ import styles from "./ProductCardGrid.module.css";
 
 const CARD_COLORS = [styles.cardGreen, styles.cardYellow, styles.cardRed];
 
+function toTitleCase(str: string): string {
+  return str.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
 function formatPrice(precio: number, moneda: string): string {
   if (!precio && precio !== 0) return "";
   if (moneda === "PEN") return `S/ ${precio.toFixed(2)}`;
@@ -58,14 +62,14 @@ export default function ProductCardGrid({ productos, fewClass }: { productos: Pr
               )}
             </div>
             <div className={styles.cardBody}>
-              <h3 className={styles.cardTitle}>{producto.nombre}</h3>
+              <h3 className={styles.cardTitle}>{toTitleCase(producto.nombre)}</h3>
               <p className={styles.cardPrice}>
                 {formatPrice(producto.precio, producto.precio_moneda)}
               </p>
-              {producto.presentacion && (
-                <p className={styles.cardPresentacion}>{producto.presentacion}</p>
-              )}
               <p className={styles.cardDescription}>{producto.descripcion_corta}</p>
+              {producto.descripcion_larga && (
+                <p className={styles.cardDescriptionLarga}>{producto.descripcion_larga}</p>
+              )}
               <Link
                 href={`/${siteCode}/productos/${producto.slug}`}
                 className={styles.cardButton}

@@ -15,14 +15,22 @@
   padding: 12px 24px;
   font-family: var(--font-montserrat), sans-serif;
   font-weight: 400;
-  font-size: 16px;
-  color: #1a1a1a;
+  font-size: 14px;
+  line-height: 150%;
+  letter-spacing: 0%;
+  vertical-align: middle;
+  color: #000000;
   outline: none;
   box-sizing: border-box;
 }
 
 .input::placeholder {
-  color: #999999;
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 150%;
+  letter-spacing: 0%;
+  color: #000000;
 }
 
 .textarea {
@@ -47,6 +55,8 @@
   font-family: var(--font-montserrat), sans-serif;
   font-weight: 700;
   font-size: 16px;
+  line-height: 140%;
+  letter-spacing: 0%;
   cursor: pointer;
 }
 
@@ -97,7 +107,7 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: #f5b800;
+  background: #F4A910;
   color: #000;
   display: flex;
   align-items: center;

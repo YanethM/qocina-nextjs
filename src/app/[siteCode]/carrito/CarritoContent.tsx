@@ -171,7 +171,7 @@ export default function CarritoPage() {
                   </div>
 
                   <div className={styles.itemInfo}>
-                    <h3 className={styles.itemNombre}>{item.nombre}</h3>
+                    <h3 className={styles.itemNombre}>{item.nombre.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase())}</h3>
                     <p className={styles.itemDescripcion}>{item.descripcionCorta}</p>
                     <div className={styles.itemCantidad}>
                       <span className={styles.itemCantidadLabel}>{t.cantidad}</span>
@@ -211,46 +211,48 @@ export default function CarritoPage() {
           <aside className={styles.sidebar}>
             <h2 className={styles.sidebarTitle}>{t.sidebarTitle}</h2>
 
-            <div className={styles.promoGroup}>
-              <p className={styles.promoLabel}>{t.promoLabel}</p>
-              <div className={styles.promoRow}>
-                <input
-                  className={styles.promoInput}
-                  placeholder={t.promoPlaceholder}
-                  value={codigoPromo}
-                  onChange={(e) => setCodigoPromo(e.target.value)}
-                />
-                <button className={styles.promoBtn} onClick={handleAplicarCodigo}>
-                  {t.promoBtn}
-                </button>
+            <div className={styles.sidebarBody}>
+              <div className={styles.promoGroup}>
+                <p className={styles.promoLabel}>{t.promoLabel}</p>
+                <div className={styles.promoRow}>
+                  <input
+                    className={styles.promoInput}
+                    placeholder={t.promoPlaceholder}
+                    value={codigoPromo}
+                    onChange={(e) => setCodigoPromo(e.target.value)}
+                  />
+                  <button className={styles.promoBtn} onClick={handleAplicarCodigo}>
+                    {t.promoBtn}
+                  </button>
+                </div>
               </div>
+
+              <hr className={styles.divider} />
+
+              <div className={styles.subtotalRow}>
+                <span>{t.subtotal}</span>
+                <span>{formatPrice(total, moneda)}</span>
+              </div>
+              <div className={styles.subtotalRow}>
+                <span>{t.descuento}</span>
+                <span>- {formatPrice(descuento, moneda)}</span>
+              </div>
+
+              <hr className={styles.divider} />
+
+              <div className={styles.totalRow}>
+                <span className={styles.totalLabel}>{t.total}</span>
+                <span className={styles.totalValue}>{formatPrice(total - descuento, moneda)}</span>
+              </div>
+
+              <hr className={styles.divider} />
+
+              <Link href={`/${siteCode}/envio`} className={styles.checkoutBtn}>
+                <span>{t.checkoutBtn}</span>
+                <Image src="/images/web/home/arrow_right.svg" alt="" width={30} height={18} className={styles.arrowDark} />
+                <Image src="/images/web/home/white_arrow_right.svg" alt="" width={30} height={18} className={styles.arrowWhite} />
+              </Link>
             </div>
-
-            <hr className={styles.divider} />
-
-            <div className={styles.subtotalRow}>
-              <span>{t.subtotal}</span>
-              <span>{formatPrice(total, moneda)}</span>
-            </div>
-            <div className={styles.subtotalRow}>
-              <span>{t.descuento}</span>
-              <span>- {formatPrice(descuento, moneda)}</span>
-            </div>
-
-            <hr className={styles.divider} />
-
-            <div className={styles.totalRow}>
-              <span className={styles.totalLabel}>{t.total}</span>
-              <span className={styles.totalValue}>{formatPrice(total - descuento, moneda)}</span>
-            </div>
-
-            <hr className={styles.divider} />
-
-            <Link href={`/${siteCode}/envio`} className={styles.checkoutBtn}>
-              <span>{t.checkoutBtn}</span>
-              <Image src="/images/web/home/arrow_right.svg" alt="" width={30} height={18} className={styles.arrowDark} />
-              <Image src="/images/web/home/white_arrow_right.svg" alt="" width={30} height={18} className={styles.arrowWhite} />
-            </Link>
           </aside>
         </div>
       )}

@@ -60,8 +60,10 @@
 .cardTitle {
   font-family: Montserrat, sans-serif;
   font-weight: 700;
-  font-size: 28px;
-  line-height: 1.2;
+  font-size: 29px;
+  line-height: 120%;
+  letter-spacing: 0%;
+  text-align: center;
   margin: 0;
   color: inherit;
 }
@@ -92,17 +94,34 @@
   color: inherit;
 }
 
+.cardDescriptionLarga {
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 140%;
+  letter-spacing: 0%;
+  text-align: center;
+  margin: 0;
+  color: inherit;
+}
+
 .cardButton {
   display: inline-block;
-  padding: 12px 40px;
+  width: 304px;
+  height: 46px;
+  min-width: 170px;
+  padding: 12px 32px;
+  border-radius: 100px;
   background: #fff;
   color: #1a1a1a;
   border: none;
-  border-radius: 999px;
   font-family: Montserrat, sans-serif;
   font-weight: 700;
-  font-size: 15px;
+  font-size: 16px;
+  line-height: 140%;
+  letter-spacing: 0%;
   text-decoration: none;
+  box-sizing: border-box;
   transition:
     background-color 0.3s ease,
     transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
@@ -136,6 +155,7 @@
   .cardImageWrapper { top: -185px; height: 274px; }
   .cardTitle { font-size: 20px; }
   .cardPrice { font-size: 22px; }
+  .cardButton { width: 100%; min-width: unset; }
 }
 
 @media (max-width: 480px) {

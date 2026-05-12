@@ -202,6 +202,7 @@ export default function EnvioPage() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
+  const [validationToast, setValidationToast] = useState(false);
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => {
@@ -364,7 +365,11 @@ export default function EnvioPage() {
   const handleSubmit = async () => {
     const newErrors = validate();
     setErrors(newErrors);
-    if (Object.keys(newErrors).length > 0) return;
+    if (Object.keys(newErrors).length > 0) {
+      setValidationToast(true);
+      setTimeout(() => setValidationToast(false), 4000);
+      return;
+    }
 
     setLoading(true);
     setApiError(null);
@@ -424,6 +429,11 @@ export default function EnvioPage() {
         };
       }
 
+      let anonymousId: string | null = null;
+      try {
+        anonymousId = (window.cioanalytics as any).user?.()?.anonymousId?.() ?? null;
+      } catch {}
+
       const prepareRes = await fetch(`/api/orders/prepare`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -437,6 +447,7 @@ export default function EnvioPage() {
           ...(cuit ? { cuit } : {}),
           ...(isAR ? { facturaType } : {}),
           shippingAddress,
+          ...(anonymousId ? { anonymousId } : {}),
         }),
       });
 
@@ -452,7 +463,10 @@ export default function EnvioPage() {
 
       if (typeof window !== "undefined" && window.cioanalytics) {
         if (order.offixCustomerId) {
-          window.cioanalytics.identify(String(order.offixCustomerId), { email: correo });
+          window.cioanalytics.identify(String(order.offixCustomerId), {
+            email: correo,
+            ...(anonymousId ? { anonymous_id: anonymousId } : {}),
+          });
         }
         window.cioanalytics.track("Checkout Step Completed", {
           checkout_id: order.orderId ?? null,
@@ -796,7 +810,7 @@ export default function EnvioPage() {
                     />
                   )}
                 </div>
-                <span className={styles.summaryNombre}>{item.nombre}</span>
+                <span className={styles.summaryNombre}>{item.nombre.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase())}</span>
                 <span className={styles.summaryPrecio}>
                   {formatPrice(item.precio * item.cantidad, item.precioMoneda)}
                 </span>
@@ -808,7 +822,16 @@ export default function EnvioPage() {
             <span className={styles.totalLabel}>{t.total}</span>
             <span className={styles.totalValue}>{formatPrice(renderedTotal, moneda)}</span>
           </div>
+          <hr className={styles.divider} />
         </aside>
+      </div>
+
+      <div className={`${styles.validationToast} ${validationToast ? styles.validationToastVisible : ""}`}>
+        <span className={styles.validationToastIcon}>!</span>
+        <p className={styles.validationToastMsg}>
+          {locale === "en" ? "Please fill in all required fields." : "Por favor completa todos los campos requeridos."}
+        </p>
+        <button className={styles.validationToastClose} onClick={() => setValidationToast(false)} aria-label="Cerrar">✕</button>
       </div>
     </div>
   );

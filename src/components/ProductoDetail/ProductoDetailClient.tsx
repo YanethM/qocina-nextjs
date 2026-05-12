@@ -18,14 +18,14 @@ const PACK_SIZES = [
 function formatPrice(precio: number, moneda: string): string {
   if (!precio && precio !== 0) return "";
   if (moneda === "PEN") return `S/ ${precio.toFixed(2)}`;
-  return `${precio.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ".")} COP`;
+  return `${precio.toFixed(2)} ${moneda.toUpperCase()}`;
 }
 
 function getTitleColor(nombre: string, categoriaSlug: string | null): string {
   const text = `${nombre} ${categoriaSlug ?? ""}`.toLowerCase();
   if (text.includes("roj")) return COLOR_MAP.rojo;
   if (text.includes("verd")) return COLOR_MAP.verde;
-  if (text.includes("amarill")) return "#CE171C";
+  if (text.includes("amarill")) return COLOR_MAP.amarillo;
   return COLOR_MAP.rojo;
 }
 
@@ -167,9 +167,11 @@ export default function ProductoDetailClient({
 
       <div className={styles.infoSection}>
         <h1 className={styles.title} style={{ color: titleColor }}>
-          {nombre}
+          {nombre.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase())}
         </h1>
-        <p className={styles.descripcion}>{descripcionCorta}</p>
+        {descripcionLarga && (
+          <p className={styles.descripcion}>{descripcionLarga}</p>
+        )}
 
         <div className={styles.fieldGroup}>
           <span className={styles.fieldLabel}>Cantidad:</span>

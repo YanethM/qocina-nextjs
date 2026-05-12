@@ -43,9 +43,9 @@ const cardConfigs = [
 ];
 
 function getConfigIndex(producto: Producto): number {
-  const slug = producto.slug.toLowerCase();
-  if (slug.includes("chupe")) return 0;
-  if (slug.includes("sofrito")) return 1;
+  const text = `${producto.slug} ${producto.nombre}`.toLowerCase();
+  if (text.includes("verd")) return 0;
+  if (text.includes("amarill")) return 1;
   return 2;
 }
 
@@ -102,7 +102,7 @@ export default function OtrasBasesCulinarias({ productos }: Props) {
                     )}
                     <div className={styles.mobileCardContent}>
                       <h3 className={`${styles.mobileCardTitulo} ${config.textDark ? styles.cardTextDark : ""}`}>
-                        {producto.nombre}
+                        {producto.nombre.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase())}
                       </h3>
                       <p className={`${styles.mobileCardDescripcion} ${config.textDark ? styles.cardTextDark : ""}`}>
                         {producto.descripcion_corta}
@@ -112,7 +112,7 @@ export default function OtrasBasesCulinarias({ productos }: Props) {
                         className={`${styles.ctaBtn} ${config.textDark ? styles.ctaBtnDark : ""}`}
                       >
                         Ver producto
-                        <Image src={config.arrowSrc} alt="" width={16} height={16} aria-hidden />
+                        <Image src={config.arrowSrc} alt="" width={30} height={18} style={{ position: "relative", top: "3.69px", left: "-6px" }} aria-hidden />
                       </Link>
                     </div>
                   </div>
@@ -160,23 +160,23 @@ export default function OtrasBasesCulinarias({ productos }: Props) {
           const textAndBtn = config.reversed ? (
             <div className={styles.cardContentAmarillo}>
               <div className={`${styles.cardText} ${config.textDark ? styles.cardTextDark : ""}`}>
-                <h3 className={styles.cardTitulo}>{producto.nombre}</h3>
+                <h3 className={styles.cardTitulo}>{producto.nombre.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase())}</h3>
                 <p className={styles.cardDescripcion}>{producto.descripcion_corta}</p>
               </div>
               <Link href={`/${siteCode}/productos/${producto.slug}`} className={`${styles.ctaBtn} ${config.textDark ? styles.ctaBtnDark : ""}`}>
                 Ver producto
-                <Image src={config.arrowSrc} alt="" width={20} height={20} aria-hidden />
+                <Image src={config.arrowSrc} alt="" width={30} height={18} style={{ position: "relative", top: "3.69px", left: "-6px" }} aria-hidden />
               </Link>
             </div>
           ) : (
             <>
               <div className={`${styles.cardText} ${config.textDark ? styles.cardTextDark : ""}`}>
-                <h3 className={styles.cardTitulo}>{producto.nombre}</h3>
+                <h3 className={styles.cardTitulo}>{producto.nombre.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase())}</h3>
                 <p className={styles.cardDescripcion}>{producto.descripcion_corta}</p>
               </div>
               <Link href={`/${siteCode}/productos/${producto.slug}`} className={`${styles.ctaBtn} ${config.textDark ? styles.ctaBtnDark : ""}`}>
                 Ver producto
-                <Image src={config.arrowSrc} alt="" width={20} height={20} aria-hidden />
+                <Image src={config.arrowSrc} alt="" width={30} height={18} style={{ position: "relative", top: "3.69px", left: "-6px" }} aria-hidden />
               </Link>
             </>
           );

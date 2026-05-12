@@ -25,6 +25,10 @@ function getCardColor(index: number): string {
   return colorOrder[index % 3];
 }
 
+function toTitleCase(str: string): string {
+  return str.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
 function formatPrice(precio: number, moneda: string): string {
   if (!precio && precio !== 0) return "";
   if (moneda === "PEN") {
@@ -86,14 +90,14 @@ function CardItem({
         )}
       </div>
       <div className={styles.cardContent}>
-        <h3 className={styles.nombre}>{producto.nombre}</h3>
+        <h3 className={styles.nombre}>{toTitleCase(producto.nombre)}</h3>
         <p className={styles.precio}>
           {formatPrice(producto.precio, producto.precio_moneda)}
         </p>
-        {producto.presentacion && (
-          <p className={styles.presentacion}>{producto.presentacion}</p>
-        )}
         <p className={styles.descripcion}>{producto.descripcion_corta}</p>
+        {producto.descripcion_larga && (
+          <p className={styles.descripcionLarga}>{producto.descripcion_larga}</p>
+        )}
         <button
           className={styles.addToCartBtn}
           data-btn={btnVariant}>

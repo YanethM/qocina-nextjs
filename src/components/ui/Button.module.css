@@ -47,6 +47,10 @@
   color: #fff;
 }
 
+.secondary:hover {
+  background-color: #333333;
+}
+
 .yellow {
   background-color: #f4a910;
   color: #000;

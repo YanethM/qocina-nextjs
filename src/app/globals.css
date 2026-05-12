@@ -59,7 +59,7 @@ img {
   transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 [data-btn="dark"]:hover {
-  background-color: #f5b800;
+  background-color: #F4A910;
   color: #000;
 }
 

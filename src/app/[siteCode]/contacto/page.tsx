@@ -64,7 +64,15 @@ export default async function ContactoPage({ params }: Props) {
 
               <div className={styles.whatsappSection}>
                 {data?.whatsapp_texto && (
-                  <p className={styles.whatsappText}>{data.whatsapp_texto}</p>
+                  <p
+                    className={styles.whatsappText}
+                    dangerouslySetInnerHTML={{
+                      __html: data.whatsapp_texto.replace(
+                        /whatsapp/gi,
+                        "<strong>WhatsApp</strong>"
+                      ),
+                    }}
+                  />
                 )}
                 {data?.whatsapp_url && (
                   <a
