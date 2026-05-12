@@ -39,7 +39,8 @@ export const metadata: Metadata = {
   description:
     "Q'ocina - Productos artesanales, recetas y más. Sabores que inspiran, productos que transforman.",
   icons: {
-    icon: "/images/web/footer/logo-qocina.svg",
+    icon: "/icon.svg",
+    shortcut: "/icon.svg",
     apple: "/images/web/footer/logo-qocina.svg",
   },
 };

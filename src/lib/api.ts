@@ -71,6 +71,7 @@ async function fetchAPI<T>(
   params?: Record<string, string>,
   locale?: string,
   siteCode?: string,
+  timeoutMs = 10000,
 ): Promise<T> {
   const resolvedLocale = locale || process.env.NEXT_PUBLIC_LOCALE || "es";
   const resolvedSiteCode = resolveSiteCode(siteCode);
@@ -86,7 +87,7 @@ async function fetchAPI<T>(
   const res = await fetch(urlStr, {
     cache: "no-store",
     headers: extraHeaders,
-    signal: AbortSignal.timeout(10000),
+    signal: AbortSignal.timeout(timeoutMs),
   });
 
   console.log(`[API] ${res.status} ${path}`);
@@ -213,7 +214,7 @@ export async function getProductoBySlug(slug: string, locale?: string, siteCode?
     "populate[ingredientes_destacados]": "*",
     "populate[testimonios][fields][0]": "id",
     "populate[sitios][populate][site]": "*",
-  }, locale, siteCode);
+  }, locale, siteCode, 30000);
   return res.data?.[0] ? normalizeProducto(res.data[0], siteCode) : null;
 }
 

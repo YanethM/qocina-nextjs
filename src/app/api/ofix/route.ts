@@ -12,7 +12,13 @@ async function getToken(): Promise<string> {
     body: JSON.stringify({ user: OFIX_USER, password: OFIX_PASSWORD, key: OFIX_API_KEY }),
     signal: AbortSignal.timeout(10000),
   });
+  if (!res.ok) {
+    throw new Error(`Ofix token failed: ${res.status} ${res.statusText}`);
+  }
   const data = await res.json();
+  if (!data?.token?.key) {
+    throw new Error(`Ofix token response inesperado: ${JSON.stringify(data)}`);
+  }
   return data.token.key;
 }
 
