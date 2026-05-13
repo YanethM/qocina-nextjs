@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
+import { VALID_SITE_CODES } from "@/lib/constants";
 
 const IS_DEV = process.env.NODE_ENV === "development";
 
@@ -35,12 +36,33 @@ function installCioLogger() {
   wrap("page");
 }
 
+function installSiteCodeMiddleware() {
+  if (typeof window === "undefined") return;
+  if ((window as any).__cioMiddlewareInstalled) return;
+  if (!window.cioanalytics) {
+    window.addEventListener("load", installSiteCodeMiddleware, { once: true });
+    return;
+  }
+  (window as any).__cioMiddlewareInstalled = true;
+
+  window.cioanalytics.addSourceMiddleware(({ payload, next }: any) => {
+    const siteCode = window.location.pathname.split("/")[1];
+    if ((VALID_SITE_CODES as readonly string[]).includes(siteCode)) {
+      if (payload?.obj?.type === "track" && payload?.obj?.properties) {
+        payload.obj.properties.country = siteCode;
+      }
+    }
+    next(payload);
+  });
+}
+
 export default function CioPageTracker() {
   const pathname = usePathname();
   const isFirst = useRef(true);
 
   useEffect(() => {
     installCioLogger();
+    installSiteCodeMiddleware();
   }, []);
 
   useEffect(() => {
