@@ -35,7 +35,9 @@ const DEFAULT_CURRENCY = "COP";
 function getOrCreateCartId(): string {
   const existing = localStorage.getItem("qocina_cart_id");
   if (existing) return existing;
-  const id = crypto.randomUUID();
+  const id = typeof crypto.randomUUID === "function"
+    ? crypto.randomUUID()
+    : `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
   localStorage.setItem("qocina_cart_id", id);
   return id;
 }
