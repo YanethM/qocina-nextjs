@@ -135,8 +135,8 @@ export async function getProductos(locale?: string, siteCode?: string) {
   return {
     ...res,
     data: res.data
-      .filter((p) => p.disponible)
-      .map((p) => normalizeProducto(p, siteCode)),
+      .map((p) => normalizeProducto(p, siteCode))
+      .filter((p) => p.disponible),
   };
 }
 
