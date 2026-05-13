@@ -327,7 +327,7 @@ export async function getProductosPage(locale?: string, siteCode?: string) {
     "populate[ayuda_imagen][fields][3]": "height",
     "populate[ayuda_imagen][fields][4]": "formats",
     "populate[ayuda_cta]": "*",
-  }, locale);
+  }, locale, siteCode);
   return {
     ...res,
     data: res.data
@@ -336,6 +336,7 @@ export async function getProductosPage(locale?: string, siteCode?: string) {
           productos_destacados: res.data.productos_destacados?.map((producto) =>
             normalizeProducto(producto, siteCode),
           ) ?? null,
+          packs_destacados: (res.data.packs_destacados ?? []).filter((p) => p.disponible),
         }
       : res.data,
   };
