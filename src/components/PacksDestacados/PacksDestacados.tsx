@@ -7,12 +7,7 @@ import { getStrapiImageUrl } from "@/lib/strapi";
 import { useSiteCode } from "@/hooks/useSiteCode";
 import AddPackToCartButton from "./AddPackToCartButton";
 import styles from "./PacksDestacados.module.css";
-
-function formatPrice(precio: number, moneda: string): string {
-  if (!precio && precio !== 0) return "";
-  if (moneda === "PEN") return `S/ ${precio.toFixed(2)}`;
-  return `${precio.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ".")} COP`;
-}
+import { formatPrice } from "@/lib/format";
 
 interface Props {
   packs: PackDestacado[];

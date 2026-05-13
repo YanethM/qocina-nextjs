@@ -7,17 +7,12 @@ import type { Producto } from "@/types";
 import { getStrapiImageUrl } from "@/lib/strapi";
 import { useSiteCode } from "@/hooks/useSiteCode";
 import styles from "./ProductCardGrid.module.css";
+import { formatPrice } from "@/lib/format";
 
 const CARD_COLORS = [styles.cardGreen, styles.cardYellow, styles.cardRed];
 
 function toTitleCase(str: string): string {
   return str.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
-}
-
-function formatPrice(precio: number, moneda: string): string {
-  if (!precio && precio !== 0) return "";
-  if (moneda === "PEN") return `S/ ${precio.toFixed(2)}`;
-  return `${precio.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ".")} COP`;
 }
 
 export default function ProductCardGrid({ productos, fewClass }: { productos: Producto[]; fewClass?: string }) {

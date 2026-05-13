@@ -7,15 +7,10 @@ import { getStrapiImageUrl } from "@/lib/strapi";
 import type { Producto } from "@/types";
 import { useSiteCode } from "@/hooks/useSiteCode";
 import styles from "./ProductosCarousel.module.css";
+import { formatPrice } from "@/lib/format";
 
 const CARD_COLORS = [styles.cardGreen, styles.cardYellow, styles.cardRed];
 const ITEMS_PER_PAGE = 3;
-
-function formatPrice(precio: number, moneda: string): string {
-  if (!precio && precio !== 0) return "";
-  if (moneda === "PEN") return `S/ ${precio.toFixed(2)}`;
-  return `${precio.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ".")} COP`;
-}
 
 export default function ProductosCarousel({
   productos,

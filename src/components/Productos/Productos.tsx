@@ -8,6 +8,7 @@ import { getStrapiImageUrl } from "@/lib/strapi";
 import { useCarousel } from "@/hooks/useCarousel";
 import { useSiteCode } from "@/hooks/useSiteCode";
 import styles from "./Productos.module.css";
+import { formatPrice } from "@/lib/format";
 
 interface ProductosProps {
   productos: Producto[];
@@ -27,14 +28,6 @@ function getCardColor(index: number): string {
 
 function toTitleCase(str: string): string {
   return str.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
-}
-
-function formatPrice(precio: number, moneda: string): string {
-  if (!precio && precio !== 0) return "";
-  if (moneda === "PEN") {
-    return `S/ ${precio.toFixed(2)}`;
-  }
-  return `${precio.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ".")} COP`;
 }
 
 function getImageUrl(

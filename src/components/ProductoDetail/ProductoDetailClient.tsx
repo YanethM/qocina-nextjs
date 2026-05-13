@@ -7,6 +7,7 @@ import { COLOR_MAP } from "@/lib/constants";
 import { useCart } from "@/context/CartContext";
 import Accordion from "@/components/Accordion/Accordion";
 import styles from "./ProductoDetailClient.module.css";
+import { formatPrice } from "@/lib/format";
 
 const PACK_SIZES = [
   { label: "Unidad", multiplier: 1 },
@@ -14,12 +15,6 @@ const PACK_SIZES = [
   { label: "Pack 6", multiplier: 6 },
   { label: "Pack 12", multiplier: 12 },
 ];
-
-function formatPrice(precio: number, moneda: string): string {
-  if (!precio && precio !== 0) return "";
-  if (moneda === "PEN") return `S/ ${precio.toFixed(2)}`;
-  return `${precio.toFixed(2)} ${moneda.toUpperCase()}`;
-}
 
 function getTitleColor(nombre: string, categoriaSlug: string | null): string {
   const text = `${nombre} ${categoriaSlug ?? ""}`.toLowerCase();
