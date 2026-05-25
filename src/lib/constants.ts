@@ -20,6 +20,7 @@ export const VALID_SITE_CODES = ["pe", "us", "es", "mx", "ar", "co", "ec", "cl"]
 export type SiteCode = typeof VALID_SITE_CODES[number];
 
 export const SITE_CODE_COOKIE = "site-code";
+export const SITE_URL_COOKIE = "site-url";
 export const LOCALE_COOKIE = "locale";
 export const COUNTRY_SELECTED_KEY = "qocina_country_selected";
 

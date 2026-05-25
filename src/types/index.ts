@@ -6,6 +6,7 @@ export interface Site {
   moneda: string;
   activo: boolean;
   ofix_country_code: string;
+  url?: string | null;
 }
 
 export interface ProductoSitio {

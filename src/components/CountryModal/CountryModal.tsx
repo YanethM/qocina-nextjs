@@ -7,6 +7,7 @@ import type { Site } from "@/types";
 import {
   VALID_SITE_CODES,
   SITE_CODE_COOKIE,
+  SITE_URL_COOKIE,
   LOCALE_COOKIE,
   COUNTRY_SELECTED_KEY,
   SITE_DEFAULT_LOCALE,
@@ -55,7 +56,12 @@ export default function CountryModal({ forceVisible = false, open, onClose }: Pr
       if (saved && VALID.has(saved)) {
         setCookie(SITE_CODE_COOKIE, saved);
         setCookie(LOCALE_COOKIE, SITE_DEFAULT_LOCALE[saved as SiteCode]);
-        router.replace(`/${saved}`);
+        const savedUrl = localStorage.getItem("qocina_country_url");
+        if (savedUrl) {
+          window.location.href = savedUrl;
+        } else {
+          router.replace(`/${saved}`);
+        }
         return;
       }
       setVisible(true);
@@ -78,17 +84,24 @@ export default function CountryModal({ forceVisible = false, open, onClose }: Pr
       .catch(() => setLoading(false));
   }, [isVisible, sites.length]);
 
-  const handleSelect = (code: string) => {
+  const handleSelect = (site: Site) => {
+    const { code, url } = site;
     const locale = SITE_DEFAULT_LOCALE[code as SiteCode] ?? "es";
     setCookie(SITE_CODE_COOKIE, code);
     setCookie(LOCALE_COOKIE, locale);
+    if (url) setCookie(SITE_URL_COOKIE, url);
     localStorage.setItem(COUNTRY_SELECTED_KEY, code);
+    if (url) localStorage.setItem("qocina_country_url", url);
     if (isControlled) {
       onClose?.();
     } else {
       setVisible(false);
     }
-    router.push(`/${code}`);
+    if (url) {
+      window.location.href = url;
+    } else {
+      router.push(`/${code}`);
+    }
   };
 
   if (!isVisible) return null;
@@ -124,7 +137,7 @@ export default function CountryModal({ forceVisible = false, open, onClose }: Pr
               <button
                 key={site.code}
                 className={styles.countryBtn}
-                onClick={() => handleSelect(site.code)}
+                onClick={() => handleSelect(site)}
               >
                 <span className={styles.flag}>{FLAG_EMOJI[site.code] ?? "🌎"}</span>
                 <span className={styles.countryName}>{site.nombre}</span>
