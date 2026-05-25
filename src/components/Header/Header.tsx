@@ -7,6 +7,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import { useSiteCode } from "@/hooks/useSiteCode";
 import { COOKIE_MAX_AGE } from "@/lib/constants";
+import CountryModal from "@/components/CountryModal/CountryModal";
 import styles from "./Header.module.css";
 
 const NAV_PATHS = [
@@ -21,6 +22,7 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [locale, setLocale] = useState("es");
   const [mounted, setMounted] = useState(false);
+  const [countryModalOpen, setCountryModalOpen] = useState(false);
   const { count } = useCart();
   const router = useRouter();
   const pathname = usePathname();
@@ -72,6 +74,20 @@ export default function Header() {
                 </Link>
               ))}
             </nav>
+            {siteCode && (
+              <button
+                className={styles.countryBtn}
+                onClick={() => setCountryModalOpen(true)}
+                aria-label="Cambiar país"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="2" y1="12" x2="22" y2="12" />
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                </svg>
+                {siteCode.toUpperCase()}
+              </button>
+            )}
             <div className={styles.langSelector}>
               <button
                 className={`${styles.langBtn} ${locale === "es" ? styles.langActive : ""}`}
@@ -158,6 +174,23 @@ export default function Header() {
             >
               EN
             </button>
+            {siteCode && (
+              <>
+                <span className={styles.langDivider}>|</span>
+                <button
+                  className={styles.countryBtn}
+                  onClick={() => { setCountryModalOpen(true); closeMenu(); }}
+                  aria-label="Cambiar país"
+                >
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="2" y1="12" x2="22" y2="12" />
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                  </svg>
+                  {siteCode.toUpperCase()}
+                </button>
+              </>
+            )}
           </div>
         </nav>
       </div>
@@ -165,6 +198,11 @@ export default function Header() {
       {menuOpen && (
         <div className={styles.overlay} onClick={closeMenu} aria-hidden="true" />
       )}
+
+      <CountryModal
+        open={countryModalOpen}
+        onClose={() => setCountryModalOpen(false)}
+      />
     </>
   );
 }

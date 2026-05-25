@@ -34,17 +34,22 @@ function setCookie(name: string, value: string) {
 }
 
 interface Props {
-  /** Si es true, muestra el modal sin importar si ya hay un país en localStorage */
   forceVisible?: boolean;
+  open?: boolean;
+  onClose?: () => void;
 }
 
-export default function CountryModal({ forceVisible = false }: Props) {
+export default function CountryModal({ forceVisible = false, open, onClose }: Props) {
   const router = useRouter();
+  const isControlled = open !== undefined;
   const [visible, setVisible] = useState(false);
   const [sites, setSites] = useState<Site[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const isVisible = isControlled ? open : visible;
+
   useEffect(() => {
+    if (isControlled) return;
     if (forceVisible) {
       const saved = localStorage.getItem(COUNTRY_SELECTED_KEY);
       if (saved && VALID.has(saved)) {
@@ -56,13 +61,14 @@ export default function CountryModal({ forceVisible = false }: Props) {
       setVisible(true);
       return;
     }
-
     const saved = localStorage.getItem(COUNTRY_SELECTED_KEY);
     if (!saved) setVisible(true);
-  }, [forceVisible, router]);
+  }, [forceVisible, isControlled, router]);
 
   useEffect(() => {
-    if (!visible) return;
+    if (!isVisible) return;
+    if (sites.length > 0) return;
+    setLoading(true);
     fetch("/api/sites")
       .then((r) => r.json())
       .then((data: Site[]) => {
@@ -70,20 +76,22 @@ export default function CountryModal({ forceVisible = false }: Props) {
         setLoading(false);
       })
       .catch(() => setLoading(false));
-  }, [visible]);
+  }, [isVisible, sites.length]);
 
   const handleSelect = (code: string) => {
     const locale = SITE_DEFAULT_LOCALE[code as SiteCode] ?? "es";
-
     setCookie(SITE_CODE_COOKIE, code);
     setCookie(LOCALE_COOKIE, locale);
     localStorage.setItem(COUNTRY_SELECTED_KEY, code);
-
-    setVisible(false);
+    if (isControlled) {
+      onClose?.();
+    } else {
+      setVisible(false);
+    }
     router.push(`/${code}`);
   };
 
-  if (!visible) return null;
+  if (!isVisible) return null;
 
   return (
     <div className={styles.overlay} role="dialog" aria-modal="true" aria-label="Selecciona tu país">
