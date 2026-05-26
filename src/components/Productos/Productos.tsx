@@ -21,6 +21,26 @@ interface ProductosProps {
   className?: string;
 }
 
+const HTML_ENTITIES: Record<string, string> = {
+  "&amp;": "&", "&lt;": "<", "&gt;": ">", "&quot;": '"', "&apos;": "'",
+  "&nbsp;": " ", "&rsquo;": "’", "&lsquo;": "‘",
+  "&rdquo;": "”", "&ldquo;": "“", "&mdash;": "—",
+  "&ndash;": "–", "&hellip;": "...", "&aacute;": "á", "&eacute;": "é",
+  "&iacute;": "í", "&oacute;": "ó", "&uacute;": "ú", "&Aacute;": "Á",
+  "&Eacute;": "É", "&Iacute;": "Í", "&Oacute;": "Ó", "&Uacute;": "Ú",
+  "&ntilde;": "ñ", "&Ntilde;": "Ñ", "&uuml;": "ü", "&Uuml;": "Ü",
+};
+
+function stripAndTruncateHtml(html: string, maxLength = 100): string {
+  const noTags = html.replace(/<[^>]*>/g, " ");
+  const decoded = noTags
+    .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(Number(n)))
+    .replace(/&#x([0-9a-fA-F]+);/g, (_, h) => String.fromCharCode(parseInt(h, 16)))
+    .replace(/&[a-zA-Z]+;/g, (m) => HTML_ENTITIES[m] ?? "");
+  const clean = decoded.replace(/\s+/g, " ").trim();
+  return clean.length <= maxLength ? clean : clean.slice(0, maxLength).trimEnd() + "...";
+}
+
 function getCardColor(index: number): string {
   const colorOrder = [styles.cardGreen, styles.cardYellow, styles.cardRed];
   return colorOrder[index % 3];
@@ -89,7 +109,9 @@ function CardItem({
         </p>
         <p className={styles.descripcion}>{producto.descripcion_corta}</p>
         {producto.descripcion_larga && (
-          <p className={styles.descripcionLarga}>{producto.descripcion_larga}</p>
+          <p className={styles.descripcionLarga}>
+            {stripAndTruncateHtml(producto.descripcion_larga)}
+          </p>
         )}
         <button
           className={styles.addToCartBtn}
