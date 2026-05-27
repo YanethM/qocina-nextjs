@@ -11,6 +11,8 @@ import styles from "./page.module.css";
 
 const PREFIJOS = ["+57", "+51", "+54", "+52", "+56", "+34", "+1", "+593"];
 
+const ZIP_UBIGEO_SITE_CODES = new Set(["mx", "ar", "es"]);
+
 const PAIS_PREFIJO: Record<string, string> = {
   co: "+57",
   pe: "+51",
@@ -284,11 +286,14 @@ export default function EnvioPage() {
     const countryCode = selectedSite?.ofix_country_code || pais.toUpperCase();
     const usCountry = countryCode === "US";
 
+    const zipUbigeo = ZIP_UBIGEO_SITE_CODES.has(pais);
+
     setIsUS(usCountry);
     setNivel1(""); setNivel2(""); setNivel3("");
     setNivel1Options([]); setNivel2Options([]); setNivel3Options([]);
     setNiveles(0);
     setCiudadUS("");
+    setCodigoPostal("");
     setUbigeoError(false);
     setLoadingUbigeo(true);
 
@@ -297,6 +302,9 @@ export default function EnvioPage() {
         if (usCountry) {
           const data = await fetchOfix("getNivel1", { countryCode });
           setNivel1Options(Array.isArray(data) ? data : []);
+        } else if (zipUbigeo) {
+          const nivelesData = await fetchOfix("getNiveles", { countryCode });
+          setNiveles(nivelesData?.nivels ?? 1);
         } else {
           const [nivelesData, nivel1Data] = await Promise.all([
             fetchOfix("getNiveles", { countryCode }),
@@ -327,6 +335,31 @@ export default function EnvioPage() {
   }, [nivel1]);
 
   useEffect(() => {
+    if (!ZIP_UBIGEO_SITE_CODES.has(pais)) return;
+    const cc = sites.find((s) => s.code === pais)?.ofix_country_code ?? pais.toUpperCase();
+
+    setNivel1(""); setNivel2(""); setNivel3("");
+    setNivel1Options([]); setNivel2Options([]); setNivel3Options([]);
+
+    if (!codigoPostal || codigoPostal.length < 4) {
+      setLoadingUbigeo(false);
+      return;
+    }
+
+    setLoadingUbigeo(true);
+    setUbigeoError(false);
+
+    const timer = setTimeout(() => {
+      fetchOfix("getNivel1", { countryCode: cc, zipCode: codigoPostal })
+        .then((data) => setNivel1Options(Array.isArray(data) ? data : []))
+        .catch(() => setUbigeoError(true))
+        .finally(() => setLoadingUbigeo(false));
+    }, 600);
+
+    return () => clearTimeout(timer);
+  }, [codigoPostal, pais, sites]);
+
+  useEffect(() => {
     if (!nivel2 || isUS || niveles < 3) return;
     const selectedSite = sites.find((s) => s.code === pais);
     const countryCode = selectedSite?.ofix_country_code ?? pais.toUpperCase();
@@ -341,7 +374,8 @@ export default function EnvioPage() {
   const selectedSite = sites.find((s) => s.code === pais);
   const countryCode = selectedSite?.ofix_country_code ?? pais.toUpperCase();
   const isAR = countryCode === "AR";
-  const zipRequired = isUS || countryCode === "MX";
+  const isZipUbigeo = ZIP_UBIGEO_SITE_CODES.has(pais);
+  const zipRequired = isUS || isZipUbigeo;
 
   const validate = () => {
     const e: Record<string, string> = {};
@@ -691,17 +725,37 @@ export default function EnvioPage() {
                 />
               </div>
 
+              {isZipUbigeo && (
+                <div className={styles.field}>
+                  <label className={styles.label}>{t.postalCode}</label>
+                  <input
+                    className={`${styles.input} ${errors.codigoPostal ? styles.inputError : ""}`}
+                    placeholder={t.postalCodePlaceholder}
+                    value={codigoPostal}
+                    onChange={(e) => setCodigoPostal(e.target.value)}
+                  />
+                </div>
+              )}
+
               <div className={styles.field}>
                 <label className={styles.label}>{isUS ? t.stateUs : t.stateDefault}</label>
                 <div className={styles.selectWrapper}>
                   <select
                     className={`${styles.select} ${errors.nivel1 ? styles.inputError : ""}`}
                     value={nivel1}
-                    disabled={!pais || loadingUbigeo || ubigeoError}
+                    disabled={!pais || loadingUbigeo || ubigeoError || (isZipUbigeo && codigoPostal.length < 4)}
                     onChange={(e) => setNivel1(e.target.value)}
                   >
                     <option value="">
-                      {loadingUbigeo ? t.loading : !pais ? t.selectCountryFirst : ubigeoError ? t.selectOption : t.selectOption}
+                      {loadingUbigeo
+                        ? t.loading
+                        : !pais
+                        ? t.selectCountryFirst
+                        : isZipUbigeo && codigoPostal.length < 4
+                        ? locale === "en" ? "Enter postal code first" : "Ingresa el código postal primero"
+                        : ubigeoError
+                        ? t.selectOption
+                        : t.selectOption}
                     </option>
                     {nivel1Options.map((o) => (
                       <option key={o.regionCode} value={o.regionCode}>{o.regionName}</option>
@@ -764,15 +818,17 @@ export default function EnvioPage() {
                 </div>
               )}
 
-              <div className={styles.field}>
-                <label className={styles.label}>{zipRequired ? t.postalCode : t.postalCodeOptional}</label>
-                <input
-                  className={`${styles.input} ${errors.codigoPostal ? styles.inputError : ""}`}
-                  placeholder={t.postalCodePlaceholder}
-                  value={codigoPostal}
-                  onChange={(e) => setCodigoPostal(e.target.value)}
-                />
-              </div>
+              {!isZipUbigeo && (
+                <div className={styles.field}>
+                  <label className={styles.label}>{zipRequired ? t.postalCode : t.postalCodeOptional}</label>
+                  <input
+                    className={`${styles.input} ${errors.codigoPostal ? styles.inputError : ""}`}
+                    placeholder={t.postalCodePlaceholder}
+                    value={codigoPostal}
+                    onChange={(e) => setCodigoPostal(e.target.value)}
+                  />
+                </div>
+              )}
             </div>
           </div>
 
