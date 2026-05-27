@@ -191,7 +191,7 @@ export default function PackDetailClient({
                   key: "uso",
                   label: "¿Cómo se usa este sofrito?",
                   content: (
-                    <p style={{ whiteSpace: "pre-wrap" }}>{descripcionLarga}</p>
+                    <div dangerouslySetInnerHTML={{ __html: descripcionLarga }} />
                   ),
                 },
               ]

@@ -357,6 +357,7 @@ export async function getPack(slug: string, locale?: string, siteCode?: string) 
       "populate[packs_destacados][populate][productos][populate][imagen_principal][fields][4]": "formats",
     },
     locale,
+    siteCode,
   );
   const data = res?.data;
   const pack = data?.packs_destacados?.find((p) => p.slug === slug) ?? null;
