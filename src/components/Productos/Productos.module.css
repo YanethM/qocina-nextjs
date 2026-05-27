@@ -111,13 +111,19 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  width: 360px;
-  height: 227px;
   gap: 16px;
+  width: 360px;
   position: relative;
   z-index: 3;
   margin: 0 auto;
+}
+
+.cardText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
 }
 
 .nombre {
@@ -154,28 +160,50 @@
 
 .descripcion {
   font-family: Montserrat, sans-serif;
-  font-weight: 400;
+  font-weight: 700;
   font-size: 16px;
-  line-height: 1.5;
+  line-height: 1.4;
   text-align: center;
   margin: 0;
-  opacity: 0.95;
-  max-width: 280px;
   color: inherit;
 }
 
 .descripcionLarga {
   font-family: Montserrat, sans-serif;
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 140%;
-  letter-spacing: 0%;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 1.5;
   text-align: center;
   margin: 0;
   color: inherit;
+  width: 100%;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.descripcionLarga :global(p),
+.descripcionLarga :global(ul),
+.descripcionLarga :global(ol),
+.descripcionLarga :global(li) {
+  margin: 0;
+  padding: 0;
+  font-size: inherit;
+  font-family: inherit;
+  font-weight: inherit;
+  color: inherit;
+  text-align: inherit;
+  display: inline;
+}
+
+.descripcionLarga :global(strong),
+.descripcionLarga :global(b) {
+  font-weight: 700;
 }
 
 .addToCartBtn {
+  flex-shrink: 0;
   width: 304px;
   height: 46px;
   min-width: 170px;
@@ -314,8 +342,8 @@
 
   .cardContent {
     width: 90%;
-    gap: 12px;
   }
+
 }
 
 @media (max-width: 1024px) {
@@ -346,7 +374,6 @@
 
   .slide .cardContent {
     width: 90%;
-    gap: 12px;
   }
 
   .slide .imageWrapper {
@@ -398,8 +425,8 @@
 
   .slide .cardContent {
     width: 260px;
-    gap: 10px;
   }
+
 
   .slide .imageWrapper {
     height: 260px;
