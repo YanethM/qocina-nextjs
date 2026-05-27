@@ -104,6 +104,30 @@
   margin: 0;
 }
 
+.descripcion :global(p) {
+  margin: 0 0 0.75em;
+}
+
+.descripcion :global(p:last-child) {
+  margin-bottom: 0;
+}
+
+.descripcion :global(ul),
+.descripcion :global(ol) {
+  margin: 0 0 0.75em;
+  padding-left: 1.4em;
+}
+
+.descripcion :global(li) {
+  margin-bottom: 0.25em;
+}
+
+.descripcion :global(strong),
+.descripcion :global(b) {
+  font-weight: 700;
+  color: inherit;
+}
+
 .fieldGroup {
   display: flex;
   flex-direction: column;

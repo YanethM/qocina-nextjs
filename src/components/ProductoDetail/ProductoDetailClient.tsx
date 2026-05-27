@@ -165,7 +165,10 @@ export default function ProductoDetailClient({
           {nombre.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase())}
         </h1>
         {descripcionLarga && (
-          <p className={styles.descripcion}>{descripcionLarga}</p>
+          <div
+            className={styles.descripcion}
+            dangerouslySetInnerHTML={{ __html: descripcionLarga }}
+          />
         )}
 
         <div className={styles.fieldGroup}>
@@ -248,7 +251,7 @@ export default function ProductoDetailClient({
               ? [{
                   key: "uso",
                   label: "¿Cómo se usa este sofrito?",
-                  content: <p style={{ whiteSpace: "pre-wrap" }}>{descripcionLarga}</p>,
+                  content: <div dangerouslySetInnerHTML={{ __html: descripcionLarga }} />,
                 }]
               : []),
             ...(badges.length > 0

@@ -63,7 +63,10 @@ export default function ProductCardGrid({ productos, fewClass }: { productos: Pr
               </p>
               <p className={styles.cardDescription}>{producto.descripcion_corta}</p>
               {producto.descripcion_larga && (
-                <p className={styles.cardDescriptionLarga}>{producto.descripcion_larga}</p>
+                <div
+                  className={styles.cardDescriptionLarga}
+                  dangerouslySetInnerHTML={{ __html: producto.descripcion_larga }}
+                />
               )}
               <Link
                 href={`/${siteCode}/productos/${producto.slug}`}
