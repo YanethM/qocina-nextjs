@@ -71,10 +71,11 @@ export default function CarritoPage() {
   const moneda = items[0]?.precioMoneda ?? "COP";
 
   useEffect(() => {
-    getProductos()
+    if (!siteCode) return;
+    getProductos(undefined, siteCode)
       .then((res) => setProductos(res.data ?? []))
       .catch(() => {});
-  }, []);
+  }, [siteCode]);
 
   useEffect(() => {
     if (items.length === 0) return;
