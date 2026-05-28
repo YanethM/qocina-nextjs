@@ -329,7 +329,10 @@ export default function EnvioPage() {
     setNivel2(""); setNivel3("");
     setNivel2Options([]); setNivel3Options([]);
 
-    fetchOfix("getNivel2", { countryCode, departament: nivel1 })
+    const params: Record<string, string> = { countryCode, departament: nivel1 };
+    if (ZIP_UBIGEO_SITE_CODES.has(pais) && codigoPostal) params.zipCode = codigoPostal;
+
+    fetchOfix("getNivel2", params)
       .then((data) => setNivel2Options(Array.isArray(data) ? data : []))
       .catch(() => {});
   }, [nivel1]);
@@ -366,7 +369,10 @@ export default function EnvioPage() {
 
     setNivel3(""); setNivel3Options([]);
 
-    fetchOfix("getNivel3", { countryCode, departament: nivel1, city: nivel2 })
+    const params: Record<string, string> = { countryCode, departament: nivel1, city: nivel2 };
+    if (ZIP_UBIGEO_SITE_CODES.has(pais) && codigoPostal) params.zipCode = codigoPostal;
+
+    fetchOfix("getNivel3", params)
       .then((data) => setNivel3Options(Array.isArray(data) ? data : []))
       .catch(() => {});
   }, [nivel2]);
