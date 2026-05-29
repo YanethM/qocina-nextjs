@@ -109,6 +109,7 @@ export interface Producto {
   recetas_relacionadas: Receta[] | null;
   testimonios: Testimonio[] | null;
   sitios: ProductoSitio[] | null;
+  color: string | null;
   meta_title: string | null;
   meta_description: string | null;
 }

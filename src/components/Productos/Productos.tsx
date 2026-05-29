@@ -21,9 +21,19 @@ interface ProductosProps {
   className?: string;
 }
 
-function getCardColor(index: number): string {
-  const colorOrder = [styles.cardGreen, styles.cardYellow, styles.cardRed];
-  return colorOrder[index % 3];
+const FALLBACK_COLORS = [styles.cardGreen, styles.cardYellow, styles.cardRed];
+
+function getFallbackColor(index: number): string {
+  return FALLBACK_COLORS[index % 3];
+}
+
+function isLightColor(hex: string): boolean {
+  const clean = hex.replace("#", "");
+  if (clean.length < 6) return true;
+  const r = parseInt(clean.slice(0, 2), 16);
+  const g = parseInt(clean.slice(2, 4), 16);
+  const b = parseInt(clean.slice(4, 6), 16);
+  return (0.299 * r + 0.587 * g + 0.114 * b) / 255 > 0.5;
 }
 
 function toTitleCase(str: string): string {
@@ -42,20 +52,28 @@ function getImageUrl(
 
 function CardItem({
   producto,
-  colorClass,
+  fallbackColorClass,
   priority = false,
 }: {
   producto: Producto;
-  colorClass: string;
+  fallbackColorClass: string;
   priority?: boolean;
 }) {
   const siteCode = useSiteCode();
-  const btnVariant = colorClass === styles.cardYellow ? "dark" : "white";
+  const apiColor = producto.color ?? null;
+  const lightBg = apiColor ? isLightColor(apiColor) : fallbackColorClass === styles.cardYellow;
+  const cardStyle = apiColor
+    ? { background: apiColor, color: lightBg ? "#000000" : "#ffffff" }
+    : undefined;
+  const btnStyle = lightBg
+    ? { backgroundColor: "#1a1a1a", color: "#ffffff" }
+    : undefined;
 
   return (
     <Link
       href={`/${siteCode}/productos/${producto.slug}`}
-      className={`${styles.card} ${colorClass}`}
+      className={`${styles.card} ${apiColor ? "" : fallbackColorClass}`}
+      style={cardStyle}
       onClick={() => {
         if (typeof window !== "undefined" && window.cioanalytics) {
           window.cioanalytics.track("Product Clicked", {
@@ -100,7 +118,7 @@ function CardItem({
         </div>
         <button
           className={styles.addToCartBtn}
-          data-btn={btnVariant}>
+          style={btnStyle}>
           Añadir al carrito
         </button>
       </div>
@@ -161,7 +179,7 @@ export default function Productos({
           <CardItem
             key={producto.id}
             producto={producto}
-            colorClass={getCardColor(index)}
+            fallbackColorClass={getFallbackColor(index)}
             priority={index === 0}
           />
         ))}
@@ -177,7 +195,7 @@ export default function Productos({
           style={{ transform: `translateX(-${translateX}px)` }}>
           {productos.map((producto, index) => (
             <div key={producto.id} className={styles.slide}>
-              <CardItem producto={producto} colorClass={getCardColor(index)} priority={index === 0} />
+              <CardItem producto={producto} fallbackColorClass={getFallbackColor(index)} priority={index === 0} />
             </div>
           ))}
         </div>
