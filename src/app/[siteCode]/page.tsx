@@ -38,7 +38,7 @@ export default async function Home({ params }: Props) {
   const locale = await getLocale();
 
   const [homeRes, badgesRes, productosRes, recetasRes, testimoniosRes, contactoRes] = await Promise.all([
-    getHomePage(locale, siteCode).catch((e) => { console.error("getHomePage error:", e); return null; }),
+    getHomePage(locale).catch((e) => { console.error("getHomePage error:", e); return null; }),
     getBadges(locale).catch((e) => { console.error("getBadges error:", e); return null; }),
     getProductos(locale, siteCode).catch((e) => { console.error("getProductos error:", e); return null; }),
     getRecetas(locale, undefined, siteCode).catch((e) => { console.error("getRecetas error:", e); return null; }),
