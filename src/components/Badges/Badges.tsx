@@ -9,11 +9,11 @@ interface BadgesProps {
   variant?: "default" | "row";
 }
 
-function BadgeItem({ badge }: { badge: Badge }) {
+function BadgeItem({ badge, rowVariant = false }: { badge: Badge; rowVariant?: boolean }) {
   return (
-    <div className={styles.badge}>
+    <div className={`${styles.badge} ${rowVariant ? styles.badgeRowItem : ""}`}>
       <div
-        className={styles.badgeIcon}
+        className={`${styles.badgeIcon} ${rowVariant ? styles.badgeRowIcon : ""}`}
         style={{ backgroundColor: "transparent" }}
       >
         {badge.icono && (
@@ -37,25 +37,26 @@ export default function Badges({ badges, className, variant = "default" }: Badge
   if (badges.length === 0) return null;
 
   const isRow = variant === "row";
-  const useMarquee = isRow || badges.length > 3;
+  const useRowMarquee = isRow && badges.length > 8;
+  const useMobileMarquee = badges.length > 3;
 
   return (
     <section className={`${styles.badgesSection} ${className || ""}`}>
-      <div className={`${styles.badges} ${isRow ? styles.badgesHidden : ""}`}>
+      <div className={`${styles.badges} ${isRow && useRowMarquee ? styles.badgesHidden : ""} ${isRow && !useRowMarquee ? styles.badgesRow : ""}`}>
         {badges.map((badge) => (
-          <BadgeItem key={badge.id} badge={badge} />
+          <BadgeItem key={badge.id} badge={badge} rowVariant={isRow && !useRowMarquee} />
         ))}
       </div>
 
-      <div className={`${styles.marqueeWrapper} ${isRow ? styles.marqueeWrapperRow : ""}`}>
+      <div className={`${styles.marqueeWrapper} ${useRowMarquee ? styles.marqueeWrapperRow : ""}`}>
         <div
-          className={`${styles.marqueeTrack} ${useMarquee ? styles.marqueeAnimated : ""}`}>
+          className={`${styles.marqueeTrack} ${(useRowMarquee || useMobileMarquee) ? styles.marqueeAnimated : ""}`}>
           {badges.map((badge) => (
             <div key={badge.id} className={styles.marqueeItem}>
               <BadgeItem badge={badge} />
             </div>
           ))}
-          {useMarquee &&
+          {(useRowMarquee || useMobileMarquee) &&
             badges.map((badge) => (
               <div
                 key={`dup-${badge.id}`}

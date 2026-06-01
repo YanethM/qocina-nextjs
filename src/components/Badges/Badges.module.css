@@ -52,6 +52,25 @@
   display: none;
 }
 
+.badgesRow {
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.badgeRowItem {
+  flex: 1;
+  max-width: none;
+  min-width: 0;
+}
+
+.badgeRowIcon {
+  width: 100%;
+  max-width: 130px;
+  height: 130px;
+  margin: 0 auto 0.5rem;
+}
+
 .marqueeWrapperRow {
   display: block;
   overflow: hidden;
