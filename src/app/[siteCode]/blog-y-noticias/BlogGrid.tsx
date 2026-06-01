@@ -10,11 +10,12 @@ import styles from "./page.module.css";
 interface BlogGridProps {
   articulos: Articulo[];
   ctaVerTodas?: string | null;
+  ctaLeerMas?: string | null;
 }
 
 const INITIAL_COUNT = 6;
 
-export default function BlogGrid({ articulos, ctaVerTodas }: BlogGridProps) {
+export default function BlogGrid({ articulos, ctaVerTodas, ctaLeerMas }: BlogGridProps) {
   const siteCode = useSiteCode();
   const [showAll, setShowAll] = useState(false);
   const visible = showAll ? articulos : articulos.slice(0, INITIAL_COUNT);
@@ -34,6 +35,7 @@ export default function BlogGrid({ articulos, ctaVerTodas }: BlogGridProps) {
                 ? getStrapiImageUrl(articulo.imagen_principal.url)
                 : undefined
             }
+            ctaText={ctaLeerMas ?? undefined}
           />
         ))}
       </div>

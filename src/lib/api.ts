@@ -453,6 +453,7 @@ export async function getHomePage(locale?: string, siteCode?: string) {
     "populate[secreto_chef_cta]": "*",
     "populate[historia_cta]": "*",
     "populate[amazon_cta]": "*",
+    "populate[recetas_ver_receta_cta]": "*",
     "populate[recetas_cta]": "*",
   }, locale, siteCode);
 }

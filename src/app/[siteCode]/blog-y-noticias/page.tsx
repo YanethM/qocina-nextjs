@@ -72,6 +72,7 @@ export default async function BlogYNoticiasPage({ params }: Props) {
         <BlogGrid
           articulos={articulos}
           ctaVerTodas={pageData?.relacionadas_cta_ver_todas}
+          ctaLeerMas={pageData?.cta_cargar_mas}
         />
       </section>
 

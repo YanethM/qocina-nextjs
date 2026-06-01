@@ -8,8 +8,8 @@ export interface RecetaCardProps {
   descripcion: string;
   imagenUrl: string | null;
   imagenAlt?: string;
-  /** Color de fondo del body y del wave. Default: #CE171C */
   accentColor?: string;
+  ctaText?: string;
 }
 
 export default function RecetaCard({
@@ -19,6 +19,7 @@ export default function RecetaCard({
   imagenUrl,
   imagenAlt,
   accentColor = "#CE171C",
+  ctaText = "Ver receta",
 }: RecetaCardProps) {
   return (
     <Link href={href} className={styles.card} data-card style={{ "--accent": accentColor } as React.CSSProperties}>
@@ -52,7 +53,7 @@ export default function RecetaCard({
         <p className={styles.description}>{descripcion}</p>
         <div className={styles.cta}>
           <span className={styles.ctaButton} data-btn="white">
-            Ver receta
+            {ctaText}
             <Image
               src="/images/web/recetas/icon_arrow_right.svg"
               alt=""

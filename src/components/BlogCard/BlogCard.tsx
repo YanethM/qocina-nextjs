@@ -7,6 +7,7 @@ interface BlogCardProps {
   descripcion_corta?: string | null;
   href?: string;
   imagenUrl?: string;
+  ctaText?: string;
 }
 
 export default function BlogCard({
@@ -14,6 +15,7 @@ export default function BlogCard({
   descripcion_corta,
   href = "#",
   imagenUrl,
+  ctaText = "Leer más",
 }: BlogCardProps) {
   return (
     <div className={styles.card}>
@@ -44,7 +46,7 @@ export default function BlogCard({
           </div>
           <div className={styles.cardBtnWrapper}>
             <Link href={href} className={styles.cardBtn} data-btn="white">
-              Leer más
+              {ctaText}
               <Image
                 src="/images/web/home/arrow_right.svg"
                 alt=""

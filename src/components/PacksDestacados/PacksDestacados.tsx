@@ -14,6 +14,7 @@ interface Props {
   titulo?: string | null;
   mostrarDescuento?: boolean;
   porcentajeDescuento?: number | null;
+  ctaVerMas?: string | null;
 }
 
 export default function PacksDestacados({
@@ -21,6 +22,7 @@ export default function PacksDestacados({
   titulo,
   mostrarDescuento = false,
   porcentajeDescuento,
+  ctaVerMas = "Más información",
 }: Props) {
   const siteCode = useSiteCode();
   const sorted = [...packs].sort((a, b) => a.orden - b.orden);
@@ -118,7 +120,7 @@ export default function PacksDestacados({
                         });
                       }
                     }}>
-                    Más información
+                    {ctaVerMas}
                     <Image
                       src={arrowSrc}
                       alt=""

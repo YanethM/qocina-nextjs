@@ -457,6 +457,7 @@ export interface HomePage {
   amazon_descripcion: string;
   amazon_cta: { texto: string; url: string; nueva_ventana: boolean } | null;
   recetas_titulo: string;
+  recetas_ver_receta_cta: { texto: string; url: string; nueva_ventana: boolean } | null;
   recetas_cta: { texto: string; url: string; nueva_ventana: boolean } | null;
   testimonios_titulo: string;
   meta_title: string | null;

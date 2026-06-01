@@ -113,6 +113,7 @@ export default async function ArticuloDetailPage({ params }: Props) {
                 descripcion_corta={a.descripcion_corta}
                 href={`/${siteCode}/blog-y-noticias/${a.slug}`}
                 imagenUrl={a.imagen_principal?.url ? getStrapiImageUrl(a.imagen_principal.url) : undefined}
+                ctaText={blogPage?.cta_cargar_mas ?? undefined}
               />
             ))}
           </div>

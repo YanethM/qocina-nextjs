@@ -12,7 +12,7 @@ import styles from "./RecetasCarousel.module.css";
 
 const GAP = 16;
 
-function CardItem({ receta }: { receta: Receta }) {
+function CardItem({ receta, ctaText }: { receta: Receta; ctaText: string }) {
   const siteCode = useSiteCode();
   const cardColor = COLOR_MAP[receta.color_card] ?? DEFAULT_COLOR;
   const waveSrc = WAVE_MAP[receta.color_card] ?? DEFAULT_WAVE;
@@ -50,7 +50,7 @@ function CardItem({ receta }: { receta: Receta }) {
         <p className={styles.cardDescription}>{receta.descripcion_corta}</p>
         <div className={styles.cardCta}>
           <span className={styles.ctaButton} data-btn="white">
-            Ver receta{" "}
+            {ctaText}{" "}
             <Image
               src="/images/web/home/arrow_right.svg"
               alt=""
@@ -69,10 +69,12 @@ function CardItem({ receta }: { receta: Receta }) {
 interface Props {
   recetas: Receta[];
   recetas_titulo?: string;
+  recetas_ver_receta_cta?: { texto: string } | null;
   recetas_cta?: { texto: string; url: string; nueva_ventana: boolean } | null;
 }
 
-export default function RecetasCarousel({ recetas, recetas_titulo, recetas_cta }: Props) {
+export default function RecetasCarousel({ recetas, recetas_titulo, recetas_ver_receta_cta, recetas_cta }: Props) {
+  const ctaVerReceta = recetas_ver_receta_cta?.texto ?? "Ver receta";
   const siteCode = useSiteCode();
   const { current, goTo, handleTouchStart, handleTouchEnd } = useCarousel(recetas.length);
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -104,7 +106,7 @@ export default function RecetasCarousel({ recetas, recetas_titulo, recetas_cta }
 
       <div className={styles.grid}>
         {recetas.map((receta) => (
-          <CardItem key={receta.id} receta={receta} />
+          <CardItem key={receta.id} receta={receta} ctaText={ctaVerReceta} />
         ))}
       </div>
 
@@ -118,7 +120,7 @@ export default function RecetasCarousel({ recetas, recetas_titulo, recetas_cta }
           style={{ transform: `translateX(-${translateX}px)` }}>
           {recetas.map((receta) => (
             <div key={receta.id} className={styles.slide}>
-              <CardItem receta={receta} />
+              <CardItem receta={receta} ctaText={ctaVerReceta} />
             </div>
           ))}
         </div>

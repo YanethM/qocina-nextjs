@@ -155,6 +155,7 @@ export default async function Home({ params }: Props) {
       <RecetasCarousel
         recetas={recetas}
         recetas_titulo={homeRes?.data?.recetas_titulo}
+        recetas_ver_receta_cta={homeRes?.data?.recetas_ver_receta_cta}
         recetas_cta={homeRes?.data?.recetas_cta}
       />
 

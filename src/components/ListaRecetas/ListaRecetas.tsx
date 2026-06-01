@@ -15,6 +15,7 @@ interface ListaRecetasProps {
   labelRegion?: string;
   labelDieta?: string;
   ctaCargarMas?: string;
+  ctaVerTodas?: string;
   locale?: string;
   siteCode?: string;
 }
@@ -104,6 +105,7 @@ export default function ListaRecetas({
   labelRegion,
   labelDieta,
   ctaCargarMas,
+  ctaVerTodas = "Ver todas las recetas",
   locale,
   siteCode,
 }: ListaRecetasProps) {
@@ -201,6 +203,7 @@ export default function ListaRecetas({
                 descripcion={receta.descripcion_corta ?? receta.descripcion}
                 imagenUrl={imgUrl}
                 imagenAlt={receta.imagen_principal?.alternativeText ?? receta.titulo}
+                ctaText={ctaCargarMas}
               />
             );
           })}
@@ -211,7 +214,7 @@ export default function ListaRecetas({
           <h3 className={styles.emptyTitle}>No encontramos recetas</h3>
           <p className={styles.emptySubtitle}>No hay recetas que coincidan con los filtros seleccionados.</p>
           <button className={styles.emptyBtn} onClick={clearFilters}>
-            Ver todas las recetas
+            {ctaVerTodas}
           </button>
         </div>
       ) : null}
