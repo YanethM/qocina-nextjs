@@ -29,34 +29,10 @@
   width: 100%;
   background-color: #ffffff;
   margin-top: -60px;
-}
-
-.badgesContainer :global(.badgesSection) {
   padding: 2rem 2rem;
-  background-color: transparent;
-  position: relative;
-  z-index: 5;
   max-width: 1440px;
-  margin: 0 auto;
-}
-
-.badgesContainer :global(.badges) {
-  flex-wrap: nowrap;
-  justify-content: space-between;
-  gap: 1rem;
-}
-
-.badgesContainer :global(.badge) {
-  flex: 1 1 0;
-  max-width: none;
-  min-width: 0;
-}
-
-.badgesContainer :global(.badgeIcon) {
-  width: 100%;
-  max-width: 130px;
-  height: 130px;
-  margin: 0 auto 0.5rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 @media (max-width: 768px) {

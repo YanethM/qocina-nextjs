@@ -21,7 +21,7 @@ export default function BeneficiosWaveSection({
         />
       </WaveSection>
       <div className={styles.badgesContainer}>
-        <Badges badges={badges} />
+        <Badges badges={badges} variant="row" />
       </div>
     </section>
   );

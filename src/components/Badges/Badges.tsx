@@ -6,6 +6,7 @@ import styles from "./Badges.module.css";
 interface BadgesProps {
   badges: Badge[];
   className?: string;
+  variant?: "default" | "row";
 }
 
 function BadgeItem({ badge }: { badge: Badge }) {
@@ -32,14 +33,14 @@ function BadgeItem({ badge }: { badge: Badge }) {
   );
 }
 
-export default function Badges({ badges, className }: BadgesProps) {
+export default function Badges({ badges, className, variant = "default" }: BadgesProps) {
   if (badges.length === 0) return null;
 
   const useMarquee = badges.length > 3;
 
   return (
     <section className={`${styles.badgesSection} ${className || ""}`}>
-      <div className={styles.badges}>
+      <div className={`${styles.badges} ${variant === "row" ? styles.badgesRow : ""}`}>
         {badges.map((badge) => (
           <BadgeItem key={badge.id} badge={badge} />
         ))}

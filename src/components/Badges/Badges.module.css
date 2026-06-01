@@ -44,6 +44,25 @@
   margin-bottom: 0.5rem;
 }
 
+.badgesRow {
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.badgesRow .badge {
+  flex: 1 1 0;
+  max-width: none;
+  min-width: 0;
+}
+
+.badgesRow .badgeIcon {
+  width: 100%;
+  max-width: 130px;
+  height: 130px;
+  margin: 0 auto 0.5rem;
+}
+
 .marqueeWrapper {
   display: none;
 }
