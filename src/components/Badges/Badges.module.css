@@ -44,27 +44,45 @@
   margin-bottom: 0.5rem;
 }
 
-.badgesRow {
-  flex-wrap: nowrap;
-  justify-content: space-between;
-  gap: 1rem;
-}
-
-.badgeRowItem {
-  flex: 1;
-  max-width: none;
-  min-width: 0;
-}
-
-.badgeRowIcon {
-  width: 100%;
-  max-width: 130px;
-  height: 130px;
-  margin: 0 auto 0.5rem;
-}
-
 .marqueeWrapper {
   display: none;
+}
+
+.badgesHidden {
+  display: none;
+}
+
+.marqueeWrapperRow {
+  display: block;
+  overflow: hidden;
+  width: 100%;
+}
+
+.marqueeWrapperRow .marqueeTrack {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 2.5rem;
+  padding: 1.5rem 0;
+}
+
+.marqueeWrapperRow .marqueeAnimated {
+  justify-content: flex-start;
+  animation: badgesMarquee 20s linear infinite;
+}
+
+.marqueeWrapperRow .marqueeAnimated:hover {
+  animation-play-state: paused;
+}
+
+.marqueeWrapperRow .marqueeItem {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+.marqueeWrapperRow .badgeIcon {
+  width: 120px;
+  height: 120px;
 }
 
 @media (max-width: 640px) {

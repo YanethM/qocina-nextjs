@@ -9,11 +9,11 @@ interface BadgesProps {
   variant?: "default" | "row";
 }
 
-function BadgeItem({ badge, rowVariant = false }: { badge: Badge; rowVariant?: boolean }) {
+function BadgeItem({ badge }: { badge: Badge }) {
   return (
-    <div className={`${styles.badge} ${rowVariant ? styles.badgeRowItem : ""}`}>
+    <div className={styles.badge}>
       <div
-        className={`${styles.badgeIcon} ${rowVariant ? styles.badgeRowIcon : ""}`}
+        className={styles.badgeIcon}
         style={{ backgroundColor: "transparent" }}
       >
         {badge.icono && (
@@ -36,17 +36,18 @@ function BadgeItem({ badge, rowVariant = false }: { badge: Badge; rowVariant?: b
 export default function Badges({ badges, className, variant = "default" }: BadgesProps) {
   if (badges.length === 0) return null;
 
-  const useMarquee = badges.length > 3;
+  const isRow = variant === "row";
+  const useMarquee = isRow || badges.length > 3;
 
   return (
     <section className={`${styles.badgesSection} ${className || ""}`}>
-      <div className={`${styles.badges} ${variant === "row" ? styles.badgesRow : ""}`}>
+      <div className={`${styles.badges} ${isRow ? styles.badgesHidden : ""}`}>
         {badges.map((badge) => (
-          <BadgeItem key={badge.id} badge={badge} rowVariant={variant === "row"} />
+          <BadgeItem key={badge.id} badge={badge} />
         ))}
       </div>
 
-      <div className={styles.marqueeWrapper}>
+      <div className={`${styles.marqueeWrapper} ${isRow ? styles.marqueeWrapperRow : ""}`}>
         <div
           className={`${styles.marqueeTrack} ${useMarquee ? styles.marqueeAnimated : ""}`}>
           {badges.map((badge) => (
