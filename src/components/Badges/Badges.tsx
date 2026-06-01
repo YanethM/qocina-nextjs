@@ -9,11 +9,11 @@ interface BadgesProps {
   variant?: "default" | "row";
 }
 
-function BadgeItem({ badge }: { badge: Badge }) {
+function BadgeItem({ badge, rowVariant = false }: { badge: Badge; rowVariant?: boolean }) {
   return (
-    <div className={styles.badge}>
+    <div className={`${styles.badge} ${rowVariant ? styles.badgeRowItem : ""}`}>
       <div
-        className={styles.badgeIcon}
+        className={`${styles.badgeIcon} ${rowVariant ? styles.badgeRowIcon : ""}`}
         style={{ backgroundColor: "transparent" }}
       >
         {badge.icono && (
@@ -42,7 +42,7 @@ export default function Badges({ badges, className, variant = "default" }: Badge
     <section className={`${styles.badgesSection} ${className || ""}`}>
       <div className={`${styles.badges} ${variant === "row" ? styles.badgesRow : ""}`}>
         {badges.map((badge) => (
-          <BadgeItem key={badge.id} badge={badge} />
+          <BadgeItem key={badge.id} badge={badge} rowVariant={variant === "row"} />
         ))}
       </div>
 

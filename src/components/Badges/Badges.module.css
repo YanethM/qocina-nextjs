@@ -50,13 +50,13 @@
   gap: 1rem;
 }
 
-.badgesRow .badge {
-  flex: 1 1 0;
+.badgeRowItem {
+  flex: 1;
   max-width: none;
   min-width: 0;
 }
 
-.badgesRow .badgeIcon {
+.badgeRowIcon {
   width: 100%;
   max-width: 130px;
   height: 130px;
