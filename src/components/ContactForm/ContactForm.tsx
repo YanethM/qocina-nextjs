@@ -2,11 +2,41 @@
 
 import { useState } from "react";
 import { API_URL } from "@/lib/strapi";
+import { useLocale } from "@/hooks/useLocale";
 import styles from "./ContactForm.module.css";
 
 type Status = "idle" | "loading" | "success" | "error";
 
+const COPY = {
+  es: {
+    namePlaceholder: "Nombre",
+    emailPlaceholder: "Correo electrónico",
+    messagePlaceholder: "Mensaje",
+    sending: "Enviando...",
+    submit: "Enviar",
+    successTitle: "¡Mensaje enviado!",
+    successText: "Nos pondremos en contacto contigo pronto.",
+    errorTitle: "Algo salió mal",
+    errorText: "Por favor intenta de nuevo.",
+    close: "Cerrar",
+  },
+  en: {
+    namePlaceholder: "Name",
+    emailPlaceholder: "Email",
+    messagePlaceholder: "Message",
+    sending: "Sending...",
+    submit: "Send",
+    successTitle: "Message sent!",
+    successText: "We'll get in touch with you soon.",
+    errorTitle: "Something went wrong",
+    errorText: "Please try again.",
+    close: "Close",
+  },
+} as const;
+
 export default function ContactForm() {
+  const locale = useLocale();
+  const t = COPY[locale];
   const [form, setForm] = useState({ nombre: "", correo: "", mensaje: "" });
   const [status, setStatus] = useState<Status>("idle");
 
@@ -47,7 +77,7 @@ export default function ContactForm() {
           className={styles.input}
           type="text"
           name="nombre"
-          placeholder="Nombre"
+          placeholder={t.namePlaceholder}
           value={form.nombre}
           onChange={handleChange}
           required
@@ -56,7 +86,7 @@ export default function ContactForm() {
           className={styles.input}
           type="email"
           name="correo"
-          placeholder="Correo electrónico"
+          placeholder={t.emailPlaceholder}
           value={form.correo}
           onChange={handleChange}
           required
@@ -64,7 +94,7 @@ export default function ContactForm() {
         <textarea
           className={`${styles.input} ${styles.textarea}`}
           name="mensaje"
-          placeholder="Mensaje"
+          placeholder={t.messagePlaceholder}
           value={form.mensaje}
           onChange={handleChange}
           required
@@ -76,7 +106,7 @@ export default function ContactForm() {
             data-btn="yellow"
             disabled={status === "loading"}
           >
-            {status === "loading" ? "Enviando..." : "Enviar"}
+            {status === "loading" ? t.sending : t.submit}
           </button>
         </div>
       </form>
@@ -86,16 +116,14 @@ export default function ContactForm() {
           <span className={styles.toastIcon}>{status === "success" ? "✓" : "!"}</span>
           <div>
             <p className={styles.toastTitle}>
-              {status === "success" ? "¡Mensaje enviado!" : "Algo salió mal"}
+              {status === "success" ? t.successTitle : t.errorTitle}
             </p>
             <p className={styles.toastText}>
-              {status === "success"
-                ? "Nos pondremos en contacto contigo pronto."
-                : "Por favor intenta de nuevo."}
+              {status === "success" ? t.successText : t.errorText}
             </p>
           </div>
         </div>
-        <button className={styles.toastClose} onClick={() => setStatus("idle")} aria-label="Cerrar">✕</button>
+        <button className={styles.toastClose} onClick={() => setStatus("idle")} aria-label={t.close}>✕</button>
       </div>
     </>
   );

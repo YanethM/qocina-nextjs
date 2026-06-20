@@ -7,19 +7,26 @@ export default function CocinarConQ({
   historia_frase_q,
   historia_cta,
   siteCode,
+  locale,
 }: {
   historia_descripcion?: string;
   historia_frase_q?: string;
   historia_cta?: { texto: string; url: string; nueva_ventana: boolean } | null;
   siteCode?: string;
+  locale?: string;
 }) {
   if (!historia_descripcion && !historia_frase_q && !historia_cta) return null;
+
+  const waveImageSrc =
+    locale === "en"
+      ? "/images/web/home/cocinar/wave_cocinar_con_q_en.svg"
+      : "/images/web/home/cocinar/wave_cocinar_con_q.svg";
 
   return (
     <section className={styles.cocinarConQ}>
       <div className={styles.imageWrapper}>
         <Image
-          src="/images/web/home/cocinar/wave_cocinar_con_q.svg"
+          src={waveImageSrc}
           alt=""
           width={1920}
           height={864}

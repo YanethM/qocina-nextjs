@@ -18,6 +18,7 @@ interface ProductosProps {
   ctaText?: string;
   ctaUrl?: string;
   ctaNuevaVentana?: boolean;
+  addToCartText?: string;
   className?: string;
 }
 
@@ -54,10 +55,12 @@ function CardItem({
   producto,
   fallbackColorClass,
   priority = false,
+  addToCartText = "Añadir al carrito",
 }: {
   producto: Producto;
   fallbackColorClass: string;
   priority?: boolean;
+  addToCartText?: string;
 }) {
   const siteCode = useSiteCode();
   const apiColor = producto.color ?? null;
@@ -119,7 +122,7 @@ function CardItem({
         <button
           className={styles.addToCartBtn}
           style={btnStyle}>
-          Añadir al carrito
+          {addToCartText}
         </button>
       </div>
     </Link>
@@ -136,6 +139,7 @@ export default function Productos({
   ctaText,
   ctaUrl,
   ctaNuevaVentana,
+  addToCartText,
   className,
 }: ProductosProps) {
   const siteCode = useSiteCode();
@@ -181,6 +185,7 @@ export default function Productos({
             producto={producto}
             fallbackColorClass={getFallbackColor(index)}
             priority={index === 0}
+            addToCartText={addToCartText}
           />
         ))}
       </div>
@@ -195,7 +200,7 @@ export default function Productos({
           style={{ transform: `translateX(-${translateX}px)` }}>
           {productos.map((producto, index) => (
             <div key={producto.id} className={styles.slide}>
-              <CardItem producto={producto} fallbackColorClass={getFallbackColor(index)} priority={index === 0} />
+              <CardItem producto={producto} fallbackColorClass={getFallbackColor(index)} priority={index === 0} addToCartText={addToCartText} />
             </div>
           ))}
         </div>

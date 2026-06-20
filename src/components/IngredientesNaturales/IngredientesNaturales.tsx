@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCarousel } from "@/hooks/useCarousel";
 import { useSiteCode } from "@/hooks/useSiteCode";
+import { useLocale } from "@/hooks/useLocale";
 import styles from "./IngredientesNaturales.module.css";
 
 interface IngredientesNaturalesProps {
@@ -17,16 +18,21 @@ interface IngredientesNaturalesProps {
   } | null;
 }
 
-const images = [
-  {
-    src: "/images/web/home/ingredientes_naturales/image1.svg",
-    alt: "Ingredientes naturales 1",
-  },
-  {
-    src: "/images/web/home/ingredientes_naturales/image2.png",
-    alt: "Ingredientes naturales 2",
-  },
-];
+function getImages(locale: "es" | "en") {
+  return [
+    {
+      src:
+        locale === "en"
+          ? "/images/web/home/ingredientes_naturales/image1_en.svg"
+          : "/images/web/home/ingredientes_naturales/image1.svg",
+      alt: "Ingredientes naturales 1",
+    },
+    {
+      src: "/images/web/home/ingredientes_naturales/image2.png",
+      alt: "Ingredientes naturales 2",
+    },
+  ];
+}
 
 export default function IngredientesNaturales({
   natural_titulo,
@@ -35,6 +41,8 @@ export default function IngredientesNaturales({
   natural_cta,
 }: IngredientesNaturalesProps) {
   const siteCode = useSiteCode();
+  const locale = useLocale();
+  const images = getImages(locale);
   const { current, goTo, handleTouchStart, handleTouchEnd } = useCarousel(
     images.length,
   );
@@ -49,7 +57,7 @@ export default function IngredientesNaturales({
       <div className={styles.desktopContainer}>
         <div className={styles.imageWrapper}>
           <Image
-            src="/images/web/home/ingredientes_naturales/image1.svg"
+            src={images[0].src}
             alt="Ingredientes naturales 1"
             fill
             sizes="(max-width: 768px) 100vw, 50vw"

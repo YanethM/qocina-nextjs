@@ -43,7 +43,13 @@ body {
 }
 
 main {
-  margin-top: -24px;
+  padding-top: 80px;
+}
+
+@media (max-width: 768px) {
+  main {
+    padding-top: 70px;
+  }
 }
 
 a {

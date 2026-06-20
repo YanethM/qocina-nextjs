@@ -20,6 +20,11 @@ export default async function NuestroSecreto({ secreto_titulo, secreto_descripci
   const badgesRes = await getBadges(locale).catch(() => null);
   const badges = badgesRes?.data ?? [];
 
+  const gastonImageSrc =
+    locale === "en"
+      ? "/images/web/home/secret/gaston_en.svg"
+      : "/images/web/home/secret/gaston.svg";
+
   return (
     <section className={styles.nuestroSecreto}>
       <div className={styles.innerContainer}>
@@ -76,7 +81,7 @@ export default async function NuestroSecreto({ secreto_titulo, secreto_descripci
 
         <div className={styles.imageWrapper}>
           <Image
-            src="/images/web/home/secret/gaston.svg"
+            src={gastonImageSrc}
             alt="Chef Gastón Acurio"
             fill
             sizes="(max-width: 768px) 100vw, 60vw"

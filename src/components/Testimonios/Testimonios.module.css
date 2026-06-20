@@ -178,6 +178,11 @@
   transform: translateX(232px);
 }
 
+.card:nth-child(4) .author,
+.card:nth-child(4) .content {
+  color: #fff;
+}
+
 .grid[data-count="1"],
 .grid[data-count="2"] {
   padding-bottom: 40px;
@@ -255,12 +260,12 @@
 
 .starFilled {
   color: #de9a0f;
-  font-size: 16px;
+  font-size: 20px;
 }
 
 .starEmpty {
   color: #ccc;
-  font-size: 16px;
+  font-size: 20px;
 }
 
 .author {
@@ -395,7 +400,7 @@
   }
 
   .author {
-    font-size: 28px;
+    font-size: 35px;
   }
 
   
@@ -425,7 +430,7 @@
   }
 
   .author {
-    font-size: 24px;
+    font-size: 35px;
   }
 
   .content {
@@ -518,13 +523,17 @@
     flex-shrink: 0;
   }
 
+  .mobileCard .cardBgImage {
+    object-position: right center;
+  }
+
   .mobileCardText {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
     padding: 20px;
-    background: rgba(255, 255, 255, 0.35);
+    background: #00000054;
     backdrop-filter: blur(22px) saturate(190%);
     -webkit-backdrop-filter: blur(22px) saturate(190%);
     will-change: backdrop-filter;
@@ -534,6 +543,11 @@
     flex-direction: column;
     gap: 6px;
     border-top: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .mobileCardText .author,
+  .mobileCardText .content {
+    color: #fff;
   }
 
   .dotsContainer {

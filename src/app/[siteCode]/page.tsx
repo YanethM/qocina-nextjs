@@ -43,7 +43,7 @@ export default async function Home({ params }: Props) {
     getProductos(locale, siteCode).catch((e) => { console.error("getProductos error:", e); return null; }),
     getRecetas(locale, undefined, siteCode).catch((e) => { console.error("getRecetas error:", e); return null; }),
     getTestimonios(locale).catch((e) => { console.error("getTestimonios error:", e); return null; }),
-    getContactoPage(locale, siteCode).catch(() => null),
+    getContactoPage(locale).catch(() => null),
   ]);
 
   const slides = homeRes?.data?.slider ?? [];
@@ -70,6 +70,7 @@ export default async function Home({ params }: Props) {
         ctaText={productosCta?.texto}
         ctaUrl={productosCta?.url}
         ctaNuevaVentana={productosCta?.nueva_ventana}
+        addToCartText={homeRes?.data?.productos_carrito_cta?.texto}
       />
 
       {(homeRes?.data?.natural_titulo ||
@@ -99,6 +100,7 @@ export default async function Home({ params }: Props) {
         historia_frase_q={homeRes?.data?.historia_frase_q}
         historia_cta={homeRes?.data?.historia_cta}
         siteCode={siteCode}
+        locale={locale}
       />
 
       {(homeRes?.data?.amazon_titulo ||
