@@ -327,6 +327,11 @@ export async function getProductosPage(locale?: string, siteCode?: string) {
     "populate[ayuda_imagen][fields][2]": "width",
     "populate[ayuda_imagen][fields][3]": "height",
     "populate[ayuda_imagen][fields][4]": "formats",
+    "populate[ayuda_imagen_mobile][fields][0]": "url",
+    "populate[ayuda_imagen_mobile][fields][1]": "alternativeText",
+    "populate[ayuda_imagen_mobile][fields][2]": "width",
+    "populate[ayuda_imagen_mobile][fields][3]": "height",
+    "populate[ayuda_imagen_mobile][fields][4]": "formats",
     "populate[ayuda_cta]": "*",
   }, locale, siteCode);
   return {

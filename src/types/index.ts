@@ -314,6 +314,7 @@ export interface ProductosPage {
   ayuda_titulo: string | null;
   ayuda_subtitulo: string | null;
   ayuda_imagen: StrapiImage | null;
+  ayuda_imagen_mobile: StrapiImage | null;
   ayuda_cta: { id: number; texto: string; url: string; nueva_ventana: boolean } | null;
   meta_title: string | null;
   meta_description: string | null;

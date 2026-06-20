@@ -47,6 +47,7 @@ export default async function ProductosPage({ params }: Props) {
   if (!pageData) return <ComingSoon />;
 
   const ayudaImagen = pageData?.ayuda_imagen;
+  const ayudaImagenMobile = pageData?.ayuda_imagen_mobile;
   const showAyudaSection = Boolean(
     pageData?.ayuda_titulo || pageData?.ayuda_subtitulo || pageData?.ayuda_cta,
   );
@@ -58,6 +59,13 @@ export default async function ProductosPage({ params }: Props) {
         ayudaImagen.url,
     )
     : null;
+  const ayudaImagenMobileUrl = ayudaImagenMobile
+    ? getStrapiImageUrl(
+      ayudaImagenMobile.formats?.medium?.url ??
+        ayudaImagenMobile.formats?.small?.url ??
+        ayudaImagenMobile.url,
+    )
+    : "/images/web/products/tienes_dudas_mobile.svg";
   const productos = (pageData?.productos_destacados ?? []).filter((p) => p.disponible);
   console.log("[productos] ids:", productos.map((p) => ({ id: p.id, documentId: p.documentId, nombre: p.nombre })));
   const rawPacks = pageData?.packs_destacados;
@@ -227,19 +235,15 @@ export default async function ProductosPage({ params }: Props) {
           </div>
 
           <div className={styles.tieneDudasMobileImg}>
-            {ayudaImagenUrl ? (
-              <Image
-                src={ayudaImagenUrl}
-                alt={ayudaImagen?.alternativeText ?? ""}
-                width={390}
-                height={400}
-                className={styles.tieneDudasBgImage}
-                style={{ width: "100%", height: "auto" }}
-                unoptimized
-              />
-            ) : (
-              <div className={styles.tieneDudasPlaceholder} />
-            )}
+            <Image
+              src={ayudaImagenMobileUrl}
+              alt={ayudaImagenMobile?.alternativeText ?? ""}
+              width={390}
+              height={400}
+              className={styles.tieneDudasBgImage}
+              style={{ width: "100%", height: "auto" }}
+              unoptimized
+            />
           </div>
         </section>
       )}

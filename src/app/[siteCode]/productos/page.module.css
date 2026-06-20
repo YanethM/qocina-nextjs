@@ -270,12 +270,11 @@
 }
 
 .paraQuienCircle {
-  width: clamp(270px, 30vw, 431px);
-  height: clamp(270px, 30vw, 431px);
+  width: clamp(300px, 33vw, 470px);
+  height: clamp(300px, 33vw, 470px);
   flex-shrink: 0;
   border-radius: 50%;
   overflow: hidden;
-  background: #e0e0e0;
   position: relative;
   z-index: 2;
 
@@ -334,11 +333,13 @@
   height: 100%;
   max-width: 1440px;
   margin: 0 auto;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   padding-left: 64px;
+  padding-right: 45%;
   gap: 24px;
   z-index: 1;
 }
@@ -346,10 +347,10 @@
 .tieneDudasContent {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 16px;
-  max-width: 600px;
-  text-align: left;
+  max-width: 100%;
+  text-align: center;
 }
 
 .tieneDudasTitle {
@@ -358,7 +359,7 @@
   font-size: 48px;
   line-height: 120%;
   letter-spacing: 0%;
-  text-align: left;
+  text-align: center;
   color: #ffffff;
   margin: 0;
 }
@@ -369,7 +370,7 @@
   font-size: 18px;
   line-height: 140%;
   letter-spacing: 0%;
-  text-align: left;
+  text-align: center;
   color: #ffffff;
   margin: 0;
 }
@@ -410,7 +411,15 @@
   }
 
   .hero {
-    height: 400px;
+    height: 470px;
+    margin-top: -70px;
+  }
+
+  .heroText {
+    top: 70px;
+    bottom: 0;
+    left: 0;
+    right: 0;
   }
 
   .heroTitulo {
@@ -585,8 +594,8 @@
 
 @media (min-width: 641px) and (max-width: 768px) {
   .paraQuienCircle {
-    width: 270px;
-    height: 270px;
+    width: 300px;
+    height: 300px;
   }
 }
 
@@ -624,12 +633,12 @@
   }
 
   .hero {
-    height: 280px;
+    height: 350px;
   }
 
   .paraQuienCircle {
-    width: 204px;
-    height: 204px;
+    width: 224px;
+    height: 224px;
     margin-top: 0;
   }
 }
