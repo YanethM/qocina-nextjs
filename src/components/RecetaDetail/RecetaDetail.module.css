@@ -562,7 +562,8 @@
 
 @media (max-width: 768px) {
   .hero {
-    height: 380px;
+    height: 450px;
+    margin-top: -70px;
   }
 
   .heroContent {

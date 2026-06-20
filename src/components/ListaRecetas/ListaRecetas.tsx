@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import RecetaCard from "@/components/RecetaCard/RecetaCard";
 import { getStrapiImageUrl } from "@/lib/strapi";
 import { getRecetas } from "@/lib/api";
@@ -11,6 +11,8 @@ import styles from "./ListaRecetas.module.css";
 interface ListaRecetasProps {
   recetas: Receta[];
   hideFilters?: boolean;
+  titulo?: string;
+  subtitulo?: string;
   labelTipoReceta?: string;
   labelRegion?: string;
   labelDieta?: string;
@@ -20,10 +22,9 @@ interface ListaRecetasProps {
   siteCode?: string;
 }
 
-/* ── Filter options ── */
-const TIPOS_RECETA = ["Piqueos", "Sopas y caldos", "Entradas", "Platos de fondo"];
-const COCINA_REGION = ["Perú", "Fusión latinoamericana", "Fusión USA", "Fusión Europea"];
-const TIPOS_DIETA = ["Vegana", "Vegetariana"];
+function distinctValues(recetas: Receta[], field: "tipo_receta" | "cocina_region" | "tipo_dieta") {
+  return Array.from(new Set(recetas.map((r) => r[field]).filter((v): v is string => Boolean(v))));
+}
 
 const PAGE_SIZE = 6;
 
@@ -101,6 +102,8 @@ function Dropdown({
 export default function ListaRecetas({
   recetas,
   hideFilters = false,
+  titulo = "Recetas fáciles, rápidas y sanas",
+  subtitulo = "Descubre preparaciones latinas con ese sabor casero y un toque extra que despierta recuerdos y conecta al primer bocado.",
   labelTipoReceta,
   labelRegion,
   labelDieta,
@@ -111,6 +114,10 @@ export default function ListaRecetas({
 }: ListaRecetasProps) {
   const urlSiteCode = useSiteCode();
   const sc = siteCode ?? urlSiteCode;
+  const isEnglish = locale === "en";
+  const tiposReceta = useMemo(() => distinctValues(recetas, "tipo_receta"), [recetas]);
+  const cocinaRegion = useMemo(() => distinctValues(recetas, "cocina_region"), [recetas]);
+  const tiposDieta = useMemo(() => distinctValues(recetas, "tipo_dieta"), [recetas]);
   const [filters, setFilters] = useState({ tipoReceta: "", cocina: "", dieta: "" });
   const [visible, setVisible] = useState(PAGE_SIZE);
   const [resultadoFiltrado, setResultadoFiltrado] = useState<Receta[] | null>(null);
@@ -150,35 +157,36 @@ export default function ListaRecetas({
       ) : (
         <div className={styles.header}>
           <div className={styles.headerLeft}>
-            <h2 className={styles.title}>
-              Recetas fáciles,<br />rápidas y sanas
-            </h2>
-            <p className={styles.subtitle}>
-              Descubre preparaciones latinas con ese sabor casero y un toque extra
-              que despierta recuerdos y conecta al primer bocado.
-            </p>
+            <h2 className={styles.title}>{titulo}</h2>
+            <p className={styles.subtitle}>{subtitulo}</p>
           </div>
 
           {showFilters && (
             <div className={styles.filters}>
-              <Dropdown
-                label={labelTipoReceta ?? "Tipo de Receta"}
-                options={TIPOS_RECETA}
-                value={filters.tipoReceta}
-                onChange={(v) => applyFilter({ ...filters, tipoReceta: v })}
-              />
-              <Dropdown
-                label={labelRegion ?? "Cocina por Región"}
-                options={COCINA_REGION}
-                value={filters.cocina}
-                onChange={(v) => applyFilter({ ...filters, cocina: v })}
-              />
-              <Dropdown
-                label={labelDieta ?? "Tipo de dieta"}
-                options={TIPOS_DIETA}
-                value={filters.dieta}
-                onChange={(v) => applyFilter({ ...filters, dieta: v })}
-              />
+              {tiposReceta.length > 0 && (
+                <Dropdown
+                  label={labelTipoReceta ?? (isEnglish ? "Type of Recipe" : "Tipo de Receta")}
+                  options={tiposReceta}
+                  value={filters.tipoReceta}
+                  onChange={(v) => applyFilter({ ...filters, tipoReceta: v })}
+                />
+              )}
+              {cocinaRegion.length > 0 && (
+                <Dropdown
+                  label={labelRegion ?? (isEnglish ? "Cuisine by Region" : "Cocina por Región")}
+                  options={cocinaRegion}
+                  value={filters.cocina}
+                  onChange={(v) => applyFilter({ ...filters, cocina: v })}
+                />
+              )}
+              {tiposDieta.length > 0 && (
+                <Dropdown
+                  label={labelDieta ?? (isEnglish ? "Diet Type" : "Tipo de dieta")}
+                  options={tiposDieta}
+                  value={filters.dieta}
+                  onChange={(v) => applyFilter({ ...filters, dieta: v })}
+                />
+              )}
             </div>
           )}
         </div>
@@ -203,6 +211,7 @@ export default function ListaRecetas({
                 descripcion={receta.descripcion_corta ?? receta.descripcion}
                 imagenUrl={imgUrl}
                 imagenAlt={receta.imagen_principal?.alternativeText ?? receta.titulo}
+                colorCard={receta.color_card}
                 ctaText={ctaCargarMas}
               />
             );

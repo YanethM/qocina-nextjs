@@ -2,11 +2,14 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import type { Producto } from "@/types";
+import { COLOR_MAP } from "@/lib/constants";
 import styles from "./BasesCulinarias.module.css";
 
 const bases = [
   {
     id: "verde",
+    colorKey: "verde",
     src: "/images/web/recetas/base_verde.svg",
     srcActive: "/images/web/recetas/base_verde_detail.svg",
     srcOtherActive: undefined,
@@ -14,52 +17,63 @@ const bases = [
     srcMobileActive: "/images/mobile/bases_culinarias/green_base_detail.svg",
     alt: "Base Verde",
     label: "Base culinaria Verde",
-    labelColor: "#fff",
     description: "Perfecto para mariscos, arroces y platos frescos.",
-    descriptionColor: "#fff",
+    detailColor: "#fff",
   },
   {
     id: "amarilla",
+    colorKey: "amarillo",
     src: "/images/web/recetas/base_amarilla.svg",
     srcActive: "/images/web/recetas/base_amarilla_detail.svg",
-    srcOtherActive: "/images/web/recetas/base_amarilla_verde_detail.svg",
+    srcOtherActive: "/images/web/recetas/base_amarilla_resumida.svg",
     srcMobile: "/images/mobile/bases_culinarias/yellow_base.svg",
     srcMobileActive: "/images/mobile/bases_culinarias/yellow_base_detail.svg",
     alt: "Base Amarilla",
     label: "Base culinaria Amarilla",
-    labelColor: "#000",
     description: "Perfecto para mariscos, arroces y platos frescos.",
-    descriptionColor: "#000",
+    detailColor: "#1a1a1a",
   },
   {
     id: "roja",
+    colorKey: "rojo",
     src: "/images/web/recetas/base_roja.svg",
     srcActive: "/images/web/recetas/base_roja_detail.svg",
-    srcOtherActive: undefined,
+    srcOtherActive: "/images/web/recetas/base_roja_resumida.svg",
     srcMobile: "/images/mobile/bases_culinarias/red_base.svg",
     srcMobileActive: "/images/mobile/bases_culinarias/red_base_detail.svg",
     alt: "Base Roja",
     label: "Base culinaria Roja",
-    labelColor: "#fff",
     description: "Perfecto para mariscos, arroces y platos frescos.",
-    descriptionColor: "#fff",
+    detailColor: "#fff",
   },
-];
+] as const;
 
-export default function BasesCulinarias() {
+interface BasesCulinariasProps {
+  productos?: Producto[];
+}
+
+export default function BasesCulinarias({ productos = [] }: BasesCulinariasProps) {
   const [activeId, setActiveId] = useState<string | null>(null);
 
   return (
     <section className={styles.section}>
       {bases.map((base) => {
         const isActive = activeId === base.id;
+        const isOtherActive = activeId !== null && !isActive;
         const imageSrc =
           isActive
             ? base.srcActive
-            : activeId !== null && base.srcOtherActive
+            : isOtherActive && base.srcOtherActive
             ? base.srcOtherActive
             : base.src;
         const mobileImageSrc = isActive ? base.srcMobileActive : base.srcMobile;
+
+        const colorHex = COLOR_MAP[base.colorKey];
+        const producto = productos.find(
+          (p) => p.color?.toUpperCase() === colorHex?.toUpperCase(),
+        );
+        const labelText = producto?.nombre ?? base.label;
+        const descriptionText = producto?.descripcion_corta ?? base.description;
 
         return (
           <div
@@ -86,6 +100,19 @@ export default function BasesCulinarias() {
                 priority
               />
             </div>
+
+            {isActive ? (
+              <div className={styles.detailOverlay} style={{ color: base.detailColor }}>
+                <h3 className={styles.detailTitle}>{base.alt}</h3>
+                <p className={styles.detailDescription}>{descriptionText}</p>
+              </div>
+            ) : (
+              <p
+                className={`${styles.label} ${isOtherActive ? styles.labelCentered : ""}`}
+              >
+                {labelText}
+              </p>
+            )}
           </div>
         );
       })}

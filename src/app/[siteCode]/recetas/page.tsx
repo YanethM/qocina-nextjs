@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { getRecetasPage, getRecetas, getStrapiImageUrl } from "@/lib/api";
+import { getRecetasPage, getRecetas, getProductos, getStrapiImageUrl } from "@/lib/api";
 import { getLocale } from "@/lib/locale";
 import ComingSoon from "@/components/ComingSoon/ComingSoon";
 import styles from "./page.module.css";
@@ -23,13 +23,15 @@ export async function generateMetadata({ params }: Props) {
 export default async function RecetasPage({ params }: Props) {
   const { siteCode } = await params;
   const locale = await getLocale();
-  const [recetasPageRes, recetasRes] = await Promise.all([
+  const [recetasPageRes, recetasRes, productosRes] = await Promise.all([
     getRecetasPage(locale, siteCode).catch(() => null),
     getRecetas(locale, undefined, siteCode).catch(() => null),
+    getProductos(locale, siteCode).catch(() => null),
   ]);
 
   const pageData = recetasPageRes?.data;
   const recetas = recetasRes?.data ?? [];
+  const productos = productosRes?.data ?? [];
 
   if (!pageData && recetas.length === 0) return <ComingSoon />;
 
@@ -37,6 +39,9 @@ export default async function RecetasPage({ params }: Props) {
   const heroImageMobileUrl = pageData?.hero_imagen_mobile ? getStrapiImageUrl(pageData.hero_imagen_mobile.url) : null;
   const showBanner = Boolean(pageData?.hero_titulo || pageData?.hero_imagen || pageData?.hero_imagen_mobile);
   const testimonios = pageData?.testimonios ?? [];
+  const logoSrc = locale === "en"
+    ? "/images/web/recetas/logo_en.svg"
+    : "/images/web/recetas/logo.svg";
 
   return (
     <div className={styles.page}>
@@ -66,7 +71,7 @@ export default async function RecetasPage({ params }: Props) {
               {pageData?.hero_subtitulo && (
                 <>
                   <Image
-                    src="/images/web/recetas/logo.svg"
+                    src={logoSrc}
                     alt=""
                     width={180}
                     height={54}
@@ -104,7 +109,7 @@ export default async function RecetasPage({ params }: Props) {
                 {pageData?.hero_subtitulo && (
                   <>
                     <Image
-                      src="/images/web/recetas/logo.svg"
+                      src={logoSrc}
                       alt=""
                       width={180}
                       height={54}
@@ -120,10 +125,12 @@ export default async function RecetasPage({ params }: Props) {
         </>
       )}
 
-      <BasesCulinarias />
+      <BasesCulinarias productos={productos} />
       {recetas.length > 0 && (
         <ListaRecetas
           recetas={recetas}
+          titulo={pageData?.hero_subtitulo ?? undefined}
+          subtitulo={pageData?.descripcion ?? undefined}
           labelTipoReceta={pageData?.filtro_tipo_receta_label ?? undefined}
           labelRegion={pageData?.filtro_region_label ?? undefined}
           labelDieta={pageData?.filtro_dieta_label ?? undefined}

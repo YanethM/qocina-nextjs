@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { COLOR_MAP, WAVE_MAP, DEFAULT_COLOR, DEFAULT_WAVE } from "@/lib/constants";
 import styles from "./RecetaCard.module.css";
 
 export interface RecetaCardProps {
@@ -8,7 +9,7 @@ export interface RecetaCardProps {
   descripcion: string;
   imagenUrl: string | null;
   imagenAlt?: string;
-  accentColor?: string;
+  colorCard?: string | null;
   ctaText?: string;
 }
 
@@ -18,11 +19,14 @@ export default function RecetaCard({
   descripcion,
   imagenUrl,
   imagenAlt,
-  accentColor = "#CE171C",
+  colorCard,
   ctaText = "Ver receta",
 }: RecetaCardProps) {
+  const accent = (colorCard && COLOR_MAP[colorCard]) ?? DEFAULT_COLOR;
+  const wave = (colorCard && WAVE_MAP[colorCard]) ?? DEFAULT_WAVE;
+
   return (
-    <Link href={href} className={styles.card} data-card style={{ "--accent": accentColor } as React.CSSProperties}>
+    <Link href={href} className={styles.card} data-card style={{ "--accent": accent } as React.CSSProperties}>
       <div className={styles.imageWrapper}>
         {imagenUrl ? (
           <Image
@@ -39,7 +43,7 @@ export default function RecetaCard({
 
       <div className={styles.waveWrapper}>
         <Image
-          src="/images/web/recetas/red_wave.svg"
+          src={wave}
           alt=""
           width={424}
           height={58}
