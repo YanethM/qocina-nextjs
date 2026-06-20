@@ -248,6 +248,7 @@ export interface QuienesSomos {
   hero_titulo: string | null;
   hero_subtitulo: string | null;
   hero_imagen: StrapiImage | null;
+  hero_imagen_mobile: StrapiImage | null;
   que_es_titulo: string | null;
   que_es_descripcion: string | null;
   chef_imagen: StrapiImage | null;

@@ -271,6 +271,7 @@ export async function getPreguntaFrecuente(id: string, locale?: string, siteCode
 export async function getQuienesSomos(locale?: string, siteCode?: string) {
   return fetchAPI<StrapiListResponse<QuienesSomos>>("/api/quienes-somos-page", {
     ...imgFields("hero_imagen"),
+    ...imgFields("hero_imagen_mobile"),
     ...imgFields("chef_imagen"),
     "populate[valores][populate][imagen][fields][0]": "url",
     "populate[valores][populate][imagen][fields][1]": "alternativeText",

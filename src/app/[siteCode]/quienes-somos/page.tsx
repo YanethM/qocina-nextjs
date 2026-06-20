@@ -34,6 +34,7 @@ export default async function NosotrosPage({ params }: Props) {
   if (!data && productos.length === 0) return <ComingSoon />;
 
   const heroImagen = data?.hero_imagen;
+  const heroImagenMobile = data?.hero_imagen_mobile;
   const heroSrc = heroImagen?.formats?.large?.url
     ? getStrapiImageUrl(heroImagen.formats.large.url)
     : heroImagen?.url
@@ -44,7 +45,11 @@ export default async function NosotrosPage({ params }: Props) {
     ? getStrapiImageUrl(heroImagen.formats.medium.url)
     : heroSrc;
 
-  const heroSrcSmall = heroImagen?.formats?.small?.url
+  const heroSrcSmall = heroImagenMobile?.formats?.medium?.url
+    ? getStrapiImageUrl(heroImagenMobile.formats.medium.url)
+    : heroImagenMobile?.url
+    ? getStrapiImageUrl(heroImagenMobile.url)
+    : heroImagen?.formats?.small?.url
     ? getStrapiImageUrl(heroImagen.formats.small.url)
     : heroSrcMedium;
 
@@ -54,7 +59,7 @@ export default async function NosotrosPage({ params }: Props) {
   const showChefBackground = Boolean(
     chefImagen || data?.chef_nombre || data?.chef_titulo || data?.chef_descripcion,
   );
-  const chefImageSrc = chefImagen?.formats?.large?.url
+  const chefImageFromStrapi = chefImagen?.formats?.large?.url
     ? getStrapiImageUrl(chefImagen.formats.large.url)
     : chefImagen?.formats?.medium?.url
     ? getStrapiImageUrl(chefImagen.formats.medium.url)
@@ -64,7 +69,9 @@ export default async function NosotrosPage({ params }: Props) {
     ? getStrapiImageUrl(chefImagen.formats.thumbnail.url)
     : chefImagen?.url
     ? getStrapiImageUrl(chefImagen.url)
-    : "/images/web/nosotros/gaston.svg";
+    : null;
+  const chefImageSrc = chefImageFromStrapi ?? "/images/web/nosotros/gaston.svg";
+  const chefImageSrcMobile = "/images/mobile/nosotros/gaston.svg";
   const chefImageAlt = chefImagen?.alternativeText ?? data?.chef_nombre ?? "Gastón Acurio";
 
   return (
@@ -213,7 +220,7 @@ export default async function NosotrosPage({ params }: Props) {
 
         <div className={`${styles.gastonPrevWrapper} ${styles.mobileOnly}`}>
           <Image
-            src="/images/mobile/nosotros/PREV_GASTON.svg"
+            src="/images/mobile/nosotros/prev_gaston.svg"
             alt=""
             width={390}
             height={500}
@@ -236,7 +243,7 @@ export default async function NosotrosPage({ params }: Props) {
         <div className={`${styles.gastonMainWrapper} ${styles.mobileOnly}`}>
           {showChefBackground && (
             <Image
-              src={chefImageSrc}
+              src={chefImageSrcMobile}
               alt={chefImageAlt}
               width={390}
               height={800}
@@ -343,8 +350,8 @@ export default async function NosotrosPage({ params }: Props) {
           <Image
             src="/images/mobile/nosotros/proceso.svg"
             alt={data?.proceso_titulo ?? "Proceso"}
-            width={390}
-            height={600}
+            width={393}
+            height={660}
             className={`${styles.gastonImage} ${styles.mobileOnly}`}
             style={{ width: "100%", height: "auto" }}
           />
