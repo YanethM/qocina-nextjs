@@ -45,7 +45,7 @@
   font-size: 48px;
   line-height: 120%;
   letter-spacing: 0%;
-  color: #000000;
+  color: #ffffff;
   margin: 0;
 }
 
@@ -61,7 +61,7 @@
   font-size: 24px;
   line-height: 130%;
   letter-spacing: 0%;
-  color: #000000;
+  color: #ffffff;
 }
 
 .porcionesIcons {
@@ -80,14 +80,13 @@
 
 .wavesTop {
   width: 100%;
-  height: 110px;
+  height: 70px;
   margin-top: -110px;
   position: relative;
   z-index: 3;
-  background-image: url("/images/web/recetas/recetas_detail/waves_solas.svg");
   background-size: 100% auto;
   background-repeat: no-repeat;
-  background-position: bottom center;
+  background-position: top center;
 }
 
 .wavesWrapper {
@@ -100,7 +99,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #F4A910;
 }
 
 .ingredientesOverWaves {
@@ -336,7 +334,7 @@
   height: 20px;
   background: #fff;
   border-radius: 999px;
-  border: 2px solid #F4A910;
+  border: 2px solid var(--receta-color);
   margin-top: 8px;
   padding: 3px;
   box-sizing: border-box;
@@ -344,7 +342,7 @@
 
 .difficultyFill {
   height: 100%;
-  background: #F4A910;
+  background: var(--receta-color);
   border-radius: 999px;
   transition: width 0.5s ease;
 }
@@ -380,7 +378,7 @@
   font-size: 220px;
   line-height: 50%;
   letter-spacing: 0%;
-  color: #F4A910;
+  color: var(--receta-color);
   vertical-align: middle;
   width: 140px;
   text-align: center;
@@ -403,7 +401,7 @@
 .tipsWaveTop {
   width: 100%;
   height: 110px;
-  background-image: url("/images/web/recetas/recetas_detail/waves_solas.svg");
+  background-image: var(--tips-wave-top);
   background-size: 100% auto;
   background-repeat: no-repeat;
   background-position: bottom center;
@@ -411,17 +409,11 @@
 
 .tipsBody {
   width: 100%;
-  background: #F4A910;
+  background: var(--receta-color);
   padding: 40px 93px 32px;
   display: flex;
   flex-direction: column;
   gap: 32px;
-}
-
-.tipsWaveBottomWrapper {
-  background: #F4A910;
-  padding-bottom: 46.24px;
-  line-height: 0;
 }
 
 .tipsHeader {
@@ -446,18 +438,12 @@
   gap: 20px;
 }
 
-.tipsWaveBottom {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
 .tipCard {
   display: flex;
   align-items: center;
   gap: 20px;
   padding: 24px 32px;
-  background: #FCE4B5;
+  background: color-mix(in srgb, var(--receta-color) 30%, white 70%);
   border-radius: 40px;
 }
 
@@ -466,14 +452,15 @@
     width: 88px;
     height: 88px;
     font-family: var(--font-palmer), sans-serif;
-    background: #f4a910;
+    background: var(--receta-color);
     border-radius: 50%;
     flex-shrink: 0;
     justify-content: center;
     align-items: center;
-    font-size: 114px;
+    font-size: 59.55px;
     font-weight: 400;
-    line-height: 1;
+    line-height: 50%;
+    letter-spacing: 0%;
     padding: 30px;
     display: flex;
 }
@@ -495,7 +482,7 @@
 
   .heroContent {
     top: auto;
-    bottom: 48px;
+    bottom: 130px;
     left: 40px;
     right: 40px;
   }
@@ -562,17 +549,20 @@
 
 @media (max-width: 768px) {
   .hero {
-    height: 450px;
+    height: 520px;
     margin-top: -70px;
+  }
+
+  .wavesTop {
+    height: 45px;
   }
 
   .heroContent {
     top: auto;
-    bottom: 32px;
+    bottom: 130px;
     left: 24px;
     right: 24px;
   }
-
 
   .heroTitle {
     font-size: 28px;
@@ -580,6 +570,10 @@
 
   .porcionesLabel {
     font-size: 18px;
+  }
+
+  .porcionesIcons {
+    gap: 6px;
   }
 
   .porcionIcon {
@@ -687,18 +681,19 @@
   }
 
   .tipNumero {
-    width: 72px;
-    height: 72px;
-    font-size: 88px;
+    width: 50px;
+    height: 50px;
     padding: 20px;
   }
 
   .tipText {
-    font-family: Montserrat, sans-serif;
-    font-size: 14px;
-    line-height: 1.5;
+    font-family: var(--font-palmer), sans-serif;
+    color: #1a1a1a;
     text-transform: uppercase;
-    font-weight: 600;
+    margin: 0;
+    font-size: 40px;
+    font-weight: 400;
+    line-height: 50%;
   }
 
   .tipsList {
@@ -734,31 +729,14 @@
   }
 
   .tipsBody {
-    background: #F4A910;
     padding: 24px 20px 40px;
   }
 
-  .tipsWaveBottomWrapper {
-    display: block;
-    width: 100%;
-    height: calc(100vw * 172 / 393);
-    background-image: url("/images/mobile/recetas/tips.svg");
-    background-size: 100% auto;
-    background-position: bottom center;
-    background-repeat: no-repeat;
-    background-color: transparent;
-    padding: 0;
-    line-height: 0;
-  }
-
-  .tipsWaveBottom {
-    display: none;
-  }
 }
 
 @media (max-width: 480px) {
   .hero {
-    height: 280px;
+    height: 480px;
   }
 
   .ingredientesBox {
@@ -778,10 +756,11 @@
   }
 
   .ingredientesImgWrapper {
-    display: flex;
-    justify-content: flex-end;
+    justify-content: center;
+    align-self: stretch;
     margin-top: 0;
-    margin-bottom: 0;
+    display: flex;
+    align-items: center;
   }
 
   .ingredientesImg {

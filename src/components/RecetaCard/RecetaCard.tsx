@@ -24,9 +24,15 @@ export default function RecetaCard({
 }: RecetaCardProps) {
   const accent = (colorCard && COLOR_MAP[colorCard]) ?? DEFAULT_COLOR;
   const wave = (colorCard && WAVE_MAP[colorCard]) ?? DEFAULT_WAVE;
+  const textColor = colorCard === "amarillo" ? "#1a1a1a" : "#fff";
 
   return (
-    <Link href={href} className={styles.card} data-card style={{ "--accent": accent } as React.CSSProperties}>
+    <Link
+      href={href}
+      className={styles.card}
+      data-card
+      style={{ "--accent": accent, "--text-color": textColor } as React.CSSProperties}
+    >
       <div className={styles.imageWrapper}>
         {imagenUrl ? (
           <Image

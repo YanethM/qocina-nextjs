@@ -10,8 +10,22 @@ export const WAVE_MAP: Record<string, string> = {
   amarillo: "/images/web/recetas/yellow_wave.svg",
 };
 
+export const WAVE_BANNER_MAP: Record<string, string> = {
+  rojo: "/images/web/recetas/recetas_detail/baner_waves_roja.svg",
+  verde: "/images/web/recetas/recetas_detail/baner_waves_verde.svg",
+  amarillo: "/images/web/recetas/recetas_detail/baner_waves_amarilla.svg",
+};
+
+export const TIPS_WAVE_TOP_MAP: Record<string, string> = {
+  rojo: "/images/web/recetas/recetas_detail/waves_rojas_solas.svg",
+  verde: "/images/web/recetas/recetas_detail/waves_verdes_solas.svg",
+  amarillo: "/images/web/recetas/recetas_detail/waves_amarillas_solas.svg",
+};
+
 export const DEFAULT_COLOR = COLOR_MAP.rojo;
 export const DEFAULT_WAVE = WAVE_MAP.rojo;
+export const DEFAULT_WAVE_BANNER = WAVE_BANNER_MAP.rojo;
+export const DEFAULT_TIPS_WAVE_TOP = TIPS_WAVE_TOP_MAP.rojo;
 
 export const COOKIE_MAX_AGE = 60 * 60 * 24 * 30;
 export const SITE_BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://qocina.com";

@@ -13,8 +13,8 @@ const bases = [
     src: "/images/web/recetas/base_verde.svg",
     srcActive: "/images/web/recetas/base_verde_detail.svg",
     srcOtherActive: undefined,
-    srcMobile: "/images/mobile/bases_culinarias/green_base.svg",
-    srcMobileActive: "/images/mobile/bases_culinarias/green_base_detail.svg",
+    srcMobile: "/images/mobile/recetas/base_verde.svg",
+    srcMobileActive: "/images/mobile/recetas/base_verde_detail.svg",
     alt: "Base Verde",
     label: "Base culinaria Verde",
     description: "Perfecto para mariscos, arroces y platos frescos.",
@@ -26,8 +26,8 @@ const bases = [
     src: "/images/web/recetas/base_amarilla.svg",
     srcActive: "/images/web/recetas/base_amarilla_detail.svg",
     srcOtherActive: "/images/web/recetas/base_amarilla_resumida.svg",
-    srcMobile: "/images/mobile/bases_culinarias/yellow_base.svg",
-    srcMobileActive: "/images/mobile/bases_culinarias/yellow_base_detail.svg",
+    srcMobile: "/images/mobile/recetas/base_amarilla.svg",
+    srcMobileActive: "/images/mobile/recetas/base_amarilla_detail.svg",
     alt: "Base Amarilla",
     label: "Base culinaria Amarilla",
     description: "Perfecto para mariscos, arroces y platos frescos.",
@@ -39,8 +39,8 @@ const bases = [
     src: "/images/web/recetas/base_roja.svg",
     srcActive: "/images/web/recetas/base_roja_detail.svg",
     srcOtherActive: "/images/web/recetas/base_roja_resumida.svg",
-    srcMobile: "/images/mobile/bases_culinarias/red_base.svg",
-    srcMobileActive: "/images/mobile/bases_culinarias/red_base_detail.svg",
+    srcMobile: "/images/mobile/recetas/base_roja.svg",
+    srcMobileActive: "/images/mobile/recetas/base_roja_detail.svg",
     alt: "Base Roja",
     label: "Base culinaria Roja",
     description: "Perfecto para mariscos, arroces y platos frescos.",
@@ -107,9 +107,7 @@ export default function BasesCulinarias({ productos = [] }: BasesCulinariasProps
                 <p className={styles.detailDescription}>{descriptionText}</p>
               </div>
             ) : (
-              <p
-                className={`${styles.label} ${isOtherActive ? styles.labelCentered : ""}`}
-              >
+              <p className={styles.label} style={{ color: base.detailColor }}>
                 {labelText}
               </p>
             )}

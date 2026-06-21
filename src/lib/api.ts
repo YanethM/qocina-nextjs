@@ -73,7 +73,7 @@ async function fetchAPI<T>(
   siteCode?: string,
   timeoutMs = 10000,
 ): Promise<T> {
-  const resolvedLocale = process.env.NEXT_PUBLIC_LOCALE || locale || "en";
+  const resolvedLocale = locale || process.env.NEXT_PUBLIC_LOCALE || "es";
   const resolvedSiteCode = resolveSiteCode(siteCode);
   const allParams = { locale: resolvedLocale, ...params };
   const qs = Object.entries(allParams)

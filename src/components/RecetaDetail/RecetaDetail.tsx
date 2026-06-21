@@ -1,5 +1,13 @@
 import Image from "next/image";
 import { getStrapiImageUrl } from "@/lib/strapi";
+import {
+  COLOR_MAP,
+  WAVE_BANNER_MAP,
+  TIPS_WAVE_TOP_MAP,
+  DEFAULT_COLOR,
+  DEFAULT_WAVE_BANNER,
+  DEFAULT_TIPS_WAVE_TOP,
+} from "@/lib/constants";
 import type { Receta } from "@/types";
 import styles from "./RecetaDetail.module.css";
 
@@ -28,8 +36,13 @@ export default function RecetaDetail({ receta }: Props) {
 
   const porcionesNum = parsePorciones(receta.porciones);
 
+  const colorCard = receta.color_card;
+  const wavesColor = (colorCard && COLOR_MAP[colorCard]) ?? DEFAULT_COLOR;
+  const wavesBanner = (colorCard && WAVE_BANNER_MAP[colorCard]) ?? DEFAULT_WAVE_BANNER;
+  const tipsWaveTop = (colorCard && TIPS_WAVE_TOP_MAP[colorCard]) ?? DEFAULT_TIPS_WAVE_TOP;
+
   return (
-    <article className={styles.page}>
+    <article className={styles.page} style={{ "--receta-color": wavesColor } as React.CSSProperties}>
       <div className={styles.heroSection}>
         <div className={styles.hero}>
           {heroImage && (
@@ -69,8 +82,8 @@ export default function RecetaDetail({ receta }: Props) {
           </div>
         </div>
 
-        <div className={styles.wavesTop} />
-        <div className={styles.wavesWrapper}>
+        <div className={styles.wavesTop} style={{ backgroundImage: `url(${wavesBanner})` }} />
+        <div className={styles.wavesWrapper} style={{ backgroundColor: wavesColor }}>
           {ingredientes.length > 0 && (
             <section className={styles.ingredientesOverWaves}>
               <h2 className={styles.ingredientesTitle}>INGREDIENTES</h2>
@@ -123,7 +136,7 @@ export default function RecetaDetail({ receta }: Props) {
                 </div>
                 <div className={styles.ingredientesImgWrapper}>
                   <Image
-                    src="/images/web/recetas/recetas_detail/productos.svg"
+                    src="/images/web/recetas/recetas_detail/receta_amarilla.svg"
                     alt="Productos Q'ocina"
                     width={300}
                     height={260}
@@ -215,7 +228,10 @@ export default function RecetaDetail({ receta }: Props) {
       </div>
 
       {tips.length > 0 && (
-        <div className={styles.tipsSection}>
+        <div
+          className={styles.tipsSection}
+          style={{ "--tips-wave-top": `url(${tipsWaveTop})` } as React.CSSProperties}
+        >
           <div className={styles.tipsWaveTop} />
           <div className={styles.tipsBody}>
             <div className={styles.tipsHeader}>
@@ -238,16 +254,6 @@ export default function RecetaDetail({ receta }: Props) {
                   </div>
                 ))}
             </div>
-          </div>
-          <div className={styles.tipsWaveBottomWrapper}>
-            <Image
-              src="/images/web/recetas/recetas_detail/white_waves.svg"
-              alt=""
-              width={1440}
-              height={110}
-              className={styles.tipsWaveBottom}
-              aria-hidden
-            />
           </div>
         </div>
       )}

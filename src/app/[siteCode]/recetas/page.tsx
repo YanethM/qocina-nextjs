@@ -13,7 +13,8 @@ interface Props {
 
 export async function generateMetadata({ params }: Props) {
   const { siteCode } = await params;
-  const res = await getRecetasPage(undefined, siteCode).catch(() => null);
+  const locale = await getLocale();
+  const res = await getRecetasPage(locale, siteCode).catch(() => null);
   return {
     title: res?.data?.meta_title ?? "Recetas - Q'ocina",
     description: res?.data?.meta_description ?? "Descubre nuestras mejores recetas",
@@ -68,19 +69,14 @@ export default async function RecetasPage({ params }: Props) {
             />
             <div className={styles.bannerText}>
               <h1 className={styles.bannerTitulo}>{pageData?.hero_titulo}</h1>
-              {pageData?.hero_subtitulo && (
-                <>
-                  <Image
-                    src={logoSrc}
-                    alt=""
-                    width={180}
-                    height={54}
-                    className={styles.bannerLogo}
-                    aria-hidden={true}
-                  />
-                  <p className={styles.bannerSubtitulo}>{pageData.hero_subtitulo}</p>
-                </>
-              )}
+              <Image
+                src={logoSrc}
+                alt=""
+                width={277}
+                height={225}
+                className={styles.bannerLogo}
+                aria-hidden={true}
+              />
             </div>
           </section>
           <div className={styles.bannerMobileWrapper}>
@@ -106,19 +102,14 @@ export default async function RecetasPage({ params }: Props) {
             {pageData?.hero_titulo && (
               <div className={styles.bannerMobileText}>
                 <h1 className={styles.bannerTitulo}>{pageData.hero_titulo}</h1>
-                {pageData?.hero_subtitulo && (
-                  <>
-                    <Image
-                      src={logoSrc}
-                      alt=""
-                      width={180}
-                      height={54}
-                      className={styles.bannerLogo}
-                      aria-hidden={true}
-                    />
-                    <p className={styles.bannerSubtitulo}>{pageData.hero_subtitulo}</p>
-                  </>
-                )}
+                <Image
+                  src={logoSrc}
+                  alt=""
+                  width={277}
+                  height={225}
+                  className={styles.bannerLogo}
+                  aria-hidden={true}
+                />
               </div>
             )}
           </div>
