@@ -1,5 +1,15 @@
 import CarritoWrapper from "./CarritoWrapper";
+import { getPacks } from "@/lib/api";
+import { getLocale } from "@/lib/locale";
 
-export default function CarritoPage() {
-  return <CarritoWrapper />;
+interface Props {
+  params: Promise<{ siteCode: string }>;
+}
+
+export default async function CarritoPage({ params }: Props) {
+  const { siteCode } = await params;
+  const locale = await getLocale();
+  const { allPacks } = await getPacks(locale, siteCode).catch(() => ({ allPacks: [] }));
+
+  return <CarritoWrapper initialPacks={allPacks} />;
 }

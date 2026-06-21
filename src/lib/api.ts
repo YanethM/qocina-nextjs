@@ -348,7 +348,7 @@ export async function getProductosPage(locale?: string, siteCode?: string) {
   };
 }
 
-export async function getPack(slug: string, locale?: string, siteCode?: string) {
+async function getPacksData(locale?: string, siteCode?: string) {
   const res = await fetchAPI<StrapiSingleResponse<ProductosPage>>(
     "/api/productos-page",
     {
@@ -366,13 +366,22 @@ export async function getPack(slug: string, locale?: string, siteCode?: string) 
     siteCode,
   );
   const data = res?.data;
-  const pack = data?.packs_destacados?.find((p) => p.slug === slug) ?? null;
   return {
-    pack,
     allPacks: data?.packs_destacados ?? [],
     mostrarDescuento: data?.packs_mostrar_descuento ?? false,
     porcentajeDescuento: data?.packs_porcentaje_descuento ?? null,
   };
+}
+
+export async function getPack(slug: string, locale?: string, siteCode?: string) {
+  const { allPacks, ...rest } = await getPacksData(locale, siteCode);
+  const pack = allPacks.find((p) => p.slug === slug) ?? null;
+  return { pack, allPacks, ...rest };
+}
+
+export async function getPacks(locale?: string, siteCode?: string) {
+  const { allPacks, ...rest } = await getPacksData(locale, siteCode);
+  return { allPacks: allPacks.filter((p) => p.disponible), ...rest };
 }
 
 export async function getRecetasPage(locale?: string, siteCode?: string) {

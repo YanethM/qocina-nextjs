@@ -2,13 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useCart } from "@/context/CartContext";
 import { getStrapiImageUrl } from "@/lib/strapi";
-import { getProductos } from "@/lib/api";;
+import { getProductos } from "@/lib/api";
 import { useSiteCode } from "@/hooks/useSiteCode";
 import { LOCALE_COOKIE } from "@/lib/constants";
-import type { Producto } from "@/types";
+import type { Producto, PackDestacado } from "@/types";
 import styles from "./page.module.css";
 
 const translations = {
@@ -50,6 +50,35 @@ const translations = {
   },
 };
 
+interface SugItem {
+  tipo: "pack" | "producto";
+  id: number;
+  documentId: string;
+  slug: string;
+  nombre: string;
+  descripcion: string;
+  precio: number;
+  precioMoneda: string;
+  imagenUrl: string | null;
+  sku: string | null;
+  categoria: string | null;
+  color: string | null;
+}
+
+function stripHtml(text: string): string {
+  return text.replace(/<[^>]*>/g, "");
+}
+
+function interleave<T>(first: T[], second: T[]): T[] {
+  const result: T[] = [];
+  const max = Math.max(first.length, second.length);
+  for (let i = 0; i < max; i++) {
+    if (i < first.length) result.push(first[i]);
+    if (i < second.length) result.push(second[i]);
+  }
+  return result;
+}
+
 function formatPrice(precio: number, moneda: string): string {
   if (!precio && precio !== 0) return "";
   if (moneda === "PEN") return `S/ ${precio.toFixed(2)}`;
@@ -58,7 +87,11 @@ function formatPrice(precio: number, moneda: string): string {
 
 const ACTIVE_STEP = 0;
 
-export default function CarritoPage() {
+interface Props {
+  initialPacks: PackDestacado[];
+}
+
+export default function CarritoPage({ initialPacks }: Props) {
   const siteCode = useSiteCode();
   const cookieLocale = document.cookie.match(new RegExp(`(?:^|;\\s*)${LOCALE_COOKIE}=([^;]+)`))?.[1];
   const locale = cookieLocale === "en" ? "en" : "es";
@@ -67,8 +100,10 @@ export default function CarritoPage() {
   const [codigoPromo, setCodigoPromo] = useState("");
   const [descuento, setDescuento] = useState(0);
   const [productos, setProductos] = useState<Producto[]>([]);
+  const [packs] = useState<PackDestacado[]>(initialPacks);
   const [carouselIdx, setCarouselIdx] = useState(0);
   const moneda = items[0]?.precioMoneda ?? "COP";
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     if (!siteCode) return;
@@ -96,12 +131,62 @@ export default function CarritoPage() {
     });
   }, []);
 
-  const cartIds = new Set(items.map((i) => i.id));
-  const sugeridos = productos.filter((p) => !cartIds.has(p.id));
+  const cartDocIds = new Set(items.map((i) => i.documentId));
+
+  const productoItems: SugItem[] = productos
+    .filter((p) => !cartDocIds.has(p.documentId))
+    .map((p) => ({
+      tipo: "producto",
+      id: p.id,
+      documentId: p.documentId,
+      slug: p.slug,
+      nombre: stripHtml(p.nombre),
+      descripcion: stripHtml(p.descripcion_corta),
+      precio: p.precio,
+      precioMoneda: p.precio_moneda,
+      imagenUrl: p.imagen_principal
+        ? getStrapiImageUrl(p.imagen_principal.formats?.medium?.url ?? p.imagen_principal.url)
+        : null,
+      sku: p.sku,
+      categoria: p.categoria?.nombre ?? null,
+      color: p.color,
+    }));
+
+  const packItems: SugItem[] = packs
+    .filter((pk) => !cartDocIds.has(pk.documentId))
+    .map((pk) => ({
+      tipo: "pack",
+      id: pk.id,
+      documentId: pk.documentId,
+      slug: pk.slug,
+      nombre: stripHtml(pk.nombre),
+      descripcion: stripHtml(pk.descripcion),
+      precio: pk.precio,
+      precioMoneda: pk.precio_moneda,
+      imagenUrl: pk.imagen
+        ? getStrapiImageUrl(pk.imagen.formats?.medium?.url ?? pk.imagen.url)
+        : null,
+      sku: pk.sku,
+      categoria: "pack",
+      color: null,
+    }));
+
+  const sugeridos = interleave(packItems, productoItems);
   const VISIBLE = 3;
   const showArrows = sugeridos.length > VISIBLE;
   const visible = sugeridos.slice(carouselIdx, carouselIdx + VISIBLE);
   const activeCardIdx = visible.length > 1 ? Math.floor(visible.length / 2) : 0;
+  const activeAbsoluteIdx = carouselIdx + activeCardIdx;
+
+  const activeDocumentId = visible[activeCardIdx]?.documentId;
+
+  useEffect(() => {
+    cardRefs.current[activeCardIdx]?.scrollIntoView({
+      behavior: "smooth",
+      inline: "center",
+      block: "nearest",
+    });
+  }, [carouselIdx, activeCardIdx, activeDocumentId]);
 
   const handleAplicarCodigo = () => {
     setDescuento(0);
@@ -267,14 +352,14 @@ export default function CarritoPage() {
             alt=""
             width={1440}
             height={812}
-            style={{ width: "100%", height: "auto", display: "block" }}
+            className={styles.secondBg}
           />
           <div className={styles.secondContent}>
             <h2 className={styles.secondTitle}>{t.addSuggested}</h2>
-            <div className={styles.secondCarousel}>
+            <div className={styles.carouselWrapper}>
               {showArrows && (
                 <button
-                  className={styles.arrowBtn}
+                  className={`${styles.arrowBtn} ${styles.arrowBtnLeft}`}
                   onClick={() => setCarouselIdx((i) => Math.max(0, i - 1))}
                   disabled={carouselIdx === 0}
                   aria-label="Anterior"
@@ -283,25 +368,22 @@ export default function CarritoPage() {
                 </button>
               )}
 
-              <div className={`${styles.cardsRow} ${!showArrows ? styles.cardsRowCentered : ""}`}>
-                {visible.map((producto, idx) => {
-                  const isActive = idx === activeCardIdx;
-                  const imgUrl = producto.imagen_principal
-                    ? getStrapiImageUrl(
-                        producto.imagen_principal.formats?.medium?.url ??
-                        producto.imagen_principal.url
-                      )
-                    : null;
-                  return (
-                    <div
-                      key={producto.id}
-                      className={`${styles.sugCard} ${isActive ? styles.sugCardActive : ""}`}
-                    >
+              <div className={styles.secondCarousel}>
+                <div className={`${styles.cardsRow} ${!showArrows ? styles.cardsRowCentered : ""}`}>
+                  {visible.map((item, idx) => {
+                    const isActive = idx === activeCardIdx;
+                    return (
+                      <div
+                        key={item.documentId}
+                        ref={(el) => { cardRefs.current[idx] = el; }}
+                        className={`${styles.sugCard} ${isActive ? styles.sugCardActive : ""}`}
+                        style={item.color ? ({ "--sug-color": item.color } as React.CSSProperties) : undefined}
+                      >
                       <div className={styles.sugCardImage}>
-                        {imgUrl && (
+                        {item.imagenUrl && (
                           <Image
-                            src={imgUrl}
-                            alt={producto.nombre}
+                            src={item.imagenUrl}
+                            alt={item.nombre}
                             fill
                             style={{ objectFit: "contain" }}
                             unoptimized
@@ -309,39 +391,40 @@ export default function CarritoPage() {
                         )}
                       </div>
                       <div className={styles.sugCardBody}>
-                        <p className={styles.sugNombre}>{producto.nombre}</p>
+                        <p className={styles.sugNombre}>{item.nombre}</p>
                         <p className={styles.sugPrecio}>
-                          {formatPrice(producto.precio, producto.precio_moneda)}
+                          {formatPrice(item.precio, item.precioMoneda)}
                         </p>
-                        <p className={styles.sugDesc}>{producto.descripcion_corta}</p>
+                        <p className={styles.sugDesc}>{item.descripcion}</p>
                         <button
                           className={`${styles.sugBtn} ${isActive ? styles.sugBtnActive : ""}`}
                           onClick={() =>
                             addItem({
-                              id: producto.id,
-                              documentId: producto.documentId,
-                              slug: producto.slug,
-                              nombre: producto.nombre,
-                              descripcionCorta: producto.descripcion_corta,
-                              precio: producto.precio,
-                              precioMoneda: producto.precio_moneda,
-                              imagen: imgUrl,
-                              sku: producto.sku ?? null,
-                              categoria: producto.categoria?.nombre ?? null,
+                              id: item.id,
+                              documentId: item.documentId,
+                              slug: item.slug,
+                              nombre: item.nombre,
+                              descripcionCorta: item.descripcion,
+                              precio: item.precio,
+                              precioMoneda: item.precioMoneda,
+                              imagen: item.imagenUrl,
+                              sku: item.sku,
+                              categoria: item.categoria,
                             })
                           }
                         >
                           {t.addBtn}
                         </button>
                       </div>
-                    </div>
-                  );
-                })}
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
 
               {showArrows && (
                 <button
-                  className={styles.arrowBtn}
+                  className={`${styles.arrowBtn} ${styles.arrowBtnRight}`}
                   onClick={() => setCarouselIdx((i) => Math.min(sugeridos.length - VISIBLE, i + 1))}
                   disabled={carouselIdx + VISIBLE >= sugeridos.length}
                   aria-label="Siguiente"
@@ -350,6 +433,21 @@ export default function CarritoPage() {
                 </button>
               )}
             </div>
+
+            {showArrows && (
+              <div className={styles.dotsRow}>
+                {sugeridos.map((item, idx) => (
+                  <button
+                    key={item.documentId}
+                    className={`${styles.dot} ${idx === activeAbsoluteIdx ? styles.dotActive : ""}`}
+                    onClick={() =>
+                      setCarouselIdx(Math.min(Math.max(0, idx - activeCardIdx), sugeridos.length - VISIBLE))
+                    }
+                    aria-label={`Ir al producto ${idx + 1}`}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         </div>
       )}
