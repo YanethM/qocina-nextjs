@@ -70,7 +70,6 @@ export default async function Home({ params }: Props) {
         ctaText={productosCta?.texto}
         ctaUrl={productosCta?.url}
         ctaNuevaVentana={productosCta?.nueva_ventana}
-        addToCartText={homeRes?.data?.productos_carrito_cta?.texto}
       />
 
       {(homeRes?.data?.natural_titulo ||
