@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import type { Badge, Categoria } from "@/types";
-import { COLOR_MAP } from "@/lib/constants";
+import { DEFAULT_COLOR } from "@/lib/constants";
 import { useCart } from "@/context/CartContext";
 import Accordion from "@/components/Accordion/Accordion";
 import styles from "./ProductoDetailClient.module.css";
@@ -15,14 +15,6 @@ const PACK_SIZES = [
   { label: "Pack 6", multiplier: 6 },
   { label: "Pack 12", multiplier: 12 },
 ];
-
-function getTitleColor(nombre: string, categoriaSlug: string | null): string {
-  const text = `${nombre} ${categoriaSlug ?? ""}`.toLowerCase();
-  if (text.includes("roj")) return COLOR_MAP.rojo;
-  if (text.includes("verd")) return COLOR_MAP.verde;
-  if (text.includes("amarill")) return COLOR_MAP.amarillo;
-  return COLOR_MAP.rojo;
-}
 
 interface Props {
   id: number;
@@ -40,6 +32,7 @@ interface Props {
   categoria: Categoria | null;
   badges: Badge[];
   sku: string | null;
+  color?: string | null;
 }
 
 export default function ProductoDetailClient({
@@ -58,6 +51,7 @@ export default function ProductoDetailClient({
   categoria,
   badges,
   sku,
+  color,
 }: Props) {
   const { addItem } = useCart();
   const [selectedImg, setSelectedImg] = useState(0);
@@ -99,7 +93,7 @@ export default function ProductoDetailClient({
     setZoomPos({ x, y });
   };
   const [packSize, setPackSize] = useState("Unidad");
-  const titleColor = getTitleColor(nombre, categoria?.slug ?? null);
+  const titleColor = color ?? DEFAULT_COLOR;
   const selectedMultiplier =
     PACK_SIZES.find((p) => p.label === packSize)?.multiplier ?? 1;
   const totalPrice = precio * cantidad * selectedMultiplier;

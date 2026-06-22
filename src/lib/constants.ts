@@ -22,10 +22,28 @@ export const TIPS_WAVE_TOP_MAP: Record<string, string> = {
   amarillo: "/images/web/recetas/recetas_detail/waves_amarillas_solas.svg",
 };
 
+export const PRODUCT_WAVE_MAP: Record<string, string> = {
+  rojo: "/images/web/products/red_waves.svg",
+  verde: "/images/web/products/green_waves.svg",
+  amarillo: "/images/web/products/yellow_waves.svg",
+};
+
+export const PRODUCT_DETAIL_WAVE_MAP: Record<string, string> = {
+  rojo: "/images/web/products/product_detail/waves_red_product_detail.svg",
+  verde: "/images/web/products/product_detail/waves_green_product_detail.svg",
+  amarillo: "/images/web/products/product_detail/waves_yellow_product_detail.svg",
+};
+
+export const COLOR_HEX_TO_KEY: Record<string, string> = Object.fromEntries(
+  Object.entries(COLOR_MAP).map(([key, hex]) => [hex.toLowerCase(), key])
+);
+
 export const DEFAULT_COLOR = COLOR_MAP.rojo;
 export const DEFAULT_WAVE = WAVE_MAP.rojo;
 export const DEFAULT_WAVE_BANNER = WAVE_BANNER_MAP.rojo;
 export const DEFAULT_TIPS_WAVE_TOP = TIPS_WAVE_TOP_MAP.rojo;
+export const DEFAULT_PRODUCT_WAVE = PRODUCT_WAVE_MAP.rojo;
+export const DEFAULT_PRODUCT_DETAIL_WAVE = PRODUCT_DETAIL_WAVE_MAP.rojo;
 
 export const COOKIE_MAX_AGE = 60 * 60 * 24 * 30;
 export const SITE_BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://qocina.com";

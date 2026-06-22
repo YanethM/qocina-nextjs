@@ -6,6 +6,7 @@ import ListaRecetas from "@/components/ListaRecetas/ListaRecetas";
 import Testimonios from "@/components/Testimonios/Testimonios";
 import OtrasBasesCulinarias from "@/components/OtrasBasesCulinarias/OtrasBasesCulinarias";
 import { getLocale } from "@/lib/locale";
+import { PRODUCT_WAVE_MAP, PRODUCT_DETAIL_WAVE_MAP, DEFAULT_PRODUCT_WAVE, DEFAULT_PRODUCT_DETAIL_WAVE, COLOR_HEX_TO_KEY } from "@/lib/constants";
 import styles from "./page.module.css";
 
 interface Props {
@@ -63,6 +64,10 @@ export default async function ProductoDetailPage({ params }: Props) {
     );
     const recetas = recetasConImagenes.filter(Boolean) as NonNullable<typeof recetasConImagenes[0]>[];
 
+    const colorKey = producto.color ? COLOR_HEX_TO_KEY[producto.color.toLowerCase()] : null;
+    const productWave = (colorKey && PRODUCT_WAVE_MAP[colorKey]) ?? DEFAULT_PRODUCT_WAVE;
+    const productDetailWave = (colorKey && PRODUCT_DETAIL_WAVE_MAP[colorKey]) ?? DEFAULT_PRODUCT_DETAIL_WAVE;
+
     return (
       <div className={styles.page}>
         <ProductoDetailClient
@@ -81,6 +86,7 @@ export default async function ProductoDetailPage({ params }: Props) {
           categoria={producto.categoria}
           badges={badges}
           sku={producto.sku ?? null}
+          color={producto.color}
         />
 
         {badges.length > 0 && (
@@ -89,7 +95,7 @@ export default async function ProductoDetailPage({ params }: Props) {
           </div>
         )}
         <img
-          src="/images/web/products/product_detail/waves_product_detail.svg"
+          src={productDetailWave}
           alt=""
           width={1440}
           height={100}
@@ -102,7 +108,7 @@ export default async function ProductoDetailPage({ params }: Props) {
           <Testimonios
             testimonios={testimonios}
             testimonios_titulo={locale === "es" ? "Testimonios" : "Testimonials"}
-            waveImage="/images/web/products/red_waves.svg"
+            waveImage={productWave}
           />
         )}
         <OtrasBasesCulinarias productos={otrasBasesProductos} />
