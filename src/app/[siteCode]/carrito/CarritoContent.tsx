@@ -79,6 +79,10 @@ function interleave<T>(first: T[], second: T[]): T[] {
   return result;
 }
 
+function getDetailHref(siteCode: string, slug: string, categoria: string | null): string {
+  return categoria === "pack" ? `/${siteCode}/packs/${slug}` : `/${siteCode}/productos/${slug}`;
+}
+
 function formatPrice(precio: number, moneda: string): string {
   if (!precio && precio !== 0) return "";
   if (moneda === "PEN") return `S/ ${precio.toFixed(2)}`;
@@ -103,14 +107,14 @@ export default function CarritoPage({ initialPacks }: Props) {
   const [packs] = useState<PackDestacado[]>(initialPacks);
   const [carouselIdx, setCarouselIdx] = useState(0);
   const moneda = items[0]?.precioMoneda ?? "COP";
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const cardRefs = useRef<(HTMLAnchorElement | null)[]>([]);
 
   useEffect(() => {
     if (!siteCode) return;
-    getProductos(undefined, siteCode)
+    getProductos(locale, siteCode)
       .then((res) => setProductos(res.data ?? []))
       .catch(() => {});
-  }, [siteCode]);
+  }, [siteCode, locale]);
 
   useEffect(() => {
     if (items.length === 0) return;
@@ -240,9 +244,11 @@ export default function CarritoPage({ initialPacks }: Props) {
           <div className={styles.itemsSection}>
             <h2 className={styles.title}>{t.cartTitle}</h2>
             <div className={styles.itemList}>
-              {items.map((item) => (
+              {items.map((item) => {
+                const itemHref = getDetailHref(siteCode, item.slug, item.categoria);
+                return (
                 <div key={item.id} className={styles.item}>
-                  <div className={styles.itemImage}>
+                  <Link href={itemHref} className={styles.itemImage}>
                     {item.imagen ? (
                       <Image
                         src={item.imagen}
@@ -254,11 +260,13 @@ export default function CarritoPage({ initialPacks }: Props) {
                     ) : (
                       <div className={styles.itemImagePlaceholder} />
                     )}
-                  </div>
+                  </Link>
 
                   <div className={styles.itemInfo}>
-                    <h3 className={styles.itemNombre}>{item.nombre.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase())}</h3>
-                    <p className={styles.itemDescripcion}>{item.descripcionCorta}</p>
+                    <Link href={itemHref} className={styles.itemNombreLink}>
+                      <h3 className={styles.itemNombre}>{item.nombre.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase())}</h3>
+                      <p className={styles.itemDescripcion}>{item.descripcionCorta}</p>
+                    </Link>
                     <div className={styles.itemCantidad}>
                       <span className={styles.itemCantidadLabel}>{t.cantidad}</span>
                       <button
@@ -290,7 +298,8 @@ export default function CarritoPage({ initialPacks }: Props) {
                     {formatPrice(item.precio * item.cantidad, item.precioMoneda)}
                   </div>
                 </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 
@@ -372,14 +381,16 @@ export default function CarritoPage({ initialPacks }: Props) {
                 <div className={`${styles.cardsRow} ${!showArrows ? styles.cardsRowCentered : ""}`}>
                   {visible.map((item, idx) => {
                     const isActive = idx === activeCardIdx;
+                    const sugHref = item.tipo === "pack" ? `/${siteCode}/packs/${item.slug}` : `/${siteCode}/productos/${item.slug}`;
                     return (
-                      <div
+                      <Link
                         key={item.documentId}
+                        href={sugHref}
                         ref={(el) => { cardRefs.current[idx] = el; }}
                         className={`${styles.sugCard} ${isActive ? styles.sugCardActive : ""}`}
                         style={item.color ? ({ "--sug-color": item.color } as React.CSSProperties) : undefined}
                       >
-                      <div className={styles.sugCardImage}>
+                      <div className={`${styles.sugCardImage} ${item.tipo === "pack" ? styles.sugCardImagePack : ""}`}>
                         {item.imagenUrl && (
                           <Image
                             src={item.imagenUrl}
@@ -398,7 +409,9 @@ export default function CarritoPage({ initialPacks }: Props) {
                         <p className={styles.sugDesc}>{item.descripcion}</p>
                         <button
                           className={`${styles.sugBtn} ${isActive ? styles.sugBtnActive : ""}`}
-                          onClick={() =>
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
                             addItem({
                               id: item.id,
                               documentId: item.documentId,
@@ -410,13 +423,13 @@ export default function CarritoPage({ initialPacks }: Props) {
                               imagen: item.imagenUrl,
                               sku: item.sku,
                               categoria: item.categoria,
-                            })
-                          }
+                            });
+                          }}
                         >
                           {t.addBtn}
                         </button>
                       </div>
-                      </div>
+                      </Link>
                     );
                   })}
                 </div>
