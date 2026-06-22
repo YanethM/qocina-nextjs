@@ -6,10 +6,15 @@ import Image from "next/image";
 import type { Producto } from "@/types";
 import { getStrapiImageUrl } from "@/lib/strapi";
 import { useSiteCode } from "@/hooks/useSiteCode";
+import { COLOR_HEX_TO_KEY } from "@/lib/constants";
 import styles from "./ProductCardGrid.module.css";
 import { formatPrice } from "@/lib/format";
 
-const CARD_COLORS = [styles.cardGreen, styles.cardYellow, styles.cardRed];
+const CARD_COLOR_CLASS: Record<string, string> = {
+  rojo: styles.cardRed,
+  verde: styles.cardGreen,
+  amarillo: styles.cardYellow,
+};
 
 function toTitleCase(str: string): string {
   return str.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
@@ -35,8 +40,9 @@ export default function ProductCardGrid({ productos, fewClass }: { productos: Pr
 
   return (
     <div className={`${styles.grid} ${fewClass ?? ""}`}>
-      {productos.map((producto, index) => {
-        const colorClass = CARD_COLORS[index % 3];
+      {productos.map((producto) => {
+        const colorKey = producto.color ? COLOR_HEX_TO_KEY[producto.color.toLowerCase()] : null;
+        const colorClass = (colorKey && CARD_COLOR_CLASS[colorKey]) ?? styles.cardRed;
         const imagenUrl = producto.imagen_principal
           ? getStrapiImageUrl(producto.imagen_principal.url)
           : null;

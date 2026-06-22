@@ -79,10 +79,6 @@ function interleave<T>(first: T[], second: T[]): T[] {
   return result;
 }
 
-function getDetailHref(siteCode: string, slug: string, categoria: string | null): string {
-  return categoria === "pack" ? `/${siteCode}/packs/${slug}` : `/${siteCode}/productos/${slug}`;
-}
-
 function formatPrice(precio: number, moneda: string): string {
   if (!precio && precio !== 0) return "";
   if (moneda === "PEN") return `S/ ${precio.toFixed(2)}`;
@@ -107,7 +103,7 @@ export default function CarritoPage({ initialPacks }: Props) {
   const [packs] = useState<PackDestacado[]>(initialPacks);
   const [carouselIdx, setCarouselIdx] = useState(0);
   const moneda = items[0]?.precioMoneda ?? "COP";
-  const cardRefs = useRef<(HTMLAnchorElement | null)[]>([]);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     if (!siteCode) return;
@@ -244,11 +240,9 @@ export default function CarritoPage({ initialPacks }: Props) {
           <div className={styles.itemsSection}>
             <h2 className={styles.title}>{t.cartTitle}</h2>
             <div className={styles.itemList}>
-              {items.map((item) => {
-                const itemHref = getDetailHref(siteCode, item.slug, item.categoria);
-                return (
+              {items.map((item) => (
                 <div key={item.id} className={styles.item}>
-                  <Link href={itemHref} className={styles.itemImage}>
+                  <div className={styles.itemImage}>
                     {item.imagen ? (
                       <Image
                         src={item.imagen}
@@ -260,13 +254,11 @@ export default function CarritoPage({ initialPacks }: Props) {
                     ) : (
                       <div className={styles.itemImagePlaceholder} />
                     )}
-                  </Link>
+                  </div>
 
                   <div className={styles.itemInfo}>
-                    <Link href={itemHref} className={styles.itemNombreLink}>
-                      <h3 className={styles.itemNombre}>{item.nombre.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase())}</h3>
-                      <p className={styles.itemDescripcion}>{item.descripcionCorta}</p>
-                    </Link>
+                    <h3 className={styles.itemNombre}>{item.nombre.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase())}</h3>
+                    <p className={styles.itemDescripcion}>{item.descripcionCorta}</p>
                     <div className={styles.itemCantidad}>
                       <span className={styles.itemCantidadLabel}>{t.cantidad}</span>
                       <button
@@ -298,8 +290,7 @@ export default function CarritoPage({ initialPacks }: Props) {
                     {formatPrice(item.precio * item.cantidad, item.precioMoneda)}
                   </div>
                 </div>
-                );
-              })}
+              ))}
             </div>
           </div>
 
@@ -381,11 +372,9 @@ export default function CarritoPage({ initialPacks }: Props) {
                 <div className={`${styles.cardsRow} ${!showArrows ? styles.cardsRowCentered : ""}`}>
                   {visible.map((item, idx) => {
                     const isActive = idx === activeCardIdx;
-                    const sugHref = item.tipo === "pack" ? `/${siteCode}/packs/${item.slug}` : `/${siteCode}/productos/${item.slug}`;
                     return (
-                      <Link
+                      <div
                         key={item.documentId}
-                        href={sugHref}
                         ref={(el) => { cardRefs.current[idx] = el; }}
                         className={`${styles.sugCard} ${isActive ? styles.sugCardActive : ""}`}
                         style={item.color ? ({ "--sug-color": item.color } as React.CSSProperties) : undefined}
@@ -409,9 +398,7 @@ export default function CarritoPage({ initialPacks }: Props) {
                         <p className={styles.sugDesc}>{item.descripcion}</p>
                         <button
                           className={`${styles.sugBtn} ${isActive ? styles.sugBtnActive : ""}`}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
+                          onClick={() =>
                             addItem({
                               id: item.id,
                               documentId: item.documentId,
@@ -423,13 +410,13 @@ export default function CarritoPage({ initialPacks }: Props) {
                               imagen: item.imagenUrl,
                               sku: item.sku,
                               categoria: item.categoria,
-                            });
-                          }}
+                            })
+                          }
                         >
                           {t.addBtn}
                         </button>
                       </div>
-                      </Link>
+                      </div>
                     );
                   })}
                 </div>

@@ -5,6 +5,7 @@
   border-bottom-left-radius: 40px;
   border-bottom-right-radius: 40px;
   overflow: hidden;
+  margin-top: -56px;
 }
 
 .bgImage {
@@ -53,6 +54,7 @@
 @media (max-width: 768px) {
   .hero {
     height: var(--hero-mobile-height, 700px);
+    margin-top: calc(var(--hero-mobile-height, 700px) * -0.1);
     border-bottom-left-radius: 24px;
     border-bottom-right-radius: 24px;
   }

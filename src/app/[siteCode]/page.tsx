@@ -58,7 +58,7 @@ export default async function Home({ params }: Props) {
 
   return (
     <>
-      <div className="versionclass">v1</div>
+      <div className={styles.versionclass}>v1</div>
       <HeroBanner slides={slides} />
       {(badges.length > 0 || introTexto) && (
         <BeneficiosWaveSection badges={badges} textoBeneficios={introTexto} />
