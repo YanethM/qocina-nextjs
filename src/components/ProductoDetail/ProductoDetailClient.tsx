@@ -208,6 +208,7 @@ export default function ProductoDetailClient({
                 key={p.label}
                 className={`${styles.packBtn} ${packSize === p.label ? styles.packBtnActive : ""}`}
                 onClick={() => setPackSize(p.label)}
+                style={packSize === p.label ? ({ "--pack-color": titleColor } as React.CSSProperties) : undefined}
               >
                 <Image
                   src="/images/web/products/product_detail/pack_image.svg"

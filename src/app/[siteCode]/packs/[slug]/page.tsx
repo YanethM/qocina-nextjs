@@ -21,7 +21,8 @@ export async function generateMetadata({
   params: Promise<{ siteCode: string; slug: string }>;
 }) {
   const { slug, siteCode } = await params;
-  const result = await getPack(slug, undefined, siteCode).catch(() => null);
+  const locale = await getLocale();
+  const result = await getPack(slug, locale, siteCode).catch(() => null);
   const pack = result?.pack;
   return {
     title: pack?.meta_title ?? pack?.nombre ?? "Pack - Q'ocina",
@@ -36,7 +37,7 @@ export default async function PackDetailPage({
 }) {
   const { slug, siteCode } = await params;
   const locale = await getLocale();
-  const result = await getPack(slug, undefined, siteCode).catch(() => null);
+  const result = await getPack(slug, locale, siteCode).catch(() => null);
 
   if (!result?.pack) notFound();
 

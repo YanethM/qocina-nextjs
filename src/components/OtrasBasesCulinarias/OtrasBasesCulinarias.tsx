@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Producto } from "@/types";
-import { getStrapiImageUrl } from "@/lib/strapi";
+import { getStrapiImageUrl, stripHtml } from "@/lib/strapi";
 import { useCarousel } from "@/hooks/useCarousel";
 import { useSiteCode } from "@/hooks/useSiteCode";
 import styles from "./OtrasBasesCulinarias.module.css";
@@ -76,6 +76,8 @@ export default function OtrasBasesCulinarias({ productos }: Props) {
               const imgSrc = producto.imagen_principal?.url
                 ? getStrapiImageUrl(producto.imagen_principal.url)
                 : null;
+              const nombre = stripHtml(producto.nombre);
+              const descripcion = stripHtml(producto.descripcion_corta);
               return (
                 <div key={producto.id} className={styles.mobileSlide}>
                   <div className={`${styles.mobileCard} ${config.rowClass}`}>
@@ -91,7 +93,7 @@ export default function OtrasBasesCulinarias({ productos }: Props) {
                       <div className={styles.mobileImgWrapper}>
                         <Image
                           src={imgSrc}
-                          alt={producto.nombre}
+                          alt={nombre}
                           width={220}
                           height={270}
                           className={styles.mobileProductImg}
@@ -102,10 +104,10 @@ export default function OtrasBasesCulinarias({ productos }: Props) {
                     )}
                     <div className={styles.mobileCardContent}>
                       <h3 className={`${styles.mobileCardTitulo} ${config.textDark ? styles.cardTextDark : ""}`}>
-                        {producto.nombre.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase())}
+                        {nombre.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase())}
                       </h3>
                       <p className={`${styles.mobileCardDescripcion} ${config.textDark ? styles.cardTextDark : ""}`}>
-                        {producto.descripcion_corta}
+                        {descripcion}
                       </p>
                       <Link
                         href={`/${siteCode}/productos/${producto.slug}`}
@@ -140,13 +142,15 @@ export default function OtrasBasesCulinarias({ productos }: Props) {
           const imgSrc = producto.imagen_principal?.url
             ? getStrapiImageUrl(producto.imagen_principal.url)
             : null;
+          const nombre = stripHtml(producto.nombre);
+          const descripcion = stripHtml(producto.descripcion_corta);
 
           const productImg = (
             <div className={`${styles.productWrapper} ${config.wrapperClass}`}>
               {imgSrc && (
                 <Image
                   src={imgSrc}
-                  alt={producto.nombre}
+                  alt={nombre}
                   width={209}
                   height={263}
                   className={styles.productImg}
@@ -160,8 +164,8 @@ export default function OtrasBasesCulinarias({ productos }: Props) {
           const textAndBtn = config.reversed ? (
             <div className={styles.cardContentAmarillo}>
               <div className={`${styles.cardText} ${config.textDark ? styles.cardTextDark : ""}`}>
-                <h3 className={styles.cardTitulo}>{producto.nombre.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase())}</h3>
-                <p className={styles.cardDescripcion}>{producto.descripcion_corta}</p>
+                <h3 className={styles.cardTitulo}>{nombre.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase())}</h3>
+                <p className={styles.cardDescripcion}>{descripcion}</p>
               </div>
               <Link href={`/${siteCode}/productos/${producto.slug}`} className={`${styles.ctaBtn} ${config.textDark ? styles.ctaBtnDark : ""}`}>
                 Ver producto
@@ -171,8 +175,8 @@ export default function OtrasBasesCulinarias({ productos }: Props) {
           ) : (
             <>
               <div className={`${styles.cardText} ${config.textDark ? styles.cardTextDark : ""}`}>
-                <h3 className={styles.cardTitulo}>{producto.nombre.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase())}</h3>
-                <p className={styles.cardDescripcion}>{producto.descripcion_corta}</p>
+                <h3 className={styles.cardTitulo}>{nombre.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase())}</h3>
+                <p className={styles.cardDescripcion}>{descripcion}</p>
               </div>
               <Link href={`/${siteCode}/productos/${producto.slug}`} className={`${styles.ctaBtn} ${config.textDark ? styles.ctaBtnDark : ""}`}>
                 Ver producto

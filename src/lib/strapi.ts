@@ -7,3 +7,7 @@ export function getStrapiImageUrl(url: string | undefined | null): string {
   if (url.startsWith("http")) return url;
   return `${API_URL}${url}`;
 }
+
+export function stripHtml(text: string): string {
+  return text.replace(/<[^>]*>/g, "");
+}

@@ -213,7 +213,7 @@ export interface PreguntaFrecuente {
   pregunta: string;
   respuesta: string;
   orden: number;
-  categoria_faq: CategoriaFaq | null;
+  categoria: CategoriaFaq | null;
 }
 
 export interface Valor {

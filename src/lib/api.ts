@@ -260,7 +260,7 @@ export async function getPreguntasFrecuentes(locale?: string, siteCode?: string)
 
 export async function getPreguntasFrecuentesByCategoria(categoriaSlug: string, locale?: string, siteCode?: string) {
   return fetchAPI<StrapiListResponse<PreguntaFrecuente>>("/api/preguntas-frecuentes", {
-    "filters[categoria_faq][slug][$eq]": categoriaSlug,
+    "filters[categoria][slug][$eq]": categoriaSlug,
   }, locale, siteCode);
 }
 

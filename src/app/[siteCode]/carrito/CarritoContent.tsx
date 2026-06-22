@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { useCart } from "@/context/CartContext";
-import { getStrapiImageUrl } from "@/lib/strapi";
+import { getStrapiImageUrl, stripHtml } from "@/lib/strapi";
 import { getProductos } from "@/lib/api";
 import { useSiteCode } from "@/hooks/useSiteCode";
 import { LOCALE_COOKIE } from "@/lib/constants";
@@ -63,10 +63,6 @@ interface SugItem {
   sku: string | null;
   categoria: string | null;
   color: string | null;
-}
-
-function stripHtml(text: string): string {
-  return text.replace(/<[^>]*>/g, "");
 }
 
 function interleave<T>(first: T[], second: T[]): T[] {
