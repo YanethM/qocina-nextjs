@@ -31,12 +31,17 @@ export default async function NuestroProcesoPage({ params }: Props) {
   const pasos: PasoProceso[] = procesoRes?.data?.pasos ?? [];
   const productosDestacados = procesoRes?.data?.productos_destacados ?? [];
   const productosCta = procesoRes?.data?.productos_cta;
-  const heroImagen = getStrapiImageUrl(procesoRes?.data?.hero_imagen?.url);
+  const heroImagenData = procesoRes?.data?.hero_imagen;
+  const heroImagen = getStrapiImageUrl(heroImagenData?.url);
+  const heroImagenMobile = heroImagenData?.formats?.medium?.url
+    ? getStrapiImageUrl(heroImagenData.formats.medium.url)
+    : heroImagen;
 
   return (
     <>
       <PageHero
         backgroundImage={heroImagen || "/images/web/nuestro_proceso/photo.svg"}
+        backgroundImageMobile={heroImagenMobile || undefined}
         backgroundAlt="Nuestro proceso de producción"
       >
         <div className={styles.heroText}>

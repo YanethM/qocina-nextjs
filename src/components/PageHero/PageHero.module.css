@@ -12,6 +12,10 @@
   object-position: center;
 }
 
+.bgImageMobileOnly {
+  display: none;
+}
+
 .waveOverlay {
   position: absolute;
   inset: 0;
@@ -48,9 +52,17 @@
 
 @media (max-width: 768px) {
   .hero {
-    height: 560px;
+    height: var(--hero-mobile-height, 700px);
     border-bottom-left-radius: 24px;
     border-bottom-right-radius: 24px;
+  }
+
+  .bgImageDesktopOnly {
+    display: none;
+  }
+
+  .bgImageMobileOnly {
+    display: block;
   }
 
   .blackWave {
@@ -65,7 +77,7 @@
 
 @media (max-width: 480px) {
   .hero {
-    height: 520px;
+    height: var(--hero-mobile-height, 700px);
   }
 
   .blackWave {

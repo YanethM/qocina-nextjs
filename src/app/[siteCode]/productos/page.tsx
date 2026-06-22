@@ -81,14 +81,16 @@ export default async function ProductosPage({ params }: Props) {
     <div className={styles.page}>
       {(pageData?.hero_titulo || pageData?.hero_subtitulo) && (
         <section className={styles.hero}>
-          <Image
-            src="/images/web/products/container.svg"
-            alt="Productos Q'ocina"
-            fill
-            className={styles.heroImage}
-            style={{ objectFit: "cover" }}
-            priority
-          />
+          <div className={styles.heroBlack} />
+          <div className={styles.heroImageWrap}>
+            <Image
+              src="/images/web/products/container.svg"
+              alt="Productos Q'ocina"
+              fill
+              className={styles.heroImage}
+              priority
+            />
+          </div>
           <div className={styles.heroText}>
             {pageData?.hero_titulo && (
               <p className={styles.heroTitulo}>{pageData.hero_titulo}</p>

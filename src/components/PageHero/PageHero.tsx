@@ -3,22 +3,39 @@ import styles from "./PageHero.module.css";
 
 interface PageHeroProps {
   backgroundImage?: string;
+  backgroundImageMobile?: string;
   backgroundAlt?: string;
   waveImage?: string;
+  waveImageMobile?: string;
   waveFullWidth?: boolean;
   overlayContent?: React.ReactNode;
   children?: React.ReactNode;
+  mobileHeight?: number;
 }
 
-export default function PageHero({ backgroundImage, backgroundAlt = "", waveImage, waveFullWidth, overlayContent, children }: PageHeroProps) {
+export default function PageHero({ backgroundImage, backgroundImageMobile, backgroundAlt = "", waveImage, waveImageMobile, waveFullWidth, overlayContent, children, mobileHeight }: PageHeroProps) {
   return (
-    <div className={styles.hero}>
+    <div
+      className={styles.hero}
+      style={mobileHeight ? ({ "--hero-mobile-height": `${mobileHeight}px` } as React.CSSProperties) : undefined}
+    >
       {backgroundImage && (
         <Image
           src={backgroundImage}
           alt={backgroundAlt}
           fill
-          className={styles.bgImage}
+          className={backgroundImageMobile ? `${styles.bgImage} ${styles.bgImageDesktopOnly}` : styles.bgImage}
+          sizes="100vw"
+          priority
+          unoptimized
+        />
+      )}
+      {backgroundImageMobile && (
+        <Image
+          src={backgroundImageMobile}
+          alt={backgroundAlt}
+          fill
+          className={`${styles.bgImage} ${styles.bgImageMobileOnly}`}
           sizes="100vw"
           priority
           unoptimized
@@ -26,7 +43,10 @@ export default function PageHero({ backgroundImage, backgroundAlt = "", waveImag
       )}
       <div className={styles.waveOverlay}>
         <picture>
-          <source media="(max-width: 768px)" srcSet="/images/mobile/nuestro_proceso/wave.svg" />
+          <source
+            media="(max-width: 768px)"
+            srcSet={waveImageMobile ?? "/images/mobile/nuestro_proceso/wave.svg"}
+          />
           <img
             src={waveImage ?? "/images/web/nuestro_proceso/black_wave.svg"}
             alt=""

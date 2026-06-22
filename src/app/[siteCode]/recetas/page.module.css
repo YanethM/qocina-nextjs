@@ -73,10 +73,7 @@
 }
 
 .bannerMobileSvg {
-  display: block;
-  width: 100%;
-  height: auto;
-  position: relative;
+  object-fit: cover;
   z-index: 1;
 }
 
@@ -225,6 +222,7 @@
 
   .bannerMobileWrapper {
     display: block;
+    height: 700px;
     padding-top: 70px;
     margin-top: -70px;
   }

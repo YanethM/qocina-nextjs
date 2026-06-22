@@ -219,8 +219,7 @@
 @media (max-width: 768px) {
   .hero {
     background-image: var(--hero-bg-mobile);
-    height: auto;
-    min-height: 600px;
+    height: 700px;
     padding: 60px 20px 30px 20px;
     justify-content: flex-end;
     align-items: center;
@@ -320,7 +319,6 @@
 
 @media (max-width: 480px) {
   .hero {
-    min-height: 550px;
     padding: 50px 16px 20px 16px;
   }
 

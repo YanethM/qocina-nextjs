@@ -37,7 +37,7 @@ export default async function RecetasPage({ params }: Props) {
   if (!pageData && recetas.length === 0) return <ComingSoon />;
 
   const heroImageUrl = pageData?.hero_imagen ? getStrapiImageUrl(pageData.hero_imagen.url) : null;
-  const heroImageMobileUrl = pageData?.hero_imagen_mobile ? getStrapiImageUrl(pageData.hero_imagen_mobile.url) : null;
+  const heroImageMobileUrl = pageData?.hero_imagen_mobile ? getStrapiImageUrl(pageData.hero_imagen_mobile.url) : heroImageUrl;
   const showBanner = Boolean(pageData?.hero_titulo || pageData?.hero_imagen || pageData?.hero_imagen_mobile);
   const testimonios = pageData?.testimonios ?? [];
   const logoSrc = locale === "en"
@@ -94,8 +94,7 @@ export default async function RecetasPage({ params }: Props) {
             <Image
               src="/images/mobile/recetas/hero.svg"
               alt=""
-              width={390}
-              height={780}
+              fill
               className={styles.bannerMobileSvg}
               priority
             />

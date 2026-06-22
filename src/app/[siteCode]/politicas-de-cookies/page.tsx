@@ -1,11 +1,134 @@
 import styles from "./page.module.css";
+import { getLocale } from "@/lib/locale";
 
-export const metadata = {
-  title: "Política de Cookies | Q'ocina en Casa",
-  description: "Conoce cómo Q'ocina en Casa utiliza cookies en su sitio web.",
-};
+export async function generateMetadata() {
+  const locale = await getLocale();
+  if (locale === "en") {
+    return {
+      title: "Cookie Policy | Q'ocina en Casa",
+      description: "Learn how Q'ocina en Casa uses cookies on its website.",
+    };
+  }
+  return {
+    title: "Política de Cookies | Q'ocina en Casa",
+    description: "Conoce cómo Q'ocina en Casa utiliza cookies en su sitio web.",
+  };
+}
 
-export default function PoliticasCookiesPage() {
+export default async function PoliticasCookiesPage() {
+  const locale = await getLocale();
+
+  if (locale === "en") {
+    return (
+      <div className={styles.page}>
+        <div className={styles.container}>
+          <p className={styles.company}>QOCINA EN CASA</p>
+          <h1 className={styles.title}>Cookie Policy</h1>
+          <p className={styles.updated}>Last updated: March 19, 2026</p>
+
+          <section className={styles.section}>
+            <p>
+              At Qocina en Casa, we believe the best recipes turn out well when there&rsquo;s
+              transparency in the ingredients. That&rsquo;s why we want to explain how we use
+              &ldquo;cookies&rdquo; on our website{" "}
+              <a href="https://qocinaencasa.com/us/" className={styles.link}>
+                https://qocinaencasa.com/us/
+              </a>
+              .
+            </p>
+            <p>
+              Just like a pinch of salt enhances the flavor, our cookies are here to make your
+              browsing experience much tastier and smoother.
+            </p>
+          </section>
+
+          <section className={styles.section}>
+            <h2 className={styles.heading}>1. What is a cookie?</h2>
+            <p>
+              No, they&rsquo;re not the chocolate kind that comes out of the oven (although we&rsquo;d
+              love that). A cookie is a small text file that gets downloaded onto your device when
+              you visit certain web pages. They allow a site to, among other things, remember your
+              preferences, know whether you&rsquo;ve visited before, and improve loading speed.
+            </p>
+          </section>
+
+          <section className={styles.section}>
+            <h2 className={styles.heading}>2. What types of cookies do we use?</h2>
+            <p>For our digital kitchen to run smoothly, we use the following types:</p>
+            <p>
+              <strong>Technical (Essential) Cookies:</strong> These are the basic ingredients.
+              Without them, the site wouldn&rsquo;t work (for example, to keep your session open or
+              remember the products in your cart).
+            </p>
+            <p>
+              <strong>Personalization Cookies:</strong> These help us remember your preferences
+              (such as language or your region in the US) so you don&rsquo;t have to set everything
+              up again each time you visit.
+            </p>
+            <p>
+              <strong>Analytics Cookies:</strong> These tell us which recipes or sections are our
+              community&rsquo;s favorites. We use tools like Google Analytics to understand how to
+              improve the service.
+            </p>
+            <p>
+              <strong>Advertising/Marketing Cookies:</strong> If you&rsquo;ve ever seen one of our
+              ads on social media about that cooking kit you liked so much, it&rsquo;s thanks to
+              these cookies.
+            </p>
+          </section>
+
+          <section className={styles.section}>
+            <h2 className={styles.heading}>3. How can you control your cookies?</h2>
+            <p>
+              You hold the pan by the handle. You can block or delete the cookies installed on your
+              device through your browser settings:
+            </p>
+            <ul className={styles.list}>
+              <li>
+                <strong>Chrome:</strong> Settings &rarr; Privacy and security &rarr; Cookies and
+                other site data.
+              </li>
+              <li>
+                <strong>Safari:</strong> Preferences &rarr; Privacy &rarr; Block all cookies.
+              </li>
+              <li>
+                <strong>Firefox:</strong> Options &rarr; Privacy &amp; Security &rarr; Cookies and
+                Site Data.
+              </li>
+            </ul>
+            <p>
+              Keep in mind that if you decide to disable some cookies, certain features of our
+              website may not be served &ldquo;to your taste&rdquo; or may stop working properly.
+            </p>
+          </section>
+
+          <section className={styles.section}>
+            <h2 className={styles.heading}>4. Policy updates</h2>
+            <p>
+              Sometimes we tweak our recipe. Any change to this policy will be posted here along
+              with the date of the last update.
+            </p>
+          </section>
+
+          <section className={styles.section}>
+            <h2 className={styles.heading}>5. Have questions?</h2>
+            <p>
+              If you&rsquo;d like to know more about how we handle your data, you can reach our
+              Customer Service team Monday through Friday from 9:00 a.m. to 6:00 p.m. and Saturdays
+              from 9:00 a.m. to 2:00 p.m., via WhatsApp chat at{" "}
+              <a href="https://wa.me/51986867611" className={styles.link}>
+                986 867 611
+              </a>
+              .
+            </p>
+          </section>
+
+          <p className={styles.footer}>QOCINA EN CASA</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.page}>
       <div className={styles.container}>

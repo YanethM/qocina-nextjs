@@ -1,12 +1,352 @@
 import styles from "./page.module.css";
+import { getLocale } from "@/lib/locale";
 
-export const metadata = {
-  title: "Términos y Condiciones | Q'ocina en Casa",
-  description:
-    "Términos y Condiciones de la Tienda Online Q'ocina en Casa de FuXion Biotech S.A.C.",
-};
+export async function generateMetadata() {
+  const locale = await getLocale();
+  if (locale === "en") {
+    return {
+      title: "Terms and Conditions | Q'ocina en Casa",
+      description:
+        "Terms and Conditions of the Q'ocina en Casa Online Store by FuXion Biotech S.A.C.",
+    };
+  }
+  return {
+    title: "Términos y Condiciones | Q'ocina en Casa",
+    description:
+      "Términos y Condiciones de la Tienda Online Q'ocina en Casa de FuXion Biotech S.A.C.",
+  };
+}
 
-export default function PoliticasPrivacidadPage() {
+export default async function PoliticasPrivacidadPage() {
+  const locale = await getLocale();
+
+  if (locale === "en") {
+    return (
+      <div className={styles.page}>
+        <div className={styles.container}>
+          <p className={styles.company}>FUXION BIOTECH S.A.C.</p>
+          <h1 className={styles.title}>Terms and Conditions</h1>
+          <p className={styles.subtitle}>
+            Terms and Conditions of the Q&apos;ocina en Casa Online Store
+          </p>
+
+          <section className={styles.section}>
+            <p>
+              Access to and use of the online shopping service of the &ldquo;Q&apos;ocina en
+              Casa&rdquo; virtual store operated by FuXion Biotech S.A.C. (hereinafter FUXION) is
+              subject to Peruvian law and is intended exclusively for residents of the Republic of
+              Peru. Users shall be subject to FUXION&apos;s General Terms and Conditions, together
+              with all other policies and principles governing FUXION that are incorporated by
+              reference; the contractual relationship between users (hereinafter, &ldquo;Users&rdquo;)
+              and FUXION is governed by the following terms and conditions:
+            </p>
+            <p>
+              The &ldquo;Q&apos;ocina en Casa&rdquo; virtual store operated by FUXION is a
+              technological tool that, using the internet, provides a digital sales channel
+              between FUXION as the SELLER and individuals who are not registered as
+              &ldquo;Fuxion Entrepreneurs&rdquo; or as &ldquo;Customers&rdquo; in FUXION&apos;s
+              database, who individually constitute the BUYER or USER.
+            </p>
+            <div className={styles.notice}>
+              THE USER DECLARES TO HAVE READ AND UNDERSTOOD ALL THE CONDITIONS ESTABLISHED IN THE
+              PRIVACY POLICY AND THESE TERMS AND CONDITIONS, AND EXPRESSES THEIR AGREEMENT AND
+              ACCEPTANCE UPON REGISTERING AND/OR USING THE &ldquo;COMPRA FUXION&rdquo; VIRTUAL
+              STORE. ANYONE WHO DOES NOT ACCEPT OR DISAGREES WITH THESE TERMS AND CONDITIONS,
+              WHICH ARE MANDATORY AND BINDING, MUST REFRAIN FROM USING THE &ldquo;COMPRA
+              FUXION&rdquo; VIRTUAL STORE.
+            </div>
+          </section>
+
+          <section className={styles.section}>
+            <h2 className={styles.heading}>First Clause</h2>
+            <p>
+              Access to the site is free, except for the cost of the internet connection provided
+              by the access provider (ISP) contracted by the User, which shall be at the
+              User&apos;s sole expense. The User may only access the site through authorized
+              means.
+            </p>
+            <p>
+              Registration as a User is not required to access the content of the Q&apos;OCINA EN
+              CASA STORE. To complete a purchase, the BUYER must provide their full name, identity
+              document number, email address, contact phone number, and the shipping address where
+              they wish to receive their purchase.
+            </p>
+            <p>
+              FUXION may use various means to identify Users, but is not responsible for the
+              accuracy of the Personal Data that users or buyers make available to it. Each USER
+              or BUYER guarantees and is responsible, in any case, for the truthfulness, accuracy,
+              validity, and authenticity of the Personal Data made available to FUXION.
+            </p>
+            <p>
+              Personal Data entered by the User must be accurate, current, and truthful at all
+              times. FUXION reserves the right to request proof and/or additional information in
+              order to verify Personal Data, and to temporarily and/or permanently suspend any
+              Registered User whose data could not be confirmed. FUXION is NOT responsible for the
+              accuracy of the data entered in the Registration.
+            </p>
+            <p>
+              Our website has been developed to guarantee the confidentiality of the information
+              provided by our customers.
+            </p>
+          </section>
+
+          <section className={styles.section}>
+            <h2 className={styles.heading}>Second Clause</h2>
+            <p>
+              Products offered on the site may be purchased through the available payment methods:
+              PayU for online payments and SafetyPay for online banking and cash payments. Payment
+              processing is subject to all terms, conditions, and privacy policies of each Payment
+              Processor.
+            </p>
+            <p>
+              If the bank does not approve the transaction after it has been made, or if we do not
+              receive confirmation of it even when the transaction appears successful, FUXION is
+              entitled to cancel the purchase and, in that case, a refund will be issued to the
+              credit or debit card, as applicable. Likewise, FUXION is entitled to verify the data
+              of the person who made the transaction through the &ldquo;COMPRA FUXION&rdquo;
+              virtual store via a phone call (to the registered phone number), for security
+              reasons or in case of suspected fraud; only if the corresponding data is confirmed
+              will the sale be approved, otherwise the transaction will not proceed and the
+              purchase amount will be refunded to the cardholder&apos;s debit or credit card.
+            </p>
+            <p className={styles.important}>
+              IMPORTANT: FUXION will not reserve or set aside products until they have been paid
+              for.
+            </p>
+            <p>
+              If you make a payment for a product that is out of stock, you will be notified and
+              refunded the cost of the product.
+            </p>
+            <p>
+              For payments made through SafetyPay or Pago Efectivo, after choosing this option,
+              keep the transaction number and amount to be paid. Then, log in to the website of
+              the financial institution through which you will make the payment. Enter your card
+              number and PIN, select the &ldquo;Pago de servicios&rdquo; option, and locate the
+              &laquo;SafetyPay&raquo; or &ldquo;Pago Efectivo&rdquo; button. Enter the transaction
+              number and the amount to be paid. You will then receive confirmation of your
+              purchase.
+            </p>
+            <p>
+              Payments made by credit card are subject to data evaluation and verification. For
+              more details, contact us via WhatsApp chat at{" "}
+              <a href="https://wa.me/51986867611" className={styles.link}>
+                986 867 611
+              </a>
+              .
+            </p>
+          </section>
+
+          <section className={styles.section}>
+            <h2 className={styles.heading}>Third Clause</h2>
+            <p>
+              Delivery Service rates are set by FUXION based on geographic location and delivery
+              demand associated with the destination area. Delivery service rates will be included
+              in the total amount to be paid, including General Sales Tax. Delivery Service fees
+              are non-refundable.
+            </p>
+            <p>
+              The recipient of the order must have a phone number available to coordinate delivery
+              (time, place, person receiving it, recipient identification, etc.).
+            </p>
+            <p>
+              Regardless of the payment method, the delivery person will require identification of
+              the order recipient via their National Identity Document or foreign resident card,
+              as applicable, as well as a signature on the delivery receipt. Orders will not be
+              delivered to minors.
+            </p>
+            <p>
+              THE Q&apos;OCINA EN CASA STORE is solely responsible for the quality of the products,
+              as well as the quality of the delivery.
+            </p>
+            <p>
+              Delivery options refer to Lima, Peru time. If you select a time outside the stated
+              windows, our Customer Service representative will contact the recipient to indicate
+              availability and coordinate delivery of the order.
+            </p>
+            <h3 className={styles.subheading}>
+              Exchange and Return Policy, for purchases made at the Q&apos;OCINA EN CASA STORE
+            </h3>
+            <p>
+              If for any reason you are not satisfied with your purchase at the Q&apos;OCINA EN
+              CASA STORE, you may exchange or return your purchase in its original condition
+              within the first 30 business days after the purchase is made.
+            </p>
+          </section>
+
+          <section className={styles.section}>
+            <h2 className={styles.heading}>Fourth Clause</h2>
+            <p>
+              FUXION will not be responsible if the User does not have a smartphone compatible
+              with use of the site. The Registered User agrees to make appropriate and lawful use
+              of the Application in accordance with applicable law, these Terms and Conditions,
+              generally accepted morals and customs, and public order. By using the site, the User
+              agrees that they will:
+            </p>
+            <ul className={styles.list}>
+              <li>
+                Not attempt to damage the site in any way, nor access restricted resources on the
+                site.
+              </li>
+              <li>Not use the site with an incompatible or unauthorized device.</li>
+              <li>
+                Not attempt to access, use, and/or manipulate FUXION&apos;s data or that of other
+                Users.
+              </li>
+              <li>
+                Not introduce or spread computer viruses or any other physical or logical systems
+                capable of causing damage to the site.
+              </li>
+            </ul>
+          </section>
+
+          <section className={styles.section}>
+            <h2 className={styles.heading}>Fifth Clause</h2>
+            <p>
+              FUXION does not guarantee the availability or continuity of the site&apos;s
+              operation. Accordingly, FUXION will under no circumstances be liable for any damage
+              and/or harm that may arise from: (i) the unavailability or inaccessibility of the
+              site; (ii) interruption of the site&apos;s operation or computer failures, telephone
+              breakdowns, disconnections, delays, or blockages caused by deficiencies or overloads
+              on telephone lines, data centers, the Internet system, or other electronic systems
+              occurring during their operation; and (iii) other damages that may be caused by
+              third parties through unauthorized intrusions beyond FUXION&apos;s control.
+            </p>
+            <p>
+              FUXION does not guarantee the absence of viruses or other elements introduced by
+              third parties unrelated to FUXION in the Application that could cause alterations to
+              the Registered User&apos;s physical or logical systems or to electronic documents
+              and files stored on their systems. Accordingly, FUXION will under no circumstances
+              be liable for any damages of any kind arising from the presence of viruses or other
+              elements that may cause alterations to the User&apos;s physical or logical systems,
+              electronic documents, or files.
+            </p>
+            <p>
+              FUXION adopts various protective measures to safeguard the Application and its
+              contents against third-party cyberattacks. However, FUXION does not guarantee that
+              unauthorized third parties will not become aware of the conditions, characteristics,
+              and circumstances under which the Registered User accesses the Application.
+              Accordingly, FUXION will under no circumstances be liable for damages arising from
+              such unauthorized access.
+            </p>
+          </section>
+
+          <section className={styles.section}>
+            <h2 className={styles.heading}>Sixth Clause</h2>
+            <p>
+              The User acknowledges and accepts that all intellectual and industrial property
+              rights over the content and/or any other elements included in the Application
+              (including, without limitation, trademarks, logos, trade names, slogans, text,
+              images, graphics, designs, sounds, databases, software, flowcharts, layout, audio
+              and video, and/or any other intellectual or industrial property right of any nature)
+              belong to and are the exclusive property of FUXION.
+            </p>
+            <p>
+              FUXION authorizes the User to use, view, print, download, and store the content
+              and/or elements included on the site exclusively for personal, private, non-commercial
+              use, refraining from any act of decompilation, reverse engineering, modification,
+              disclosure, or distribution thereof. Any other use or exploitation of any content
+              and/or other elements included on the site, other than as expressly provided for
+              herein, shall require FUXION&apos;s prior authorization.
+            </p>
+            <p>
+              Under no circumstances shall access to the site and/or acceptance of the Terms and
+              Conditions be understood to grant any right of assignment in favor of Users or any
+              third party.
+            </p>
+            <p>
+              FUXION is responsible for all content on the website, as well as for any changes it
+              may make to it.
+            </p>
+          </section>
+
+          <section className={styles.section}>
+            <h2 className={styles.heading}>Seventh Clause</h2>
+            <p>
+              Personal data provided by Users for the purpose of making purchases on the site will
+              be processed in accordance with Law No. 29733, the Personal Data Protection Law, and
+              its Regulations, approved by Supreme Decree No. 003-2013-JUS, and other related
+              regulations. Accordingly, FUXION undertakes to strictly comply with the aforementioned
+              regulations, as well as to maintain the highest standards of security, protection,
+              safekeeping, preservation, and confidentiality of the information received or sent.
+            </p>
+            <p>
+              Users declare that their personal data has been provided freely and voluntarily,
+              without any kind of pressure, obligation, or condition.
+            </p>
+          </section>
+
+          <section className={styles.section}>
+            <h2 className={styles.heading}>Eighth Clause</h2>
+            <p>
+              The User declares and accepts that FUXION may send timely notifications to the User
+              via the site, text messages, or the email address provided by the User, including
+              messages for promotional or advertising purposes. The Registered User may notify
+              FUXION and request that promotional or advertising activity cease by submitting a
+              request through the Support section available on the platform.
+            </p>
+          </section>
+
+          <section className={styles.section}>
+            <h2 className={styles.heading}>Ninth Clause</h2>
+            <p>
+              Photographic content of the products shown on the site is for reference only; there
+              may be variations between the photo shown on the &ldquo;Compra Fuxion&rdquo; virtual
+              store and the product received.
+            </p>
+          </section>
+
+          <section className={styles.section}>
+            <h2 className={styles.heading}>Tenth Clause</h2>
+            <p>
+              Any submission or complaint related to actions taken through this site must be
+              submitted through our Customer Service channels, Monday through Friday from 9:00
+              a.m. to 6:00 p.m. and Saturdays from 9:00 a.m. to 2:00 p.m., via WhatsApp chat at{" "}
+              <a href="https://wa.me/51986867611" className={styles.link}>
+                986 867 611
+              </a>
+              .
+            </p>
+          </section>
+
+          <section className={styles.section}>
+            <h2 className={styles.heading}>Eleventh Clause</h2>
+            <p>
+              The prices of the products and services available on this site, while listed, are
+              valid and applicable only on this site and are not necessarily applicable to other
+              sales channels used by Fuxion, unless Fuxion states otherwise. Likewise, the company
+              may modify any information contained on this site, including information related to
+              merchandise, services, prices, stock, and conditions, at any time and without prior
+              notice, respecting purchases that have been accepted up to that point.
+            </p>
+            <p>
+              Promotions offered on this website are not necessarily the same as those offered
+              through other sales channels used by Fuxion, such as physical stores, unless
+              expressly stated on this site or in advertising carried out by the provider for each
+              promotion.
+            </p>
+          </section>
+
+          <section className={styles.section}>
+            <h2 className={styles.heading}>Twelfth Clause</h2>
+            <p>
+              These Terms and Conditions, as well as the relationship between FUXION BIOTECH SAC
+              and THE USER, shall be governed and interpreted in accordance with the laws in force
+              in the Republic of Peru and the following documents:
+            </p>
+            <ul className={styles.list}>
+              <li>The Terms and Conditions – FUXION BIOTECH S.A.C.</li>
+              <li>
+                The Privacy Policy of FUXION BIOTECH S.A.C. and Personal Data Processing.
+              </li>
+            </ul>
+          </section>
+
+          <p className={styles.footer}>FUXION BIOTECH S.A.C.</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.page}>
       <div className={styles.container}>

@@ -87,6 +87,16 @@
 }
 
 @media (max-width: 768px) {
+  .heroTitulo {
+    width: auto;
+    padding-left: 0;
+    left: 24px;
+    right: 24px;
+    bottom: 70px;
+    font-size: 16px;
+    text-align: center;
+  }
+
   .heroLogoWrapper {
     justify-content: flex-start;
     padding: 0 24px;

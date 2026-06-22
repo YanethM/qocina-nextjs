@@ -54,6 +54,12 @@ export default async function BlogYNoticiasPage({ params }: Props) {
           backgroundImage={heroImageUrl}
           backgroundAlt="Blog y Noticias"
           waveImage="/images/web/noticias/hero_wave.svg"
+          waveImageMobile={
+            locale === "en"
+              ? "/images/mobile/blog/blog_en.svg"
+              : "/images/mobile/blog/blog_es.svg"
+          }
+          mobileHeight={700}
           overlayContent={
             pageData?.hero_titulo ? (
               <p className={styles.heroTitulo}>{pageData.hero_titulo}</p>

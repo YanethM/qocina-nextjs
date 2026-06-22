@@ -212,11 +212,11 @@
 
 @media (max-width: 768px) {
   .portada {
-    height: 360px;
+    height: 700px;
   }
 
   .heroBg {
-    top: 240px;
+    top: 580px;
     height: 500px;
     border-bottom-left-radius: 32px;
     border-bottom-right-radius: 32px;
@@ -281,11 +281,11 @@
 
 @media (max-width: 480px) {
   .portada {
-    height: 260px;
+    height: 700px;
   }
 
   .heroBg {
-    top: 170px;
+    top: 610px;
     height: 380px;
     border-bottom-left-radius: 24px;
     border-bottom-right-radius: 24px;

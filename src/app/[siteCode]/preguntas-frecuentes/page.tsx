@@ -63,7 +63,7 @@ export default async function PreguntasFrecuentesPage({ params }: Props) {
     : null;
   const heroImageMobileUrl = pageData?.hero_imagen_mobile?.url
     ? getStrapiImageUrl(pageData.hero_imagen_mobile.url)
-    : null;
+    : heroImageUrl;
   const showHero = Boolean(
     pageData?.hero_imagen ||
       pageData?.hero_imagen_mobile ||
@@ -72,13 +72,28 @@ export default async function PreguntasFrecuentesPage({ params }: Props) {
   );
   const showSubscribe = Boolean(pageData?.meta_title && pageData?.meta_description);
 
+  const [tituloRegular, tituloBold] = pageData?.hero_titulo
+    ? pageData.hero_titulo.includes("  ")
+      ? pageData.hero_titulo.split(/\s{2,}/)
+      : pageData.hero_titulo.match(/^(.*?)\s+(Culinary Bases)$/i)?.slice(1) ??
+        [pageData.hero_titulo]
+    : [];
+
   const heroText = (
     <>
       {pageData?.hero_etiqueta && (
         <p className={styles.heroLabel}>{pageData.hero_etiqueta}</p>
       )}
       {pageData?.hero_titulo && (
-        <h1 className={styles.heroTitle}>{pageData.hero_titulo}</h1>
+        <h1 className={styles.heroTitle}>
+          <span className={styles.heroTituloRegular}>{tituloRegular}</span>
+          {tituloBold && (
+            <>
+              {" "}
+              <span className={styles.heroTituloBold}>{tituloBold}</span>
+            </>
+          )}
+        </h1>
       )}
       {pageData?.hero_descripcion && (
         <p className={styles.heroDescription}>{pageData.hero_descripcion}</p>

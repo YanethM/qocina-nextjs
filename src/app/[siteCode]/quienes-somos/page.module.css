@@ -455,12 +455,12 @@
   }
 
   .bannerSection {
-    height: 750px;
+    height: 700px;
     margin-top: -70px;
   }
 
   .bannerImage {
-    height: 750px !important;
+    height: 700px !important;
     object-position: center top;
   }
 
