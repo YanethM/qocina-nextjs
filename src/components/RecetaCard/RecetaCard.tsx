@@ -1,6 +1,9 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { COLOR_MAP, WAVE_MAP, DEFAULT_COLOR, DEFAULT_WAVE } from "@/lib/constants";
+import { useLocale } from "@/hooks/useLocale";
 import styles from "./RecetaCard.module.css";
 
 export interface RecetaCardProps {
@@ -20,8 +23,10 @@ export default function RecetaCard({
   imagenUrl,
   imagenAlt,
   colorCard,
-  ctaText = "Ver receta",
+  ctaText,
 }: RecetaCardProps) {
+  const locale = useLocale();
+  const label = ctaText ?? (locale === "en" ? "View recipe" : "Ver receta");
   const accent = (colorCard && COLOR_MAP[colorCard]) ?? DEFAULT_COLOR;
   const wave = (colorCard && WAVE_MAP[colorCard]) ?? DEFAULT_WAVE;
   const textColor = colorCard === "amarillo" ? "#1a1a1a" : "#fff";
@@ -63,7 +68,7 @@ export default function RecetaCard({
         <p className={styles.description}>{descripcion}</p>
         <div className={styles.cta}>
           <span className={styles.ctaButton} data-btn="white">
-            {ctaText}
+            {label}
             <Image
               src="/images/web/recetas/icon_arrow_right.svg"
               alt=""

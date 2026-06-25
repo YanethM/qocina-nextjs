@@ -6,8 +6,14 @@ import Image from "next/image";
 import { getStrapiImageUrl } from "@/lib/strapi";
 import type { Producto } from "@/types";
 import { useSiteCode } from "@/hooks/useSiteCode";
+import { useLocale } from "@/hooks/useLocale";
 import styles from "./ProductosCarousel.module.css";
 import { formatPrice } from "@/lib/format";
+
+const translations = {
+  es: { addToCart: "Añadir al carrito" },
+  en: { addToCart: "Add to cart" },
+};
 
 const CARD_COLORS = [styles.cardGreen, styles.cardYellow, styles.cardRed];
 const ITEMS_PER_PAGE = 3;
@@ -18,6 +24,8 @@ export default function ProductosCarousel({
   productos: Producto[];
 }) {
   const siteCode = useSiteCode();
+  const locale = useLocale();
+  const t = translations[locale];
   const [page, setPage] = useState(0);
   const [dir, setDir] = useState<"next" | "prev">("next");
 
@@ -108,7 +116,7 @@ export default function ProductosCarousel({
                       });
                     }
                   }}>
-                  Añadir al carrito
+                  {t.addToCart}
                 </Link>
               </div>
             </div>

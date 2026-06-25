@@ -64,152 +64,110 @@
 }
 
 .sugCard {
-  position: relative;
-  width: 380px;
-  min-width: 380px;
-  height: 510px;
-  flex-shrink: 0;
-  transition: transform 0.2s;
-}
-
-.sugCardActive {
-  transform: scale(1.04);
-}
-
-.sugCardImage {
-  position: absolute;
-  top: 1px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 264px;
-  height: 222px;
-  z-index: 1;
-}
-
-.sugCardImagePack {
-  width: 348.14px;
-  height: 238.11px;
-}
-
-.sugCardBody {
-  position: absolute;
-  top: 141px;
-  left: 0;
-  right: 0;
-  height: 368px;
-  background: #ffffff00;
-  border-radius: 20px;
-  padding: 111px 26px 26px;
-  box-sizing: border-box;
+  border-radius: 24px;
+  overflow: visible;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
-  box-shadow: none;
+  text-align: center;
+  padding: 136px 32px 32px;
+  position: relative;
+  margin-top: 231px;
+  width: 380px;
+  min-width: 380px;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
 }
 
-.sugCardActive .sugCardBody {
-  background: var(--sug-color, #6A892C);
-  box-shadow: 0 8px 32px color-mix(in srgb, var(--sug-color, #6A892C) 25%, transparent);
+.sugCard:hover {
+  transform: translateY(-5px);
 }
 
-.sugPack {
-  font-size: 15px;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin: 0;
+.sugCardGreen { background: #6a892c; color: #fff; }
+.sugCardYellow { background: #f4a910; color: #000; }
+.sugCardRed { background: #ce171c; color: #fff; }
+
+.sugCardImage {
+  position: absolute;
+  top: -231px;
+  left: 0;
+  width: 100%;
+  height: 343px;
   display: flex;
   align-items: center;
-  gap: 6px;
-}
-
-.sugCardActive .sugPack {
-  color: #fff;
-}
-
-.sugPackBadge {
-  display: inline-flex;
-  align-items: center;
   justify-content: center;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: #1a1a1a;
-  color: #fff;
-  font-size: 12px;
-  font-weight: 700;
+  z-index: 2;
 }
 
-.sugCardActive .sugPackBadge {
-  background: #fff;
-  color: #6A892C;
-}
-
-.sugPrecio {
-  font-size: 26px;
-  font-weight: 400;
-  color: #1a1a1a;
-  margin: 0;
-  line-height: 1.2;
-  text-align: center;
-}
-
-.sugCardActive .sugPrecio {
-  color: #fff;
+.sugCardBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  flex: 1;
+  position: relative;
+  z-index: 3;
 }
 
 .sugNombre {
-  font-size: 24px;
+  font-family: Montserrat, sans-serif;
   font-weight: 700;
-  color: #1a1a1a;
-  margin: 0;
-  line-height: 1.2;
+  font-size: 29px;
+  line-height: 120%;
   text-align: center;
+  margin: 0;
+  color: inherit;
 }
 
-.sugCardActive .sugNombre {
-  color: #fff;
+.sugPrecio {
+  font-family: Montserrat, sans-serif;
+  font-size: 30px;
+  font-weight: 400;
+  margin: 0;
+  color: inherit;
 }
 
 .sugDesc {
-  font-size: 14.68px;
-  font-weight: 400;
-  color: #555;
-  margin: 0;
-  line-height: 1.4;
-  letter-spacing: 0;
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 140%;
   text-align: center;
-  overflow: hidden;
-  flex: 1;
-}
-
-.sugCardActive .sugDesc {
-  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  opacity: 0.9;
+  color: inherit;
 }
 
 .sugBtn {
-  margin-top: auto;
+  display: inline-block;
   width: 100%;
+  max-width: 304px;
+  margin-top: auto;
+  padding: 12px 32px;
+  border-radius: 100px;
+  background: #fff;
+  color: #1a1a1a;
+  border: none;
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 140%;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.sugCardYellow .sugBtn {
   background: #1a1a1a;
   color: #fff;
-  border: none;
-  border-radius: 50px;
-  padding: 12px 20px;
-  font-size: 13px;
-  font-weight: 700;
-  line-height: 1.4;
-  cursor: pointer;
-  transition: opacity 0.2s;
 }
 
 .sugBtn:hover {
-  opacity: 0.85;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
-.sugBtnActive {
-  background: #fff;
-  color: #1a1a1a;
-}
+
 
 .arrowBtn {
   background: none;
@@ -831,58 +789,36 @@
   .sugCard {
     min-width: calc(100vw - 96px);
     width: calc(100vw - 96px);
-    height: 465px;
     flex-shrink: 0;
     scroll-snap-align: center;
+    padding: 110px 20px 24px;
+    margin-top: 185px;
   }
 
   .sugCardImage {
-    width: 264px;
-    height: 222px;
-    top: 1.43px;
+    top: -185px;
+    height: 274px;
   }
 
   .sugCardBody {
-    top: 141.04px;
-    height: 323.79px;
-    padding: 110.88px 26.09px 26.09px;
-    gap: 19.57px;
-    border-radius: 19.57px;
+    gap: 12px;
   }
 
   .sugNombre {
-    font-family: Montserrat, sans-serif;
-    font-weight: 400;
-    font-size: 26.27px;
-    line-height: 120%;
-    letter-spacing: 0%;
-    text-align: center;
+    font-size: 20px;
   }
 
   .sugPrecio {
-    font-family: Montserrat, sans-serif;
-    font-weight: 400;
-    font-size: 26.27px;
-    line-height: 120%;
-    letter-spacing: 0%;
-    text-align: center;
+    font-size: 22px;
   }
 
   .sugDesc {
-    font-family: Montserrat, sans-serif;
-    font-weight: 400;
-    font-size: 14.78px;
-    line-height: 140%;
-    letter-spacing: 0%;
-    text-align: center;
+    font-size: 14px;
   }
 
   .sugBtn {
-    font-family: Montserrat, sans-serif;
-    font-weight: 700;
-    font-size: 13.14px;
-    line-height: 140%;
-    letter-spacing: 0%;
+    max-width: unset;
+    font-size: 13px;
   }
 }
 

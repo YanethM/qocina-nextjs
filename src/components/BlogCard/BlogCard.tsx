@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useLocale } from "@/hooks/useLocale";
 import styles from "./BlogCard.module.css";
 
 interface BlogCardProps {
@@ -15,8 +18,10 @@ export default function BlogCard({
   descripcion_corta,
   href = "#",
   imagenUrl,
-  ctaText = "Leer más",
+  ctaText,
 }: BlogCardProps) {
+  const locale = useLocale();
+  const label = ctaText ?? (locale === "en" ? "Read more" : "Leer más");
   return (
     <div className={styles.card}>
       {imagenUrl && (
@@ -46,7 +51,7 @@ export default function BlogCard({
           </div>
           <div className={styles.cardBtnWrapper}>
             <Link href={href} className={styles.cardBtn} data-btn="white">
-              {ctaText}
+              {label}
               <Image
                 src="/images/web/home/arrow_right.svg"
                 alt=""

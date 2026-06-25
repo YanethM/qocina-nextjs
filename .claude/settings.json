@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node check.mjs)",
+      "Bash(python3 -c ' *)",
+      "Bash(node check2.mjs)",
+      "Bash(node check_desktop2.mjs)",
+      "Bash(node check_desktop.mjs)",
+      "Bash(node check_blogarticle.mjs)",
+      "Bash(find / -maxdepth 6 -iname \"playwright-core\" -type d 2>/dev/null | head -5; find /Users -maxdepth 8 -iname \"playwright\" -type d 2>/dev/null | head -10)",
+      "Read(//Users/**)",
+      "Bash(NODE_PATH=/Users/yanethmejia/.npm/_npx/e41f203b7505f1fb/node_modules node measure.mjs)",
+      "Bash(ln -s /Users/yanethmejia/.npm/_npx/e41f203b7505f1fb/node_modules node_modules)",
+      "Bash(node measure.mjs)",
+      "Bash(node /tmp/pw_proc/measure.mjs)",
+      "Bash(mkdir -p /tmp/verify-carrito)",
+      "Bash(npm init *)",
+      "Bash(npm install *)",
+      "Bash(node verify.js)",
+      "Bash(node verify2.js)",
+      "Bash(sips -getProperty pixelWidth -getProperty pixelHeight D0-sugeridos.png)",
+      "Bash(node check_header.js)",
+      "Bash(node check_home_hero.js)",
+      "Bash(node check_heroes.js)",
+      "Bash(node check_hero_overlay.js)",
+      "Bash(node measure_blog_hero.js)",
+      "Bash(node measure_blog_mobile.js)",
+      "Bash(node check_faq_us.js)",
+      "Bash(node check_faq.js)"
+    ]
+  }
+}

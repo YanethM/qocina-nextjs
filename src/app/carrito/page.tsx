@@ -6,8 +6,22 @@ import { useState, useEffect } from "react";
 import { useCart } from "@/context/CartContext";
 import { getStrapiImageUrl } from "@/lib/strapi";
 import { getProductos } from "@/lib/api";;
+import { useLocale } from "@/hooks/useLocale";
 import type { Producto } from "@/types";
 import styles from "./page.module.css";
+
+const translations = {
+  es: {
+    promoBtn: "Aplicar",
+    checkoutBtn: "Continuar con el pago",
+    addToCart: "Añadir al carrito",
+  },
+  en: {
+    promoBtn: "Apply",
+    checkoutBtn: "Proceed to checkout",
+    addToCart: "Add to cart",
+  },
+};
 
 function formatPrice(precio: number, moneda: string): string {
   if (!precio && precio !== 0) return "";
@@ -24,6 +38,8 @@ const STEPS = [
 
 export default function CarritoPage() {
   const { items, removeItem, updateCantidad, addItem, total } = useCart();
+  const locale = useLocale();
+  const t = translations[locale];
   const [codigoPromo, setCodigoPromo] = useState("");
   const [descuento, setDescuento] = useState(0);
   const [productos, setProductos] = useState<Producto[]>([]);
@@ -155,7 +171,7 @@ export default function CarritoPage() {
                   onChange={(e) => setCodigoPromo(e.target.value)}
                 />
                 <button className={styles.promoBtn} onClick={handleAplicarCodigo}>
-                  Aplicar
+                  {t.promoBtn}
                 </button>
               </div>
             </div>
@@ -179,7 +195,7 @@ export default function CarritoPage() {
             </div>
 
             <Link href="/envio" className={styles.checkoutBtn}>
-              <span>Continuar con el pago</span>
+              <span>{t.checkoutBtn}</span>
               <Image
                 src="/images/web/home/arrow_right.svg"
                 alt=""
@@ -265,7 +281,7 @@ export default function CarritoPage() {
                             })
                           }
                         >
-                          Añadir al carrito
+                          {t.addToCart}
                         </button>
                       </div>
                     </div>

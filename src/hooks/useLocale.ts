@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { LOCALE_COOKIE } from "@/lib/constants";
 
 function readLocaleCookie(): "es" | "en" {
@@ -9,10 +9,12 @@ function readLocaleCookie(): "es" | "en" {
   return match?.[1] === "en" ? "en" : "es";
 }
 
+const useBrowserLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
+
 export function useLocale(): "es" | "en" {
   const [locale, setLocale] = useState<"es" | "en">("es");
 
-  useEffect(() => {
+  useBrowserLayoutEffect(() => {
     setLocale(readLocaleCookie());
     const handleChange = (e: Event) => {
       const detail = (e as CustomEvent<string>).detail;

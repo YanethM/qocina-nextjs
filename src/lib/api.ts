@@ -172,6 +172,8 @@ export async function getRecetas(
   return fetchAPI<StrapiListResponse<Receta>>("/api/recetas", {
     ...imgFields("imagen_principal"),
     ...filterParams,
+    "sort[0]": "orden:asc",
+    "sort[1]": "publishedAt:desc",
   }, locale, siteCode);
 }
 
@@ -333,6 +335,7 @@ export async function getProductosPage(locale?: string, siteCode?: string) {
     "populate[ayuda_imagen_mobile][fields][3]": "height",
     "populate[ayuda_imagen_mobile][fields][4]": "formats",
     "populate[ayuda_cta]": "*",
+    "populate[secreto_secciones]": "*",
   }, locale, siteCode);
   return {
     ...res,

@@ -4,9 +4,15 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import type { Producto } from "@/types";
 import { useCart } from "@/context/CartContext";
+import { useLocale } from "@/hooks/useLocale";
 import Accordion from "@/components/Accordion/Accordion";
 import styles from "./PackDetailClient.module.css";
 import { formatPrice } from "@/lib/format";
+
+const translations = {
+  es: { addToCart: "Añadir al carrito" },
+  en: { addToCart: "Add to cart" },
+};
 
 interface Props {
   id: number;
@@ -40,6 +46,8 @@ export default function PackDetailClient({
   firstProduct,
 }: Props) {
   const { addItem } = useCart();
+  const locale = useLocale();
+  const t = translations[locale];
   const [cantidad, setCantidad] = useState(1);
 
   useEffect(() => {
@@ -234,7 +242,7 @@ export default function PackDetailClient({
           )
         }
       >
-        Añadir al carrito
+        {t.addToCart}
       </button>
     </div>
   );

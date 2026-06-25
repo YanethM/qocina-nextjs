@@ -178,11 +178,6 @@
   transform: translateX(232px);
 }
 
-.card:nth-child(4) .author,
-.card:nth-child(4) .content {
-  color: #fff;
-}
-
 .grid[data-count="1"],
 .grid[data-count="2"] {
   padding-bottom: 40px;

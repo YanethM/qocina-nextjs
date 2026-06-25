@@ -3,12 +3,20 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useSiteCode } from "@/hooks/useSiteCode";
+import { useLocale } from "@/hooks/useLocale";
 import styles from "./CookieBanner.module.css";
+
+const translations = {
+  es: { reject: "Rechazar", accept: "Aceptar todas" },
+  en: { reject: "Reject", accept: "Accept all" },
+};
 
 const STORAGE_KEY = "qocina_cookie_consent";
 
 export default function CookieBanner() {
   const siteCode = useSiteCode();
+  const locale = useLocale();
+  const t = translations[locale];
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -42,10 +50,10 @@ export default function CookieBanner() {
         </p>
         <div className={styles.actions}>
           <button className={styles.btnReject} onClick={handleReject}>
-            Rechazar
+            {t.reject}
           </button>
           <button className={styles.btnAccept} onClick={handleAccept}>
-            Aceptar todas
+            {t.accept}
           </button>
         </div>
       </div>

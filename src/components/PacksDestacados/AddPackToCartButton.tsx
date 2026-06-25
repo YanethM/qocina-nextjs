@@ -1,6 +1,12 @@
 "use client";
 
 import { useCart } from "@/context/CartContext";
+import { useLocale } from "@/hooks/useLocale";
+
+const translations = {
+  es: { addToCart: "Añadir al carrito" },
+  en: { addToCart: "Add to cart" },
+};
 
 interface Props {
   id: number;
@@ -28,6 +34,8 @@ export default function AddPackToCartButton({
   className,
 }: Props) {
   const { addItem } = useCart();
+  const locale = useLocale();
+  const t = translations[locale];
 
   return (
     <button
@@ -46,7 +54,7 @@ export default function AddPackToCartButton({
           categoria: null,
         })
       }>
-      Añadir al carrito
+      {t.addToCart}
     </button>
   );
 }

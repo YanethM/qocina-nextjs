@@ -5,9 +5,15 @@ import Image from "next/image";
 import type { Badge, Categoria } from "@/types";
 import { DEFAULT_COLOR } from "@/lib/constants";
 import { useCart } from "@/context/CartContext";
+import { useLocale } from "@/hooks/useLocale";
 import Accordion from "@/components/Accordion/Accordion";
 import styles from "./ProductoDetailClient.module.css";
 import { formatPrice } from "@/lib/format";
+
+const translations = {
+  es: { addToCart: "Añadir al carrito" },
+  en: { addToCart: "Add to cart" },
+};
 
 const PACK_SIZES = [
   { label: "Unidad", multiplier: 1 },
@@ -54,6 +60,8 @@ export default function ProductoDetailClient({
   color,
 }: Props) {
   const { addItem } = useCart();
+  const locale = useLocale();
+  const t = translations[locale];
   const [selectedImg, setSelectedImg] = useState(0);
 
   useEffect(() => {
@@ -285,7 +293,7 @@ export default function ProductoDetailClient({
             )
           }
         >
-          Añadir al carrito
+          {t.addToCart}
         </button>
       </div>
     </div>

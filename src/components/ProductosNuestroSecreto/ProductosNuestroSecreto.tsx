@@ -2,62 +2,21 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import ReactMarkdown from "react-markdown";
 import { getStrapiImageUrl } from "@/lib/strapi";
-import type { StrapiImage } from "@/types";
+import type { StrapiImage, SecretoSeccion } from "@/types";
 import styles from "./ProductosNuestroSecreto.module.css";
-
-const items = [
-  {
-    id: 1,
-    titulo: "Descubre el proceso detrás del sabor",
-    contenido: (
-      <>
-        <p>
-          Nuestra base roja no se hizo a la carrera. Se cocina{" "}
-          <strong>slow and sabroso</strong>, como manda la buena cocina latina
-          que siempre se atreve a innovar. Primero se doran los ingredientes
-          hasta que griten &quot;¡listo!&quot;. Luego, se liofiliza (sí, así de
-          pro).
-        </p>
-        <p>
-          ¿El resultado? Una base práctica, saludable y con ese cariño que solo
-          tiene lo hecho en casa... pero lista en segundos.
-        </p>
-      </>
-    ),
-  },
-  {
-    id: 2,
-    titulo: "¿Qué es la liofilización y por qué importa?",
-    contenido: (
-      <p>
-        La liofilización es un proceso de deshidratación en frío que conserva el
-        sabor, color, aroma y nutrientes de los alimentos. A diferencia del
-        secado tradicional, no usa calor, lo que significa que tu base llega a
-        ti con toda su esencia intacta.
-      </p>
-    ),
-  },
-  {
-    id: 3,
-    titulo: "¿Por qué esta base culinaria?",
-    contenido: (
-      <p>
-        Porque cocinar rico no debería ser complicado. Esta base te da el
-        arranque sabroso que necesitas para preparar tus platos favoritos en
-        minutos, sin sacrificar calidad ni autenticidad.
-      </p>
-    ),
-  },
-];
 
 interface Props {
   titulo?: string | null;
   secretoImagen?: StrapiImage | null;
+  secciones?: SecretoSeccion[] | null;
 }
 
-export default function ProductosNuestroSecreto({ titulo, secretoImagen }: Props) {
-  const [openId, setOpenId] = useState<number>(1);
+export default function ProductosNuestroSecreto({ titulo, secretoImagen, secciones }: Props) {
+  const defaultOpen =
+    secciones?.find((s) => s.expandida_por_defecto)?.id ?? secciones?.[0]?.id ?? 0;
+  const [openId, setOpenId] = useState<number>(defaultOpen);
 
   const toggle = (id: number) => {
     setOpenId((prev) => (prev === id ? 0 : id));
@@ -70,6 +29,8 @@ export default function ProductosNuestroSecreto({ titulo, secretoImagen }: Props
     secretoImagen?.url;
   const imageSrc = imageUrl ? getStrapiImageUrl(imageUrl) : null;
   const imageAlt = secretoImagen?.alternativeText ?? "Nuestro secreto del sabor";
+
+  if (!secciones || secciones.length === 0) return null;
 
   return (
     <section className={styles.section}>
@@ -90,7 +51,7 @@ export default function ProductosNuestroSecreto({ titulo, secretoImagen }: Props
         )}
 
         <div className={styles.accordion}>
-          {items.map((item) => {
+          {secciones.map((item) => {
             const isOpen = openId === item.id;
             return (
               <div key={item.id} className={styles.accordionItem}>
@@ -117,7 +78,7 @@ export default function ProductosNuestroSecreto({ titulo, secretoImagen }: Props
                 {isOpen && (
                   <div className={styles.accordionContent}>
                     <hr className={styles.divider} />
-                    {item.contenido}
+                    <ReactMarkdown>{item.contenido}</ReactMarkdown>
                   </div>
                 )}
               </div>
@@ -128,3 +89,4 @@ export default function ProductosNuestroSecreto({ titulo, secretoImagen }: Props
     </section>
   );
 }
+

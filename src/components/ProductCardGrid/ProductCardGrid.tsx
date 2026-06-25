@@ -6,9 +6,15 @@ import Image from "next/image";
 import type { Producto } from "@/types";
 import { getStrapiImageUrl } from "@/lib/strapi";
 import { useSiteCode } from "@/hooks/useSiteCode";
+import { useLocale } from "@/hooks/useLocale";
 import { COLOR_HEX_TO_KEY } from "@/lib/constants";
 import styles from "./ProductCardGrid.module.css";
 import { formatPrice } from "@/lib/format";
+
+const translations = {
+  es: { addToCart: "Añadir al carrito" },
+  en: { addToCart: "Add to cart" },
+};
 
 const CARD_COLOR_CLASS: Record<string, string> = {
   rojo: styles.cardRed,
@@ -22,6 +28,8 @@ function toTitleCase(str: string): string {
 
 export default function ProductCardGrid({ productos, fewClass }: { productos: Producto[]; fewClass?: string }) {
   const siteCode = useSiteCode();
+  const locale = useLocale();
+  const t = translations[locale];
 
   useEffect(() => {
     if (typeof window === "undefined" || !window.cioanalytics) return;
@@ -90,7 +98,7 @@ export default function ProductCardGrid({ productos, fewClass }: { productos: Pr
                     });
                   }
                 }}>
-                Añadir al carrito
+                {t.addToCart}
               </Link>
             </div>
           </div>

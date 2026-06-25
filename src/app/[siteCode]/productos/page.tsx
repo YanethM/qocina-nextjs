@@ -128,6 +128,7 @@ export default async function ProductosPage({ params }: Props) {
       <ProductosNuestroSecreto
         titulo={pageData?.secreto_titulo}
         secretoImagen={pageData?.secreto_imagen ?? null}
+        secciones={pageData?.secreto_secciones ?? null}
       />
 
       <section className={styles.paraQuien}>

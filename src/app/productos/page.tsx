@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
+import { cookies } from "next/headers";
 import { getProductosPage, getStrapiImageUrl } from "@/lib/api";
+import { LOCALE_COOKIE } from "@/lib/constants";
 import styles from "./page.module.css";
 import ProductosNuestroSecreto from "@/components/ProductosNuestroSecreto/ProductosNuestroSecreto";
 import PacksDestacados from "@/components/PacksDestacados/PacksDestacados";
@@ -38,6 +40,9 @@ function formatPrice(precio: number, moneda: string): string {
 }
 
 export default async function ProductosPage() {
+  const cookieStore = await cookies();
+  const locale = cookieStore.get(LOCALE_COOKIE)?.value === "en" ? "en" : "es";
+  const addToCartText = locale === "en" ? "Add to cart" : "Añadir al carrito";
   const productosPageRes = await getProductosPage().catch(() => null);
 
   const pageData = productosPageRes?.data;
@@ -136,7 +141,7 @@ export default async function ProductosPage() {
                     <Link
                       href={`/productos/${producto.slug}`}
                       className={styles.cardButton}>
-                      Añadir al carrito
+                      {addToCartText}
                     </Link>
                   </div>
                 </div>

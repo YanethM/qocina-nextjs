@@ -11,11 +11,11 @@ import CountryModal from "@/components/CountryModal/CountryModal";
 import styles from "./Header.module.css";
 
 const NAV_PATHS = [
-  { path: "/quienes-somos", label: "Nosotros" },
-  { path: "/productos", label: "Tienda" },
-  { path: "/recetas", label: "Recetas" },
-  { path: "/blog-y-noticias", label: "Blog y Noticias" },
-  { path: "/contacto", label: "Contacto" },
+  { path: "/quienes-somos", label: { es: "Nosotros", en: "About us" } },
+  { path: "/productos", label: { es: "Tienda", en: "Shop" } },
+  { path: "/recetas", label: { es: "Recetas", en: "Recipes" } },
+  { path: "/blog-y-noticias", label: { es: "Blog y Noticias", en: "Blog & News" } },
+  { path: "/contacto", label: { es: "Contacto", en: "Contact" } },
 ];
 
 export default function Header() {
@@ -29,7 +29,7 @@ export default function Header() {
   const siteCode = useSiteCode();
 
   const base = siteCode ? `/${siteCode}` : "";
-  const navLinks = NAV_PATHS.map((n) => ({ href: `${base}${n.path}`, label: n.label, path: n.path }));
+  const navLinks = NAV_PATHS.map((n) => ({ href: `${base}${n.path}`, label: n.label[locale as "es" | "en"] ?? n.label.es, path: n.path }));
 
   const closeMenu = () => setMenuOpen(false);
 

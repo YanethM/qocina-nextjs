@@ -7,6 +7,7 @@ import { Producto } from "@/types";
 import { getStrapiImageUrl } from "@/lib/strapi";
 import { useCarousel } from "@/hooks/useCarousel";
 import { useSiteCode } from "@/hooks/useSiteCode";
+import { useLocale } from "@/hooks/useLocale";
 import styles from "./Productos.module.css";
 import { formatPrice } from "@/lib/format";
 
@@ -55,7 +56,7 @@ function CardItem({
   producto,
   fallbackColorClass,
   priority = false,
-  addToCartText = "Añadir al carrito",
+  addToCartText,
 }: {
   producto: Producto;
   fallbackColorClass: string;
@@ -63,6 +64,8 @@ function CardItem({
   addToCartText?: string;
 }) {
   const siteCode = useSiteCode();
+  const locale = useLocale();
+  const label = addToCartText ?? (locale === "en" ? "Add to cart" : "Añadir al carrito");
   const apiColor = producto.color ?? null;
   const lightBg = apiColor ? isLightColor(apiColor) : fallbackColorClass === styles.cardYellow;
   const cardStyle = apiColor
@@ -122,7 +125,7 @@ function CardItem({
         <button
           className={styles.addToCartBtn}
           style={btnStyle}>
-          {addToCartText}
+          {label}
         </button>
       </div>
     </Link>

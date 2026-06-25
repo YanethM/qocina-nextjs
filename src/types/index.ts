@@ -293,6 +293,13 @@ export interface PerfilUsuario {
   imagen: StrapiImage | null;
 }
 
+export interface SecretoSeccion {
+  id: number;
+  titulo: string;
+  contenido: string;
+  expandida_por_defecto: boolean;
+}
+
 export interface ProductosPage {
   id: number;
   documentId: string;
@@ -308,6 +315,7 @@ export interface ProductosPage {
   banner: StrapiImage | null;
   secreto_titulo: string | null;
   secreto_imagen: StrapiImage | null;
+  secreto_secciones: SecretoSeccion[] | null;
   packs_destacados: PackDestacado[] | null;
   para_quien_titulo: string | null;
   perfiles_usuario: PerfilUsuario[] | null;

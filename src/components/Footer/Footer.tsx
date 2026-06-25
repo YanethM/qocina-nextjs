@@ -3,10 +3,38 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useSiteCode } from "@/hooks/useSiteCode";
+import { useLocale } from "@/hooks/useLocale";
 import styles from "./Footer.module.css";
+
+const translations = {
+  es: {
+    about: "Sobre nosotros",
+    products: "Productos",
+    recipes: "Recetas",
+    news: "Actualidad",
+    contact: "Contacto",
+    secure: "Compra en línea 100% seguro",
+    faq: "Preguntas frecuentes",
+    privacy: "Políticas de privacidad",
+    cookies: "Políticas de cookies",
+  },
+  en: {
+    about: "About us",
+    products: "Products",
+    recipes: "Recipes",
+    news: "News",
+    contact: "Contact",
+    secure: "100% secure online shopping",
+    faq: "Frequently asked questions",
+    privacy: "Privacy policy",
+    cookies: "Cookie policy",
+  },
+};
 
 export default function Footer() {
   const siteCode = useSiteCode();
+  const locale = useLocale();
+  const t = translations[locale];
 
   return (
     <footer className={styles.footer}>
@@ -23,11 +51,11 @@ export default function Footer() {
 
         <div className={styles.navCart}>
           <nav className={styles.nav}>
-            <Link href={`/${siteCode}/quienes-somos`}>Sobre nosotros</Link>
-            <Link href={`/${siteCode}/productos`}>Productos</Link>
-            <Link href={`/${siteCode}/recetas`}>Recetas</Link>
-            <Link href={`/${siteCode}/blog-y-noticias`}>Actualidad</Link>
-            <Link href={`/${siteCode}/contacto`}>Contacto</Link>
+            <Link href={`/${siteCode}/quienes-somos`}>{t.about}</Link>
+            <Link href={`/${siteCode}/productos`}>{t.products}</Link>
+            <Link href={`/${siteCode}/recetas`}>{t.recipes}</Link>
+            <Link href={`/${siteCode}/blog-y-noticias`}>{t.news}</Link>
+            <Link href={`/${siteCode}/contacto`}>{t.contact}</Link>
           </nav>
 
           <Link href={`/${siteCode}/carrito`} className={styles.cartIcon} aria-label="Carrito">
@@ -38,7 +66,7 @@ export default function Footer() {
 
       <div className={styles.middleRow}>
         <div className={styles.paymentSection}>
-          <span className={styles.secureText}>Compra en línea 100% seguro</span>
+          <span className={styles.secureText}>{t.secure}</span>
           <Image
             src="/images/web/footer/mastercard-securecode.svg"
             alt="MasterCard SecureCode"
@@ -78,9 +106,9 @@ export default function Footer() {
           &copy; All rights reserved. Fuxion {new Date().getFullYear()}.
         </p>
         <nav className={styles.policyLinks}>
-          <Link href={`/${siteCode}/preguntas-frecuentes`}>Preguntas frecuentes</Link>
-          <Link href={`/${siteCode}/politicas-de-privacidad`}>Políticas de privacidad</Link>
-          <Link href={`/${siteCode}/politicas-de-cookies`}>Políticas de cookies</Link>
+          <Link href={`/${siteCode}/preguntas-frecuentes`}>{t.faq}</Link>
+          <Link href={`/${siteCode}/politicas-de-privacidad`}>{t.privacy}</Link>
+          <Link href={`/${siteCode}/politicas-de-cookies`}>{t.cookies}</Link>
         </nav>
       </div>
     </footer>

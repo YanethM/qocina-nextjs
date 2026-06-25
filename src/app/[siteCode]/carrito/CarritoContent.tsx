@@ -7,7 +7,7 @@ import { useCart } from "@/context/CartContext";
 import { getStrapiImageUrl, stripHtml } from "@/lib/strapi";
 import { getProductos } from "@/lib/api";
 import { useSiteCode } from "@/hooks/useSiteCode";
-import { LOCALE_COOKIE } from "@/lib/constants";
+import { LOCALE_COOKIE, COLOR_HEX_TO_KEY } from "@/lib/constants";
 import type { Producto, PackDestacado } from "@/types";
 import styles from "./page.module.css";
 
@@ -63,6 +63,18 @@ interface SugItem {
   sku: string | null;
   categoria: string | null;
   color: string | null;
+}
+
+const SUG_COLOR_CLASS: Record<string, string> = {
+  rojo: styles.sugCardRed,
+  verde: styles.sugCardGreen,
+  amarillo: styles.sugCardYellow,
+};
+
+function getSugColorClass(color: string | null): string {
+  if (!color) return styles.sugCardRed;
+  const key = COLOR_HEX_TO_KEY[color.toLowerCase()];
+  return (key && SUG_COLOR_CLASS[key]) ?? styles.sugCardRed;
 }
 
 function interleave<T>(first: T[], second: T[]): T[] {
@@ -148,26 +160,7 @@ export default function CarritoPage({ initialPacks }: Props) {
       color: p.color,
     }));
 
-  const packItems: SugItem[] = packs
-    .filter((pk) => !cartDocIds.has(pk.documentId))
-    .map((pk) => ({
-      tipo: "pack",
-      id: pk.id,
-      documentId: pk.documentId,
-      slug: pk.slug,
-      nombre: stripHtml(pk.nombre),
-      descripcion: stripHtml(pk.descripcion),
-      precio: pk.precio,
-      precioMoneda: pk.precio_moneda,
-      imagenUrl: pk.imagen
-        ? getStrapiImageUrl(pk.imagen.formats?.medium?.url ?? pk.imagen.url)
-        : null,
-      sku: pk.sku,
-      categoria: "pack",
-      color: null,
-    }));
-
-  const sugeridos = interleave(packItems, productoItems);
+  const sugeridos = productoItems;
   const VISIBLE = 3;
   const showArrows = sugeridos.length > VISIBLE;
   const visible = sugeridos.slice(carouselIdx, carouselIdx + VISIBLE);
@@ -367,15 +360,13 @@ export default function CarritoPage({ initialPacks }: Props) {
               <div className={styles.secondCarousel}>
                 <div className={`${styles.cardsRow} ${!showArrows ? styles.cardsRowCentered : ""}`}>
                   {visible.map((item, idx) => {
-                    const isActive = idx === activeCardIdx;
                     return (
                       <div
                         key={item.documentId}
                         ref={(el) => { cardRefs.current[idx] = el; }}
-                        className={`${styles.sugCard} ${isActive ? styles.sugCardActive : ""}`}
-                        style={item.color ? ({ "--sug-color": item.color } as React.CSSProperties) : undefined}
+                        className={`${styles.sugCard} ${getSugColorClass(item.color)}`}
                       >
-                      <div className={`${styles.sugCardImage} ${item.tipo === "pack" ? styles.sugCardImagePack : ""}`}>
+                      <div className={styles.sugCardImage}>
                         {item.imagenUrl && (
                           <Image
                             src={item.imagenUrl}
@@ -393,7 +384,7 @@ export default function CarritoPage({ initialPacks }: Props) {
                         </p>
                         <p className={styles.sugDesc}>{item.descripcion}</p>
                         <button
-                          className={`${styles.sugBtn} ${isActive ? styles.sugBtnActive : ""}`}
+                          className={styles.sugBtn}
                           onClick={() =>
                             addItem({
                               id: item.id,
