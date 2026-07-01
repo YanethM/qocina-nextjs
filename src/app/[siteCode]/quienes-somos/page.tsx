@@ -35,20 +35,22 @@ export default async function NosotrosPage({ params }: Props) {
 
   const heroImagen = data?.hero_imagen;
   const heroImagenMobile = data?.hero_imagen_mobile;
-  const heroSrc = heroImagen?.formats?.large?.url
-    ? getStrapiImageUrl(heroImagen.formats.large.url)
-    : heroImagen?.url
+  const heroSrc = heroImagen?.url
     ? getStrapiImageUrl(heroImagen.url)
+    : heroImagen?.formats?.large?.url
+    ? getStrapiImageUrl(heroImagen.formats.large.url)
     : "/images/web/nosotros/banner.svg";
 
-  const heroSrcMedium = heroImagen?.formats?.medium?.url
+  const heroSrcMedium = heroImagen?.url
+    ? getStrapiImageUrl(heroImagen.url)
+    : heroImagen?.formats?.medium?.url
     ? getStrapiImageUrl(heroImagen.formats.medium.url)
     : heroSrc;
 
-  const heroSrcSmall = heroImagenMobile?.formats?.medium?.url
-    ? getStrapiImageUrl(heroImagenMobile.formats.medium.url)
-    : heroImagenMobile?.url
+  const heroSrcSmall = heroImagenMobile?.url
     ? getStrapiImageUrl(heroImagenMobile.url)
+    : heroImagenMobile?.formats?.medium?.url
+    ? getStrapiImageUrl(heroImagenMobile.formats.medium.url)
     : heroImagen?.formats?.small?.url
     ? getStrapiImageUrl(heroImagen.formats.small.url)
     : heroSrcMedium;
@@ -59,7 +61,9 @@ export default async function NosotrosPage({ params }: Props) {
   const showChefBackground = Boolean(
     chefImagen || data?.chef_nombre || data?.chef_titulo || data?.chef_descripcion,
   );
-  const chefImageFromStrapi = chefImagen?.formats?.large?.url
+  const chefImageFromStrapi = chefImagen?.url
+    ? getStrapiImageUrl(chefImagen.url)
+    : chefImagen?.formats?.large?.url
     ? getStrapiImageUrl(chefImagen.formats.large.url)
     : chefImagen?.formats?.medium?.url
     ? getStrapiImageUrl(chefImagen.formats.medium.url)
@@ -67,8 +71,6 @@ export default async function NosotrosPage({ params }: Props) {
     ? getStrapiImageUrl(chefImagen.formats.small.url)
     : chefImagen?.formats?.thumbnail?.url
     ? getStrapiImageUrl(chefImagen.formats.thumbnail.url)
-    : chefImagen?.url
-    ? getStrapiImageUrl(chefImagen.url)
     : null;
   const chefImageSrc = chefImageFromStrapi ?? "/images/web/nosotros/gaston.svg";
   const chefImageSrcMobile = "/images/mobile/nosotros/gaston.svg";
@@ -170,10 +172,10 @@ export default async function NosotrosPage({ params }: Props) {
                 { svg: "/images/web/nosotros/verde.svg", textColor: "#ffffff" },
               ];
               const { svg: colorSvg, textColor } = colorConfig[index] ?? colorConfig[0];
-              const imgSrc = valor.imagen?.formats?.large?.url
-                ? getStrapiImageUrl(valor.imagen.formats.large.url)
-                : valor.imagen?.url
+              const imgSrc = valor.imagen?.url
                 ? getStrapiImageUrl(valor.imagen.url)
+                : valor.imagen?.formats?.large?.url
+                ? getStrapiImageUrl(valor.imagen.formats.large.url)
                 : null;
               return (
                 <div key={valor.id} className={styles.beneficioCard}>
@@ -185,7 +187,7 @@ export default async function NosotrosPage({ params }: Props) {
                         fill
                         style={{ objectFit: "cover" }}
                         loading="lazy"
-                        unoptimized
+                        quality={90}
                       />
                     )}
                   </div>

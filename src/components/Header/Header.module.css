@@ -315,6 +315,11 @@
   }
 }
 
+.headerMenuOpen {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
 @media (max-width: 768px) {
   .container {
     padding: 0 1rem;

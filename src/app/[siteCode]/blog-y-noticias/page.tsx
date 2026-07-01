@@ -53,7 +53,11 @@ export default async function BlogYNoticiasPage({ params }: Props) {
         <PageHero
           backgroundImage={heroImageUrl}
           backgroundAlt="Blog y Noticias"
-          waveImage="/images/web/noticias/hero_wave.svg"
+          waveImage={
+            locale === "en"
+              ? "/images/web/blog/qocinaencasablogqocinaconqformadesktopen.svg"
+              : "/images/web/blog/qocinaencasablogqocinaconqformadesktopes.svg"
+          }
           waveImageMobile={
             locale === "en"
               ? "/images/mobile/blog/blog_en.svg"

@@ -53,7 +53,7 @@ export default function RecetaDetail({ receta }: Props) {
               style={{ objectFit: "cover" }}
               priority
               sizes="100vw"
-              unoptimized
+              quality={90}
             />
           )}
           <div className={styles.heroOverlay} />

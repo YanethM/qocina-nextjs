@@ -23,10 +23,10 @@ export default function ProductosNuestroSecreto({ titulo, secretoImagen, seccion
   };
 
   const imageUrl =
+    secretoImagen?.url ??
     secretoImagen?.formats?.large?.url ??
     secretoImagen?.formats?.medium?.url ??
-    secretoImagen?.formats?.small?.url ??
-    secretoImagen?.url;
+    secretoImagen?.formats?.small?.url;
   const imageSrc = imageUrl ? getStrapiImageUrl(imageUrl) : null;
   const imageAlt = secretoImagen?.alternativeText ?? "Nuestro secreto del sabor";
 
@@ -45,7 +45,7 @@ export default function ProductosNuestroSecreto({ titulo, secretoImagen, seccion
               fill
               sizes="(max-width: 640px) 100vw, (max-width: 900px) 100vw, (max-width: 1200px) 480px, 611px"
               className={styles.image}
-              unoptimized
+              quality={90}
             />
           </div>
         )}

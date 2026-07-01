@@ -125,7 +125,7 @@ export default async function PreguntasFrecuentesPage({ params }: Props) {
                 fill
                 className={styles.heroImage}
                 priority
-                unoptimized
+                quality={90}
               />
             </div>
           )}

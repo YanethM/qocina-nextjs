@@ -83,7 +83,7 @@ export default async function PackDetailPage({
                 fill
                 style={{ objectFit: "contain" }}
                 sizes="(max-width: 768px) 80vw, 400px"
-                unoptimized
+                quality={90}
               />
             </div>
           )}

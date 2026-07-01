@@ -33,9 +33,7 @@ export default async function NuestroProcesoPage({ params }: Props) {
   const productosCta = procesoRes?.data?.productos_cta;
   const heroImagenData = procesoRes?.data?.hero_imagen;
   const heroImagen = getStrapiImageUrl(heroImagenData?.url);
-  const heroImagenMobile = heroImagenData?.formats?.medium?.url
-    ? getStrapiImageUrl(heroImagenData.formats.medium.url)
-    : heroImagen;
+  const heroImagenMobile = heroImagen;
 
   return (
     <>
@@ -93,7 +91,7 @@ export default async function NuestroProcesoPage({ params }: Props) {
               fill
               className={styles.sectionImage}
               sizes="(max-width: 768px) 100vw, 50vw"
-              unoptimized
+              quality={90}
             />
           </div>
         ) : null;

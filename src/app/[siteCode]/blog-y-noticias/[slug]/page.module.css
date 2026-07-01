@@ -2,7 +2,6 @@
   position: relative;
   width: 100%;
   padding-bottom: 120px;
-  overflow-x: hidden;
 }
 
 .portada {
@@ -10,7 +9,7 @@
   width: 100%;
   height: 700px;
   overflow: hidden;
-  margin-top: -70px;
+  margin-top: -80px;
 }
 
 .portadaImg {
@@ -214,6 +213,7 @@
 @media (max-width: 768px) {
   .portada {
     height: 700px;
+    margin-top: -70px;
   }
 
   .heroBg {

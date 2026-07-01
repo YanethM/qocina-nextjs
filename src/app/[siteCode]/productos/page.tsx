@@ -53,17 +53,17 @@ export default async function ProductosPage({ params }: Props) {
   );
   const ayudaImagenUrl = ayudaImagen
     ? getStrapiImageUrl(
-      ayudaImagen.formats?.large?.url ??
+      ayudaImagen.url ??
+        ayudaImagen.formats?.large?.url ??
         ayudaImagen.formats?.medium?.url ??
-        ayudaImagen.formats?.small?.url ??
-        ayudaImagen.url,
+        ayudaImagen.formats?.small?.url,
     )
     : null;
   const ayudaImagenMobileUrl = ayudaImagenMobile
     ? getStrapiImageUrl(
-      ayudaImagenMobile.formats?.medium?.url ??
-        ayudaImagenMobile.formats?.small?.url ??
-        ayudaImagenMobile.url,
+      ayudaImagenMobile.url ??
+        ayudaImagenMobile.formats?.medium?.url ??
+        ayudaImagenMobile.formats?.small?.url,
     )
     : "/images/web/products/tienes_dudas_mobile.svg";
   const productos = (pageData?.productos_destacados ?? []).filter((p) => p.disponible);
@@ -230,7 +230,7 @@ export default async function ProductosPage({ params }: Props) {
                 height={400}
                 className={styles.tieneDudasBgImage}
                 style={{ width: "100%", height: "auto" }}
-                unoptimized
+                quality={90}
               />
             ) : (
               <div className={styles.tieneDudasPlaceholder} />

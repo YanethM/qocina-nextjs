@@ -131,7 +131,7 @@ export default function ProductoDetailClient({
                 style={{ objectFit: "cover" }}
                 sizes="(max-width: 768px) 100vw, 50vw"
                 priority
-                unoptimized
+                quality={90}
                 className={fading ? styles.imgFadeOut : styles.imgFadeIn}
               />
             )}

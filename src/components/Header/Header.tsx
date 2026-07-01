@@ -50,7 +50,7 @@ export default function Header() {
 
   return (
     <>
-      <header className={styles.header}>
+      <header className={`${styles.header} ${menuOpen ? styles.headerMenuOpen : ""}`}>
         <div className={styles.container}>
           <Link href={siteCode ? `/${siteCode}` : "/"} className={styles.logoWrapper} onClick={closeMenu}>
             <Image

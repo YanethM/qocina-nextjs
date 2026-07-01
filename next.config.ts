@@ -47,7 +47,7 @@ const nextConfig: NextConfig = {
   allowedDevOrigins: ["192.168.1.11"],
   images: {
     remotePatterns: buildRemotePatterns(),
-    unoptimized: true,
+    qualities: [75, 90, 100],
   },
 };
 

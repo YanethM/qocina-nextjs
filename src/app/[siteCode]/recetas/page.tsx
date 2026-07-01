@@ -57,7 +57,7 @@ export default async function RecetasPage({ params }: Props) {
                 className={styles.bannerApiBg}
                 style={{ objectFit: "cover" }}
                 priority
-                unoptimized
+                quality={90}
               />
             )}
             <Image
@@ -88,7 +88,7 @@ export default async function RecetasPage({ params }: Props) {
                 className={styles.bannerMobileApiBg}
                 style={{ objectFit: "cover", objectPosition: "center top" }}
                 priority
-                unoptimized
+                quality={90}
               />
             )}
             <Image

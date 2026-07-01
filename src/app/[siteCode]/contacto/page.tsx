@@ -46,7 +46,7 @@ export default async function ContactoPage({ params }: Props) {
                       height={data.imagen.height ?? 480}
                       className={styles.mujerImg}
                       priority
-                      unoptimized
+                      quality={90}
                     />
                   </div>
                 )}
