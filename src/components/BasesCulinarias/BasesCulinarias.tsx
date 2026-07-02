@@ -88,16 +88,19 @@ export default function BasesCulinarias({ productos = [] }: BasesCulinariasProps
               style={{ objectFit: "cover" }}
               sizes="(max-width: 640px) 100vw, 33vw"
               priority
+              unoptimized
               className={styles.desktopImage}
             />
-            <div className={styles.mobileImage}>
+            <div className={`${styles.mobileImage} ${isActive ? styles.mobileImageActive : ""}`}>
               <Image
+                key={mobileImageSrc}
                 src={mobileImageSrc}
                 alt={base.alt}
-                width={390}
-                height={480}
-                style={{ width: "100%", height: "auto", display: "block" }}
-                priority
+                fill
+                style={{ objectFit: "cover" }}
+                priority={!isActive}
+                unoptimized
+                className={styles.mobileImageFade}
               />
             </div>
 

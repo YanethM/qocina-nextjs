@@ -48,6 +48,8 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: buildRemotePatterns(),
     qualities: [75, 90, 100],
+    // El hostname de EC2 resuelve a IP privada dentro de la VPC; remotePatterns ya limita el origen.
+    dangerouslyAllowLocalIP: true,
   },
 };
 
