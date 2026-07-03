@@ -16,6 +16,18 @@ export const WAVE_BANNER_MAP: Record<string, string> = {
   amarillo: "/images/web/recetas/recetas_detail/baner_waves_amarilla.svg",
 };
 
+export const INGREDIENTES_BG_MAP: Record<string, string> = {
+  rojo: "/images/mobile/recetas/qocinaencasaingredientssectionrojo.svg",
+  amarillo: "/images/mobile/recetas/qocinaencasaingredientssectionamarillo.svg",
+  verde: "/images/mobile/recetas/qocinaencasaingredientssectionverde.svg",
+};
+
+export const INGREDIENTES_IMG_MAP: Record<string, string> = {
+  rojo: "/images/web/recetas/recetas_detail/receta_roja.svg",
+  amarillo: "/images/web/recetas/recetas_detail/receta_amarilla.svg",
+  verde: "/images/web/recetas/recetas_detail/receta_verde.svg",
+};
+
 export const TIPS_WAVE_TOP_MAP: Record<string, string> = {
   rojo: "/images/web/recetas/recetas_detail/waves_rojas_solas.svg",
   verde: "/images/web/recetas/recetas_detail/waves_verdes_solas.svg",
@@ -42,6 +54,7 @@ export const DEFAULT_COLOR = COLOR_MAP.rojo;
 export const DEFAULT_WAVE = WAVE_MAP.rojo;
 export const DEFAULT_WAVE_BANNER = WAVE_BANNER_MAP.rojo;
 export const DEFAULT_TIPS_WAVE_TOP = TIPS_WAVE_TOP_MAP.rojo;
+export const DEFAULT_INGREDIENTES_IMG = INGREDIENTES_IMG_MAP.rojo;
 export const DEFAULT_PRODUCT_WAVE = PRODUCT_WAVE_MAP.rojo;
 export const DEFAULT_PRODUCT_DETAIL_WAVE = PRODUCT_DETAIL_WAVE_MAP.rojo;
 
@@ -55,6 +68,9 @@ export const SITE_CODE_COOKIE = "site-code";
 export const SITE_URL_COOKIE = "site-url";
 export const LOCALE_COOKIE = "locale";
 export const COUNTRY_SELECTED_KEY = "qocina_country_selected";
+
+export const GEO_HINT_COOKIE = "geo-hint";
+export const GEO_HINT_MAX_AGE = 60 * 60 * 24;
 
 /** Locale por defecto según país */
 export const SITE_DEFAULT_LOCALE: Record<SiteCode, "es" | "en"> = {

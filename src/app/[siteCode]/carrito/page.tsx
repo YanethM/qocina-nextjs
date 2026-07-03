@@ -8,7 +8,7 @@ interface Props {
 
 export default async function CarritoPage({ params }: Props) {
   const { siteCode } = await params;
-  const locale = await getLocale();
+  const locale = await getLocale(siteCode);
   const { allPacks } = await getPacks(locale, siteCode).catch(() => ({ allPacks: [] }));
 
   return <CarritoWrapper initialPacks={allPacks} />;

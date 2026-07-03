@@ -6,12 +6,32 @@ import {
   LOCALE_COOKIE,
   SITE_DEFAULT_LOCALE,
   COOKIE_MAX_AGE,
+  GEO_HINT_COOKIE,
+  GEO_HINT_MAX_AGE,
   type SiteCode,
 } from "@/lib/constants";
 
 const VALID = new Set<string>(VALID_SITE_CODES);
 
-export function middleware(request: NextRequest) {
+async function detectCountryFromIP(request: NextRequest): Promise<SiteCode | null> {
+  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
+  if (!ip) return null;
+
+  const token = process.env.IPINFO_TOKEN;
+  const url = token ? `https://ipinfo.io/${ip}?token=${token}` : `https://ipinfo.io/${ip}/json`;
+
+  try {
+    const res = await fetch(url, { signal: AbortSignal.timeout(1500) });
+    if (!res.ok) return null;
+    const data = await res.json();
+    const countryCode = (data.country as string | undefined)?.toLowerCase();
+    return countryCode && VALID.has(countryCode) ? (countryCode as SiteCode) : null;
+  } catch {
+    return null;
+  }
+}
+
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const firstSegment = pathname.split("/")[1];
   const hasSiteCode = VALID.has(firstSegment);
@@ -58,7 +78,19 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/", request.url));
   }
 
-  return NextResponse.next();
+  if (request.cookies.get(GEO_HINT_COOKIE)?.value !== undefined) {
+    return NextResponse.next();
+  }
+
+  const detected = await detectCountryFromIP(request);
+  const response = NextResponse.next();
+  response.cookies.set(GEO_HINT_COOKIE, detected ?? "", {
+    path: "/",
+    maxAge: GEO_HINT_MAX_AGE,
+    sameSite: "lax",
+    secure: process.env.NEXT_PUBLIC_SECURE_COOKIES === "true",
+  });
+  return response;
 }
 
 export const config = {

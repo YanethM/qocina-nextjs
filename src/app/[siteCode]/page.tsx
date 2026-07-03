@@ -25,7 +25,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Props) {
   const { siteCode: _siteCode } = await params;
-  const locale = await getLocale();
+  const locale = await getLocale(_siteCode);
   const res = await getHomePage(locale, _siteCode).catch(() => null);
   return {
     title: res?.data?.meta_title ?? "Q'ocina En Casa",
@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: Props) {
 
 export default async function Home({ params }: Props) {
   const { siteCode } = await params;
-  const locale = await getLocale();
+  const locale = await getLocale(siteCode);
 
   const [homeRes, badgesRes, productosRes, recetasRes, testimoniosRes, contactoRes] = await Promise.all([
     getHomePage(locale).catch((e) => { console.error("getHomePage error:", e); return null; }),

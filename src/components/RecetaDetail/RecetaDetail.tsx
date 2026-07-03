@@ -4,9 +4,12 @@ import {
   COLOR_MAP,
   WAVE_BANNER_MAP,
   TIPS_WAVE_TOP_MAP,
+  INGREDIENTES_BG_MAP,
+  INGREDIENTES_IMG_MAP,
   DEFAULT_COLOR,
   DEFAULT_WAVE_BANNER,
   DEFAULT_TIPS_WAVE_TOP,
+  DEFAULT_INGREDIENTES_IMG,
 } from "@/lib/constants";
 import type { Receta } from "@/types";
 import styles from "./RecetaDetail.module.css";
@@ -40,6 +43,72 @@ export default function RecetaDetail({ receta }: Props) {
   const wavesColor = (colorCard && COLOR_MAP[colorCard]) ?? DEFAULT_COLOR;
   const wavesBanner = (colorCard && WAVE_BANNER_MAP[colorCard]) ?? DEFAULT_WAVE_BANNER;
   const tipsWaveTop = (colorCard && TIPS_WAVE_TOP_MAP[colorCard]) ?? DEFAULT_TIPS_WAVE_TOP;
+  const ingredientesBg = colorCard && INGREDIENTES_BG_MAP[colorCard];
+  const ingredientesImg =
+    (colorCard && INGREDIENTES_IMG_MAP[colorCard]) ?? DEFAULT_INGREDIENTES_IMG;
+
+  const ingredientesSection = ingredientes.length > 0 && (
+    <section className={styles.ingredientesOverWaves}>
+      <h2 className={styles.ingredientesTitle}>INGREDIENTES</h2>
+      <div className={styles.ingredientesBox}>
+        <div className={styles.ingredientesColumns}>
+          <ul className={styles.ingredientesCol}>
+            {ingredientes
+              .slice(0, Math.ceil(ingredientes.length / 2))
+              .map((ing) => (
+                <li key={ing.id} className={styles.ingredienteRow}>
+                  <Image
+                    src="/images/web/recetas/recetas_detail/checkmark.svg"
+                    alt=""
+                    width={24}
+                    height={24}
+                    className={styles.checkIcon}
+                    aria-hidden
+                  />
+                  <span className={styles.ingredienteText}>
+                    {ing.cantidad} {ing.unidad} {ing.nombre}
+                    {ing.es_opcional && (
+                      <span className={styles.opcionalWhite}> (opcional)</span>
+                    )}
+                  </span>
+                </li>
+              ))}
+          </ul>
+          <ul className={styles.ingredientesCol}>
+            {ingredientes
+              .slice(Math.ceil(ingredientes.length / 2))
+              .map((ing) => (
+                <li key={ing.id} className={styles.ingredienteRow}>
+                  <Image
+                    src="/images/web/recetas/recetas_detail/checkmark.svg"
+                    alt=""
+                    width={24}
+                    height={24}
+                    className={styles.checkIcon}
+                    aria-hidden
+                  />
+                  <span className={styles.ingredienteText}>
+                    {ing.cantidad} {ing.unidad} {ing.nombre}
+                    {ing.es_opcional && (
+                      <span className={styles.opcionalWhite}> (opcional)</span>
+                    )}
+                  </span>
+                </li>
+              ))}
+          </ul>
+        </div>
+        <div className={styles.ingredientesImgWrapper}>
+          <Image
+            src={ingredientesImg}
+            alt="Productos Q'ocina"
+            width={300}
+            height={260}
+            className={styles.ingredientesImg}
+          />
+        </div>
+      </div>
+    </section>
+  );
 
   return (
     <article className={styles.page} style={{ "--receta-color": wavesColor } as React.CSSProperties}>
@@ -82,71 +151,21 @@ export default function RecetaDetail({ receta }: Props) {
           </div>
         </div>
 
-        <div className={styles.wavesTop} style={{ backgroundImage: `url(${wavesBanner})` }} />
-        <div className={styles.wavesWrapper} style={{ backgroundColor: wavesColor }}>
-          {ingredientes.length > 0 && (
-            <section className={styles.ingredientesOverWaves}>
-              <h2 className={styles.ingredientesTitle}>INGREDIENTES</h2>
-              <div className={styles.ingredientesBox}>
-                <div className={styles.ingredientesColumns}>
-                  <ul className={styles.ingredientesCol}>
-                    {ingredientes
-                      .slice(0, Math.ceil(ingredientes.length / 2))
-                      .map((ing) => (
-                        <li key={ing.id} className={styles.ingredienteRow}>
-                          <Image
-                            src="/images/web/recetas/recetas_detail/checkmark.svg"
-                            alt=""
-                            width={24}
-                            height={24}
-                            className={styles.checkIcon}
-                            aria-hidden
-                          />
-                          <span className={styles.ingredienteText}>
-                            {ing.cantidad} {ing.unidad} {ing.nombre}
-                            {ing.es_opcional && (
-                              <span className={styles.opcionalWhite}> (opcional)</span>
-                            )}
-                          </span>
-                        </li>
-                      ))}
-                  </ul>
-                  <ul className={styles.ingredientesCol}>
-                    {ingredientes
-                      .slice(Math.ceil(ingredientes.length / 2))
-                      .map((ing) => (
-                        <li key={ing.id} className={styles.ingredienteRow}>
-                          <Image
-                            src="/images/web/recetas/recetas_detail/checkmark.svg"
-                            alt=""
-                            width={24}
-                            height={24}
-                            className={styles.checkIcon}
-                            aria-hidden
-                          />
-                          <span className={styles.ingredienteText}>
-                            {ing.cantidad} {ing.unidad} {ing.nombre}
-                            {ing.es_opcional && (
-                              <span className={styles.opcionalWhite}> (opcional)</span>
-                            )}
-                          </span>
-                        </li>
-                      ))}
-                  </ul>
-                </div>
-                <div className={styles.ingredientesImgWrapper}>
-                  <Image
-                    src="/images/web/recetas/recetas_detail/receta_amarilla.svg"
-                    alt="Productos Q'ocina"
-                    width={300}
-                    height={260}
-                    className={styles.ingredientesImg}
-                  />
-                </div>
-              </div>
-            </section>
-          )}
-        </div>
+        {ingredientesBg ? (
+          <div
+            className={`${styles.wavesWrapper} ${styles.wavesWrapperImage}`}
+            style={{ backgroundImage: `url(${ingredientesBg})` }}
+          >
+            {ingredientesSection}
+          </div>
+        ) : (
+          <>
+            <div className={styles.wavesTop} style={{ backgroundImage: `url(${wavesBanner})` }} />
+            <div className={styles.wavesWrapper} style={{ backgroundColor: wavesColor }}>
+              {ingredientesSection}
+            </div>
+          </>
+        )}
       </div>
 
       <div className={styles.content}>

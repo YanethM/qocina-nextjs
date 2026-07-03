@@ -70,20 +70,19 @@
   object-fit: cover;
   object-position: center top;
   z-index: 0;
-  height: 100% !important;
+  height: 55% !important;
 }
 
 .bannerMobileSvg {
   object-fit: cover;
   z-index: 1;
-  height: 70% !important;
-  top: auto !important;
-  bottom: 0 !important;
+  height: 700px !important;
+  top: 70px !important;
 }
 
 .bannerMobileText {
   position: absolute;
-  top: 52%;
+  top: 56%;
   left: 0;
   width: 100%;
   z-index: 2;
@@ -226,7 +225,7 @@
 
   .bannerMobileWrapper {
     display: block;
-    height: 700px;
+    height: 770px;
     padding-top: 70px;
     margin-top: -70px;
   }

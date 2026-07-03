@@ -21,7 +21,7 @@ export async function generateMetadata({
   params: Promise<{ siteCode: string; slug: string }>;
 }) {
   const { slug, siteCode } = await params;
-  const locale = await getLocale();
+  const locale = await getLocale(siteCode);
   const result = await getPack(slug, locale, siteCode).catch(() => null);
   const pack = result?.pack;
   return {
@@ -36,7 +36,7 @@ export default async function PackDetailPage({
   params: Promise<{ siteCode: string; slug: string }>;
 }) {
   const { slug, siteCode } = await params;
-  const locale = await getLocale();
+  const locale = await getLocale(siteCode);
   const result = await getPack(slug, locale, siteCode).catch(() => null);
 
   if (!result?.pack) notFound();

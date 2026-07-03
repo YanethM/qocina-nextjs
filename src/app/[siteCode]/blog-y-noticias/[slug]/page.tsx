@@ -15,7 +15,8 @@ interface Props {
 
 export async function generateMetadata({ params }: Props) {
   const { slug, siteCode } = await params;
-  const articulo = await getArticuloBySlug(slug, undefined, siteCode).catch(() => null);
+  const locale = await getLocale(siteCode);
+  const articulo = await getArticuloBySlug(slug, locale, siteCode).catch(() => null);
   return {
     title: articulo?.meta_title ?? articulo?.titulo ?? "Artículo - Q'ocina",
     description: articulo?.meta_description ?? articulo?.descripcion_corta ?? articulo?.descripcion ?? "Lee este artículo",
@@ -24,7 +25,7 @@ export async function generateMetadata({ params }: Props) {
 
 export default async function ArticuloDetailPage({ params }: Props) {
   const { slug, siteCode } = await params;
-  const locale = await getLocale();
+  const locale = await getLocale(siteCode);
   const [articulo, articulosRes, blogPageRes] = await Promise.all([
     getArticuloBySlug(slug, locale, siteCode).catch(() => null),
     getArticulos(locale, siteCode).catch(() => null),

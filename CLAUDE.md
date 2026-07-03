@@ -45,7 +45,17 @@ OFIX_API_BASE_URL=https://api-artics.fuxion.com/api-fuxion
 OFIX_USER=usr_External
 OFIX_PASSWORD=QkDZAQTM
 OFIX_API_KEY=cwBlAGMAcgBlAHQAXwBFAHgAdABlAHIAbgBhAGwA
+IPINFO_TOKEN=  # opcional, geolocalizacion por IP en middleware (ver seccion abajo)
 ```
+
+## Geolocalizacion por IP (pre-seleccion de pais)
+
+Al entrar a `/` sin cookie `site-code`, el middleware (`src/middleware.ts`) llama a `ipinfo.io` con la IP del request (header `x-forwarded-for`) y guarda el resultado en la cookie `geo-hint` (`GEO_HINT_COOKIE` en `src/lib/constants.ts`), valida 24h. `src/app/page.tsx` lee esa cookie y la pasa como `suggestedCountry` a `CountryModal`, que resalta ese pais en el grid con el badge "Sugerido". El usuario siempre debe hacer click para confirmar — no hay redireccion automatica ni cambio del comportamiento de `useSiteCode()`.
+
+- Sin `IPINFO_TOKEN` se usa el endpoint publico de ipinfo (limite mas bajo). Con token: 50,000 consultas/mes gratis, luego ~USD 11/mes.
+- Si la IP no resuelve a un pais del catalogo (`VALID_SITE_CODES`), la cookie se guarda vacia y el modal se comporta como hoy (sin pre-seleccion).
+- Los paises pendientes (ar, mx, es) entran en el scope de deteccion, pero el checkout sigue sin funcionar para ellos hasta que Ofix confirme sus `warehouseID`.
+- CloudFront con el header `CloudFront-Viewer-Country` seria mas eficiente (sin llamada de red), pero requiere que el sitio corra detras de CloudFront — no es el caso actual.
 
 ## Países y estado de configuración
 

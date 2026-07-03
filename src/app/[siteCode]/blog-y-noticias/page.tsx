@@ -12,7 +12,8 @@ interface Props {
 
 export async function generateMetadata({ params }: Props) {
   const { siteCode } = await params;
-  const res = await getBlogPage(undefined, siteCode).catch(() => null);
+  const locale = await getLocale(siteCode);
+  const res = await getBlogPage(locale, siteCode).catch(() => null);
   return {
     title: res?.data?.meta_title ?? "Blog y Noticias - Q'ocina",
     description: res?.data?.meta_description ?? "Artículos y noticias de Q'ocina",
@@ -21,7 +22,7 @@ export async function generateMetadata({ params }: Props) {
 
 export default async function BlogYNoticiasPage({ params }: Props) {
   const { siteCode } = await params;
-  const locale = await getLocale();
+  const locale = await getLocale(siteCode);
   const [pageRes, articulosRes] = await Promise.all([
     getBlogPage(locale, siteCode).catch(() => null),
     getArticulos(locale, siteCode).catch(() => null),

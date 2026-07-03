@@ -15,7 +15,8 @@ interface Props {
 
 export async function generateMetadata({ params }: Props) {
   const { slug, siteCode } = await params;
-  const producto = await getProductoBySlug(slug, undefined, siteCode).catch(() => null);
+  const locale = await getLocale(siteCode);
+  const producto = await getProductoBySlug(slug, locale, siteCode).catch(() => null);
   return {
     title: producto?.meta_title ?? producto?.nombre ?? "Producto - Q'ocina",
     description: producto?.meta_description ?? producto?.descripcion_corta ?? "Descubre este producto",
@@ -25,7 +26,7 @@ export async function generateMetadata({ params }: Props) {
 export default async function ProductoDetailPage({ params }: Props) {
   try {
     const { slug, siteCode } = await params;
-    const locale = await getLocale();
+    const locale = await getLocale(siteCode);
 
     const [producto, todosProductosRes] = await Promise.all([
       getProductoBySlug(slug, locale, siteCode),

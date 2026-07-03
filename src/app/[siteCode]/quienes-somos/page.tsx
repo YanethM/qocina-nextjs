@@ -13,7 +13,8 @@ interface Props {
 
 export async function generateMetadata({ params }: Props) {
   const { siteCode } = await params;
-  const res = await getQuienesSomos(undefined, siteCode).catch(() => null);
+  const locale = await getLocale(siteCode);
+  const res = await getQuienesSomos(locale, siteCode).catch(() => null);
   return {
     title: res?.data?.meta_title ?? "Nosotros - Q'ocina",
     description: res?.data?.meta_description ?? "Conoce quiénes somos, nuestra misión, visión y valores.",
@@ -22,7 +23,7 @@ export async function generateMetadata({ params }: Props) {
 
 export default async function NosotrosPage({ params }: Props) {
   const { siteCode } = await params;
-  const locale = await getLocale();
+  const locale = await getLocale(siteCode);
   const [productosRes, quienesSomosRes] = await Promise.all([
     getProductos(locale, siteCode).catch(() => null),
     getQuienesSomos(locale, siteCode).catch(() => null),

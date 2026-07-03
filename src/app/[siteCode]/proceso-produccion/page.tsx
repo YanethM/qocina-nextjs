@@ -14,7 +14,8 @@ interface Props {
 
 export async function generateMetadata({ params }: Props) {
   const { siteCode } = await params;
-  const res = await getProcesoProduccion(undefined, siteCode).catch(() => null);
+  const locale = await getLocale(siteCode);
+  const res = await getProcesoProduccion(locale, siteCode).catch(() => null);
   return {
     title: res?.data?.meta_title ?? "Proceso de producción - Q'ocina",
     description: res?.data?.meta_description ?? "",
@@ -23,7 +24,7 @@ export async function generateMetadata({ params }: Props) {
 
 export default async function NuestroProcesoPage({ params }: Props) {
   const { siteCode } = await params;
-  const locale = await getLocale();
+  const locale = await getLocale(siteCode);
   const procesoRes = await getProcesoProduccion(locale, siteCode).catch(() => null);
 
   if (!procesoRes?.data) return <ComingSoon />;

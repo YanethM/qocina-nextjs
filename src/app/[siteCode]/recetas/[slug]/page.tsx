@@ -11,7 +11,7 @@ export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: Props) {
   const { slug, siteCode } = await params;
-  const locale = await getLocale();
+  const locale = await getLocale(siteCode);
   const receta = await getRecetaBySlug(slug, locale, siteCode).catch(() => null);
   return {
     title: receta?.meta_title ?? receta?.titulo ?? "Receta - Q'ocina",
@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: Props) {
 
 export default async function RecetaDetailPage({ params }: Props) {
   const { slug, siteCode } = await params;
-  const locale = await getLocale();
+  const locale = await getLocale(siteCode);
 
   let receta;
 

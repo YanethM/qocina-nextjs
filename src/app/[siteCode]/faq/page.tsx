@@ -18,7 +18,7 @@ interface Props {
 
 export default async function FaqPage({ params }: Props) {
   const { siteCode } = await params;
-  const locale = await getLocale();
+  const locale = await getLocale(siteCode);
   const [pageRes, preguntasRes, categoriasRes] = await Promise.all([
     getFaqPage(locale, siteCode).catch(() => null),
     getPreguntasFrecuentes(locale, siteCode).catch(() => null),

@@ -19,7 +19,8 @@ interface Props {
 
 export async function generateMetadata({ params }: Props) {
   const { siteCode } = await params;
-  const res = await getFaqPage(undefined, siteCode).catch(() => null);
+  const locale = await getLocale(siteCode);
+  const res = await getFaqPage(locale, siteCode).catch(() => null);
   return {
     title: res?.data?.meta_title ?? "Preguntas Frecuentes - Q'ocina",
     description: res?.data?.meta_description ?? "Encuentra respuestas a tus preguntas sobre Q'ocina",
@@ -28,7 +29,7 @@ export async function generateMetadata({ params }: Props) {
 
 export default async function PreguntasFrecuentesPage({ params }: Props) {
   const { siteCode } = await params;
-  const locale = await getLocale();
+  const locale = await getLocale(siteCode);
   const [pageRes, categoriasRes] = await Promise.all([
     getFaqPage(locale, siteCode).catch(() => null),
     getCategoriasFaq(locale, siteCode).catch(() => null),

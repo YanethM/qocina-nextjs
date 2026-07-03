@@ -13,7 +13,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Props) {
   const { siteCode } = await params;
-  const locale = await getLocale();
+  const locale = await getLocale(siteCode);
   const res = await getRecetasPage(locale, siteCode).catch(() => null);
   return {
     title: res?.data?.meta_title ?? "Recetas - Q'ocina",
@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: Props) {
 
 export default async function RecetasPage({ params }: Props) {
   const { siteCode } = await params;
-  const locale = await getLocale();
+  const locale = await getLocale(siteCode);
   const [recetasPageRes, recetasRes, productosRes] = await Promise.all([
     getRecetasPage(locale, siteCode).catch(() => null),
     getRecetas(locale, undefined, siteCode).catch(() => null),
@@ -86,7 +86,7 @@ export default async function RecetasPage({ params }: Props) {
                 alt="Recetas Q'ocina"
                 fill
                 className={styles.bannerMobileApiBg}
-                style={{ objectFit: "cover", objectPosition: "center top" }}
+                style={{ objectFit: "cover", objectPosition: "75% top" }}
                 priority
                 quality={90}
               />
