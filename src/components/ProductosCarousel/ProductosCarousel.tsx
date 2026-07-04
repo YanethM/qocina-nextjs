@@ -18,6 +18,19 @@ const translations = {
 const CARD_COLORS = [styles.cardGreen, styles.cardYellow, styles.cardRed];
 const ITEMS_PER_PAGE = 3;
 
+function isLightColor(hex: string): boolean {
+  const clean = hex.replace("#", "");
+  if (clean.length < 6) return true;
+  const r = parseInt(clean.slice(0, 2), 16);
+  const g = parseInt(clean.slice(2, 4), 16);
+  const b = parseInt(clean.slice(4, 6), 16);
+  return (0.299 * r + 0.587 * g + 0.114 * b) / 255 > 0.5;
+}
+
+function toTitleCase(str: string): string {
+  return str.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
 export default function ProductosCarousel({
   productos,
 }: {
@@ -62,7 +75,15 @@ export default function ProductosCarousel({
         className={`${styles.grid} ${dir === "next" ? styles.slideInRight : styles.slideInLeft}`}>
         {visible.map((producto, index) => {
           const globalIndex = page * ITEMS_PER_PAGE + index;
-          const colorClass = CARD_COLORS[globalIndex % 3];
+          const fallbackColorClass = CARD_COLORS[globalIndex % 3];
+          const apiColor = producto.color ?? null;
+          const lightBg = apiColor ? isLightColor(apiColor) : fallbackColorClass === styles.cardYellow;
+          const cardStyle = apiColor
+            ? { background: apiColor, color: lightBg ? "#000000" : "#ffffff" }
+            : undefined;
+          const btnStyle = lightBg
+            ? { backgroundColor: "#1a1a1a", color: "#ffffff" }
+            : undefined;
           const imagenUrl = producto.imagen_principal?.url
             ? getStrapiImageUrl(producto.imagen_principal.url)
             : null;
@@ -70,7 +91,8 @@ export default function ProductosCarousel({
           return (
             <div
               key={producto.id}
-              className={`${styles.card} ${colorClass}`}>
+              className={`${styles.card} ${apiColor ? "" : fallbackColorClass}`}
+              style={cardStyle}>
               <div className={styles.cardImageWrapper}>
                 {imagenUrl && (
                   <Image
@@ -88,7 +110,7 @@ export default function ProductosCarousel({
                 )}
               </div>
               <div className={styles.cardBody}>
-                <h3 className={styles.cardTitle}>{producto.nombre}</h3>
+                <h3 className={styles.cardTitle}>{toTitleCase(producto.nombre)}</h3>
                 <p className={styles.cardPrice}>
                   {formatPrice(producto.precio, producto.precio_moneda)}
                 </p>
@@ -103,6 +125,7 @@ export default function ProductosCarousel({
                 <Link
                   href={`/${siteCode}/productos/${producto.slug}`}
                   className={styles.cardButton}
+                  style={btnStyle}
                   onClick={() => {
                     if (typeof window !== "undefined" && window.cioanalytics) {
                       window.cioanalytics.track("Product Clicked", {

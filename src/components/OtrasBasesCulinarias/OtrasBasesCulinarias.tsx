@@ -10,6 +10,7 @@ import styles from "./OtrasBasesCulinarias.module.css";
 
 interface Props {
   productos: Producto[];
+  locale?: string;
 }
 
 const cardConfigs = [
@@ -49,16 +50,18 @@ function getConfigIndex(producto: Producto): number {
   return 2;
 }
 
-export default function OtrasBasesCulinarias({ productos }: Props) {
+export default function OtrasBasesCulinarias({ productos, locale }: Props) {
   const siteCode = useSiteCode();
   const { current, goTo, handleTouchStart, handleTouchEnd } = useCarousel(productos.length);
+  const isEnglish = locale === "en";
+  const ctaText = isEnglish ? "View product" : "Ver producto";
 
   if (productos.length === 0) return null;
 
   return (
     <section className={styles.section}>
       <h2 className={styles.titulo}>
-        Descubre nuestras otras<br />bases culinarias
+        {isEnglish ? <>Discover our other<br />cooking bases</> : <>Descubre nuestras otras<br />bases culinarias</>}
       </h2>
 
       <div className={styles.mobileCards}>
@@ -113,7 +116,7 @@ export default function OtrasBasesCulinarias({ productos }: Props) {
                         href={`/${siteCode}/productos/${producto.slug}`}
                         className={`${styles.ctaBtn} ${config.textDark ? styles.ctaBtnDark : ""}`}
                       >
-                        Ver producto
+                        {ctaText}
                         <Image src={config.arrowSrc} alt="" width={30} height={18} style={{ position: "relative", top: "3.69px", left: "-6px" }} aria-hidden />
                       </Link>
                     </div>
@@ -168,7 +171,7 @@ export default function OtrasBasesCulinarias({ productos }: Props) {
                 <p className={styles.cardDescripcion}>{descripcion}</p>
               </div>
               <Link href={`/${siteCode}/productos/${producto.slug}`} className={`${styles.ctaBtn} ${config.textDark ? styles.ctaBtnDark : ""}`}>
-                Ver producto
+                {ctaText}
                 <Image src={config.arrowSrc} alt="" width={30} height={18} style={{ position: "relative", top: "3.69px", left: "-6px" }} aria-hidden />
               </Link>
             </div>
@@ -179,7 +182,7 @@ export default function OtrasBasesCulinarias({ productos }: Props) {
                 <p className={styles.cardDescripcion}>{descripcion}</p>
               </div>
               <Link href={`/${siteCode}/productos/${producto.slug}`} className={`${styles.ctaBtn} ${config.textDark ? styles.ctaBtnDark : ""}`}>
-                Ver producto
+                {ctaText}
                 <Image src={config.arrowSrc} alt="" width={30} height={18} style={{ position: "relative", top: "3.69px", left: "-6px" }} aria-hidden />
               </Link>
             </>

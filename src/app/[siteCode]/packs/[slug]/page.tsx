@@ -46,18 +46,15 @@ export default async function PackDetailPage({
   const packProductos = pack.productos ?? [];
 
   const firstProductSlug = packProductos[0]?.slug ?? null;
-  const firstProduct = firstProductSlug
-    ? await getProductoBySlug(firstProductSlug, locale, siteCode).catch(() => null)
-    : null;
+  const [firstProduct, testimoniosRes] = await Promise.all([
+    firstProductSlug
+      ? getProductoBySlug(firstProductSlug, locale, siteCode).catch(() => null)
+      : Promise.resolve(null),
+    getTestimonios(locale, siteCode).catch(() => null),
+  ]);
 
   const badges = firstProduct?.badges ?? [];
-
-  const testimonioIds = new Set((firstProduct?.testimonios ?? []).map((t) => t.id));
-  const testimoniosRes =
-    testimonioIds.size > 0 ? await getTestimonios(locale, siteCode).catch(() => null) : null;
-  const testimonios = (testimoniosRes?.data ?? []).filter((t) =>
-    testimonioIds.has(t.id),
-  );
+  const testimonios = testimoniosRes?.data ?? [];
 
   const recetasSlugs = [
     ...new Set((firstProduct?.recetas_relacionadas ?? []).map((r) => r.slug)),

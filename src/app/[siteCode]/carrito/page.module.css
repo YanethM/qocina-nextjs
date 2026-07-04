@@ -110,6 +110,13 @@
   z-index: 3;
 }
 
+.sugNombreRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
 .sugNombre {
   font-family: Montserrat, sans-serif;
   font-weight: 700;
@@ -118,6 +125,21 @@
   text-align: center;
   margin: 0;
   color: inherit;
+}
+
+.sugCantidadBadge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #1a1a1a;
+  color: #fff;
+  font-family: Montserrat, sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  flex-shrink: 0;
 }
 
 .sugPrecio {
@@ -593,7 +615,6 @@
   line-height: 1.4;
   cursor: pointer;
   width: 100%;
-  margin-top: 8px;
   transition: background 0.2s, color 0.2s;
   display: flex;
   align-items: center;

@@ -1,4 +1,4 @@
-import { getProductoBySlug, getProductos, getRecetaBySlug, getTestimonios, getStrapiImageUrl } from "@/lib/api";
+import { getProductoBySlug, getProductos, getRecetas, getTestimonios, getStrapiImageUrl } from "@/lib/api";
 import { notFound } from "next/navigation";
 import Badges from "@/components/Badges/Badges";
 import ProductoDetailClient from "@/components/ProductoDetail/ProductoDetailClient";
@@ -28,9 +28,11 @@ export default async function ProductoDetailPage({ params }: Props) {
     const { slug, siteCode } = await params;
     const locale = await getLocale(siteCode);
 
-    const [producto, todosProductosRes] = await Promise.all([
+    const [producto, todosProductosRes, recetasRes, testimoniosRes] = await Promise.all([
       getProductoBySlug(slug, locale, siteCode),
       getProductos(locale, siteCode).catch(() => null),
+      getRecetas(locale, undefined, siteCode).catch(() => null),
+      getTestimonios(locale, siteCode).catch(() => null),
     ]);
 
     if (!producto || !producto.disponible) {
@@ -53,19 +55,12 @@ export default async function ProductoDetailPage({ params }: Props) {
 
     const badges = producto.badges ?? [];
 
-    const productoTestimonioIds = new Set((producto.testimonios ?? []).map((t) => t.id));
-    const testimoniosRes = productoTestimonioIds.size > 0
-      ? await getTestimonios(locale, siteCode).catch(() => null)
-      : null;
-    const testimonios = (testimoniosRes?.data ?? []).filter((t) => productoTestimonioIds.has(t.id));
-
-    const recetasBase = producto.recetas_relacionadas ?? [];
-    const recetasConImagenes = await Promise.all(
-      recetasBase.map((r) => getRecetaBySlug(r.slug, locale, siteCode).catch(() => null))
-    );
-    const recetas = recetasConImagenes.filter(Boolean) as NonNullable<typeof recetasConImagenes[0]>[];
+    const testimonios = testimoniosRes?.data ?? [];
 
     const colorKey = producto.color ? COLOR_HEX_TO_KEY[producto.color.toLowerCase()] : null;
+    const recetas = (recetasRes?.data ?? [])
+      .filter((r) => r.color_card === (colorKey ?? "rojo"))
+      .slice(0, 3);
     const productWave = (colorKey && PRODUCT_WAVE_MAP[colorKey]) ?? DEFAULT_PRODUCT_WAVE;
     const productDetailWave = (colorKey && PRODUCT_DETAIL_WAVE_MAP[colorKey]) ?? DEFAULT_PRODUCT_DETAIL_WAVE;
 
@@ -112,7 +107,7 @@ export default async function ProductoDetailPage({ params }: Props) {
             waveImage={productWave}
           />
         )}
-        <OtrasBasesCulinarias productos={otrasBasesProductos} />
+        <OtrasBasesCulinarias productos={otrasBasesProductos} locale={locale} />
       </div>
     );
   } catch (error) {

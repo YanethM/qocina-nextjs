@@ -13,6 +13,12 @@ interface TestimoniosProps {
   waveImage?: string;
 }
 
+function chunk<T>(items: T[], size: number): T[][] {
+  const rows: T[][] = [];
+  for (let i = 0; i < items.length; i += size) rows.push(items.slice(i, i + size));
+  return rows;
+}
+
 export default function Testimonios({ testimonios, testimonios_titulo, waveImage = "/images/web/home/testimonials/testimonials.svg" }: TestimoniosProps) {
   const [imageErrors, setImageErrors] = useState<Record<number, boolean>>({});
   const hasSingleRow = testimonios.length <= 2;
@@ -33,6 +39,53 @@ export default function Testimonios({ testimonios, testimonios_titulo, waveImage
     const parts = name.trim().split(/\s+/);
     if (parts.length <= 1) return name;
     return `${parts[0]} ${parts.slice(1).map((p) => `${p[0]}.`).join(" ")}`;
+  };
+
+  const renderCard = (testimonio: Testimonio, index: number) => {
+    const fotoUrl = getStrapiImageUrl(testimonio.foto_usuario?.url);
+    const showImage = fotoUrl && !imageErrors[testimonio.id];
+
+    return (
+      <div key={testimonio.id} className={styles.card}>
+        <div className={styles.cardBg}>
+          {showImage ? (
+            <Image
+              src={fotoUrl}
+              alt={testimonio.nombre_usuario}
+              fill
+              className={styles.cardBgImage}
+              sizes="424px"
+              priority={index < 2}
+              onError={() => handleImageError(testimonio.id)}
+              unoptimized
+            />
+          ) : (
+            <div className={styles.cardPlaceholder}>
+              <span className={styles.initials}>
+                {getInitials(testimonio.nombre_usuario)}
+              </span>
+            </div>
+          )}
+        </div>
+
+        <div className={styles.cardText}>
+          <div className={styles.stars}>
+            {Array.from({ length: testimonio.rating }, (_, i) => (
+              <span key={i} className={styles.starFilled}>★</span>
+            ))}
+            {Array.from({ length: 5 - testimonio.rating }, (_, i) => (
+              <span key={`empty-${i}`} className={styles.starEmpty}>☆</span>
+            ))}
+          </div>
+          <p className={styles.author}>{abbreviateName(testimonio.nombre_usuario)}</p>
+          <p className={styles.content}>
+            &ldquo;{testimonio.texto_testimonio}&rdquo;
+          </p>
+        </div>
+
+        <div className={styles.cardRight} />
+      </div>
+    );
   };
 
   return (
@@ -61,52 +114,15 @@ export default function Testimonios({ testimonios, testimonios_titulo, waveImage
                 className={styles.grid}
                 data-count={testimonios.length}
                 data-single-row={hasSingleRow ? "true" : "false"}>
-                {testimonios.map((testimonio, index) => {
-                  const fotoUrl = getStrapiImageUrl(testimonio.foto_usuario?.url);
-                  const showImage = fotoUrl && !imageErrors[testimonio.id];
-
-                  return (
-                    <div key={testimonio.id} className={styles.card}>
-                      <div className={styles.cardBg}>
-                        {showImage ? (
-                          <Image
-                            src={fotoUrl}
-                            alt={testimonio.nombre_usuario}
-                            fill
-                            className={styles.cardBgImage}
-                            sizes="424px"
-                            priority={index < 2}
-                            onError={() => handleImageError(testimonio.id)}
-                            unoptimized
-                          />
-                        ) : (
-                          <div className={styles.cardPlaceholder}>
-                            <span className={styles.initials}>
-                              {getInitials(testimonio.nombre_usuario)}
-                            </span>
-                          </div>
-                        )}
+                {hasSingleRow
+                  ? testimonios.map((testimonio, index) => renderCard(testimonio, index))
+                  : chunk(testimonios, 2).map((row, rowIndex) => (
+                      <div
+                        key={rowIndex}
+                        className={`${styles.row} ${rowIndex % 2 === 1 ? styles.rowEnd : styles.rowStart}`}>
+                        {row.map((testimonio, index) => renderCard(testimonio, rowIndex * 2 + index))}
                       </div>
-
-                      <div className={styles.cardText}>
-                        <div className={styles.stars}>
-                          {Array.from({ length: testimonio.rating }, (_, i) => (
-                            <span key={i} className={styles.starFilled}>★</span>
-                          ))}
-                          {Array.from({ length: 5 - testimonio.rating }, (_, i) => (
-                            <span key={`empty-${i}`} className={styles.starEmpty}>☆</span>
-                          ))}
-                        </div>
-                        <p className={styles.author}>{abbreviateName(testimonio.nombre_usuario)}</p>
-                        <p className={styles.content}>
-                          &ldquo;{testimonio.texto_testimonio}&rdquo;
-                        </p>
-                      </div>
-
-                      <div className={styles.cardRight} />
-                    </div>
-                  );
-                })}
+                    ))}
               </div>
             </div>
           </div>

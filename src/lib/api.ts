@@ -20,6 +20,8 @@ import type {
   HomePage,
   ContactoPage,
   Site,
+  FiltroOpcion,
+  Order,
 } from "@/types";
 export { API_URL, getStrapiImageUrl } from "@/lib/strapi";
 import { API_URL } from "@/lib/strapi";
@@ -119,7 +121,9 @@ export async function getCategoria(id: string, locale?: string, siteCode?: strin
 }
 
 export async function getTestimonios(locale?: string, siteCode?: string) {
-  return fetchAPI<StrapiListResponse<Testimonio>>("/api/testimonios", {}, locale, siteCode);
+  return fetchAPI<StrapiListResponse<Testimonio>>("/api/testimonios", {
+    "sort[0]": "createdAt:asc",
+  }, locale, siteCode);
 }
 
 export async function getTestimonio(id: string, locale?: string, siteCode?: string) {
@@ -131,6 +135,7 @@ export async function getProductos(locale?: string, siteCode?: string) {
     ...imgFields("imagen_principal"),
     "populate[tamanos_disponibles]": "*",
     "populate[sitios][populate][site]": "*",
+    "sort[0]": "createdAt:asc",
   }, locale, siteCode);
   return {
     ...res,
@@ -177,6 +182,18 @@ export async function getRecetas(
   }, locale, siteCode);
 }
 
+export async function getTiposReceta(locale?: string, siteCode?: string) {
+  return fetchAPI<StrapiListResponse<FiltroOpcion>>("/api/tipo-recetas", {}, locale, siteCode);
+}
+
+export async function getCocinaRegiones(locale?: string, siteCode?: string) {
+  return fetchAPI<StrapiListResponse<FiltroOpcion>>("/api/cocina-regiones", {}, locale, siteCode);
+}
+
+export async function getTiposDieta(locale?: string, siteCode?: string) {
+  return fetchAPI<StrapiListResponse<FiltroOpcion>>("/api/tipo-dietas", {}, locale, siteCode);
+}
+
 export async function getReceta(id: string, locale?: string, siteCode?: string) {
   return fetchAPI<StrapiSingleResponse<Receta>>(`/api/recetas/${id}`, {
     ...imgFields("imagen_principal"),
@@ -215,6 +232,9 @@ export async function getProductoBySlug(slug: string, locale?: string, siteCode?
     "populate[secciones_expandibles]": "*",
     "populate[ingredientes_destacados]": "*",
     "populate[testimonios][fields][0]": "id",
+    "populate[badges][populate][icono][fields][0]": "url",
+    "populate[badges][populate][icono][fields][1]": "alternativeText",
+    "populate[badges][populate][icono][fields][2]": "formats",
     "populate[sitios][populate][site]": "*",
   }, locale, siteCode, 30000);
   return res.data?.[0] ? normalizeProducto(res.data[0], siteCode) : null;
@@ -484,4 +504,12 @@ export async function getContactoPage(locale?: string, siteCode?: string) {
 
 export async function getSites() {
   return fetchAPI<StrapiListResponse<Site>>("/api/sites", {});
+}
+
+export async function getOrder(orderId: string, siteCode?: string): Promise<Order | null> {
+  const res = await fetchAPI<StrapiListResponse<Order>>("/api/orders", {
+    "filters[id][$eq]": orderId,
+    "populate": "*",
+  }, undefined, siteCode);
+  return res.data?.[0] ?? null;
 }

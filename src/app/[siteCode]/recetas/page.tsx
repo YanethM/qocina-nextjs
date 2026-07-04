@@ -1,5 +1,14 @@
 import Image from "next/image";
-import { getRecetasPage, getRecetas, getProductos, getStrapiImageUrl } from "@/lib/api";
+import {
+  getRecetasPage,
+  getRecetas,
+  getProductos,
+  getStrapiImageUrl,
+  getTiposReceta,
+  getCocinaRegiones,
+  getTiposDieta,
+  getTestimonios,
+} from "@/lib/api";
 import { getLocale } from "@/lib/locale";
 import ComingSoon from "@/components/ComingSoon/ComingSoon";
 import styles from "./page.module.css";
@@ -24,22 +33,29 @@ export async function generateMetadata({ params }: Props) {
 export default async function RecetasPage({ params }: Props) {
   const { siteCode } = await params;
   const locale = await getLocale(siteCode);
-  const [recetasPageRes, recetasRes, productosRes] = await Promise.all([
+  const [recetasPageRes, recetasRes, productosRes, tiposRecetaRes, cocinaRegionesRes, tiposDietaRes, testimoniosRes] = await Promise.all([
     getRecetasPage(locale, siteCode).catch(() => null),
     getRecetas(locale, undefined, siteCode).catch(() => null),
     getProductos(locale, siteCode).catch(() => null),
+    getTiposReceta(locale, siteCode).catch(() => null),
+    getCocinaRegiones(locale, siteCode).catch(() => null),
+    getTiposDieta(locale, siteCode).catch(() => null),
+    getTestimonios(locale, siteCode).catch(() => null),
   ]);
 
   const pageData = recetasPageRes?.data;
   const recetas = recetasRes?.data ?? [];
   const productos = productosRes?.data ?? [];
+  const tiposRecetaOptions = (tiposRecetaRes?.data ?? []).map((t) => t.nombre);
+  const cocinaRegionOptions = (cocinaRegionesRes?.data ?? []).map((t) => t.nombre);
+  const tiposDietaOptions = (tiposDietaRes?.data ?? []).map((t) => t.nombre);
 
   if (!pageData && recetas.length === 0) return <ComingSoon />;
 
   const heroImageUrl = pageData?.hero_imagen ? getStrapiImageUrl(pageData.hero_imagen.url) : null;
   const heroImageMobileUrl = pageData?.hero_imagen_mobile ? getStrapiImageUrl(pageData.hero_imagen_mobile.url) : heroImageUrl;
   const showBanner = Boolean(pageData?.hero_titulo || pageData?.hero_imagen || pageData?.hero_imagen_mobile);
-  const testimonios = pageData?.testimonios ?? [];
+  const testimonios = testimoniosRes?.data ?? [];
   const logoSrc = locale === "en"
     ? "/images/web/recetas/logo_en.svg"
     : "/images/web/recetas/logo.svg";
@@ -124,6 +140,9 @@ export default async function RecetasPage({ params }: Props) {
           labelTipoReceta={pageData?.filtro_tipo_receta_label ?? undefined}
           labelRegion={pageData?.filtro_region_label ?? undefined}
           labelDieta={pageData?.filtro_dieta_label ?? undefined}
+          tiposRecetaOptions={tiposRecetaOptions}
+          cocinaRegionOptions={cocinaRegionOptions}
+          tiposDietaOptions={tiposDietaOptions}
           ctaCargarMas={pageData?.cta_cargar_mas ?? undefined}
           locale={locale}
           siteCode={siteCode}

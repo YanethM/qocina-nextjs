@@ -78,6 +78,8 @@ const COPY = {
     continueToPayment: "Continuar al pago",
     processing: "Procesando...",
     summary: "Resumen",
+    shippingCost: "Costo de envío",
+    taxes: "Impuestos",
     total: "Total",
     required: "Requerido",
     invalid: "Error",
@@ -130,6 +132,8 @@ const COPY = {
     continueToPayment: "Continue to Payment",
     processing: "Processing...",
     summary: "Summary",
+    shippingCost: "Shipping cost",
+    taxes: "Taxes",
     total: "Total",
     required: "Required",
     invalid: "Error",
@@ -534,6 +538,7 @@ export default function EnvioPage() {
 
       const { data: session } = await sessionRes.json();
       sessionStorage.setItem("qocina_checkout_email", correo);
+      if (order.orderId) sessionStorage.setItem("qocina_checkout_order_id", String(order.orderId));
       window.location.href = session.checkoutUrl;
     } catch (err) {
       setApiError(err instanceof Error ? err.message : t.unexpectedError);
@@ -839,21 +844,6 @@ export default function EnvioPage() {
           </div>
 
           {apiError && <p className={styles.apiError}>{apiError}</p>}
-          <div className={styles.submitRow}>
-            <button
-              className={styles.checkoutBtn}
-              onClick={handleSubmit}
-              disabled={loading}
-            >
-              <span>{loading ? t.processing : t.continueToPayment}</span>
-              {!loading && (
-                <>
-                  <Image src="/images/web/home/arrow_right.svg" alt="" width={30} height={18} className={styles.arrowDark} />
-                  <Image src="/images/web/home/white_arrow_right.svg" alt="" width={30} height={18} className={styles.arrowWhite} />
-                </>
-              )}
-            </button>
-          </div>
         </div>
 
         <aside className={styles.sidebar}>
@@ -872,19 +862,44 @@ export default function EnvioPage() {
                     />
                   )}
                 </div>
-                <span className={styles.summaryNombre}>{item.nombre.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase())}</span>
-                <span className={styles.summaryPrecio}>
-                  {formatPrice(item.precio * item.cantidad, item.precioMoneda)}
-                </span>
+                <div className={styles.summaryInfo}>
+                  <span className={styles.summaryNombre}>{item.nombre.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase())}</span>
+                  <span className={styles.summaryPrecio}>
+                    {formatPrice(item.precio, item.precioMoneda)}
+                  </span>
+                </div>
+                <span className={styles.summaryCantidad}>{item.cantidad}</span>
               </div>
             ))}
           </div>
           <hr className={styles.divider} />
+          <div className={styles.summaryRow}>
+            <span>{t.shippingCost}</span>
+            <span>{formatPrice(0, moneda)}</span>
+          </div>
+          <div className={styles.summaryRow}>
+            <span>{t.taxes}</span>
+            <span>{formatPrice(0, moneda)}</span>
+          </div>
           <div className={styles.totalRow}>
             <span className={styles.totalLabel}>{t.total}</span>
             <span className={styles.totalValue}>{formatPrice(renderedTotal, moneda)}</span>
           </div>
           <hr className={styles.divider} />
+
+          <button
+            className={styles.checkoutBtn}
+            onClick={handleSubmit}
+            disabled={loading}
+          >
+            <span>{loading ? t.processing : t.continueToPayment}</span>
+            {!loading && (
+              <>
+                <Image src="/images/web/home/arrow_right.svg" alt="" width={30} height={18} className={styles.arrowDark} />
+                <Image src="/images/web/home/white_arrow_right.svg" alt="" width={30} height={18} className={styles.arrowWhite} />
+              </>
+            )}
+          </button>
         </aside>
       </div>
 

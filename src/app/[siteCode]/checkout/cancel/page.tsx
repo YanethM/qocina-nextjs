@@ -4,9 +4,10 @@ import { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
+import { useSiteCode } from "@/hooks/useSiteCode";
 import styles from "./page.module.css";
 
-const ACTIVE_STEP = 2;
+const ERROR_STEP = 2;
 
 const STEPS = [
   { img: "/images/web/shopping/carrito.svg", imgGreen: "/images/web/shopping/carrito_green.svg", label: "Carrito" },
@@ -22,37 +23,45 @@ function formatPrice(precio: number, moneda: string): string {
 }
 
 function CancelContent() {
+  const siteCode = useSiteCode();
   const { items, total } = useCart();
   const moneda = items[0]?.precioMoneda ?? "COP";
 
   return (
     <div className={styles.page}>
       <div className={styles.steps}>
-        {STEPS.map((step, i) => (
-          <div key={step.label} className={styles.stepGroup}>
-            <div className={`${styles.step} ${i <= ACTIVE_STEP ? styles.stepActive : ""}`}>
-              <Image src={i <= ACTIVE_STEP ? step.imgGreen : step.img} alt={step.label} width={110} height={74} className={styles.stepImg} />
-              <p className={styles.stepLabel}>{step.label}</p>
+        {STEPS.map((step, i) => {
+          const isError = i === ERROR_STEP;
+          const isDone = i < ERROR_STEP;
+          let src = step.img;
+          if (isError) src = "/images/web/shopping/seguridad_red.svg";
+          else if (isDone) src = step.imgGreen;
+          return (
+            <div key={step.label} className={styles.stepGroup}>
+              <div className={`${styles.step} ${isDone ? styles.stepActive : ""} ${isError ? styles.stepError : ""}`}>
+                <Image src={src} alt={step.label} width={110} height={74} className={styles.stepImg} />
+                <p className={styles.stepLabel}>{step.label}</p>
+              </div>
+              {i < STEPS.length - 1 && (
+                <Image
+                  src={isDone ? "/images/web/shopping/linea.svg" : "/images/web/shopping/linea_inactiva.svg"}
+                  alt="" width={72} height={6} className={styles.stepLine}
+                />
+              )}
             </div>
-            {i < STEPS.length - 1 && (
-              <Image
-                src={i <= ACTIVE_STEP ? "/images/web/shopping/linea.svg" : "/images/web/shopping/linea_inactiva.svg"}
-                alt="" width={72} height={6} className={styles.stepLine}
-              />
-            )}
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       <div className={styles.header}>
         <Image
-          src="/images/web/error.svg"
+          src="/images/web/shopping/error.svg"
           alt="Error"
           width={64}
           height={64}
           className={styles.headerIcon}
         />
-        <h1 className={styles.headerTitle}>¡Ups! Algo no salió como esperábamos</h1>
+        <h1 className={styles.headerTitle}>¡Ups! No pudimos completar tu pedido</h1>
       </div>
 
       <div className={styles.body}>
@@ -61,21 +70,21 @@ function CancelContent() {
           <p className={styles.bodyText}>
             Lo sentimos, hubo un problema técnico al intentar procesar tu solicitud.
           </p>
-          <p className={styles.bodyText}>No se ha realizado ningún cargo a tu tarjeta.</p>
+          <p className={styles.bodyText}>No pudimos procesar tu pago en este momento.</p>
           <p className={styles.whatTodoTitle}>¿Qué puedes hacer?</p>
           <ul className={styles.bulletList}>
-            <li>Verifica los datos de tu tarjeta.</li>
+            <li>Verifica tus datos de pago.</li>
             <li>Intenta con otro método de pago.</li>
             <li>
-              Si el problema persiste, contacta a nuestro{" "}
-              <a href="mailto:soporte@qocina.com">equipo de soporte.</a>
+              Si el problema persiste,{" "}
+              <a href="mailto:soporte@qocina.com">contáctanos para poder ayudarte.</a>
             </li>
           </ul>
           <div className={styles.actions}>
-            <Link href="/envio" className={styles.btnPrimary}>
+            <Link href={`/${siteCode}/envio`} className={styles.btnPrimary}>
               Reintentar pago
             </Link>
-            <Link href="/carrito" className={styles.btnSecondary}>
+            <Link href={`/${siteCode}/carrito`} className={styles.btnSecondary}>
               Volver al carrito
             </Link>
           </div>
@@ -97,14 +106,25 @@ function CancelContent() {
                     />
                   )}
                 </div>
-                <span className={styles.summaryNombre}>{item.nombre}</span>
-                <span className={styles.summaryPrecio}>
-                  {formatPrice(item.precio * item.cantidad, item.precioMoneda)}
-                </span>
+                <div className={styles.summaryInfo}>
+                  <span className={styles.summaryNombre}>{item.nombre}</span>
+                  <span className={styles.summaryPrecio}>
+                    {formatPrice(item.precio, item.precioMoneda)}
+                  </span>
+                </div>
+                <span className={styles.summaryCantidad}>{item.cantidad}</span>
               </div>
             ))}
           </div>
           <hr className={styles.divider} />
+          <div className={styles.summaryRow}>
+            <span>Costo de envío</span>
+            <span>{formatPrice(0, moneda)}</span>
+          </div>
+          <div className={styles.summaryRow}>
+            <span>Impuestos</span>
+            <span>{formatPrice(0, moneda)}</span>
+          </div>
           <div className={styles.totalRow}>
             <span className={styles.totalLabel}>Total</span>
             <span className={styles.totalValue}>{formatPrice(total, moneda)}</span>

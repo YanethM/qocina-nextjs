@@ -157,6 +157,7 @@
   align-items: center;
   gap: 12px;
   width: 100%;
+  flex: 1;
   position: relative;
   z-index: 3;
 }
@@ -164,7 +165,7 @@
 .cardTitle {
   font-family: Montserrat, sans-serif;
   font-weight: 700;
-  font-size: 28px;
+  font-size: 29px;
   line-height: 1.2;
   margin: 0;
   color: inherit;
@@ -172,7 +173,7 @@
 
 .cardPrice {
   font-family: Montserrat, sans-serif;
-  font-size: 30px;
+  font-size: 32px;
   font-weight: 400;
   margin: 0;
   color: inherit;
@@ -198,6 +199,7 @@
 
 .cardButton {
   display: inline-block;
+  margin-top: auto;
   padding: 12px 40px;
   background: #fff;
   color: #1a1a1a;

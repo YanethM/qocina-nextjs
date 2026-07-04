@@ -102,6 +102,7 @@ export default function PacksDestacados({
                     precioMoneda={pack.precio_moneda}
                     imagen={imagenUrl}
                     sku={pack.sku ?? null}
+                    color={pack.productos?.[0]?.color ?? null}
                     className={`${styles.btnPrimary} ${isFeatured ? styles.btnPrimaryFeatured : ""}`}
                   />
                   <Link

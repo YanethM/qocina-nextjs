@@ -15,13 +15,6 @@ const translations = {
   en: { addToCart: "Add to cart" },
 };
 
-const PACK_SIZES = [
-  { label: "Unidad", multiplier: 1 },
-  { label: "Pack 3", multiplier: 3 },
-  { label: "Pack 6", multiplier: 6 },
-  { label: "Pack 12", multiplier: 12 },
-];
-
 interface Props {
   id: number;
   documentId: string;
@@ -100,11 +93,8 @@ export default function ProductoDetailClient({
     const y = ((e.clientY - rect.top) / rect.height) * 100;
     setZoomPos({ x, y });
   };
-  const [packSize, setPackSize] = useState("Unidad");
   const titleColor = color ?? DEFAULT_COLOR;
-  const selectedMultiplier =
-    PACK_SIZES.find((p) => p.label === packSize)?.multiplier ?? 1;
-  const totalPrice = precio * cantidad * selectedMultiplier;
+  const totalPrice = precio * cantidad;
 
   return (
     <div className={styles.grid}>
@@ -208,30 +198,6 @@ export default function ProductoDetailClient({
           </div>
         </div>
 
-        <div className={styles.fieldGroup}>
-          <span className={styles.fieldLabel}>Tamaño del paquete:</span>
-          <div className={styles.packSelector}>
-            {PACK_SIZES.map((p) => (
-              <button
-                key={p.label}
-                className={`${styles.packBtn} ${packSize === p.label ? styles.packBtnActive : ""}`}
-                onClick={() => setPackSize(p.label)}
-                style={packSize === p.label ? ({ "--pack-color": titleColor } as React.CSSProperties) : undefined}
-              >
-                <Image
-                  src="/images/web/products/product_detail/pack_image.svg"
-                  alt=""
-                  width={28}
-                  height={30}
-                  className={styles.packIcon}
-                  aria-hidden
-                />
-                <span className={styles.packLabel}>{p.label}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-
         <div className={styles.details}>
           {presentacion && (
             <p className={styles.detail}>
@@ -288,8 +254,9 @@ export default function ProductoDetailClient({
                 imagen: imagenPrincipal,
                 sku: sku ?? null,
                 categoria: categoria?.nombre ?? null,
+                color: color ?? null,
               },
-              cantidad * (PACK_SIZES.find((p) => p.label === packSize)?.multiplier ?? 1)
+              cantidad
             )
           }
         >

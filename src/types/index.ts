@@ -18,6 +18,30 @@ export interface ProductoSitio {
   site: Site;
 }
 
+export interface OrderItem {
+  id: number;
+  name: string;
+  sku: string | null;
+  quantity: number;
+  price: number;
+  subtotal: number;
+}
+
+export interface Order {
+  id: number;
+  orderNumber: string;
+  customerEmail: string;
+  subtotal: number;
+  shipping: number;
+  tax: number;
+  discount: number;
+  total: number;
+  currency: string;
+  paidAt: string | null;
+  createdAt: string;
+  items: OrderItem[];
+}
+
 export interface StrapiImage {
   id: number;
   url: string;
@@ -74,6 +98,11 @@ export interface Categoria {
   slug: string;
   descripcion: string | null;
   imagen: StrapiImage | null;
+}
+
+export interface FiltroOpcion {
+  id: number;
+  nombre: string;
 }
 
 export interface Testimonio {

@@ -46,13 +46,24 @@ function parseContent(content: string): Section[] {
     currentType = null;
   };
 
+  let lastNum = 0;
+
   for (const line of lines) {
-    const match = line.match(/^###\s+(\d+)\.\s+(.+)/);
-    if (match) {
+    const numberedMatch = line.match(/^###\s+(\d+)\.\s+(.+)/);
+    const plainHeadingMatch = !numberedMatch && line.match(/^###\s+(.+)/);
+
+    if (numberedMatch) {
       flush();
       currentType = "numbered";
-      currentNum = parseInt(match[1]);
-      currentLabel = match[2];
+      currentNum = parseInt(numberedMatch[1]);
+      currentLabel = numberedMatch[2];
+      lastNum = currentNum;
+    } else if (plainHeadingMatch && currentType === "numbered") {
+      flush();
+      currentType = "numbered";
+      currentNum = lastNum + 1;
+      currentLabel = plainHeadingMatch[1];
+      lastNum = currentNum;
     } else {
       if (currentType === null) currentType = "normal";
       currentLines.push(line);

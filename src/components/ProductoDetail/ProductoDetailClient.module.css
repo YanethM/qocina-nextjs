@@ -183,52 +183,6 @@
   text-align: center;
 }
 
-.packSelector {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.packBtn {
-  width: 72px;
-  height: 72px;
-  padding: 0;
-  border-radius: 16px;
-  border: 1.5px solid #d0d0d0;
-  background: #fff;
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  cursor: pointer;
-  transition: border-color 0.2s, background 0.2s;
-}
-
-.packIcon {
-  width: 28px;
-  height: 30px;
-}
-
-.packLabel {
-  font-family: Montserrat, sans-serif;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 150%;
-  letter-spacing: 0;
-  color: #1a1a1a;
-}
-
-.packBtnActive {
-  border-color: var(--pack-color, #ce171c);
-  border-width: 2px;
-  background: color-mix(in srgb, var(--pack-color, #ce171c) 10%, white);
-}
-
-.packBtnActive .packLabel {
-  font-weight: 700;
-}
-
 .details {
   display: flex;
   flex-direction: column;
@@ -324,9 +278,5 @@
 @media (max-width: 480px) {
   .grid {
     padding: 24px 16px;
-  }
-
-  .packSelector {
-    gap: 8px;
   }
 }

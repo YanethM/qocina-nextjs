@@ -82,14 +82,14 @@
 
 .content {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 480px;
-  gap: 28px;
+  grid-template-columns: minmax(0, 1fr) 425px;
+  gap: 24px;
   align-items: start;
 }
 
 
 .title {
-  font-size: 30px;
+  font-size: 24px;
   font-weight: 700;
   margin: 0 0 36px;
 }
@@ -299,19 +299,14 @@
   color: #bbb;
 }
 
-.submitRow {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 44px;
-}
-
 .checkoutBtn {
   background: #E8B84B;
   color: #1a1a1a;
   border: none;
   border-radius: 50px;
   min-height: 60px;
-  min-width: 340px;
+  width: 100%;
+  box-sizing: border-box;
   justify-content: center;
   padding: 14px 32px;
   font-size: 16px;
@@ -367,7 +362,7 @@
 }
 
 .sidebarTitle {
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 700;
   margin: 0;
 }
@@ -380,35 +375,60 @@
 
 .summaryItem {
   display: grid;
-  grid-template-columns: 96px minmax(0, 1fr) auto;
+  grid-template-columns: 88px minmax(0, 1fr) auto;
   gap: 16px;
   align-items: center;
 }
 
 .summaryImage {
   position: relative;
-  width: 96px;
-  height: 96px;
+  width: 88px;
+  height: 88px;
   background: #fff;
-  border-radius: 12px;
+  border-radius: 8px;
   overflow: hidden;
   flex-shrink: 0;
+}
+
+.summaryInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
 }
 
 .summaryNombre {
   font-family: Montserrat, sans-serif;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 150%;
   letter-spacing: 0%;
   color: #1a1a1a;
 }
 
 .summaryPrecio {
-  font-size: 16px;
-  font-weight: 700;
+  font-family: Montserrat, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
   white-space: nowrap;
   color: #1a1a1a;
+}
+
+.summaryCantidad {
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  color: #1a1a1a;
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  font-family: Montserrat, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 140%;
+  color: #888;
 }
 
 .divider {
@@ -553,10 +573,6 @@
     display: block;
   }
 
-  .submitRow {
-    justify-content: stretch;
-  }
-
   .checkoutBtn {
     width: 100%;
     min-width: 0;
@@ -595,8 +611,11 @@
   }
 
   .summaryPrecio {
-    grid-column: auto;
     font-size: 14px;
+  }
+
+  .summaryCantidad {
+    font-size: 18px;
   }
 
   .totalRow {

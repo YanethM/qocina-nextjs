@@ -55,7 +55,7 @@
 .card {
   width: 100%;
   max-width: 424px;
-  height: 481px;
+  min-height: 481px;
   border-radius: 24px;
   padding: 136px 32px 32px 32px;
   text-align: center;
@@ -113,6 +113,7 @@
   align-items: center;
   gap: 16px;
   width: 360px;
+  flex: 1;
   position: relative;
   z-index: 3;
   margin: 0 auto;
@@ -161,7 +162,7 @@
 .descripcion {
   font-family: Montserrat, sans-serif;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.4;
   text-align: center;
   margin: 0;
@@ -171,7 +172,7 @@
 .descripcionLarga {
   font-family: Montserrat, sans-serif;
   font-weight: 400;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.5;
   text-align: center;
   margin: 0;
@@ -204,6 +205,7 @@
 
 .addToCartBtn {
   flex-shrink: 0;
+  margin-top: auto;
   width: 304px;
   height: 46px;
   min-width: 170px;
@@ -221,7 +223,6 @@
   transition: all 0.2s;
   text-decoration: none;
   display: inline-block;
-  margin: 0;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
 }

@@ -16,6 +16,9 @@ interface ListaRecetasProps {
   labelTipoReceta?: string;
   labelRegion?: string;
   labelDieta?: string;
+  tiposRecetaOptions?: string[];
+  cocinaRegionOptions?: string[];
+  tiposDietaOptions?: string[];
   ctaCargarMas?: string;
   ctaVerTodas?: string;
   locale?: string;
@@ -107,6 +110,9 @@ export default function ListaRecetas({
   labelTipoReceta,
   labelRegion,
   labelDieta,
+  tiposRecetaOptions,
+  cocinaRegionOptions,
+  tiposDietaOptions,
   ctaCargarMas,
   ctaVerTodas = "Ver todas las recetas",
   locale,
@@ -115,9 +121,18 @@ export default function ListaRecetas({
   const urlSiteCode = useSiteCode();
   const sc = siteCode ?? urlSiteCode;
   const isEnglish = locale === "en";
-  const tiposReceta = useMemo(() => distinctValues(recetas, "tipo_receta"), [recetas]);
-  const cocinaRegion = useMemo(() => distinctValues(recetas, "cocina_region"), [recetas]);
-  const tiposDieta = useMemo(() => distinctValues(recetas, "tipo_dieta"), [recetas]);
+  const tiposReceta = useMemo(
+    () => tiposRecetaOptions ?? distinctValues(recetas, "tipo_receta"),
+    [recetas, tiposRecetaOptions],
+  );
+  const cocinaRegion = useMemo(
+    () => cocinaRegionOptions ?? distinctValues(recetas, "cocina_region"),
+    [recetas, cocinaRegionOptions],
+  );
+  const tiposDieta = useMemo(
+    () => tiposDietaOptions ?? distinctValues(recetas, "tipo_dieta"),
+    [recetas, tiposDietaOptions],
+  );
   const [filters, setFilters] = useState({ tipoReceta: "", cocina: "", dieta: "" });
   const [visible, setVisible] = useState(PAGE_SIZE);
   const [resultadoFiltrado, setResultadoFiltrado] = useState<Receta[] | null>(null);

@@ -6,6 +6,8 @@ import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import type { CartItem } from "@/context/CartContext";
 import { useSiteCode } from "@/hooks/useSiteCode";
+import { getOrder } from "@/lib/api";
+import type { Order } from "@/types";
 import styles from "./page.module.css";
 
 const ACTIVE_STEP = 3;
@@ -47,6 +49,13 @@ function SuccessContent() {
     }
     return "";
   });
+  const [orderId] = useState(() => {
+    if (typeof window !== "undefined") {
+      return sessionStorage.getItem("qocina_checkout_order_id") ?? "";
+    }
+    return "";
+  });
+  const [order, setOrder] = useState<Order | null>(null);
 
   useEffect(() => {
     if (!cleared.current && items.length > 0) {
@@ -58,9 +67,36 @@ function SuccessContent() {
     }
   }, [items, total, clearCart]);
 
+  useEffect(() => {
+    if (!orderId || !siteCode) return;
+    getOrder(orderId, siteCode)
+      .then(setOrder)
+      .catch(() => setOrder(null));
+  }, [orderId, siteCode]);
+
   const displayItems = snapshot.length > 0 ? snapshot : items;
   const displayTotal = snapshot.length > 0 ? snapshotTotal : total;
   const displayMoneda = snapshot.length > 0 ? snapshotMoneda : (items[0]?.precioMoneda ?? "COP");
+
+  const finalEmail = order?.customerEmail || email;
+  const finalOrderNumber = order?.orderNumber || (orderId ? `#${orderId}` : "");
+  const finalDate = order?.paidAt ? new Date(order.paidAt) : orderDate;
+  const finalMoneda = order?.currency || displayMoneda;
+  const finalTotal = order ? order.total : displayTotal;
+  const finalShipping = order?.shipping ?? 0;
+  const finalTax = order?.tax ?? 0;
+  const summaryItems = order?.items?.length
+    ? order.items.map((oi) => ({
+        id: oi.id,
+        nombre: oi.name,
+        cantidad: oi.quantity,
+        precio: oi.price,
+        precioMoneda: finalMoneda,
+        imagen: displayItems.find(
+          (di) => di.nombre.toLowerCase() === oi.name.toLowerCase()
+        )?.imagen ?? null,
+      }))
+    : displayItems;
 
   return (
     <div className={styles.page}>
@@ -89,7 +125,7 @@ function SuccessContent() {
           height={64}
           className={styles.headerIcon}
         />
-        <h1 className={styles.headerTitle}>¡Muchas gracias!</h1>
+        <h1 className={styles.headerTitle}>¡Gracias por elegir Q&rsquo;ocina en Casa!</h1>
       </div>
 
       <div className={styles.body}>
@@ -98,18 +134,39 @@ function SuccessContent() {
           <p className={styles.boldText}>
             Revisa tu correo electrónico para ver la confirmación de tu pedido.
           </p>
-          <p className={styles.infoText}>Fecha del pedido: {formatDate(orderDate)}</p>
-          {email && (
-            <p className={styles.infoText}>
-              Hemos enviado los detalles de la confirmación a {email}
-            </p>
-          )}
+          <div className={styles.checklist}>
+            {finalEmail && (
+              <div className={styles.checklistItem}>
+                <Image src="/images/web/recetas/recetas_detail/checkmark.svg" alt="" width={20} height={16} />
+                <p className={styles.infoText}>
+                  Enviamos los detalles de la confirmación a: <strong>{finalEmail}</strong>
+                </p>
+              </div>
+            )}
+            <div className={styles.checklistItem}>
+              <Image src="/images/web/recetas/recetas_detail/checkmark.svg" alt="" width={20} height={16} />
+              <p className={styles.infoText}>
+                Fecha del pedido: <strong>{formatDate(finalDate)}</strong>
+              </p>
+            </div>
+            {finalOrderNumber && (
+              <div className={styles.checklistItem}>
+                <Image src="/images/web/recetas/recetas_detail/checkmark.svg" alt="" width={20} height={16} />
+                <p className={styles.infoText}>
+                  Número de pedido: <strong>{finalOrderNumber}</strong>
+                </p>
+              </div>
+            )}
+          </div>
           <div className={styles.actions}>
-            <Link href={`/${siteCode}/productos`} className={styles.btnPrimary}>
-              Seguir comprando
+            <Link href={`/${siteCode}/recetas`} className={styles.btnSecondary}>
+              Explorar recetas
             </Link>
-            <Link href={`/${siteCode}`} className={styles.btnSecondary}>
-              Ir al inicio
+            <Link href={`/${siteCode}/productos`} className={styles.btnPrimary}>
+              Volver a la tienda
+            </Link>
+            <Link href={`/${siteCode}/blog-y-noticias`} className={styles.btnOutline}>
+              Descubrir tips y novedades de Q&rsquo;ocina
             </Link>
           </div>
         </div>
@@ -117,7 +174,7 @@ function SuccessContent() {
         <aside className={styles.sidebar}>
           <h2 className={styles.sidebarTitle}>Resumen</h2>
           <div className={styles.summaryList}>
-            {displayItems.map((item) => (
+            {summaryItems.map((item) => (
               <div key={item.id} className={styles.summaryItem}>
                 <div className={styles.summaryImage}>
                   {item.imagen && (
@@ -130,17 +187,28 @@ function SuccessContent() {
                     />
                   )}
                 </div>
-                <span className={styles.summaryNombre}>{item.nombre}</span>
-                <span className={styles.summaryPrecio}>
-                  {formatPrice(item.precio * item.cantidad, item.precioMoneda)}
-                </span>
+                <div className={styles.summaryInfo}>
+                  <span className={styles.summaryNombre}>{item.nombre}</span>
+                  <span className={styles.summaryPrecio}>
+                    {formatPrice(item.precio, item.precioMoneda)}
+                  </span>
+                </div>
+                <span className={styles.summaryCantidad}>{item.cantidad}</span>
               </div>
             ))}
           </div>
           <hr className={styles.divider} />
+          <div className={styles.summaryRow}>
+            <span>Costo de envío</span>
+            <span>{formatPrice(finalShipping, finalMoneda)}</span>
+          </div>
+          <div className={styles.summaryRow}>
+            <span>Impuestos</span>
+            <span>{formatPrice(finalTax, finalMoneda)}</span>
+          </div>
           <div className={styles.totalRow}>
             <span className={styles.totalLabel}>Total</span>
-            <span className={styles.totalValue}>{formatPrice(displayTotal, displayMoneda)}</span>
+            <span className={styles.totalValue}>{formatPrice(finalTotal, finalMoneda)}</span>
           </div>
         </aside>
       </div>

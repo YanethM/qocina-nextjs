@@ -71,7 +71,7 @@
 
 .cardPrice {
   font-family: Montserrat, sans-serif;
-  font-size: 30px;
+  font-size: 32px;
   font-weight: 400;
   margin: 0;
   color: inherit;
@@ -107,6 +107,29 @@
   text-align: center;
   margin: 0;
   color: inherit;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.cardDescriptionLarga :global(p),
+.cardDescriptionLarga :global(ul),
+.cardDescriptionLarga :global(ol),
+.cardDescriptionLarga :global(li) {
+  margin: 0;
+  padding: 0;
+  font-size: inherit;
+  font-family: inherit;
+  font-weight: inherit;
+  color: inherit;
+  text-align: inherit;
+  display: inline;
+}
+
+.cardDescriptionLarga :global(strong),
+.cardDescriptionLarga :global(b) {
+  font-weight: 700;
 }
 
 .cardButton {

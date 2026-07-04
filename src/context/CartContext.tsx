@@ -14,6 +14,7 @@ export interface CartItem {
   cantidad: number;
   sku: string | null;
   categoria: string | null;
+  color?: string | null;
 }
 
 interface CartContextValue {
@@ -69,6 +70,7 @@ function normalizeCartItem(item: Partial<CartItem>): CartItem | null {
     cantidad: typeof item.cantidad === "number" && item.cantidad > 0 ? item.cantidad : 1,
     sku: typeof item.sku === "string" ? item.sku : null,
     categoria: typeof item.categoria === "string" ? item.categoria : null,
+    color: typeof item.color === "string" ? item.color : null,
   };
 }
 

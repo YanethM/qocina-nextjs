@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { getProductosPage, getStrapiImageUrl } from "@/lib/api";
+import { getProductosPage, getProductos, getStrapiImageUrl } from "@/lib/api";
 import { getLocale } from "@/lib/locale";
 import ComingSoon from "@/components/ComingSoon/ComingSoon";
 import styles from "./page.module.css";
@@ -40,7 +40,10 @@ const IS_REVERSED = [false, true, false];
 export default async function ProductosPage({ params }: Props) {
   const { siteCode } = await params;
   const locale = await getLocale(siteCode);
-  const productosPageRes = await getProductosPage(locale, siteCode).catch(() => null);
+  const [productosPageRes, todosProductosRes] = await Promise.all([
+    getProductosPage(locale, siteCode).catch(() => null),
+    getProductos(locale, siteCode).catch(() => null),
+  ]);
 
   const pageData = productosPageRes?.data;
 
@@ -66,8 +69,10 @@ export default async function ProductosPage({ params }: Props) {
         ayudaImagenMobile.formats?.small?.url,
     )
     : "/images/web/products/tienes_dudas_mobile.svg";
-  const productos = (pageData?.productos_destacados ?? []).filter((p) => p.disponible);
-  console.log("[productos] ids:", productos.map((p) => ({ id: p.id, documentId: p.documentId, nombre: p.nombre })));
+  const productosDestacados = (pageData?.productos_destacados ?? []).filter((p) => p.disponible);
+  const productos = productosDestacados.length > 0
+    ? productosDestacados
+    : (todosProductosRes?.data ?? []);
   const rawPacks = pageData?.packs_destacados;
   const packsDestacados = (Array.isArray(rawPacks) ? rawPacks : []).sort(
     (a, b) => a.orden - b.orden,

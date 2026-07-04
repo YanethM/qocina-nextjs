@@ -63,6 +63,12 @@ interface SugItem {
   sku: string | null;
   categoria: string | null;
   color: string | null;
+  cantidad: number | null;
+}
+
+function extraerCantidadPack(nombre: string): number | null {
+  const match = nombre.match(/(\d+)/);
+  return match ? parseInt(match[1], 10) : null;
 }
 
 const SUG_COLOR_CLASS: Record<string, string> = {
@@ -158,9 +164,28 @@ export default function CarritoPage({ initialPacks }: Props) {
       sku: p.sku,
       categoria: p.categoria?.nombre ?? null,
       color: p.color,
+      cantidad: null,
     }));
 
-  const sugeridos = productoItems;
+  const packItems: SugItem[] = packs
+    .filter((p) => p.disponible && !cartDocIds.has(p.documentId))
+    .map((p) => ({
+      tipo: "pack",
+      id: p.id,
+      documentId: p.documentId,
+      slug: p.slug,
+      nombre: stripHtml(p.nombre),
+      descripcion: stripHtml(p.descripcion),
+      precio: p.precio,
+      precioMoneda: p.precio_moneda,
+      imagenUrl: p.imagen ? getStrapiImageUrl(p.imagen.url) : null,
+      sku: p.sku,
+      categoria: null,
+      color: p.productos?.[0]?.color ?? null,
+      cantidad: extraerCantidadPack(p.nombre),
+    }));
+
+  const sugeridos = packItems.length > 0 ? packItems : productoItems;
   const VISIBLE = 3;
   const showArrows = sugeridos.length > VISIBLE;
   const visible = sugeridos.slice(carouselIdx, carouselIdx + VISIBLE);
@@ -231,7 +256,10 @@ export default function CarritoPage({ initialPacks }: Props) {
             <div className={styles.itemList}>
               {items.map((item) => (
                 <div key={item.id} className={styles.item}>
-                  <div className={styles.itemImage}>
+                  <div
+                    className={styles.itemImage}
+                    style={item.color ? { background: item.color } : undefined}
+                  >
                     {item.imagen ? (
                       <Image
                         src={item.imagen}
@@ -378,7 +406,12 @@ export default function CarritoPage({ initialPacks }: Props) {
                         )}
                       </div>
                       <div className={styles.sugCardBody}>
-                        <p className={styles.sugNombre}>{item.nombre}</p>
+                        <div className={styles.sugNombreRow}>
+                          <p className={styles.sugNombre}>{item.nombre}</p>
+                          {item.cantidad && (
+                            <span className={styles.sugCantidadBadge}>{item.cantidad}</span>
+                          )}
+                        </div>
                         <p className={styles.sugPrecio}>
                           {formatPrice(item.precio, item.precioMoneda)}
                         </p>
@@ -397,6 +430,7 @@ export default function CarritoPage({ initialPacks }: Props) {
                               imagen: item.imagenUrl,
                               sku: item.sku,
                               categoria: item.categoria,
+                              color: item.color,
                             })
                           }
                         >

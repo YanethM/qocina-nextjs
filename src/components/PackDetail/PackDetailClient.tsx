@@ -237,6 +237,7 @@ export default function PackDetailClient({
               imagen,
               sku: sku ?? null,
               categoria: null,
+              color: productRef?.color ?? null,
             },
             cantidad,
           )

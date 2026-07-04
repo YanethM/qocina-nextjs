@@ -12,6 +12,7 @@
 .bgImage {
   grid-row: 1;
   grid-column: 1;
+  align-self: end;
   z-index: 0;
   line-height: 0;
 }
@@ -66,6 +67,7 @@
 
 .section:has(.grid[data-single-row="true"]) .bgImage {
   order: 2;
+  align-self: auto;
   margin-top: -60px;
   z-index: 1;
 }
@@ -147,18 +149,40 @@
 }
 
 .grid {
-  display: grid;
-  grid-template-columns: repeat(2, 500px);
+  display: flex;
+  flex-direction: column;
   gap: 24px;
-  justify-content: center;
+  width: 100%;
+  max-width: 1096px;
   margin: 0 auto;
   position: relative;
 }
 
+.grid[data-single-row="true"] {
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: start;
+  padding-bottom: 40px;
+}
+
+.row {
+  display: flex;
+  gap: 24px;
+}
+
+.rowStart {
+  justify-content: flex-start;
+}
+
+.rowEnd {
+  justify-content: flex-end;
+}
+
 .card {
   position: relative;
-  width: 500px;
-  height: 300px;
+  width: 424px;
+  height: 253px;
   border-radius: 24px;
   overflow: hidden;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
@@ -171,37 +195,6 @@
 .card:hover {
   transform: translateY(-6px) scale(1.02);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
-}
-
-
-.card:nth-child(n+3) {
-  transform: translateX(232px);
-}
-
-.grid[data-count="1"],
-.grid[data-count="2"] {
-  padding-bottom: 40px;
-}
-
-.grid[data-count="1"] {
-  grid-template-columns: 424px;
-}
-
-.grid[data-single-row="true"] {
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: center;
-  align-items: start;
-  gap: 24px;
-  width: 100%;
-}
-
-.grid[data-count="1"][data-single-row="true"] {
-  justify-content: center;
-}
-
-.grid[data-count="2"][data-single-row="true"] {
-  justify-content: center;
 }
 
 .cardBg {
@@ -222,8 +215,8 @@
 
 .cardText {
   position: relative;
-  width: 300px;
-  height: 300px;
+  width: 232px;
+  height: 253px;
   padding: 20px 24px;
   background: rgba(255, 255, 255, 0.35);
   backdrop-filter: blur(16px) saturate(180%);
@@ -293,7 +286,7 @@
 
 .cardRight {
   flex: 1;
-  height: 300px;
+  height: 253px;
   position: relative;
   z-index: 1;
 }
@@ -345,12 +338,6 @@
     max-width: 500px;
   }
 
-  
-  .card:nth-child(n+3) {
-    transform: translateX(0);
-  }
-
-  
   .backgroundImage {
     left: -24px;
     width: calc(100% + 48px);
