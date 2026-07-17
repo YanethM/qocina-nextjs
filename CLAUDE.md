@@ -76,6 +76,8 @@ Los países ⚠️ no deben salir a producción hasta confirmar `warehouseID` co
 
 - **503 en email duplicado**: cuando el email ya existe en Ofix con `customerTypeID=9`, `findOrCreateOfixCustomer` devuelve 503 en vez de reusar el `customerID`. Pendiente fix del desarrollador backend en `src/api/order/controllers/order.ts` (Strapi).
 
+- **Las imágenes de productos se pueden perder o cambiar sin aviso**: la web siempre muestra la imagen que esté cargada en Strapi en ese momento, no guarda un historial ni una copia de respaldo. Si alguien edita ese producto en Strapi — el cliente, el equipo, o algún proceso automático que sincronice datos — la imagen anterior se pierde apenas se guarda el cambio, sin forma de recuperarla desde la web. Además, cada producto tiene **una sola imagen para todos los países** (Perú, Colombia, Ecuador, Chile, USA comparten la misma si están en el mismo idioma) — no existe la opción de poner una imagen distinta por país. Esto no se puede resolver en el código de la web: hay que decidirlo del lado de Strapi (por ejemplo, agregar una imagen por país, o dejar ese campo fuera de cualquier sincronización automática que use el cliente).
+
 ## Nunca hacer
 
 - Hardcodear `"pe"` o cualquier país como valor por defecto en ningún archivo

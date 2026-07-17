@@ -82,6 +82,7 @@
   line-height: 120%;
   letter-spacing: 0%;
   margin: 0;
+  max-width: 380px;
 }
 
 .detailDescription {
@@ -91,6 +92,7 @@
   line-height: 130%;
   letter-spacing: 0%;
   margin: 16px 0 0;
+  max-width: 380px;
 }
 
 .mobileImage {
@@ -160,6 +162,7 @@
     letter-spacing: 0%;
     text-align: center;
     text-transform: uppercase;
+    max-width: none;
   }
 
   .detailDescription {
@@ -169,5 +172,6 @@
     line-height: 150%;
     letter-spacing: 0%;
     text-align: center;
+    max-width: none;
   }
 }

@@ -77,6 +77,9 @@ export default async function NosotrosPage({ params }: Props) {
   const chefImageSrcMobile = "/images/mobile/nosotros/gaston.svg";
   const chefImageAlt = chefImagen?.alternativeText ?? data?.chef_nombre ?? "Gastón Acurio";
 
+  const [heroTituloPrincipal, ...heroTituloRestoPalabras] = (data?.hero_titulo ?? "").split(" ");
+  const heroTituloSecundario = heroTituloRestoPalabras.join(" ");
+
   return (
     <div className={styles.page}>
       {(data?.hero_titulo || data?.hero_subtitulo) && (
@@ -114,7 +117,12 @@ export default async function NosotrosPage({ params }: Props) {
           <div className={styles.bannerTextContainer}>
             <div className={styles.bannerTextInner}>
               {data?.hero_titulo && (
-                <p className={styles.heroTitulo}>{data.hero_titulo}</p>
+                <>
+                  <p className={styles.heroTituloPrincipal}>{heroTituloPrincipal}</p>
+                  {heroTituloSecundario && (
+                    <p className={styles.heroTituloSecundario}>{heroTituloSecundario}</p>
+                  )}
+                </>
               )}
               {data?.hero_subtitulo && (
                 <p className={styles.heroSubtitulo}>{data.hero_subtitulo}</p>

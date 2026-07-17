@@ -8,10 +8,12 @@ import styles from "./Footer.module.css";
 
 const translations = {
   es: {
-    about: "Sobre nosotros",
-    products: "Productos",
+    home: "Inicio",
+    about: "Nosotros",
+    process: "Proceso",
+    products: "Tienda",
     recipes: "Recetas",
-    news: "Actualidad",
+    news: "Noticias",
     contact: "Contacto",
     secure: "Compra en línea 100% seguro",
     faq: "Preguntas frecuentes",
@@ -19,8 +21,10 @@ const translations = {
     cookies: "Políticas de cookies",
   },
   en: {
+    home: "Home",
     about: "About us",
-    products: "Products",
+    process: "Process",
+    products: "Shop",
     recipes: "Recipes",
     news: "News",
     contact: "Contact",
@@ -51,7 +55,9 @@ export default function Footer() {
 
         <div className={styles.navCart}>
           <nav className={styles.nav}>
+            <Link href={`/${siteCode}`}>{t.home}</Link>
             <Link href={`/${siteCode}/quienes-somos`}>{t.about}</Link>
+            <Link href={`/${siteCode}/proceso-produccion`}>{t.process}</Link>
             <Link href={`/${siteCode}/productos`}>{t.products}</Link>
             <Link href={`/${siteCode}/recetas`}>{t.recipes}</Link>
             <Link href={`/${siteCode}/blog-y-noticias`}>{t.news}</Link>

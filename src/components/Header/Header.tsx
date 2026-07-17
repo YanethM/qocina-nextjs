@@ -11,7 +11,9 @@ import CountryModal from "@/components/CountryModal/CountryModal";
 import styles from "./Header.module.css";
 
 const NAV_PATHS = [
+  { path: "", label: { es: "Inicio", en: "Home" } },
   { path: "/quienes-somos", label: { es: "Nosotros", en: "About us" } },
+  { path: "/proceso-produccion", label: { es: "Proceso", en: "Process" } },
   { path: "/productos", label: { es: "Tienda", en: "Shop" } },
   { path: "/recetas", label: { es: "Recetas", en: "Recipes" } },
   { path: "/blog-y-noticias", label: { es: "Blog y Noticias", en: "Blog & News" } },
@@ -45,6 +47,19 @@ export default function Header() {
     document.cookie = `locale=${newLocale}; path=/; max-age=${COOKIE_MAX_AGE}; SameSite=Lax${secureCookies ? "; Secure" : ""}`;
     setLocale(newLocale);
     window.dispatchEvent(new CustomEvent("qocina:locale-change", { detail: newLocale }));
+
+    const recetaMatch = /^\/[^/]+\/recetas\/[^/]+\/?$/.test(pathname);
+    if (recetaMatch) {
+      router.push(`${base}/recetas`);
+      return;
+    }
+
+    const blogMatch = /^\/[^/]+\/blog-y-noticias\/[^/]+\/?$/.test(pathname);
+    if (blogMatch) {
+      router.push(`${base}/blog-y-noticias`);
+      return;
+    }
+
     router.refresh();
   };
 
@@ -65,14 +80,17 @@ export default function Header() {
 
           <div className={styles.rightGroup}>
             <nav className={styles.nav}>
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`${styles.navLink} ${pathname.includes(link.path) ? styles.navLinkActive : ""}`}>
-                  {link.label}
-                </Link>
-              ))}
+              {navLinks.map((link) => {
+                const isActive = link.path === "" ? pathname === link.href : pathname.includes(link.path);
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={`${styles.navLink} ${isActive ? styles.navLinkActive : ""}`}>
+                    {link.label}
+                  </Link>
+                );
+              })}
             </nav>
             {siteCode && (
               <button
@@ -150,16 +168,19 @@ export default function Header() {
 
       <div className={`${styles.mobileMenu} ${menuOpen ? styles.mobileMenuOpen : ""}`}>
         <nav className={styles.mobileNav}>
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={`${styles.mobileNavLink} ${pathname.includes(link.path) ? styles.mobileNavLinkActive : ""}`}
-              onClick={closeMenu}
-            >
-              {link.label}
-            </Link>
-          ))}
+          {navLinks.map((link) => {
+            const isActive = link.path === "" ? pathname === link.href : pathname.includes(link.path);
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`${styles.mobileNavLink} ${isActive ? styles.mobileNavLinkActive : ""}`}
+                onClick={closeMenu}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
           <div className={styles.mobileLangSelector}>
             <button
               className={`${styles.langBtn} ${locale === "es" ? styles.langActive : ""}`}

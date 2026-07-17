@@ -59,6 +59,11 @@
   right: 48px;
 }
 
+.bannerLogoEn {
+  width: 330px;
+  height: 268px;
+}
+
 .bannerMobileWrapper {
   display: none;
   width: 100%;

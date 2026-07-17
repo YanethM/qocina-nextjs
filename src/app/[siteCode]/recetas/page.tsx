@@ -59,6 +59,9 @@ export default async function RecetasPage({ params }: Props) {
   const logoSrc = locale === "en"
     ? "/images/web/recetas/logo_en.svg"
     : "/images/web/recetas/logo.svg";
+  const heroMobileSvgSrc = locale === "en"
+    ? "/images/mobile/recetas/hero_en.svg"
+    : "/images/mobile/recetas/hero.svg";
 
   return (
     <div className={styles.page}>
@@ -90,7 +93,7 @@ export default async function RecetasPage({ params }: Props) {
                 alt=""
                 width={277}
                 height={225}
-                className={styles.bannerLogo}
+                className={`${styles.bannerLogo} ${locale === "en" ? styles.bannerLogoEn : ""}`}
                 aria-hidden={true}
               />
             </div>
@@ -108,7 +111,7 @@ export default async function RecetasPage({ params }: Props) {
               />
             )}
             <Image
-              src="/images/mobile/recetas/hero.svg"
+              src={heroMobileSvgSrc}
               alt=""
               fill
               className={styles.bannerMobileSvg}

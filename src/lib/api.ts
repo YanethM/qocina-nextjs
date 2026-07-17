@@ -105,6 +105,7 @@ async function fetchAPI<T>(
 export async function getBadges(locale?: string, siteCode?: string) {
   return fetchAPI<StrapiListResponse<Badge>>("/api/badges", {
     ...imgFields("icono"),
+    "sort[0]": "createdAt:asc",
   }, locale, siteCode);
 }
 
@@ -269,7 +270,9 @@ export async function getCategoriaBlog(id: string, locale?: string, siteCode?: s
 }
 
 export async function getCategoriasFaq(locale?: string, siteCode?: string) {
-  return fetchAPI<StrapiListResponse<CategoriaFaq>>("/api/categorias-faq", {}, locale, siteCode);
+  return fetchAPI<StrapiListResponse<CategoriaFaq>>("/api/categorias-faq", {
+    "sort[0]": "id:asc",
+  }, locale, siteCode);
 }
 
 export async function getCategoriaFaq(id: string, locale?: string, siteCode?: string) {
@@ -277,12 +280,15 @@ export async function getCategoriaFaq(id: string, locale?: string, siteCode?: st
 }
 
 export async function getPreguntasFrecuentes(locale?: string, siteCode?: string) {
-  return fetchAPI<StrapiListResponse<PreguntaFrecuente>>("/api/preguntas-frecuentes", {}, locale, siteCode);
+  return fetchAPI<StrapiListResponse<PreguntaFrecuente>>("/api/preguntas-frecuentes", {
+    "sort[0]": "id:asc",
+  }, locale, siteCode);
 }
 
 export async function getPreguntasFrecuentesByCategoria(categoriaSlug: string, locale?: string, siteCode?: string) {
   return fetchAPI<StrapiListResponse<PreguntaFrecuente>>("/api/preguntas-frecuentes", {
     "filters[categoria][slug][$eq]": categoriaSlug,
+    "sort[0]": "id:asc",
   }, locale, siteCode);
 }
 
