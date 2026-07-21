@@ -1,11 +1,12 @@
 import Image from "next/image";
 import Button from "@/components/ui/Button";
 import styles from "./NuestroSecreto.module.css";
-import { getBadges } from "@/lib/api";
+import type { Badge } from "@/types";
 
 interface NuestroSecretoProps {
   secreto_titulo?: string;
   secreto_descripcion?: string;
+  secreto_badges?: Badge[];
   secreto_chef_frase_q?: string;
   secreto_cta?: { texto: string; url: string; nueva_ventana: boolean } | null;
   secreto_chef_cta?: { texto: string; url: string; nueva_ventana: boolean } | null;
@@ -13,12 +14,11 @@ interface NuestroSecretoProps {
   locale?: string;
 }
 
-export default async function NuestroSecreto({ secreto_titulo, secreto_descripcion, secreto_chef_frase_q, secreto_cta, secreto_chef_cta, siteCode, locale }: NuestroSecretoProps) {
+export default function NuestroSecreto({ secreto_titulo, secreto_descripcion, secreto_badges, secreto_chef_frase_q, secreto_cta, secreto_chef_cta, siteCode, locale }: NuestroSecretoProps) {
   const hasContent = secreto_titulo || secreto_descripcion || secreto_chef_frase_q || secreto_cta || secreto_chef_cta;
   if (!hasContent) return null;
 
-  const badgesRes = await getBadges(locale).catch(() => null);
-  const badges = badgesRes?.data ?? [];
+  const badges = secreto_badges ?? [];
 
   const gastonImageSrc =
     locale === "en"

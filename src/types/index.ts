@@ -478,6 +478,7 @@ export interface HomePage {
   documentId: string;
   slider: HeroSlide[];
   intro_texto: string;
+  intro_badges: Badge[];
   productos_titulo: string;
   productos_cta: { texto: string; url: string; nueva_ventana: boolean } | null;
   natural_titulo: string;
@@ -486,6 +487,7 @@ export interface HomePage {
   natural_cta: { texto: string; url: string; nueva_ventana: boolean } | null;
   secreto_titulo: string;
   secreto_descripcion: string;
+  secreto_badges: Badge[];
   secreto_chef_frase_q: string;
   secreto_cta: { texto: string; url: string; nueva_ventana: boolean } | null;
   secreto_chef_cta: { texto: string; url: string; nueva_ventana: boolean } | null;

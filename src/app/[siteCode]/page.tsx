@@ -8,7 +8,6 @@ import CocinarConQ from "@/components/CocinarConQ/CocinarConQ";
 import NuestroSecreto from "@/components/NuestroSecreto/NuestroSecreto";
 import RecetasCarousel from "@/components/RecetasCarousel/RecetasCarousel";
 import {
-  getBadges,
   getProductos,
   getRecetas,
   getTestimonios,
@@ -37,9 +36,8 @@ export default async function Home({ params }: Props) {
   const { siteCode } = await params;
   const locale = await getLocale(siteCode);
 
-  const [homeRes, badgesRes, productosRes, recetasRes, testimoniosRes, contactoRes] = await Promise.all([
+  const [homeRes, productosRes, recetasRes, testimoniosRes, contactoRes] = await Promise.all([
     getHomePage(locale).catch((e) => { console.error("getHomePage error:", e); return null; }),
-    getBadges(locale).catch((e) => { console.error("getBadges error:", e); return null; }),
     getProductos(locale, siteCode).catch((e) => { console.error("getProductos error:", e); return null; }),
     getRecetas(locale, undefined, siteCode).catch((e) => { console.error("getRecetas error:", e); return null; }),
     getTestimonios(locale).catch((e) => { console.error("getTestimonios error:", e); return null; }),
@@ -50,7 +48,7 @@ export default async function Home({ params }: Props) {
   const introTexto = homeRes?.data?.intro_texto ?? "";
   const productosTitulo = homeRes?.data?.productos_titulo ?? "";
   const productosCta = homeRes?.data?.productos_cta;
-  const badges = badgesRes?.data ?? [];
+  const badges = homeRes?.data?.intro_badges ?? [];
   const productos = productosRes?.data?.slice(0, 3) ?? [];
   const recetas = recetasRes?.data?.slice(0, 3) ?? [];
   const testimonios = testimoniosRes?.data ?? [];
@@ -87,6 +85,7 @@ export default async function Home({ params }: Props) {
       <NuestroSecreto
         secreto_titulo={homeRes?.data?.secreto_titulo}
         secreto_descripcion={homeRes?.data?.secreto_descripcion}
+        secreto_badges={homeRes?.data?.secreto_badges}
         secreto_chef_frase_q={homeRes?.data?.secreto_chef_frase_q}
         secreto_cta={homeRes?.data?.secreto_cta}
         secreto_chef_cta={homeRes?.data?.secreto_chef_cta}
