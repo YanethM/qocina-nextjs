@@ -172,9 +172,9 @@ export async function getRecetas(
   siteCode?: string,
 ) {
   const filterParams: Record<string, string> = {};
-  if (filters?.tipo_receta) filterParams["filters[tipo_receta][$eq]"] = filters.tipo_receta;
-  if (filters?.cocina_region) filterParams["filters[cocina_region][$eq]"] = filters.cocina_region;
-  if (filters?.tipo_dieta) filterParams["filters[tipo_dieta][$eq]"] = filters.tipo_dieta;
+  if (filters?.tipo_receta) filterParams["filters[tipo_receta][nombre][$eq]"] = filters.tipo_receta;
+  if (filters?.cocina_region) filterParams["filters[cocina_region][nombre][$eq]"] = filters.cocina_region;
+  if (filters?.tipo_dieta) filterParams["filters[tipo_dieta][nombre][$eq]"] = filters.tipo_dieta;
   return fetchAPI<StrapiListResponse<Receta>>("/api/recetas", {
     ...imgFields("imagen_principal"),
     ...filterParams,
