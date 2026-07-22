@@ -82,25 +82,6 @@
   transform: translateY(-2px);
 }
 
-.suggested {
-  border-color: #ce171c;
-  background: #fff5f5;
-}
-
-.suggestedBadge {
-  position: absolute;
-  top: -9px;
-  right: -6px;
-  background: #ce171c;
-  color: #fff;
-  font-size: 0.6rem;
-  font-weight: 700;
-  padding: 2px 7px;
-  border-radius: 999px;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-}
-
 .countryBtn:active {
   transform: scale(0.97);
 }

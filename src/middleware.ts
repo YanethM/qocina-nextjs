@@ -8,10 +8,13 @@ import {
   COOKIE_MAX_AGE,
   GEO_HINT_COOKIE,
   GEO_HINT_MAX_AGE,
+  CHECKOUT_ENABLED_SITE_CODES,
+  GEO_FALLBACK_SITE_CODE,
   type SiteCode,
 } from "@/lib/constants";
 
 const VALID = new Set<string>(VALID_SITE_CODES);
+const CHECKOUT_ENABLED = new Set<string>(CHECKOUT_ENABLED_SITE_CODES);
 
 async function detectCountryFromIP(request: NextRequest): Promise<SiteCode | null> {
   const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
@@ -83,12 +86,39 @@ export async function middleware(request: NextRequest) {
   }
 
   const detected = await detectCountryFromIP(request);
+  const secureCookies = process.env.NEXT_PUBLIC_SECURE_COOKIES === "true";
+
+  if (detected) {
+    const resolvedSiteCode = CHECKOUT_ENABLED.has(detected) ? detected : GEO_FALLBACK_SITE_CODE;
+    const response = NextResponse.redirect(new URL(`/${resolvedSiteCode}`, request.url));
+
+    response.cookies.set(SITE_CODE_COOKIE, resolvedSiteCode, {
+      path: "/",
+      maxAge: COOKIE_MAX_AGE,
+      sameSite: "lax",
+      secure: secureCookies,
+    });
+    response.cookies.set(LOCALE_COOKIE, SITE_DEFAULT_LOCALE[resolvedSiteCode], {
+      path: "/",
+      maxAge: COOKIE_MAX_AGE,
+      sameSite: "lax",
+      secure: secureCookies,
+    });
+    response.cookies.set(GEO_HINT_COOKIE, detected, {
+      path: "/",
+      maxAge: GEO_HINT_MAX_AGE,
+      sameSite: "lax",
+      secure: secureCookies,
+    });
+    return response;
+  }
+
   const response = NextResponse.next();
-  response.cookies.set(GEO_HINT_COOKIE, detected ?? "", {
+  response.cookies.set(GEO_HINT_COOKIE, "", {
     path: "/",
     maxAge: GEO_HINT_MAX_AGE,
     sameSite: "lax",
-    secure: process.env.NEXT_PUBLIC_SECURE_COOKIES === "true",
+    secure: secureCookies,
   });
   return response;
 }

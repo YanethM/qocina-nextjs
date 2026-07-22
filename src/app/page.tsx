@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import CountryModal from "@/components/CountryModal/CountryModal";
-import { VALID_SITE_CODES, SITE_CODE_COOKIE, SITE_URL_COOKIE, GEO_HINT_COOKIE } from "@/lib/constants";
+import { VALID_SITE_CODES, SITE_CODE_COOKIE, SITE_URL_COOKIE } from "@/lib/constants";
 
 export const metadata: Metadata = {
   robots: { index: false, follow: false },
@@ -19,8 +19,5 @@ export default async function RootPage() {
     redirect(siteUrl || `/${siteCode}`);
   }
 
-  const geoHint = cookieStore.get(GEO_HINT_COOKIE)?.value;
-  const suggestedCountry = geoHint && VALID.has(geoHint) ? geoHint : undefined;
-
-  return <CountryModal forceVisible suggestedCountry={suggestedCountry} />;
+  return <CountryModal forceVisible />;
 }

@@ -502,18 +502,19 @@
   .bannerTextInner {
     width: 100%;
     max-width: 100%;
+    overflow-wrap: break-word;
   }
 
   .heroTituloPrincipal {
-    font-size: 130px;
+    font-size: min(130px, 20vw);
   }
 
   .heroTituloSecundario {
-    font-size: 70px;
+    font-size: min(70px, 11vw);
   }
 
   .heroSubtitulo {
-    font-size: 24px;
+    font-size: min(24px, 6vw);
   }
 
   .beneficiosSection {

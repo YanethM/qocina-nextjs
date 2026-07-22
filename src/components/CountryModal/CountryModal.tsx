@@ -38,10 +38,9 @@ interface Props {
   forceVisible?: boolean;
   open?: boolean;
   onClose?: () => void;
-  suggestedCountry?: string;
 }
 
-export default function CountryModal({ forceVisible = false, open, onClose, suggestedCountry }: Props) {
+export default function CountryModal({ forceVisible = false, open, onClose }: Props) {
   const router = useRouter();
   const isControlled = open !== undefined;
   const [visible, setVisible] = useState(false);
@@ -134,22 +133,16 @@ export default function CountryModal({ forceVisible = false, open, onClose, sugg
           </div>
         ) : (
           <div className={styles.grid}>
-            {[...sites]
-              .sort((a) => (a.code === suggestedCountry ? -1 : 0))
-              .map((site) => {
-                const isSuggested = site.code === suggestedCountry;
-                return (
-                  <button
-                    key={site.code}
-                    className={`${styles.countryBtn} ${isSuggested ? styles.suggested : ""}`}
-                    onClick={() => handleSelect(site)}
-                  >
-                    {isSuggested && <span className={styles.suggestedBadge}>Sugerido</span>}
-                    <span className={styles.flag}>{FLAG_EMOJI[site.code] ?? "🌎"}</span>
-                    <span className={styles.countryName}>{site.nombre}</span>
-                  </button>
-                );
-              })}
+            {sites.map((site) => (
+              <button
+                key={site.code}
+                className={styles.countryBtn}
+                onClick={() => handleSelect(site)}
+              >
+                <span className={styles.flag}>{FLAG_EMOJI[site.code] ?? "🌎"}</span>
+                <span className={styles.countryName}>{site.nombre}</span>
+              </button>
+            ))}
           </div>
         )}
       </div>

@@ -48,13 +48,14 @@ OFIX_API_KEY=cwBlAGMAcgBlAHQAXwBFAHgAdABlAHIAbgBhAGwA
 IPINFO_TOKEN=  # opcional, geolocalizacion por IP en middleware (ver seccion abajo)
 ```
 
-## Geolocalizacion por IP (pre-seleccion de pais)
+## Geolocalizacion por IP (redireccion automatica de pais)
 
-Al entrar a `/` sin cookie `site-code`, el middleware (`src/middleware.ts`) llama a `ipinfo.io` con la IP del request (header `x-forwarded-for`) y guarda el resultado en la cookie `geo-hint` (`GEO_HINT_COOKIE` en `src/lib/constants.ts`), valida 24h. `src/app/page.tsx` lee esa cookie y la pasa como `suggestedCountry` a `CountryModal`, que resalta ese pais en el grid con el badge "Sugerido". El usuario siempre debe hacer click para confirmar — no hay redireccion automatica ni cambio del comportamiento de `useSiteCode()`.
+Al entrar a `/` sin cookie `site-code`, el middleware (`src/middleware.ts`) llama a `ipinfo.io` con la IP del request (header `x-forwarded-for`). Si detecta un pais del catalogo (`VALID_SITE_CODES`), redirige automaticamente a `/{siteCode}` seteando `site-code` y `locale` en el mismo response — **sin mostrar el modal**. Si el pais detectado no tiene checkout operativo (`CHECKOUT_ENABLED_SITE_CODES` en `src/lib/constants.ts`: pe, co, ec, cl, us), redirige a `GEO_FALLBACK_SITE_CODE` (Peru) en vez de al pais real detectado.
+
+El modal (`CountryModal`, `forceVisible`) solo se muestra cuando la IP no resuelve a ningun pais (ipinfo falla, timeout, o el pais no esta en el catalogo) — en ese caso no hay sugerencia, el usuario elige manualmente. La cookie `geo-hint` (`GEO_HINT_COOKIE`) sigue guardandose (vacia o con el pais detectado) pero ya no alimenta ningun badge "Sugerido" en el modal — esa funcionalidad se retiro de `CountryModal.tsx`.
 
 - Sin `IPINFO_TOKEN` se usa el endpoint publico de ipinfo (limite mas bajo). Con token: 50,000 consultas/mes gratis, luego ~USD 11/mes.
-- Si la IP no resuelve a un pais del catalogo (`VALID_SITE_CODES`), la cookie se guarda vacia y el modal se comporta como hoy (sin pre-seleccion).
-- Los paises pendientes (ar, mx, es) entran en el scope de deteccion, pero el checkout sigue sin funcionar para ellos hasta que Ofix confirme sus `warehouseID`.
+- Los paises pendientes (ar, mx, es) SI entran en el scope de deteccion pero se tratan como "sin informacion": la persona termina en Peru, no en su pais real, porque el checkout no funciona ahi hasta que Ofix confirme sus `warehouseID`.
 - CloudFront con el header `CloudFront-Viewer-Country` seria mas eficiente (sin llamada de red), pero requiere que el sitio corra detras de CloudFront — no es el caso actual.
 
 ## Países y estado de configuración
@@ -80,7 +81,7 @@ Los países ⚠️ no deben salir a producción hasta confirmar `warehouseID` co
 
 ## Nunca hacer
 
-- Hardcodear `"pe"` o cualquier país como valor por defecto en ningún archivo
+- Hardcodear `"pe"` o cualquier país como valor por defecto en ningún archivo — **única excepción documentada:** `GEO_FALLBACK_SITE_CODE` en `src/lib/constants.ts`, usado solo por el middleware cuando la geolocalización detecta un país sin checkout operativo (ver sección de Geolocalización)
 - Usar `sites[0]` como fallback en `normalizeProducto` — si no hay sitio para el país, el producto no está disponible
 - Asumir que `useSiteCode()` siempre tiene valor — puede devolver `""` en la root page antes de seleccionar país
 - Modificar rutas legacy (sin `[siteCode]`) — no están en uso activo

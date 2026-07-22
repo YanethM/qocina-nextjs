@@ -52,8 +52,8 @@ export default async function NosotrosPage({ params }: Props) {
     ? getStrapiImageUrl(heroImagenMobile.url)
     : heroImagenMobile?.formats?.medium?.url
     ? getStrapiImageUrl(heroImagenMobile.formats.medium.url)
-    : heroImagen?.formats?.small?.url
-    ? getStrapiImageUrl(heroImagen.formats.small.url)
+    : heroImagen?.formats?.medium?.url
+    ? getStrapiImageUrl(heroImagen.formats.medium.url)
     : heroSrcMedium;
 
   const heroWidth = heroImagen?.formats?.large?.width ?? heroImagen?.width ?? 1440;

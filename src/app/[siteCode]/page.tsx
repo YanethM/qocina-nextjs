@@ -12,7 +12,6 @@ import {
   getRecetas,
   getTestimonios,
   getHomePage,
-  getContactoPage,
 } from "@/lib/api";
 import { getLocale } from "@/lib/locale";
 import BeneficiosWaveSection from "@/components/BeneficiosWaveSection/BeneficiosWaveSection";
@@ -36,13 +35,24 @@ export default async function Home({ params }: Props) {
   const { siteCode } = await params;
   const locale = await getLocale(siteCode);
 
-  const [homeRes, productosRes, recetasRes, testimoniosRes, contactoRes] = await Promise.all([
+  const [homeRes, productosRes, recetasRes, testimoniosRes] = await Promise.all([
     getHomePage(locale).catch((e) => { console.error("getHomePage error:", e); return null; }),
     getProductos(locale, siteCode).catch((e) => { console.error("getProductos error:", e); return null; }),
     getRecetas(locale, undefined, siteCode).catch((e) => { console.error("getRecetas error:", e); return null; }),
     getTestimonios(locale).catch((e) => { console.error("getTestimonios error:", e); return null; }),
-    getContactoPage(locale).catch(() => null),
   ]);
+
+  const subscribeCopy = locale === "en"
+    ? {
+        title: "Get Inspired with Every Recipe.",
+        description: "Share your email and be the first to receive new recipes, product launches, special offers, and cooking tips inspired by authentic Peruvian flavor.",
+        boton: "Subscribe Now",
+      }
+    : {
+        title: "Inspírate con cada receta.",
+        description: "Déjanos tu correo y sé el primero en recibir recetas, lanzamientos, promociones y consejos para cocinar con el auténtico sabor peruano.",
+        boton: "Quiero suscribirme",
+      };
 
   const slides = homeRes?.data?.slider ?? [];
   const introTexto = homeRes?.data?.intro_texto ?? "";
@@ -164,15 +174,11 @@ export default async function Home({ params }: Props) {
         testimonios_titulo={homeRes?.data?.testimonios_titulo}
       />
 
-      {(contactoRes?.data?.titulo ||
-        contactoRes?.data?.descripcion ||
-        contactoRes?.data?.formulario_boton) && (
-        <Subscribe
-          title={contactoRes.data.titulo}
-          description={contactoRes.data.descripcion}
-          formulario_boton={contactoRes.data.formulario_boton}
-        />
-      )}
+      <Subscribe
+        title={subscribeCopy.title}
+        description={subscribeCopy.description}
+        formulario_boton={subscribeCopy.boton}
+      />
     </>
   );
 }

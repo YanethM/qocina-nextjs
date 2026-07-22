@@ -52,6 +52,30 @@ export default async function RecetasPage({ params }: Props) {
 
   if (!pageData && recetas.length === 0) return <ComingSoon />;
 
+  const imagenesApi = {
+    verde: {
+      desktopDefault: pageData?.base_verde_desktop_default ? getStrapiImageUrl(pageData.base_verde_desktop_default.url) : null,
+      desktopDetalle: pageData?.base_verde_desktop_detalle ? getStrapiImageUrl(pageData.base_verde_desktop_detalle.url) : null,
+      desktopResumen: pageData?.base_verde_desktop_resumen ? getStrapiImageUrl(pageData.base_verde_desktop_resumen.url) : null,
+      mobileDefault: pageData?.base_verde_mobile_default ? getStrapiImageUrl(pageData.base_verde_mobile_default.url) : null,
+      mobileDetalle: pageData?.base_verde_mobile_detalle ? getStrapiImageUrl(pageData.base_verde_mobile_detalle.url) : null,
+    },
+    amarilla: {
+      desktopDefault: pageData?.base_amarilla_desktop_default ? getStrapiImageUrl(pageData.base_amarilla_desktop_default.url) : null,
+      desktopDetalle: pageData?.base_amarilla_desktop_detalle ? getStrapiImageUrl(pageData.base_amarilla_desktop_detalle.url) : null,
+      desktopResumen: pageData?.base_amarilla_desktop_resumen ? getStrapiImageUrl(pageData.base_amarilla_desktop_resumen.url) : null,
+      mobileDefault: pageData?.base_amarilla_mobile_default ? getStrapiImageUrl(pageData.base_amarilla_mobile_default.url) : null,
+      mobileDetalle: pageData?.base_amarilla_mobile_detalle ? getStrapiImageUrl(pageData.base_amarilla_mobile_detalle.url) : null,
+    },
+    roja: {
+      desktopDefault: pageData?.base_roja_desktop_default ? getStrapiImageUrl(pageData.base_roja_desktop_default.url) : null,
+      desktopDetalle: pageData?.base_roja_desktop_detalle ? getStrapiImageUrl(pageData.base_roja_desktop_detalle.url) : null,
+      desktopResumen: pageData?.base_roja_desktop_resumen ? getStrapiImageUrl(pageData.base_roja_desktop_resumen.url) : null,
+      mobileDefault: pageData?.base_roja_mobile_default ? getStrapiImageUrl(pageData.base_roja_mobile_default.url) : null,
+      mobileDetalle: pageData?.base_roja_mobile_detalle ? getStrapiImageUrl(pageData.base_roja_mobile_detalle.url) : null,
+    },
+  };
+
   const heroImageUrl = pageData?.hero_imagen ? getStrapiImageUrl(pageData.hero_imagen.url) : null;
   const heroImageMobileUrl = pageData?.hero_imagen_mobile ? getStrapiImageUrl(pageData.hero_imagen_mobile.url) : heroImageUrl;
   const showBanner = Boolean(pageData?.hero_titulo || pageData?.hero_imagen || pageData?.hero_imagen_mobile);
@@ -134,7 +158,7 @@ export default async function RecetasPage({ params }: Props) {
         </>
       )}
 
-      <BasesCulinarias productos={productos} />
+      <BasesCulinarias productos={productos} imagenesApi={imagenesApi} />
       {recetas.length > 0 && (
         <ListaRecetas
           recetas={recetas}

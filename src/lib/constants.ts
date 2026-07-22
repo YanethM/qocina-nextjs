@@ -64,6 +64,12 @@ export const SITE_BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://qocina
 export const VALID_SITE_CODES = ["pe", "us", "es", "mx", "ar", "co", "ec", "cl"] as const;
 export type SiteCode = typeof VALID_SITE_CODES[number];
 
+/** Países con checkout operativo (warehouseID de Ofix configurado) */
+export const CHECKOUT_ENABLED_SITE_CODES = ["pe", "co", "ec", "cl", "us"] as const;
+
+/** País al que se redirige cuando la geolocalización detecta un país sin checkout operativo */
+export const GEO_FALLBACK_SITE_CODE: SiteCode = "pe";
+
 export const SITE_CODE_COOKIE = "site-code";
 export const SITE_URL_COOKIE = "site-url";
 export const LOCALE_COOKIE = "locale";

@@ -93,7 +93,8 @@ function loadInitialCartItems(): CartItem[] {
 }
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const [items, setItems] = useState<CartItem[]>(loadInitialCartItems);
+  const [items, setItems] = useState<CartItem[]>([]);
+  const [hydrated, setHydrated] = useState(false);
   const [toastVisible, setToastVisible] = useState(false);
   const [toastNombre, setToastNombre] = useState("");
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -104,8 +105,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }, [items]);
 
   useEffect(() => {
+    setItems(loadInitialCartItems());
+    setHydrated(true);
+  }, []);
+
+  useEffect(() => {
+    if (!hydrated) return;
     localStorage.setItem("qocina_cart", JSON.stringify(items));
-  }, [items]);
+  }, [items, hydrated]);
 
   const dismissToast = useCallback(() => {
     setToastVisible(false);
