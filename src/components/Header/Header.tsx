@@ -7,6 +7,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import { useSiteCode } from "@/hooks/useSiteCode";
 import { COOKIE_MAX_AGE } from "@/lib/constants";
+import { getRecetaBySlug, getReceta } from "@/lib/api";
 import CountryModal from "@/components/CountryModal/CountryModal";
 import styles from "./Header.module.css";
 
@@ -16,7 +17,7 @@ const NAV_PATHS = [
   { path: "/proceso-produccion", label: { es: "Proceso", en: "Process" } },
   { path: "/productos", label: { es: "Tienda", en: "Shop" } },
   { path: "/recetas", label: { es: "Recetas", en: "Recipes" } },
-  { path: "/blog-y-noticias", label: { es: "Blog y Noticias", en: "Blog & News" } },
+  { path: "/blog-y-noticias", label: { es: "Noticias", en: "News" } },
   { path: "/contacto", label: { es: "Contacto", en: "Contact" } },
 ];
 
@@ -42,15 +43,26 @@ export default function Header() {
     return () => window.cancelAnimationFrame(frame);
   }, []);
 
-  const changeLocale = (newLocale: string) => {
+  const changeLocale = async (newLocale: string) => {
     const secureCookies = process.env.NEXT_PUBLIC_SECURE_COOKIES === "true";
+    const previousLocale = locale;
     document.cookie = `locale=${newLocale}; path=/; max-age=${COOKIE_MAX_AGE}; SameSite=Lax${secureCookies ? "; Secure" : ""}`;
     setLocale(newLocale);
     window.dispatchEvent(new CustomEvent("qocina:locale-change", { detail: newLocale }));
 
-    const recetaMatch = /^\/[^/]+\/recetas\/[^/]+\/?$/.test(pathname);
+    const recetaMatch = pathname.match(/^\/[^/]+\/recetas\/([^/]+)\/?$/);
     if (recetaMatch) {
-      router.push(`${base}/recetas`);
+      const currentSlug = recetaMatch[1];
+      try {
+        const currentReceta = await getRecetaBySlug(currentSlug, previousLocale, siteCode);
+        const translated = currentReceta?.documentId
+          ? await getReceta(currentReceta.documentId, newLocale, siteCode)
+          : null;
+        const translatedSlug = translated?.data?.slug;
+        router.push(translatedSlug ? `${base}/recetas/${translatedSlug}` : `${base}/recetas`);
+      } catch {
+        router.push(`${base}/recetas`);
+      }
       return;
     }
 
