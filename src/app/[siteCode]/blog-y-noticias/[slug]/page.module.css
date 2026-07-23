@@ -14,7 +14,7 @@
 
 .portadaImg {
   object-fit: cover;
-  object-position: center;
+  object-position: center 38%;
 }
 
 .portadaPlaceholder {
@@ -216,6 +216,10 @@
   .portada {
     height: 700px;
     margin-top: -70px;
+  }
+
+  .portadaImg {
+    object-position: center top;
   }
 
   .heroBg {

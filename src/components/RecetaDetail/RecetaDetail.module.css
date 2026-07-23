@@ -17,6 +17,11 @@
   margin-top: -80px;
 }
 
+.heroImg {
+  object-fit: cover;
+  object-position: center 38%;
+}
+
 .heroOverlay {
   position: absolute;
   inset: 0;
@@ -568,6 +573,10 @@
   .hero {
     height: 700px;
     margin-top: -70px;
+  }
+
+  .heroImg {
+    object-position: center top;
   }
 
   .wavesTop {

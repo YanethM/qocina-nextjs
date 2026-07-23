@@ -152,10 +152,10 @@ export default function ArticuloMarkdown({ content }: { content: string }) {
         if (section.type === "numbered-group") {
           return (
             <div key={i} className={styles.numberedCard}>
-              {section.items.map((item) => {
+              {section.items.map((item, itemIndex) => {
                 const imgSrc = NUMBER_IMAGES[item.num];
                 return (
-                  <React.Fragment key={item.num}>
+                  <React.Fragment key={`${itemIndex}-${item.num}`}>
                     <div className={styles.numberedItem}>
                       {imgSrc ? (
                         <img

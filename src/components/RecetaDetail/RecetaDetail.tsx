@@ -119,7 +119,7 @@ export default function RecetaDetail({ receta }: Props) {
               src={getStrapiImageUrl(heroImage)}
               alt={receta.titulo}
               fill
-              style={{ objectFit: "cover" }}
+              className={styles.heroImg}
               priority
               sizes="100vw"
               quality={90}
