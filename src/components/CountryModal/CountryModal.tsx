@@ -18,15 +18,15 @@ import styles from "./CountryModal.module.css";
 
 const VALID = new Set<string>(VALID_SITE_CODES);
 
-const FLAG_EMOJI: Record<string, string> = {
-  pe: "🇵🇪",
-  us: "🇺🇸",
-  es: "🇪🇸",
-  mx: "🇲🇽",
-  ar: "🇦🇷",
-  co: "🇨🇴",
-  ec: "🇪🇨",
-  cl: "🇨🇱",
+const FLAG_IMAGES: Record<string, string> = {
+  ar: "/images/web/modal/argentina.svg",
+  cl: "/images/web/modal/chile.svg",
+  co: "/images/web/modal/colombia.svg",
+  ec: "/images/web/modal/ecuador.svg",
+  es: "/images/web/modal/espana.svg",
+  mx: "/images/web/modal/mexico.svg",
+  pe: "/images/web/modal/peru.svg",
+  us: "/images/web/modal/usa.svg",
 };
 
 function setCookie(name: string, value: string) {
@@ -51,6 +51,11 @@ export default function CountryModal({ forceVisible = false, open, onClose }: Pr
 
   useEffect(() => {
     if (isControlled) return;
+    let frame: number | null = null;
+    const showModal = () => {
+      frame = window.requestAnimationFrame(() => setVisible(true));
+    };
+
     if (forceVisible) {
       const saved = localStorage.getItem(COUNTRY_SELECTED_KEY);
       if (saved && VALID.has(saved)) {
@@ -58,30 +63,47 @@ export default function CountryModal({ forceVisible = false, open, onClose }: Pr
         setCookie(LOCALE_COOKIE, SITE_DEFAULT_LOCALE[saved as SiteCode]);
         const savedUrl = localStorage.getItem("qocina_country_url");
         if (savedUrl) {
-          window.location.href = savedUrl;
+          window.location.assign(savedUrl);
         } else {
           router.replace(`/${saved}`);
         }
         return;
       }
-      setVisible(true);
-      return;
+      showModal();
+      return () => {
+        if (frame !== null) window.cancelAnimationFrame(frame);
+      };
     }
     const saved = localStorage.getItem(COUNTRY_SELECTED_KEY);
-    if (!saved) setVisible(true);
+    if (!saved) showModal();
+    return () => {
+      if (frame !== null) window.cancelAnimationFrame(frame);
+    };
   }, [forceVisible, isControlled, router]);
 
   useEffect(() => {
     if (!isVisible) return;
     if (sites.length > 0) return;
-    setLoading(true);
-    fetch("/api/sites")
+    let cancelled = false;
+
+    Promise.resolve()
+      .then(() => {
+        if (!cancelled) setLoading(true);
+        return fetch("/api/sites");
+      })
       .then((r) => r.json())
       .then((data: Site[]) => {
+        if (cancelled) return;
         setSites(Array.isArray(data) ? data.filter((s) => s.activo) : []);
         setLoading(false);
       })
-      .catch(() => setLoading(false));
+      .catch(() => {
+        if (!cancelled) setLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
   }, [isVisible, sites.length]);
 
   const handleSelect = (site: Site) => {
@@ -98,7 +120,7 @@ export default function CountryModal({ forceVisible = false, open, onClose }: Pr
       setVisible(false);
     }
     if (url) {
-      window.location.href = url;
+      window.location.assign(url);
     } else {
       router.push(`/${code}`);
     }
@@ -139,7 +161,19 @@ export default function CountryModal({ forceVisible = false, open, onClose }: Pr
                 className={styles.countryBtn}
                 onClick={() => handleSelect(site)}
               >
-                <span className={styles.flag}>{FLAG_EMOJI[site.code] ?? "🌎"}</span>
+                <span className={styles.flag} aria-hidden>
+                  {FLAG_IMAGES[site.code] ? (
+                    <Image
+                      src={FLAG_IMAGES[site.code]}
+                      alt=""
+                      width={72}
+                      height={72}
+                      className={styles.flagImg}
+                    />
+                  ) : (
+                    <span className={styles.flagFallback}>{site.code.toUpperCase()}</span>
+                  )}
+                </span>
                 <span className={styles.countryName}>{site.nombre}</span>
               </button>
             ))}

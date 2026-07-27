@@ -2,7 +2,6 @@ import Image from "next/image";
 import {
   getRecetasPage,
   getRecetas,
-  getProductos,
   getStrapiImageUrl,
   getTiposReceta,
   getCocinaRegiones,
@@ -33,10 +32,9 @@ export async function generateMetadata({ params }: Props) {
 export default async function RecetasPage({ params }: Props) {
   const { siteCode } = await params;
   const locale = await getLocale(siteCode);
-  const [recetasPageRes, recetasRes, productosRes, tiposRecetaRes, cocinaRegionesRes, tiposDietaRes, testimoniosRes] = await Promise.all([
+  const [recetasPageRes, recetasRes, tiposRecetaRes, cocinaRegionesRes, tiposDietaRes, testimoniosRes] = await Promise.all([
     getRecetasPage(locale, siteCode).catch(() => null),
     getRecetas(locale, undefined, siteCode).catch(() => null),
-    getProductos(locale, siteCode).catch(() => null),
     getTiposReceta(locale, siteCode).catch(() => null),
     getCocinaRegiones(locale, siteCode).catch(() => null),
     getTiposDieta(locale, siteCode).catch(() => null),
@@ -45,7 +43,6 @@ export default async function RecetasPage({ params }: Props) {
 
   const pageData = recetasPageRes?.data;
   const recetas = recetasRes?.data ?? [];
-  const productos = productosRes?.data ?? [];
   const tiposRecetaOptions = (tiposRecetaRes?.data ?? []).map((t) => t.nombre);
   const cocinaRegionOptions = (cocinaRegionesRes?.data ?? []).map((t) => t.nombre);
   const tiposDietaOptions = (tiposDietaRes?.data ?? []).map((t) => t.nombre);
@@ -158,7 +155,7 @@ export default async function RecetasPage({ params }: Props) {
         </>
       )}
 
-      <BasesCulinarias productos={productos} imagenesApi={imagenesApi} />
+      <BasesCulinarias imagenesApi={imagenesApi} />
       {recetas.length > 0 && (
         <ListaRecetas
           recetas={recetas}
