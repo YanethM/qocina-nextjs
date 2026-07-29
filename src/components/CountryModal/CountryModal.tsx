@@ -166,8 +166,8 @@ export default function CountryModal({ forceVisible = false, open, onClose }: Pr
                     <Image
                       src={FLAG_IMAGES[site.code]}
                       alt=""
-                      width={72}
-                      height={72}
+                      width={32}
+                      height={32}
                       className={styles.flagImg}
                     />
                   ) : (

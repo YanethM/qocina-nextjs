@@ -35,16 +35,22 @@ export default function RelacionadosCarousel({ articulos, ctaVerTodas }: Props) 
           className={styles.track}
           style={{ transform: `translateX(-${current * 100}%)` }}
         >
-          {visible.map((a) => (
-            <div key={a.id} className={styles.slide}>
-              <BlogCard
-                titulo={a.titulo}
-                descripcion_corta={a.descripcion_corta}
-                href={`/${siteCode}/blog-y-noticias/${a.slug}`}
-                imagenUrl={a.imagen_principal?.url ? getStrapiImageUrl(a.imagen_principal.url) : undefined}
-              />
-            </div>
-          ))}
+          {visible.map((a) => {
+            const desktopImage = a.imagen_banner_desktop ?? a.imagen_principal;
+            const mobileImage = a.imagen_banner_mobile ?? desktopImage;
+
+            return (
+              <div key={a.id} className={styles.slide}>
+                <BlogCard
+                  titulo={a.titulo}
+                  descripcion_corta={a.descripcion_corta}
+                  href={`/${siteCode}/blog-y-noticias/${a.slug}`}
+                  imagenUrl={desktopImage?.url ? getStrapiImageUrl(desktopImage.url) : undefined}
+                  imagenMobileUrl={mobileImage?.url ? getStrapiImageUrl(mobileImage.url) : undefined}
+                />
+              </div>
+            );
+          })}
         </div>
       </div>
 

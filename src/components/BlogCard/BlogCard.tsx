@@ -10,6 +10,7 @@ interface BlogCardProps {
   descripcion_corta?: string | null;
   href?: string;
   imagenUrl?: string;
+  imagenMobileUrl?: string;
   ctaText?: string;
 }
 
@@ -18,10 +19,12 @@ export default function BlogCard({
   descripcion_corta,
   href = "#",
   imagenUrl,
+  imagenMobileUrl,
   ctaText,
 }: BlogCardProps) {
   const locale = useLocale();
   const label = ctaText ?? (locale === "en" ? "Read more" : "Leer más");
+  const mobileImageUrl = imagenMobileUrl ?? imagenUrl;
   return (
     <div className={styles.card}>
       {imagenUrl && (
@@ -29,7 +32,17 @@ export default function BlogCard({
           src={imagenUrl}
           alt={titulo ?? ""}
           fill
-          className={styles.cardPhoto}
+          className={`${styles.cardPhoto} ${styles.cardPhotoDesktop}`}
+          style={{ objectFit: "cover" }}
+          unoptimized
+        />
+      )}
+      {mobileImageUrl && (
+        <Image
+          src={mobileImageUrl}
+          alt={titulo ?? ""}
+          fill
+          className={`${styles.cardPhoto} ${styles.cardPhotoMobile}`}
           style={{ objectFit: "cover" }}
           unoptimized
         />

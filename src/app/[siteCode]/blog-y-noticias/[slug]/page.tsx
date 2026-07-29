@@ -43,19 +43,33 @@ export default async function ArticuloDetailPage({ params }: Props) {
       return true;
     })
     .sort((a, b) => a.orden - b.orden);
+  const portadaDesktop = articulo.imagen_banner_desktop ?? articulo.imagen_principal;
+  const portadaMobile = articulo.imagen_banner_mobile ?? portadaDesktop;
 
   return (
     <div className={styles.page}>
       <div className={styles.portada}>
-        {articulo.imagen_principal ? (
-          <Image
-            src={getStrapiImageUrl(articulo.imagen_principal.url)}
-            alt={articulo.imagen_principal.alternativeText || articulo.titulo}
-            fill
-            className={styles.portadaImg}
-            priority
-            quality={90}
-          />
+        {portadaDesktop ? (
+          <>
+            <Image
+              src={getStrapiImageUrl(portadaDesktop.url)}
+              alt={portadaDesktop.alternativeText || articulo.titulo}
+              fill
+              className={`${styles.portadaImg} ${styles.portadaImgDesktop}`}
+              priority
+              quality={90}
+            />
+            {portadaMobile && (
+              <Image
+                src={getStrapiImageUrl(portadaMobile.url)}
+                alt={portadaMobile.alternativeText || articulo.titulo}
+                fill
+                className={`${styles.portadaImg} ${styles.portadaImgMobile}`}
+                priority
+                quality={90}
+              />
+            )}
+          </>
         ) : (
           <div className={styles.portadaPlaceholder} />
         )}
@@ -107,16 +121,22 @@ export default async function ArticuloDetailPage({ params }: Props) {
             )}
           </div>
           <div className={styles.relacionados}>
-            {otrosArticulos.map((a) => (
-              <BlogCard
-                key={a.id}
-                titulo={a.titulo}
-                descripcion_corta={a.descripcion_corta}
-                href={`/${siteCode}/blog-y-noticias/${a.slug}`}
-                imagenUrl={a.imagen_principal?.url ? getStrapiImageUrl(a.imagen_principal.url) : undefined}
-                ctaText={blogPage?.cta_cargar_mas ?? undefined}
-              />
-            ))}
+            {otrosArticulos.map((a) => {
+              const desktopImage = a.imagen_banner_desktop ?? a.imagen_principal;
+              const mobileImage = a.imagen_banner_mobile ?? desktopImage;
+
+              return (
+                <BlogCard
+                  key={a.id}
+                  titulo={a.titulo}
+                  descripcion_corta={a.descripcion_corta}
+                  href={`/${siteCode}/blog-y-noticias/${a.slug}`}
+                  imagenUrl={desktopImage?.url ? getStrapiImageUrl(desktopImage.url) : undefined}
+                  imagenMobileUrl={mobileImage?.url ? getStrapiImageUrl(mobileImage.url) : undefined}
+                  ctaText={blogPage?.cta_cargar_mas ?? undefined}
+                />
+              );
+            })}
           </div>
           <div className={styles.relacionadosCarousel}>
             <RelacionadosCarousel

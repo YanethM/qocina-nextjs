@@ -217,6 +217,8 @@ export interface Articulo {
   contenido: string | null;
   imagen: StrapiImage | null;
   imagen_principal: StrapiImage | null;
+  imagen_banner_desktop: StrapiImage | null;
+  imagen_banner_mobile: StrapiImage | null;
   fecha: string | null;
   fecha_publicacion: string | null;
   autor: string | null;

@@ -24,20 +24,22 @@ export default function BlogGrid({ articulos, ctaVerTodas, ctaLeerMas }: BlogGri
   return (
     <>
       <div className={styles.cardsGrid}>
-        {visible.map((articulo) => (
-          <BlogCard
-            key={articulo.id}
-            titulo={articulo.titulo}
-            descripcion_corta={articulo.descripcion_corta}
-            href={`/${siteCode}/blog-y-noticias/${articulo.slug}`}
-            imagenUrl={
-              articulo.imagen_principal?.url
-                ? getStrapiImageUrl(articulo.imagen_principal.url)
-                : undefined
-            }
-            ctaText={ctaLeerMas ?? undefined}
-          />
-        ))}
+        {visible.map((articulo) => {
+          const desktopImage = articulo.imagen_banner_desktop ?? articulo.imagen_principal;
+          const mobileImage = articulo.imagen_banner_mobile ?? desktopImage;
+
+          return (
+            <BlogCard
+              key={articulo.id}
+              titulo={articulo.titulo}
+              descripcion_corta={articulo.descripcion_corta}
+              href={`/${siteCode}/blog-y-noticias/${articulo.slug}`}
+              imagenUrl={desktopImage?.url ? getStrapiImageUrl(desktopImage.url) : undefined}
+              imagenMobileUrl={mobileImage?.url ? getStrapiImageUrl(mobileImage.url) : undefined}
+              ctaText={ctaLeerMas ?? undefined}
+            />
+          );
+        })}
       </div>
       {!showAll && hasMore && ctaVerTodas && (
         <div className={styles.verTodasWrapper}>

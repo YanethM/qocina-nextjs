@@ -14,7 +14,11 @@
 
 .portadaImg {
   object-fit: cover;
-  object-position: center 38%;
+  object-position: center 46%;
+}
+
+.portadaImgMobile {
+  display: none;
 }
 
 .portadaPlaceholder {
@@ -50,7 +54,7 @@
   width: 100%;
   max-width: 1300px;
   margin: -70px auto 0;
-  padding: 120px 65px 0;
+  padding: 50px 65px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -220,6 +224,14 @@
 
   .portadaImg {
     object-position: center top;
+  }
+
+  .portadaImgDesktop {
+    display: none;
+  }
+
+  .portadaImgMobile {
+    display: block;
   }
 
   .heroBg {
