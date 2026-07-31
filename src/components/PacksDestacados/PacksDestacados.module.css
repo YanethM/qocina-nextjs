@@ -146,17 +146,6 @@
   color: inherit;
 }
 
-.packSlug {
-  font-family: Montserrat, sans-serif;
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 140%;
-  letter-spacing: 0%;
-  text-align: center;
-  margin: 0;
-  color: inherit;
-}
-
 .descripcion {
   font-family: Montserrat, sans-serif;
   font-weight: 400;
@@ -376,7 +365,6 @@
     font-size: 24px;
   }
 
-  .packSlug,
   .descripcion {
     font-size: 16px;
   }

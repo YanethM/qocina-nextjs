@@ -87,8 +87,6 @@ export default function PacksDestacados({
                   {formatPrice(pack.precio, pack.precio_moneda)}
                 </p>
 
-                <p className={styles.packSlug}>{pack.slug}</p>
-
                 <p className={styles.descripcion}>{pack.descripcion}</p>
 
                 <div className={styles.actions}>
