@@ -332,7 +332,6 @@ export async function getQuienesSomos(locale?: string, siteCode?: string) {
 }
 
 export async function getProductosPage(locale?: string, siteCode?: string) {
-  void siteCode;
   const res = await fetchAPI<StrapiSingleResponse<ProductosPage>>("/api/productos-page", {
     "populate[perfiles_usuario][populate][imagen][fields][0]": "url",
     "populate[perfiles_usuario][populate][imagen][fields][1]": "alternativeText",
@@ -365,7 +364,7 @@ export async function getProductosPage(locale?: string, siteCode?: string) {
     "populate[ayuda_imagen_mobile][fields][4]": "formats",
     "populate[ayuda_cta]": "*",
     "populate[secreto_secciones]": "*",
-  }, locale);
+  }, locale, siteCode);
   return {
     ...res,
     data: res.data
