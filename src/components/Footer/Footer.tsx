@@ -17,7 +17,7 @@ const translations = {
     contact: "Contacto",
     secure: "Compra en línea 100% seguro",
     faq: "Preguntas frecuentes",
-    privacy: "Políticas de privacidad",
+    privacy: "Términos y condiciones",
     cookies: "Políticas de cookies",
   },
   en: {
@@ -30,7 +30,7 @@ const translations = {
     contact: "Contact",
     secure: "100% secure online shopping",
     faq: "Frequently asked questions",
-    privacy: "Privacy policy",
+    privacy: "Terms and conditions",
     cookies: "Cookie policy",
   },
 };
