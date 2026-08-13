@@ -397,6 +397,7 @@
   vertical-align: middle;
   width: 140px;
   text-align: center;
+  transform: translateY(-9%);
 }
 
 .pasoDescripcion {
