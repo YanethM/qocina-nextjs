@@ -111,9 +111,9 @@
 .wavesWrapper.wavesWrapperImage {
   margin-top: min(-110px, -7.64vw);
   padding-top: max(90px, 9.7vw);
-  background-size: 100% auto;
-  background-repeat: no-repeat;
-  background-position: top center;
+  background-repeat: no-repeat, no-repeat;
+  background-position: top center, bottom center;
+  background-size: 100% auto, 100% calc(100% - max(110px, 7.64vw));
 }
 
 .ingredientesOverWaves {

@@ -154,7 +154,9 @@ export default function RecetaDetail({ receta }: Props) {
         {ingredientesBg ? (
           <div
             className={`${styles.wavesWrapper} ${styles.wavesWrapperImage}`}
-            style={{ backgroundImage: `url(${ingredientesBg})` }}
+            style={{
+              backgroundImage: `url(${ingredientesBg}), linear-gradient(${wavesColor}, ${wavesColor})`,
+            }}
           >
             {ingredientesSection}
           </div>
