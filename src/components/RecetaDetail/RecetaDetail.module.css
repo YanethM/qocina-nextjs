@@ -156,6 +156,7 @@
   display: flex;
   gap: 48px;
   flex: 1;
+  min-width: 0;
 }
 
 .ingredientesCol {
@@ -166,17 +167,17 @@
   flex-direction: column;
   gap: 12px;
   width: 358px;
-  max-height: 260px;
 }
 
 .ingredienteRow {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 12px;
 }
 
 .checkIcon {
   flex-shrink: 0;
+  margin-top: 1px;
 }
 
 .ingredienteText {
@@ -185,6 +186,8 @@
   font-size: 16px;
   line-height: 160%;
   color: #fff;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .opcionalWhite {

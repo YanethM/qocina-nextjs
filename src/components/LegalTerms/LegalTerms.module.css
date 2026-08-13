@@ -4,9 +4,9 @@
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 900px;
   margin: 0 auto;
-  padding: 64px 90px 96px;
+  padding: 64px 60px 96px;
 }
 
 .company {
@@ -44,40 +44,6 @@
   margin-bottom: 52px;
 }
 
-.section p {
-  font-family: var(--font-montserrat), sans-serif;
-  font-size: 18px;
-  font-weight: 400;
-  line-height: 1.4;
-  color: #000;
-  margin: 0 0 18px;
-}
-
-.section p:last-child {
-  margin-bottom: 0;
-}
-
-.notice {
-  font-family: var(--font-montserrat), sans-serif;
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 1.4;
-  color: #000;
-  background: #f7f7f5;
-  padding: 20px 24px;
-  border-radius: 8px;
-  margin-top: 8px;
-}
-
-.important {
-  font-family: var(--font-montserrat), sans-serif;
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 1.4;
-  color: #000;
-  margin: 0 0 18px !important;
-}
-
 .heading {
   font-family: var(--font-montserrat), sans-serif;
   font-weight: 700;
@@ -91,37 +57,30 @@
   border-bottom: 1px solid #e5e5e5;
 }
 
-.subheading {
-  font-family: var(--font-montserrat), sans-serif;
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 1.4;
-  color: #000;
-  margin: 28px 0 12px;
-}
-
+.section p,
 .list {
   font-family: var(--font-montserrat), sans-serif;
   font-size: 18px;
   font-weight: 400;
   line-height: 1.4;
   color: #000;
+}
+
+.section p {
+  margin: 0 0 18px;
+}
+
+.section p:last-child {
+  margin-bottom: 0;
+}
+
+.list {
   padding-left: 24px;
   margin: 0 0 18px;
 }
 
 .list li {
   margin-bottom: 8px;
-}
-
-.link {
-  color: #5a7a2e;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-
-.link:hover {
-  color: #3d5a1e;
 }
 
 .footer {
@@ -138,7 +97,7 @@
 
 @media (max-width: 1024px) {
   .container {
-    padding: 56px 30px 80px;
+    padding: 56px 40px 80px;
   }
 
   .title {
@@ -148,7 +107,7 @@
 
 @media (max-width: 640px) {
   .container {
-    padding: 40px 30px 64px;
+    padding: 40px 20px 64px;
   }
 
   .title {
@@ -166,10 +125,7 @@
   }
 
   .section p,
-  .list,
-  .notice,
-  .important,
-  .subheading {
+  .list {
     font-size: 16px;
   }
 }
