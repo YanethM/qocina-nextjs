@@ -58,6 +58,17 @@ export default async function NosotrosPage({ params }: Props) {
 
   const heroWidth = heroImagen?.formats?.large?.width ?? heroImagen?.width ?? 1440;
   const heroHeight = heroImagen?.formats?.large?.height ?? heroImagen?.height ?? 600;
+
+  const queEsImagen = data?.que_es_imagen;
+  const queEsImgSrc = queEsImagen?.url
+    ? getStrapiImageUrl(queEsImagen.url)
+    : queEsImagen?.formats?.large?.url
+    ? getStrapiImageUrl(queEsImagen.formats.large.url)
+    : null;
+  const queEsImgSrcMobile = queEsImagen?.formats?.medium?.url
+    ? getStrapiImageUrl(queEsImagen.formats.medium.url)
+    : queEsImgSrc;
+
   const chefImagen = data?.chef_imagen;
   const showChefBackground = Boolean(
     chefImagen || data?.chef_nombre || data?.chef_titulo || data?.chef_descripcion,
@@ -135,20 +146,22 @@ export default async function NosotrosPage({ params }: Props) {
       {(data?.que_es_titulo || data?.que_es_descripcion) && (
         <section className={styles.secondSection}>
           <Image
-            src="/images/web/nosotros/second_section.svg"
-            alt=""
+            src={queEsImgSrc ?? "/images/web/nosotros/second_section.svg"}
+            alt={queEsImagen?.alternativeText ?? data?.que_es_titulo ?? ""}
             width={1440}
             height={600}
             className={styles.desktopOnly}
             style={{ width: "100%", height: "auto" }}
+            unoptimized
           />
           <Image
-            src="/images/mobile/nosotros/second_section.svg"
-            alt=""
+            src={queEsImgSrcMobile ?? "/images/mobile/nosotros/second_section.svg"}
+            alt={queEsImagen?.alternativeText ?? data?.que_es_titulo ?? ""}
             width={390}
             height={600}
             className={styles.mobileOnly}
             style={{ width: "100%", height: "auto" }}
+            unoptimized
           />
           <div className={styles.secondTextOverlay}>
             {data.que_es_titulo && (
