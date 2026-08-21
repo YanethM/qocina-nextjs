@@ -497,6 +497,10 @@ export interface HomePage {
   slider: HeroSlide[];
   intro_texto: string;
   intro_badges: Badge[];
+  video_titulo: string;
+  video_descripcion: string;
+  video_url: string;
+  video_cover: StrapiImage | null;
   productos_titulo: string;
   productos_cta: { texto: string; url: string; nueva_ventana: boolean } | null;
   natural_titulo: string;

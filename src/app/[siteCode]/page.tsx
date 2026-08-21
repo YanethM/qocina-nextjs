@@ -16,6 +16,7 @@ import {
 import { getLocale } from "@/lib/locale";
 import BeneficiosWaveSection from "@/components/BeneficiosWaveSection/BeneficiosWaveSection";
 import IngredientesNaturales from "@/components/IngredientesNaturales/IngredientesNaturales";
+import VideoSection from "@/components/VideoSection/VideoSection";
 
 interface Props {
   params: Promise<{ siteCode: string }>;
@@ -68,6 +69,14 @@ export default async function Home({ params }: Props) {
     <>
       <div className={styles.versionclass}>v1</div>
       <HeroBanner slides={slides} />
+      {homeRes?.data?.video_url && homeRes?.data?.video_cover && (
+        <VideoSection
+          titulo={homeRes.data.video_titulo}
+          descripcion={homeRes.data.video_descripcion}
+          videoUrl={homeRes.data.video_url}
+          cover={homeRes.data.video_cover}
+        />
+      )}
       {(badges.length > 0 || introTexto) && (
         <BeneficiosWaveSection badges={badges} textoBeneficios={introTexto} />
       )}
