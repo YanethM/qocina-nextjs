@@ -303,7 +303,7 @@ export async function getPreguntaFrecuente(id: string, locale?: string, siteCode
 }
 
 export async function getQuienesSomos(locale?: string, siteCode?: string) {
-  return fetchAPI<StrapiListResponse<QuienesSomos>>("/api/quienes-somos-page", {
+  return fetchAPI<StrapiSingleResponse<QuienesSomos>>("/api/quienes-somos", {
     ...imgFields("hero_imagen"),
     ...imgFields("hero_imagen_mobile"),
     ...imgFields("chef_imagen"),
@@ -325,10 +325,7 @@ export async function getQuienesSomos(locale?: string, siteCode?: string) {
     "populate[premios][populate][logo_organizacion][fields][2]": "width",
     "populate[premios][populate][logo_organizacion][fields][3]": "height",
     "populate[premios][populate][logo_organizacion][fields][4]": "formats",
-  }, locale, siteCode).then((res) => ({
-    data: res.data?.[0] ?? null,
-    meta: res.meta,
-  })) as Promise<StrapiSingleResponse<QuienesSomos>>;
+  }, locale, siteCode);
 }
 
 export async function getProductosPage(locale?: string, siteCode?: string) {
