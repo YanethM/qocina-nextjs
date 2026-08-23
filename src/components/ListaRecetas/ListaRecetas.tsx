@@ -244,7 +244,6 @@ export default function ListaRecetas({
                 imagenUrl={imgUrl}
                 imagenAlt={receta.imagen_principal?.alternativeText ?? receta.titulo}
                 colorCard={receta.color_card}
-                ctaText={ctaCargarMas}
               />
             );
           })}

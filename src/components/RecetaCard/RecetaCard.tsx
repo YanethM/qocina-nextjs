@@ -13,7 +13,6 @@ export interface RecetaCardProps {
   imagenUrl: string | null;
   imagenAlt?: string;
   colorCard?: string | null;
-  ctaText?: string;
 }
 
 export default function RecetaCard({
@@ -23,10 +22,9 @@ export default function RecetaCard({
   imagenUrl,
   imagenAlt,
   colorCard,
-  ctaText,
 }: RecetaCardProps) {
   const locale = useLocale();
-  const label = ctaText ?? (locale === "en" ? "View recipe" : "Ver receta");
+  const label = locale === "en" ? "View recipe" : "Ver receta";
   const accent = (colorCard && COLOR_MAP[colorCard]) ?? DEFAULT_COLOR;
   const wave = (colorCard && WAVE_MAP[colorCard]) ?? DEFAULT_WAVE;
   const textColor = colorCard === "amarillo" ? "#1a1a1a" : "#fff";
