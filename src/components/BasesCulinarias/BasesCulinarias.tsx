@@ -56,10 +56,21 @@ interface BaseCulinariaImagenApi {
 
 interface BasesCulinariasProps {
   imagenesApi?: Partial<Record<(typeof bases)[number]["id"], BaseCulinariaImagenApi>>;
+  activeId?: string | null;
+  onActiveChange?: (id: string | null) => void;
 }
 
-export default function BasesCulinarias({ imagenesApi }: BasesCulinariasProps) {
-  const [activeId, setActiveId] = useState<string | null>(null);
+export default function BasesCulinarias({ imagenesApi, activeId: controlledActiveId, onActiveChange }: BasesCulinariasProps) {
+  const [internalActiveId, setInternalActiveId] = useState<string | null>(null);
+  const isControlled = controlledActiveId !== undefined;
+  const activeId = isControlled ? controlledActiveId : internalActiveId;
+
+  const handleToggle = (id: string) => {
+    const next = activeId === id ? null : id;
+    if (!isControlled) setInternalActiveId(next);
+    onActiveChange?.(next);
+  };
+
   const sectionAspectRatio = activeId === null
     ? `${DEFAULT_TOTAL_WIDTH} / ${DESIGN_HEIGHT}`
     : `${ACTIVE_TOTAL_WIDTH} / ${DESIGN_HEIGHT}`;
@@ -96,7 +107,7 @@ export default function BasesCulinarias({ imagenesApi }: BasesCulinariasProps) {
               backgroundColor: base.panelColor,
               "--item-basis": itemBasis,
             } as React.CSSProperties}
-            onClick={() => setActiveId((prev) => (prev === base.id ? null : base.id))}
+            onClick={() => handleToggle(base.id)}
           >
             <div className={styles.imageBleed}>
               <Image

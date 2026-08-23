@@ -11,9 +11,8 @@ import {
 import { getLocale } from "@/lib/locale";
 import ComingSoon from "@/components/ComingSoon/ComingSoon";
 import styles from "./page.module.css";
-import BasesCulinarias from "@/components/BasesCulinarias/BasesCulinarias";
 import Testimonios from "@/components/Testimonios/Testimonios";
-import ListaRecetas from "@/components/ListaRecetas/ListaRecetas";
+import RecetasFiltroPorBase from "@/components/RecetasFiltroPorBase/RecetasFiltroPorBase";
 
 interface Props {
   params: Promise<{ siteCode: string }>;
@@ -155,23 +154,21 @@ export default async function RecetasPage({ params }: Props) {
         </>
       )}
 
-      <BasesCulinarias imagenesApi={imagenesApi} />
-      {recetas.length > 0 && (
-        <ListaRecetas
-          recetas={recetas}
-          titulo={pageData?.hero_subtitulo ?? undefined}
-          subtitulo={pageData?.descripcion ?? undefined}
-          labelTipoReceta={pageData?.filtro_tipo_receta_label ?? undefined}
-          labelRegion={pageData?.filtro_region_label ?? undefined}
-          labelDieta={pageData?.filtro_dieta_label ?? undefined}
-          tiposRecetaOptions={tiposRecetaOptions}
-          cocinaRegionOptions={cocinaRegionOptions}
-          tiposDietaOptions={tiposDietaOptions}
-          ctaCargarMas={pageData?.cta_cargar_mas ?? undefined}
-          locale={locale}
-          siteCode={siteCode}
-        />
-      )}
+      <RecetasFiltroPorBase
+        imagenesApi={imagenesApi}
+        recetas={recetas}
+        titulo={pageData?.hero_subtitulo ?? undefined}
+        subtitulo={pageData?.descripcion ?? undefined}
+        labelTipoReceta={pageData?.filtro_tipo_receta_label ?? undefined}
+        labelRegion={pageData?.filtro_region_label ?? undefined}
+        labelDieta={pageData?.filtro_dieta_label ?? undefined}
+        tiposRecetaOptions={tiposRecetaOptions}
+        cocinaRegionOptions={cocinaRegionOptions}
+        tiposDietaOptions={tiposDietaOptions}
+        ctaCargarMas={pageData?.cta_cargar_mas ?? undefined}
+        locale={locale}
+        siteCode={siteCode}
+      />
       <Testimonios testimonios={testimonios} testimonios_titulo={pageData?.testimonios_titulo ?? undefined} />
     </div>
   );

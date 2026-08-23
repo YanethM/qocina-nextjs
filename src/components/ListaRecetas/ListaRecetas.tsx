@@ -23,6 +23,8 @@ interface ListaRecetasProps {
   ctaVerTodas?: string;
   locale?: string;
   siteCode?: string;
+  colorCardFilter?: string | null;
+  onClearColorCardFilter?: () => void;
 }
 
 function distinctValues(recetas: Receta[], field: "tipo_receta" | "cocina_region" | "tipo_dieta") {
@@ -117,6 +119,8 @@ export default function ListaRecetas({
   ctaVerTodas = "Ver todas las recetas",
   locale,
   siteCode,
+  colorCardFilter,
+  onClearColorCardFilter,
 }: ListaRecetasProps) {
   const urlSiteCode = useSiteCode();
   const sc = siteCode ?? urlSiteCode;
@@ -139,8 +143,12 @@ export default function ListaRecetas({
   const [loading, setLoading] = useState(false);
   const showFilters = !hideFilters && Boolean(labelTipoReceta || labelRegion || labelDieta);
 
-  const hasActiveFilters = !!(filters.tipoReceta || filters.cocina || filters.dieta);
-  const resultado = hasActiveFilters ? (resultadoFiltrado ?? []) : recetas;
+  const hasDropdownFilters = !!(filters.tipoReceta || filters.cocina || filters.dieta);
+  const hasActiveFilters = hasDropdownFilters || !!colorCardFilter;
+  const baseResultado = hasDropdownFilters ? (resultadoFiltrado ?? []) : recetas;
+  const resultado = colorCardFilter
+    ? baseResultado.filter((r) => r.color_card === colorCardFilter)
+    : baseResultado;
 
   const applyFilter = (next: { tipoReceta: string; cocina: string; dieta: string }) => {
     setFilters(next);
@@ -160,7 +168,16 @@ export default function ListaRecetas({
       .finally(() => setLoading(false));
   };
 
-  const clearFilters = () => applyFilter({ tipoReceta: "", cocina: "", dieta: "" });
+  const clearFilters = () => {
+    applyFilter({ tipoReceta: "", cocina: "", dieta: "" });
+    onClearColorCardFilter?.();
+  };
+
+  const [prevColorCardFilter, setPrevColorCardFilter] = useState(colorCardFilter);
+  if (colorCardFilter !== prevColorCardFilter) {
+    setPrevColorCardFilter(colorCardFilter);
+    setVisible(PAGE_SIZE);
+  }
 
   const shown = resultado.slice(0, visible);
   const hasMore = visible < resultado.length;
