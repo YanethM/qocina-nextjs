@@ -10,20 +10,25 @@ interface NuestroSecretoProps {
   secreto_chef_frase_q?: string;
   secreto_cta?: { texto: string; url: string; nueva_ventana: boolean } | null;
   secreto_chef_cta?: { texto: string; url: string; nueva_ventana: boolean } | null;
+  secreto_chef_imagen_url?: string;
   siteCode?: string;
   locale?: string;
 }
 
-export default function NuestroSecreto({ secreto_titulo, secreto_descripcion, secreto_badges, secreto_chef_frase_q, secreto_cta, secreto_chef_cta, siteCode, locale }: NuestroSecretoProps) {
+export default function NuestroSecreto({ secreto_titulo, secreto_descripcion, secreto_badges, secreto_chef_frase_q, secreto_cta, secreto_chef_cta, secreto_chef_imagen_url, siteCode, locale }: NuestroSecretoProps) {
   const hasContent = secreto_titulo || secreto_descripcion || secreto_chef_frase_q || secreto_cta || secreto_chef_cta;
   if (!hasContent) return null;
 
   const badges = secreto_badges ?? [];
 
-  const gastonImageSrc =
+  const staticGastonImageSrc =
     locale === "en"
       ? "/images/web/home/secret/gaston_en.svg"
       : "/images/web/home/secret/gaston.svg";
+
+  const gastonImageSrc = secreto_chef_imagen_url || staticGastonImageSrc;
+  const mobileGastonImageSrc =
+    secreto_chef_imagen_url || "/images/mobile/nuestro_secreto/cocinar_con_q.svg";
 
   return (
     <section className={styles.nuestroSecreto}>
@@ -87,14 +92,16 @@ export default function NuestroSecreto({ secreto_titulo, secreto_descripcion, se
             sizes="(max-width: 768px) 100vw, 60vw"
             className={styles.waveImage}
             priority={false}
+            quality={90}
           />
           <Image
-            src="/images/mobile/nuestro_secreto/cocinar_con_q.svg"
+            src={mobileGastonImageSrc}
             alt="Nuestro secreto"
             width={390}
             height={700}
             className={styles.mobileSecretoImage}
             priority={false}
+            quality={90}
           />
           {secreto_chef_frase_q && (
             <p className={styles.chefFraseQ}>{secreto_chef_frase_q}</p>

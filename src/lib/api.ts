@@ -411,7 +411,6 @@ export async function getPacks(locale?: string, siteCode?: string) {
 }
 
 export async function getRecetasPage(locale?: string, siteCode?: string) {
-  void siteCode;
   return fetchAPI<StrapiSingleResponse<RecetasPage>>("/api/recetas-page", {
     ...imgFields("hero_imagen"),
     ...imgFields("hero_imagen_mobile"),
@@ -439,7 +438,7 @@ export async function getRecetasPage(locale?: string, siteCode?: string) {
     "populate[testimonios][populate][foto_usuario][fields][1]": "alternativeText",
     "populate[testimonios][populate][foto_usuario][fields][2]": "width",
     "populate[testimonios][populate][foto_usuario][fields][3]": "height",
-  }, locale);
+  }, locale, siteCode);
 }
 
 export async function getBlogPage(locale?: string, siteCode?: string) {
@@ -514,6 +513,11 @@ export async function getHomePage(locale?: string, siteCode?: string) {
     "populate[video_cover][fields][3]": "height",
     "populate[productos_cta]": "*",
     "populate[natural_cta]": "*",
+    "populate[natural_imagen][fields][0]": "url",
+    "populate[natural_imagen][fields][1]": "alternativeText",
+    "populate[natural_imagen][fields][2]": "width",
+    "populate[natural_imagen][fields][3]": "height",
+    "populate[natural_imagen][fields][4]": "formats",
     "populate[secreto_badges][populate][icono][fields][0]": "url",
     "populate[secreto_badges][populate][icono][fields][1]": "alternativeText",
     "populate[secreto_badges][populate][icono][fields][2]": "width",
@@ -521,7 +525,17 @@ export async function getHomePage(locale?: string, siteCode?: string) {
     "populate[secreto_badges][populate][icono][fields][4]": "formats",
     "populate[secreto_cta]": "*",
     "populate[secreto_chef_cta]": "*",
+    "populate[secreto_chef_imagen][fields][0]": "url",
+    "populate[secreto_chef_imagen][fields][1]": "alternativeText",
+    "populate[secreto_chef_imagen][fields][2]": "width",
+    "populate[secreto_chef_imagen][fields][3]": "height",
+    "populate[secreto_chef_imagen][fields][4]": "formats",
     "populate[historia_cta]": "*",
+    "populate[historia_imagen][fields][0]": "url",
+    "populate[historia_imagen][fields][1]": "alternativeText",
+    "populate[historia_imagen][fields][2]": "width",
+    "populate[historia_imagen][fields][3]": "height",
+    "populate[historia_imagen][fields][4]": "formats",
     "populate[amazon_cta]": "*",
     "populate[recetas_ver_receta_cta]": "*",
     "populate[recetas_cta]": "*",

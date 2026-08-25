@@ -507,15 +507,18 @@ export interface HomePage {
   natural_descripcion: string;
   natural_frase_q: string;
   natural_cta: { texto: string; url: string; nueva_ventana: boolean } | null;
+  natural_imagen: StrapiImage | null;
   secreto_titulo: string;
   secreto_descripcion: string;
   secreto_badges: Badge[];
   secreto_chef_frase_q: string;
   secreto_cta: { texto: string; url: string; nueva_ventana: boolean } | null;
   secreto_chef_cta: { texto: string; url: string; nueva_ventana: boolean } | null;
+  secreto_chef_imagen: StrapiImage | null;
   historia_descripcion: string;
   historia_frase_q: string;
   historia_cta: { texto: string; url: string; nueva_ventana: boolean } | null;
+  historia_imagen: StrapiImage | null;
   amazon_titulo: string;
   amazon_descripcion: string;
   amazon_cta: { texto: string; url: string; nueva_ventana: boolean } | null;

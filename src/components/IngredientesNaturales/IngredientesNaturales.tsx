@@ -16,15 +16,18 @@ interface IngredientesNaturalesProps {
     url: string;
     nueva_ventana: boolean;
   } | null;
+  natural_imagen_url?: string;
 }
 
-function getImages(locale: "es" | "en") {
+function getImages(locale: "es" | "en", naturalImagenUrl?: string) {
+  const staticSrc =
+    locale === "en"
+      ? "/images/web/home/ingredientes_naturales/image1_en.svg"
+      : "/images/web/home/ingredientes_naturales/image1.svg";
+
   return [
     {
-      src:
-        locale === "en"
-          ? "/images/web/home/ingredientes_naturales/image1_en.svg"
-          : "/images/web/home/ingredientes_naturales/image1.svg",
+      src: naturalImagenUrl || staticSrc,
       alt: "Ingredientes naturales 1",
     },
     {
@@ -39,10 +42,11 @@ export default function IngredientesNaturales({
   natural_descripcion,
   natural_frase_q,
   natural_cta,
+  natural_imagen_url,
 }: IngredientesNaturalesProps) {
   const siteCode = useSiteCode();
   const locale = useLocale();
-  const images = getImages(locale);
+  const images = getImages(locale, natural_imagen_url);
   const { current, goTo, handleTouchStart, handleTouchEnd } = useCarousel(
     images.length,
   );
@@ -63,6 +67,7 @@ export default function IngredientesNaturales({
             sizes="(max-width: 768px) 100vw, 50vw"
             className={styles.gridImage}
             priority
+            quality={90}
           />
           {natural_frase_q && (
             <p className={styles.naturalFraseQ}>{natural_frase_q}</p>
@@ -111,6 +116,7 @@ export default function IngredientesNaturales({
                     height={1079}
                     className={styles.slideImage}
                     style={{ height: "auto" }}
+                    quality={90}
                   />
                   <div className={styles.mobileContentOverlay}>
                     {natural_titulo && <h2 className={styles.mobileOverlayTitle}>{natural_titulo}</h2>}
@@ -136,6 +142,7 @@ export default function IngredientesNaturales({
                     className={styles.slideImage}
                     style={{ height: "auto" }}
                     priority
+                    quality={90}
                   />
                   {natural_frase_q && (
                     <p className={styles.naturalFraseQ}>{natural_frase_q}</p>

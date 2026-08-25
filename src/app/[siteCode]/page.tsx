@@ -12,6 +12,7 @@ import {
   getRecetas,
   getTestimonios,
   getHomePage,
+  getStrapiImageUrl,
 } from "@/lib/api";
 import { getLocale } from "@/lib/locale";
 import BeneficiosWaveSection from "@/components/BeneficiosWaveSection/BeneficiosWaveSection";
@@ -64,6 +65,10 @@ export default async function Home({ params }: Props) {
   const recetas = recetasRes?.data?.slice(0, 3) ?? [];
   const testimonios = testimoniosRes?.data ?? [];
 
+  const historiaImagenUrl = getStrapiImageUrl(homeRes?.data?.historia_imagen?.url) || undefined;
+  const secretoChefImagenUrl = getStrapiImageUrl(homeRes?.data?.secreto_chef_imagen?.url) || undefined;
+  const naturalImagenUrl = getStrapiImageUrl(homeRes?.data?.natural_imagen?.url) || undefined;
+
 
   return (
     <>
@@ -98,6 +103,7 @@ export default async function Home({ params }: Props) {
           natural_descripcion={homeRes.data.natural_descripcion}
           natural_frase_q={homeRes.data.natural_frase_q}
           natural_cta={homeRes.data.natural_cta}
+          natural_imagen_url={naturalImagenUrl}
         />
       )}
 
@@ -108,6 +114,7 @@ export default async function Home({ params }: Props) {
         secreto_chef_frase_q={homeRes?.data?.secreto_chef_frase_q}
         secreto_cta={homeRes?.data?.secreto_cta}
         secreto_chef_cta={homeRes?.data?.secreto_chef_cta}
+        secreto_chef_imagen_url={secretoChefImagenUrl}
         siteCode={siteCode}
         locale={locale}
       />
@@ -116,6 +123,7 @@ export default async function Home({ params }: Props) {
         historia_descripcion={homeRes?.data?.historia_descripcion}
         historia_frase_q={homeRes?.data?.historia_frase_q}
         historia_cta={homeRes?.data?.historia_cta}
+        historia_imagen_url={historiaImagenUrl}
         siteCode={siteCode}
         locale={locale}
       />

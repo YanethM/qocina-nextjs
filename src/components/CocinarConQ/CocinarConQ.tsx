@@ -6,21 +6,27 @@ export default function CocinarConQ({
   historia_descripcion,
   historia_frase_q,
   historia_cta,
+  historia_imagen_url,
   siteCode,
   locale,
 }: {
   historia_descripcion?: string;
   historia_frase_q?: string;
   historia_cta?: { texto: string; url: string; nueva_ventana: boolean } | null;
+  historia_imagen_url?: string;
   siteCode?: string;
   locale?: string;
 }) {
   if (!historia_descripcion && !historia_frase_q && !historia_cta) return null;
 
-  const waveImageSrc =
+  const staticWaveImageSrc =
     locale === "en"
       ? "/images/web/home/cocinar/wave_cocinar_con_q_en.svg"
       : "/images/web/home/cocinar/wave_cocinar_con_q.svg";
+
+  const waveImageSrc = historia_imagen_url || staticWaveImageSrc;
+  const mobileWaveImageSrc =
+    historia_imagen_url || "/images/mobile/cocinar/wave_cocinar_con_q.svg";
 
   return (
     <section className={styles.cocinarConQ}>
@@ -32,14 +38,16 @@ export default function CocinarConQ({
           height={864}
           className={`${styles.waveImage} ${styles.waveImageDesktop}`}
           priority={false}
+          quality={90}
         />
         <Image
-          src="/images/mobile/cocinar/wave_cocinar_con_q.svg"
+          src={mobileWaveImageSrc}
           alt=""
           width={390}
           height={500}
           className={`${styles.waveImage} ${styles.waveImageMobile}`}
           priority={false}
+          quality={90}
         />
 
         {historia_frase_q && (
