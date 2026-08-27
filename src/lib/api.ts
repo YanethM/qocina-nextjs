@@ -308,6 +308,7 @@ export async function getQuienesSomos(locale?: string, siteCode?: string) {
     ...imgFields("hero_imagen"),
     ...imgFields("hero_imagen_mobile"),
     ...imgFields("que_es_imagen"),
+    ...imgFields("que_es_imagen_mobile"),
     ...imgFields("chef_imagen"),
     "populate[valores][populate][imagen][fields][0]": "url",
     "populate[valores][populate][imagen][fields][1]": "alternativeText",

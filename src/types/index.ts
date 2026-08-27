@@ -293,6 +293,7 @@ export interface QuienesSomos {
   que_es_titulo: string | null;
   que_es_descripcion: string | null;
   que_es_imagen: StrapiImage | null;
+  que_es_imagen_mobile: StrapiImage | null;
   chef_imagen: StrapiImage | null;
   chef_nombre: string | null;
   chef_titulo: string | null;

@@ -60,12 +60,17 @@ export default async function NosotrosPage({ params }: Props) {
   const heroHeight = heroImagen?.formats?.large?.height ?? heroImagen?.height ?? 600;
 
   const queEsImagen = data?.que_es_imagen;
+  const queEsImagenMobile = data?.que_es_imagen_mobile;
   const queEsImgSrc = queEsImagen?.url
     ? getStrapiImageUrl(queEsImagen.url)
     : queEsImagen?.formats?.large?.url
     ? getStrapiImageUrl(queEsImagen.formats.large.url)
     : null;
-  const queEsImgSrcMobile = queEsImagen?.formats?.medium?.url
+  const queEsImgSrcMobile = queEsImagenMobile?.url
+    ? getStrapiImageUrl(queEsImagenMobile.url)
+    : queEsImagenMobile?.formats?.medium?.url
+    ? getStrapiImageUrl(queEsImagenMobile.formats.medium.url)
+    : queEsImagen?.formats?.medium?.url
     ? getStrapiImageUrl(queEsImagen.formats.medium.url)
     : queEsImgSrc;
 
@@ -156,7 +161,7 @@ export default async function NosotrosPage({ params }: Props) {
           />
           <Image
             src={queEsImgSrcMobile ?? "/images/mobile/nosotros/second_section.svg"}
-            alt={queEsImagen?.alternativeText ?? data?.que_es_titulo ?? ""}
+            alt={queEsImagenMobile?.alternativeText ?? queEsImagen?.alternativeText ?? data?.que_es_titulo ?? ""}
             width={390}
             height={600}
             className={styles.mobileOnly}
