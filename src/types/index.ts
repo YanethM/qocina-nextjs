@@ -178,6 +178,7 @@ export interface Receta {
   contenido: string | null;
   imagen: StrapiImage | null;
   imagen_principal: StrapiImage | null;
+  imagen_productos_qocina?: StrapiImage | null;
   galeria_imagenes: StrapiImage[] | null;
   tiempo: string | null;
   tiempo_preparacion: number | null;

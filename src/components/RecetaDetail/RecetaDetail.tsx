@@ -44,8 +44,9 @@ export default function RecetaDetail({ receta }: Props) {
   const wavesBanner = (colorCard && WAVE_BANNER_MAP[colorCard]) ?? DEFAULT_WAVE_BANNER;
   const tipsWaveTop = (colorCard && TIPS_WAVE_TOP_MAP[colorCard]) ?? DEFAULT_TIPS_WAVE_TOP;
   const ingredientesBg = colorCard && INGREDIENTES_BG_MAP[colorCard];
-  const ingredientesImg =
-    (colorCard && INGREDIENTES_IMG_MAP[colorCard]) ?? DEFAULT_INGREDIENTES_IMG;
+  const ingredientesImg = receta.imagen_productos_qocina?.url
+    ? getStrapiImageUrl(receta.imagen_productos_qocina.url)
+    : (colorCard && INGREDIENTES_IMG_MAP[colorCard]) ?? DEFAULT_INGREDIENTES_IMG;
 
   const ingredientesSection = ingredientes.length > 0 && (
     <section className={styles.ingredientesOverWaves}>
@@ -100,7 +101,7 @@ export default function RecetaDetail({ receta }: Props) {
         <div className={styles.ingredientesImgWrapper}>
           <Image
             src={ingredientesImg}
-            alt="Productos Q'ocina"
+            alt={receta.imagen_productos_qocina?.alternativeText || "Productos Q'ocina"}
             width={300}
             height={260}
             className={styles.ingredientesImg}

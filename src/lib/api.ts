@@ -210,6 +210,7 @@ export async function getRecetaBySlug(slug: string, locale?: string, siteCode?: 
   const res = await fetchAPI<StrapiListResponse<Receta>>("/api/recetas", {
     "filters[slug][$eq]": slug,
     ...imgFields("imagen_principal"),
+    ...imgFields("imagen_productos_qocina"),
     "populate[ingredientes]": "*",
     "populate[pasos][fields][0]": "numero",
     "populate[pasos][fields][1]": "titulo",
