@@ -105,6 +105,14 @@ export interface FiltroOpcion {
   nombre: string;
 }
 
+export interface SeccionExpandible {
+  id: number;
+  titulo: string;
+  contenido: string | null;
+  orden: number;
+  expandida_por_defecto: boolean;
+}
+
 export interface Testimonio {
   id: number;
   documentId: string;
@@ -135,6 +143,7 @@ export interface Producto {
   galeria_imagenes: StrapiImage[] | null;
   categoria: Categoria | null;
   badges: Badge[] | null;
+  secciones_expandibles: SeccionExpandible[] | null;
   recetas_relacionadas: Receta[] | null;
   testimonios: Testimonio[] | null;
   sitios: ProductoSitio[] | null;

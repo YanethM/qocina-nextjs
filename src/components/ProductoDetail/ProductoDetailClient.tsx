@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import type { Badge, Categoria } from "@/types";
+import type { Categoria, SeccionExpandible } from "@/types";
 import { DEFAULT_COLOR } from "@/lib/constants";
 import { useCart } from "@/context/CartContext";
 import { useLocale } from "@/hooks/useLocale";
@@ -29,7 +29,7 @@ interface Props {
   allImages: string[];
   imagenPrincipal: string | null;
   categoria: Categoria | null;
-  badges: Badge[];
+  seccionesExpandibles: SeccionExpandible[];
   sku: string | null;
   color?: string | null;
 }
@@ -48,7 +48,7 @@ export default function ProductoDetailClient({
   allImages,
   imagenPrincipal,
   categoria,
-  badges,
+  seccionesExpandibles,
   sku,
   color,
 }: Props) {
@@ -214,30 +214,22 @@ export default function ProductoDetailClient({
           </p>
         </div>
 
-        <Accordion
-          items={[
-            ...(descripcionLarga
-              ? [{
-                  key: "uso",
-                  label: "¿Cómo se usa este sofrito?",
-                  content: <div dangerouslySetInnerHTML={{ __html: descripcionLarga }} />,
-                }]
-              : []),
-            ...(badges.length > 0
-              ? [{
-                  key: "beneficios",
-                  label: "Beneficios que se sienten en el paladar de toda la familia",
-                  content: (
-                    <ul className={styles.beneficiosList}>
-                      {badges.map((b) => (
-                        <li key={b.id}>{b.nombre}</li>
-                      ))}
-                    </ul>
-                  ),
-                }]
-              : []),
-          ]}
-        />
+        {seccionesExpandibles.length > 0 && (
+          <Accordion
+            items={seccionesExpandibles.map((seccion) => ({
+              key: String(seccion.id),
+              label: seccion.titulo,
+              content: seccion.contenido ? (
+                <div dangerouslySetInnerHTML={{ __html: seccion.contenido }} />
+              ) : null,
+            }))}
+            defaultOpen={
+              seccionesExpandibles.find((s) => s.expandida_por_defecto)?.id
+                ? String(seccionesExpandibles.find((s) => s.expandida_por_defecto)!.id)
+                : undefined
+            }
+          />
+        )}
 
         <button
           className={styles.addToCart}

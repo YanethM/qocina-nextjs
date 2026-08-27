@@ -50,6 +50,9 @@ export default async function ProductoDetailPage({ params }: Props) {
     const allImages = [imagenPrincipal, ...galeria].filter(Boolean) as string[];
 
     const badges = producto.badges ?? [];
+    const seccionesExpandibles = [...(producto.secciones_expandibles ?? [])].sort(
+      (a, b) => a.orden - b.orden
+    );
 
     const productoTestimonioIds = new Set((producto.testimonios ?? []).map((t) => t.id));
     const testimoniosRes = productoTestimonioIds.size > 0
@@ -79,7 +82,7 @@ export default async function ProductoDetailPage({ params }: Props) {
           allImages={allImages}
           imagenPrincipal={imagenPrincipal}
           categoria={producto.categoria}
-          badges={badges}
+          seccionesExpandibles={seccionesExpandibles}
           sku={producto.sku ?? null}
         />
 

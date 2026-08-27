@@ -55,6 +55,10 @@ export default async function ProductoDetailPage({ params }: Props) {
 
     const badges = producto.badges ?? [];
 
+    const seccionesExpandibles = [...(producto.secciones_expandibles ?? [])].sort(
+      (a, b) => a.orden - b.orden
+    );
+
     const testimonios = testimoniosRes?.data ?? [];
 
     const colorKey = producto.color ? COLOR_HEX_TO_KEY[producto.color.toLowerCase()] : null;
@@ -80,7 +84,7 @@ export default async function ProductoDetailPage({ params }: Props) {
           allImages={allImages}
           imagenPrincipal={imagenPrincipal}
           categoria={producto.categoria}
-          badges={badges}
+          seccionesExpandibles={seccionesExpandibles}
           sku={producto.sku ?? null}
           color={producto.color}
         />
