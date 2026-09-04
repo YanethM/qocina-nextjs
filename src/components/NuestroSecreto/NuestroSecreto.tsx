@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Button from "@/components/ui/Button";
 import styles from "./NuestroSecreto.module.css";
+import { getStrapiImageUrl } from "@/lib/strapi";
 import type { Badge } from "@/types";
 
 interface NuestroSecretoProps {
@@ -48,7 +49,7 @@ export default function NuestroSecreto({ secreto_titulo, secreto_descripcion, se
               const formats = icono?.formats;
               
               const imageUrl = formats?.small?.url || formats?.thumbnail?.url || icono?.url;
-              const fullImageUrl = imageUrl ? `${process.env.NEXT_PUBLIC_API_URL}${imageUrl}` : null;
+              const fullImageUrl = imageUrl ? getStrapiImageUrl(imageUrl) : null;
 
               if (!fullImageUrl) return null;
 

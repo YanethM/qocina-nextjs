@@ -5,7 +5,7 @@ export const API_URL =
 export function getStrapiImageUrl(url: string | undefined | null): string {
   if (!url) return "";
   if (url.startsWith("http")) return url;
-  return `${API_URL}${url}`;
+  return `/api/media${url}`;
 }
 
 export function stripHtml(text: string): string {
