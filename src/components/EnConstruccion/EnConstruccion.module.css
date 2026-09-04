@@ -1,0 +1,44 @@
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem 1.5rem;
+  background-color: #fff;
+}
+
+.logo {
+  width: 180px;
+  height: auto;
+  margin-bottom: 2.5rem;
+}
+
+.titulo {
+  font-size: 2.75rem;
+  font-weight: 400;
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+  max-width: 700px;
+}
+
+.descripcion {
+  font-size: 1.125rem;
+  color: var(--color-text-light);
+  max-width: 480px;
+}
+
+@media (max-width: 768px) {
+  .logo {
+    width: 140px;
+  }
+
+  .titulo {
+    font-size: 2rem;
+  }
+
+  .descripcion {
+    font-size: 1rem;
+  }
+}

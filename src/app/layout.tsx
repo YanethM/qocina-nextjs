@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
+import { headers } from "next/headers";
 import CioPageTracker from "@/components/CioPageTracker/CioPageTracker";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
@@ -45,11 +46,17 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const requestHeaders = await headers();
+  const pathname = requestHeaders.get("x-pathname");
+  const siteCode = requestHeaders.get("x-site-code");
+  const isHomePage = Boolean(siteCode && pathname === `/${siteCode}`);
+  const hideChrome = process.env.MAINTENANCE_MODE === "true" && isHomePage;
+
   return (
     <html lang="es">
       <head>
@@ -64,9 +71,9 @@ export default function RootLayout({
       <body className={`${montserrat.variable} ${palmer.variable}`} suppressHydrationWarning>
         <CartProvider>
           <CioPageTracker />
-          <Header />
-          <main>{children}</main>
-          <Footer />
+          {!hideChrome && <Header />}
+          <main className={hideChrome ? "main-no-chrome" : undefined}>{children}</main>
+          {!hideChrome && <Footer />}
           <CartToast />
           <CookieBanner />
         </CartProvider>

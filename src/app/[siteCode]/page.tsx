@@ -1,5 +1,6 @@
 import Image from "next/image";
 import styles from "./page.module.css";
+import EnConstruccion from "@/components/EnConstruccion/EnConstruccion";
 import HeroBanner from "@/components/HeroBanner/HeroBanner";
 import Subscribe from "@/components/Subscribe/Subscribe";
 import Testimonios from "@/components/Testimonios/Testimonios";
@@ -25,6 +26,14 @@ interface Props {
 
 export async function generateMetadata({ params }: Props) {
   const { siteCode: _siteCode } = await params;
+
+  if (process.env.MAINTENANCE_MODE === "true") {
+    return {
+      title: "Q'ocina - Próximamente",
+      description: "Estamos preparando algo nuevo. Vuelve pronto.",
+    };
+  }
+
   const locale = await getLocale(_siteCode);
   const res = await getHomePage(locale, _siteCode).catch(() => null);
   return {
@@ -36,6 +45,10 @@ export async function generateMetadata({ params }: Props) {
 export default async function Home({ params }: Props) {
   const { siteCode } = await params;
   const locale = await getLocale(siteCode);
+
+  if (process.env.MAINTENANCE_MODE === "true") {
+    return <EnConstruccion locale={locale} />;
+  }
 
   const [homeRes, productosRes, recetasRes, testimoniosRes] = await Promise.all([
     getHomePage(locale).catch((e) => { console.error("getHomePage error:", e); return null; }),
