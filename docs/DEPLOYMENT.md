@@ -27,10 +27,7 @@ Este documento describe el proceso de despliegue del frontend QCocina (Next.js 1
 
 | Campo | Valor |
 |-------|-------|
-| IP Pública | 23.23.186.243 |
-| DNS Público | ec2-23-23-186-243.compute-1.amazonaws.com |
-| Puerto | 1337 |
-| URL API | `http://ec2-23-23-186-243.compute-1.amazonaws.com:1337` |
+| URL API | `https://backend.qocinaencasa.com` |
 
 ---
 
@@ -90,7 +87,7 @@ nano /home/ubuntu/qcocina-front/.env.prod
 Contenido del archivo:
 
 ```env
-NEXT_PUBLIC_API_URL=http://ec2-23-23-186-243.compute-1.amazonaws.com:1337
+NEXT_PUBLIC_API_URL=https://backend.qocinaencasa.com
 NEXT_PUBLIC_SECURE_COOKIES=false
 
 OFIX_API_BASE_URL=https://api-artics.fuxion.com/api-fuxion

@@ -2,8 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { VALID_SITE_CODES } from "@/lib/constants";
 
 const API_URL =
-  process.env.NEXT_PUBLIC_API_URL ||
-  "http://ec2-23-23-186-243.compute-1.amazonaws.com:1337";
+  process.env.NEXT_PUBLIC_API_URL || "https://backend.qocinaencasa.com";
 
 const VALID = new Set<string>(VALID_SITE_CODES);
 

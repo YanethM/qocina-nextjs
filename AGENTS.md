@@ -27,7 +27,7 @@ npm run lint     # ESLint
 
 ## Stack
 - Next.js App Router (src/app/[siteCode]/...)
-- Strapi CMS en EC2 puerto 1337 — acceso público sin auth
+- Strapi CMS en https://backend.qocinaencasa.com — acceso público sin auth
 - Ofix API para geolocalización y cálculo de envío
 - Stripe para pagos
 - Middleware Edge Runtime para routing por país
@@ -40,7 +40,7 @@ npm run lint     # ESLint
 
 ## Variables de entorno relevantes
 ```
-NEXT_PUBLIC_API_URL=http://ec2-23-23-186-243.compute-1.amazonaws.com:1337
+NEXT_PUBLIC_API_URL=https://backend.qocinaencasa.com
 OFIX_API_BASE_URL=https://api-artics.fuxion.com/api-fuxion
 OFIX_USER=usr_External
 OFIX_PASSWORD=QkDZAQTM
@@ -127,12 +127,12 @@ Dirección de prueba válida para US (en red Ofix):
 
 Productos actuales en Strapi (pueden cambiar de ID):
 ```bash
-curl -s "http://ec2-23-23-186-243.compute-1.amazonaws.com:1337/api/productos?populate=sitios"
+curl -s "https://backend.qocinaencasa.com/api/productos?populate=sitios"
 ```
 
 Comando de prueba directo a Strapi:
 ```bash
-curl -s -X POST "http://ec2-23-23-186-243.compute-1.amazonaws.com:1337/api/orders/prepare" \
+curl -s -X POST "https://backend.qocinaencasa.com/api/orders/prepare" \
   -H "Content-Type: application/json" \
   -H "X-Site: us" \
   -d '{ "items": [...], "customerName": "...", "customerEmail": "...", "customerPhone": "...", "shippingAddress": {...} }'
