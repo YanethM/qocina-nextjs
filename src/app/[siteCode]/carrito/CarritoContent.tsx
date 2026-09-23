@@ -6,6 +6,7 @@ import { useState, useEffect, useRef } from "react";
 import { useCart } from "@/context/CartContext";
 import { getStrapiImageUrl, stripHtml } from "@/lib/strapi";
 import { getProductos } from "@/lib/api";
+import { formatPrice } from "@/lib/format";
 import { useSiteCode } from "@/hooks/useSiteCode";
 import { LOCALE_COOKIE, COLOR_HEX_TO_KEY } from "@/lib/constants";
 import type { Producto, PackDestacado } from "@/types";
@@ -91,12 +92,6 @@ function interleave<T>(first: T[], second: T[]): T[] {
     if (i < second.length) result.push(second[i]);
   }
   return result;
-}
-
-function formatPrice(precio: number, moneda: string): string {
-  if (!precio && precio !== 0) return "";
-  if (moneda === "PEN") return `S/ ${precio.toFixed(2)}`;
-  return `$ ${precio.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ".")} ${moneda}`;
 }
 
 const ACTIVE_STEP = 0;

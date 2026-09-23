@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import { useSiteCode } from "@/hooks/useSiteCode";
+import { formatPrice } from "@/lib/format";
 import styles from "./page.module.css";
 
 const ERROR_STEP = 2;
@@ -15,12 +16,6 @@ const STEPS = [
   { img: "/images/web/shopping/pago.svg", imgGreen: "/images/web/shopping/seguridad_green.svg", label: "Pago" },
   { img: "/images/web/shopping/confirmacion.svg", imgGreen: "/images/web/shopping/confirmacion_check.svg", label: "Confirmación" },
 ];
-
-function formatPrice(precio: number, moneda: string): string {
-  if (!precio && precio !== 0) return "";
-  if (moneda === "PEN") return `S/ ${precio.toFixed(2)}`;
-  return `$${precio.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ".")} ${moneda}`;
-}
 
 function CancelContent() {
   const siteCode = useSiteCode();

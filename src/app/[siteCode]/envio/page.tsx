@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import { API_URL } from "@/lib/strapi";
+import { formatPrice } from "@/lib/format";
 import type { Site } from "@/types";
 import styles from "./page.module.css";
 
@@ -142,12 +143,6 @@ const COPY = {
     unexpectedError: "Unexpected error. Please try again.",
   },
 } as const;
-
-function formatPrice(precio: number, moneda: string): string {
-  if (!precio && precio !== 0) return "";
-  if (moneda === "PEN") return `S/ ${precio.toFixed(2)}`;
-  return `$ ${precio.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ".")} ${moneda}`;
-}
 
 async function fetchOfix(action: string, params: Record<string, string> = {}) {
   const res = await fetch("/api/ofix", {
