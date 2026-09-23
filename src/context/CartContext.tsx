@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState, useCallback, useRef } from "react";
+import { useSiteCode } from "@/hooks/useSiteCode";
 
 export interface CartItem {
   id: number;
@@ -32,15 +33,26 @@ interface CartContextValue {
 
 const CartContext = createContext<CartContextValue | null>(null);
 const DEFAULT_CURRENCY = "COP";
+const CART_STORAGE_KEY = "qocina_cart";
+const CART_SITE_STORAGE_KEY = "qocina_cart_site";
+const CART_ID_STORAGE_KEY = "qocina_cart_id";
 
 function getOrCreateCartId(): string {
-  const existing = localStorage.getItem("qocina_cart_id");
+  const existing = localStorage.getItem(CART_ID_STORAGE_KEY);
   if (existing) return existing;
   const id = typeof crypto.randomUUID === "function"
     ? crypto.randomUUID()
     : `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
-  localStorage.setItem("qocina_cart_id", id);
+  localStorage.setItem(CART_ID_STORAGE_KEY, id);
   return id;
+}
+
+function loadStoredCartSite(): string | null {
+  try {
+    return localStorage.getItem(CART_SITE_STORAGE_KEY);
+  } catch {
+    return null;
+  }
 }
 
 function normalizeCartItem(item: Partial<CartItem>): CartItem | null {
@@ -78,7 +90,7 @@ function loadInitialCartItems(): CartItem[] {
   if (typeof window === "undefined") return [];
 
   try {
-    const stored = localStorage.getItem("qocina_cart");
+    const stored = localStorage.getItem(CART_STORAGE_KEY);
     if (!stored) return [];
 
     const parsed = JSON.parse(stored);
@@ -93,7 +105,9 @@ function loadInitialCartItems(): CartItem[] {
 }
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
+  const siteCode = useSiteCode();
   const [items, setItems] = useState<CartItem[]>([]);
+  const [cartSite, setCartSite] = useState<string | null>(null);
   const [hydrated, setHydrated] = useState(false);
   const [toastVisible, setToastVisible] = useState(false);
   const [toastNombre, setToastNombre] = useState("");
@@ -106,13 +120,23 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     setItems(loadInitialCartItems());
+    setCartSite(loadStoredCartSite());
     setHydrated(true);
   }, []);
 
+  if (hydrated && siteCode && cartSite !== siteCode) {
+    setCartSite(siteCode);
+    if (cartSite !== null) setItems([]);
+  }
+
   useEffect(() => {
     if (!hydrated) return;
-    localStorage.setItem("qocina_cart", JSON.stringify(items));
-  }, [items, hydrated]);
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
+    if (!cartSite) return;
+    const storedSite = localStorage.getItem(CART_SITE_STORAGE_KEY);
+    if (storedSite && storedSite !== cartSite) localStorage.removeItem(CART_ID_STORAGE_KEY);
+    localStorage.setItem(CART_SITE_STORAGE_KEY, cartSite);
+  }, [items, cartSite, hydrated]);
 
   const dismissToast = useCallback(() => {
     setToastVisible(false);
@@ -161,7 +185,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const removeItem = useCallback((id: number) => {
     const item = itemsRef.current.find((i) => i.id === id);
     if (item && typeof window !== "undefined" && window.cioanalytics) {
-      const cartId = localStorage.getItem("qocina_cart_id") ?? "";
+      const cartId = localStorage.getItem(CART_ID_STORAGE_KEY) ?? "";
       window.cioanalytics.track("Product Removed", {
         cart_id: cartId,
         product_id: String(item.id),
