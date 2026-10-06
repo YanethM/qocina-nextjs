@@ -189,7 +189,12 @@ export default function CarritoPage({ initialPacks }: Props) {
 
   const activeDocumentId = visible[activeCardIdx]?.documentId;
 
+  const carouselMounted = useRef(false);
   useEffect(() => {
+    if (!carouselMounted.current) {
+      carouselMounted.current = true;
+      return;
+    }
     cardRefs.current[activeCardIdx]?.scrollIntoView({
       behavior: "smooth",
       inline: "center",

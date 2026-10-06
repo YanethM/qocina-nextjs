@@ -171,7 +171,7 @@ export default function EnvioPage() {
   const moneda = renderedItems[0]?.precioMoneda ?? "COP";
 
   const [sites, setSites] = useState<Site[]>([]);
-  const [pais, setPais] = useState(() => {
+  const [pais] = useState(() => {
     const sc = routeParams?.siteCode;
     return typeof sc === "string" ? sc : "";
   });
@@ -583,7 +583,7 @@ export default function EnvioPage() {
               <select
                 className={`${styles.select} ${errors.pais ? styles.inputError : ""}`}
                 value={pais}
-                onChange={(e) => setPais(e.target.value)}
+                disabled
               >
                 <option value="">{t.country}</option>
                 {sites.map((s) => (
