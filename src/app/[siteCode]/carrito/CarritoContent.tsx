@@ -187,8 +187,6 @@ export default function CarritoPage({ initialPacks }: Props) {
   const activeCardIdx = visible.length > 1 ? Math.floor(visible.length / 2) : 0;
   const activeAbsoluteIdx = carouselIdx + activeCardIdx;
 
-  const activeDocumentId = visible[activeCardIdx]?.documentId;
-
   const carouselMounted = useRef(false);
   useEffect(() => {
     if (!carouselMounted.current) {
@@ -200,7 +198,7 @@ export default function CarritoPage({ initialPacks }: Props) {
       inline: "center",
       block: "nearest",
     });
-  }, [carouselIdx, activeCardIdx, activeDocumentId]);
+  }, [carouselIdx]);
 
   const handleAplicarCodigo = () => {
     setDescuento(0);
