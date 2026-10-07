@@ -5,9 +5,9 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { useCart } from "@/context/CartContext";
-import { API_URL } from "@/lib/strapi";
 import { formatPrice } from "@/lib/format";
-import type { Site } from "@/types";
+import type { Site, PaymentGateway, CreatePaymentSessionResponse } from "@/types";
+import PaymentMethodSelector from "@/components/PaymentMethodSelector/PaymentMethodSelector";
 import styles from "./page.module.css";
 
 const PREFIJOS = ["+57", "+51", "+54", "+52", "+56", "+34", "+1", "+593"];
@@ -23,6 +23,13 @@ const PAIS_PREFIJO: Record<string, string> = {
   es: "+34",
   us: "+1",
   ec: "+593",
+};
+
+const STRIPE_FALLBACK_GATEWAY: PaymentGateway = {
+  gateway: "stripe",
+  displayName: "Tarjeta de crédito/débito",
+  logoUrl: null,
+  displayOrder: 0,
 };
 
 type Nivel1Option = { regionCode: string; regionName: string };
@@ -76,6 +83,7 @@ const COPY = {
     selectRegionFirst: "Primero elige región",
     selectCityFirst: "Primero elige ciudad",
     locationLoadError: "No se pudieron cargar las opciones de ubicación. Verifica tu conexión e intenta de nuevo.",
+    paymentMethod: "Método de pago",
     continueToPayment: "Continuar al pago",
     processing: "Procesando...",
     summary: "Resumen",
@@ -130,6 +138,7 @@ const COPY = {
     selectRegionFirst: "Choose a state first",
     selectCityFirst: "Choose a city first",
     locationLoadError: "Location options could not be loaded. Check your connection and try again.",
+    paymentMethod: "Payment method",
     continueToPayment: "Continue to Payment",
     processing: "Processing...",
     summary: "Summary",
@@ -204,6 +213,31 @@ export default function EnvioPage() {
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
   const [validationToast, setValidationToast] = useState(false);
+
+  const [gateways, setGateways] = useState<PaymentGateway[]>([]);
+  const [selectedGateway, setSelectedGateway] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!pais) return;
+
+    const useFallback = () => {
+      setGateways([STRIPE_FALLBACK_GATEWAY]);
+      setSelectedGateway(STRIPE_FALLBACK_GATEWAY.gateway);
+    };
+
+    fetch(`/api/payment-gateways?siteCode=${pais}`)
+      .then((res) => res.json())
+      .then((res) => {
+        const list: PaymentGateway[] = res.data ?? [];
+        if (list.length === 0) {
+          useFallback();
+          return;
+        }
+        setGateways(list);
+        if (list.length === 1) setSelectedGateway(list[0].gateway);
+      })
+      .catch(useFallback);
+  }, [pais]);
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => {
@@ -398,6 +432,7 @@ export default function EnvioPage() {
     if (!isUS && niveles >= 2 && !nivel2) e.nivel2 = t.required;
     if (!isUS && niveles >= 3 && !nivel3) e.nivel3 = t.required;
     if (zipRequired && !codigoPostal) e.codigoPostal = t.required;
+    if (gateways.length > 0 && !selectedGateway) e.gateway = t.required;
     return e;
   };
 
@@ -520,10 +555,13 @@ export default function EnvioPage() {
         });
       }
 
-      const sessionRes = await fetch(`${API_URL}/api/payments/create-checkout-session`, {
+      const gatewayToUse = selectedGateway ?? gateways[0]?.gateway;
+      if (!gatewayToUse) throw new Error(t.paymentSessionError);
+
+      const sessionRes = await fetch(`/api/payments/create-session`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ orderId: order.orderId }),
+        body: JSON.stringify({ siteCode: pais, orderId: order.orderId, gateway: gatewayToUse }),
       });
 
       if (!sessionRes.ok) {
@@ -531,10 +569,30 @@ export default function EnvioPage() {
         throw new Error(err?.error?.message ?? t.paymentSessionError);
       }
 
-      const { data: session } = await sessionRes.json();
+      const { data: session }: { data: CreatePaymentSessionResponse } = await sessionRes.json();
+      if (session.redirectMethod === "POST" && !session.fields) {
+        throw new Error(t.paymentSessionError);
+      }
+
       sessionStorage.setItem("qocina_checkout_email", correo);
       if (order.orderId) sessionStorage.setItem("qocina_checkout_order_id", String(order.orderId));
-      window.location.href = session.checkoutUrl;
+
+      if (session.redirectMethod === "POST" && session.fields) {
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = session.url;
+        for (const [key, value] of Object.entries(session.fields)) {
+          const input = document.createElement("input");
+          input.type = "hidden";
+          input.name = key;
+          input.value = value;
+          form.appendChild(input);
+        }
+        document.body.appendChild(form);
+        form.submit();
+      } else {
+        window.location.href = session.url;
+      }
     } catch (err) {
       setApiError(err instanceof Error ? err.message : t.unexpectedError);
       setLoading(false);
@@ -881,6 +939,18 @@ export default function EnvioPage() {
             <span className={styles.totalValue}>{formatPrice(renderedTotal, moneda)}</span>
           </div>
           <hr className={styles.divider} />
+
+          {gateways.length > 1 && (
+            <div className={`${styles.formGroup} ${errors.gateway ? styles.inputError : ""}`}>
+              <label className={styles.label}>{t.paymentMethod}</label>
+              <PaymentMethodSelector
+                gateways={gateways}
+                value={selectedGateway}
+                onChange={setSelectedGateway}
+                disabled={loading}
+              />
+            </div>
+          )}
 
           <button
             className={styles.checkoutBtn}

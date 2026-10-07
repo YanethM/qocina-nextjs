@@ -27,6 +27,20 @@ export interface OrderItem {
   subtotal: number;
 }
 
+export interface PaymentGateway {
+  gateway: "stripe" | "payu_pe" | "safetypay_pe";
+  displayName: string;
+  logoUrl: string | null;
+  displayOrder: number;
+}
+
+export interface CreatePaymentSessionResponse {
+  gateway: string;
+  redirectMethod: "GET" | "POST";
+  url: string;
+  fields: Record<string, string> | null;
+}
+
 export interface Order {
   id: number;
   orderNumber: string;
