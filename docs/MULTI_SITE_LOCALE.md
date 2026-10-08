@@ -198,6 +198,6 @@ Vercel inyecta `request.geo.country` automáticamente con el código ISO del pa�
 
 | Variable | Uso | Valor típico |
 |---|---|---|
-| `NEXT_PUBLIC_API_URL` | URL base del backend Strapi | `http://...amazonaws.com:1337` |
+| `NEXT_PUBLIC_API_URL` | URL base del backend Strapi | `https://backend.qocinaencasa.com` |
 | `NEXT_PUBLIC_LOCALE` | Locale fallback si no hay cookie | `es` |
 | `NEXT_PUBLIC_SITE_CODE` | Fallback de siteCode si no hay URL | `pe` (solo para entornos sin URL dinámica) |

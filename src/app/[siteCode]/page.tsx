@@ -51,7 +51,7 @@ export default async function Home({ params }: Props) {
   }
 
   const [homeRes, productosRes, recetasRes, testimoniosRes] = await Promise.all([
-    getHomePage(locale).catch((e) => { console.error("getHomePage error:", e); return null; }),
+    getHomePage(locale, siteCode).catch((e) => { console.error("getHomePage error:", e); return null; }),
     getProductos(locale, siteCode).catch((e) => { console.error("getProductos error:", e); return null; }),
     getRecetas(locale, undefined, siteCode).catch((e) => { console.error("getRecetas error:", e); return null; }),
     getTestimonios(locale).catch((e) => { console.error("getTestimonios error:", e); return null; }),
