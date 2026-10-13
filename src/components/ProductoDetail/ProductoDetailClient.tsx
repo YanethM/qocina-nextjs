@@ -11,8 +11,20 @@ import styles from "./ProductoDetailClient.module.css";
 import { formatPrice } from "@/lib/format";
 
 const translations = {
-  es: { addToCart: "Añadir al carrito" },
-  en: { addToCart: "Add to cart" },
+  es: {
+    addToCart: "Añadir al carrito",
+    cantidad: "Cantidad",
+    presentacion: "Presentación",
+    rinde: "Rinde",
+    precio: "Precio",
+  },
+  en: {
+    addToCart: "Add to cart",
+    cantidad: "Quantity",
+    presentacion: "Presentation",
+    rinde: "Yields",
+    precio: "Price",
+  },
 };
 
 interface Props {
@@ -164,7 +176,7 @@ export default function ProductoDetailClient({
         )}
 
         <div className={styles.fieldGroup}>
-          <span className={styles.fieldLabel}>Cantidad:</span>
+          <span className={styles.fieldLabel}>{t.cantidad}:</span>
           <div className={styles.quantitySelector}>
             <button
               className={styles.quantityBtn}
@@ -201,16 +213,16 @@ export default function ProductoDetailClient({
         <div className={styles.details}>
           {presentacion && (
             <p className={styles.detail}>
-              <strong>Presentación</strong>: {presentacion}
+              <strong>{t.presentacion}</strong>: {presentacion}
             </p>
           )}
           {rinde && (
             <p className={styles.detail}>
-              <strong>Rinde</strong>: {rinde}
+              <strong>{t.rinde}</strong>: {rinde}
             </p>
           )}
           <p className={styles.detail}>
-            <strong>Precio</strong>: {formatPrice(totalPrice, precioMoneda)}
+            <strong>{t.precio}</strong>: {formatPrice(totalPrice, precioMoneda)}
           </p>
         </div>
 

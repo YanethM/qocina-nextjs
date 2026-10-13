@@ -5,9 +5,15 @@ import Link from "next/link";
 import type { PackDestacado } from "@/types";
 import { getStrapiImageUrl } from "@/lib/strapi";
 import { useSiteCode } from "@/hooks/useSiteCode";
+import { useLocale } from "@/hooks/useLocale";
 import AddPackToCartButton from "./AddPackToCartButton";
 import styles from "./PacksDestacados.module.css";
 import { formatPrice } from "@/lib/format";
+
+const translations = {
+  es: { ctaVerMas: "Más información" },
+  en: { ctaVerMas: "More information" },
+};
 
 interface Props {
   packs: PackDestacado[];
@@ -22,9 +28,12 @@ export default function PacksDestacados({
   titulo,
   mostrarDescuento = false,
   porcentajeDescuento,
-  ctaVerMas = "Más información",
+  ctaVerMas,
 }: Props) {
   const siteCode = useSiteCode();
+  const locale = useLocale();
+  const t = translations[locale];
+  const ctaLabel = ctaVerMas ?? t.ctaVerMas;
   const sorted = [...packs].sort((a, b) => a.orden - b.orden);
 
   return (
@@ -119,7 +128,7 @@ export default function PacksDestacados({
                         });
                       }
                     }}>
-                    {ctaVerMas}
+                    {ctaLabel}
                     <Image
                       src={arrowSrc}
                       alt=""
