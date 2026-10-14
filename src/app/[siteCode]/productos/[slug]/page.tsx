@@ -103,7 +103,7 @@ export default async function ProductoDetailPage({ params }: Props) {
           style={{ width: "100%", height: "auto" }}
         />
 
-        {recetas.length > 0 && <ListaRecetas recetas={recetas} hideFilters />}
+        {recetas.length > 0 && <ListaRecetas recetas={recetas} hideFilters locale={locale} />}
         {testimonios.length > 0 && (
           <Testimonios
             testimonios={testimonios}

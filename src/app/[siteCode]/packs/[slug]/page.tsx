@@ -117,7 +117,7 @@ export default async function PackDetailPage({
         style={{ width: "100%", height: "auto" }}
       />
 
-      {recetas.length > 0 && <ListaRecetas recetas={recetas} hideFilters />}
+      {recetas.length > 0 && <ListaRecetas recetas={recetas} hideFilters locale={locale} />}
 
       {testimonios.length > 0 && (
         <Testimonios

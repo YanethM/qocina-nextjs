@@ -39,11 +39,13 @@ function Dropdown({
   options,
   value,
   onChange,
+  clearLabel,
 }: {
   label: string;
   options: string[];
   value: string;
   onChange: (v: string) => void;
+  clearLabel: string;
 }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -83,7 +85,7 @@ function Dropdown({
               className={`${styles.dropdownItem} ${styles.clearItem}`}
               onClick={() => { onChange(""); setOpen(false); }}
             >
-              Todos
+              {clearLabel}
             </li>
           )}
           {options.map((opt) => (
@@ -103,12 +105,37 @@ function Dropdown({
   );
 }
 
+const translations = {
+  es: {
+    recetas: "Recetas",
+    todos: "Todos",
+    titulo: "Recetas fáciles, rápidas y sanas",
+    subtitulo: "Descubre preparaciones latinas con ese sabor casero y un toque extra que despierta recuerdos y conecta al primer bocado.",
+    ctaVerTodas: "Ver todas las recetas",
+    buscando: "Buscando recetas...",
+    sinResultadosTitulo: "No encontramos recetas",
+    sinResultadosSubtitulo: "No hay recetas que coincidan con los filtros seleccionados.",
+    ctaCargarMas: "Cargar más recetas",
+  },
+  en: {
+    recetas: "Recipes",
+    todos: "All",
+    titulo: "Easy, quick and healthy recipes",
+    subtitulo: "Discover Latin dishes with that homemade flavor and an extra touch that brings back memories from the very first bite.",
+    ctaVerTodas: "See all recipes",
+    buscando: "Searching recipes...",
+    sinResultadosTitulo: "No recipes found",
+    sinResultadosSubtitulo: "No recipes match the selected filters.",
+    ctaCargarMas: "Load more recipes",
+  },
+};
+
 /* ── Main component ── */
 export default function ListaRecetas({
   recetas,
   hideFilters = false,
-  titulo = "Recetas fáciles, rápidas y sanas",
-  subtitulo = "Descubre preparaciones latinas con ese sabor casero y un toque extra que despierta recuerdos y conecta al primer bocado.",
+  titulo,
+  subtitulo,
   labelTipoReceta,
   labelRegion,
   labelDieta,
@@ -116,7 +143,7 @@ export default function ListaRecetas({
   cocinaRegionOptions,
   tiposDietaOptions,
   ctaCargarMas,
-  ctaVerTodas = "Ver todas las recetas",
+  ctaVerTodas,
   locale,
   siteCode,
   colorCardFilter,
@@ -125,6 +152,7 @@ export default function ListaRecetas({
   const urlSiteCode = useSiteCode();
   const sc = siteCode ?? urlSiteCode;
   const isEnglish = locale === "en";
+  const t = translations[isEnglish ? "en" : "es"];
   const tiposReceta = useMemo(
     () => tiposRecetaOptions ?? distinctValues(recetas, "tipo_receta"),
     [recetas, tiposRecetaOptions],
@@ -185,12 +213,12 @@ export default function ListaRecetas({
   return (
     <section className={styles.section}>
       {hideFilters ? (
-        <h2 className={styles.tituloSimple}>Recetas</h2>
+        <h2 className={styles.tituloSimple}>{t.recetas}</h2>
       ) : (
         <div className={styles.header}>
           <div className={styles.headerLeft}>
-            <h2 className={styles.title}>{titulo}</h2>
-            <p className={styles.subtitle}>{subtitulo}</p>
+            <h2 className={styles.title}>{titulo ?? t.titulo}</h2>
+            <p className={styles.subtitle}>{subtitulo ?? t.subtitulo}</p>
           </div>
 
           {showFilters && (
@@ -201,6 +229,7 @@ export default function ListaRecetas({
                   options={tiposReceta}
                   value={filters.tipoReceta}
                   onChange={(v) => applyFilter({ ...filters, tipoReceta: v })}
+                  clearLabel={t.todos}
                 />
               )}
               {cocinaRegion.length > 0 && (
@@ -209,6 +238,7 @@ export default function ListaRecetas({
                   options={cocinaRegion}
                   value={filters.cocina}
                   onChange={(v) => applyFilter({ ...filters, cocina: v })}
+                  clearLabel={t.todos}
                 />
               )}
               {tiposDieta.length > 0 && (
@@ -217,6 +247,7 @@ export default function ListaRecetas({
                   options={tiposDieta}
                   value={filters.dieta}
                   onChange={(v) => applyFilter({ ...filters, dieta: v })}
+                  clearLabel={t.todos}
                 />
               )}
             </div>
@@ -227,7 +258,7 @@ export default function ListaRecetas({
       {loading ? (
         <div className={styles.loadingWrapper}>
           <div className={styles.spinner} />
-          <p className={styles.loadingText}>Buscando recetas...</p>
+          <p className={styles.loadingText}>{t.buscando}</p>
         </div>
       ) : shown.length > 0 ? (
         <div className={styles.grid} data-count={shown.length}>
@@ -251,10 +282,10 @@ export default function ListaRecetas({
       ) : hasActiveFilters ? (
         <div className={styles.emptyState}>
           <div className={styles.emptyIcon}>🍽️</div>
-          <h3 className={styles.emptyTitle}>No encontramos recetas</h3>
-          <p className={styles.emptySubtitle}>No hay recetas que coincidan con los filtros seleccionados.</p>
+          <h3 className={styles.emptyTitle}>{t.sinResultadosTitulo}</h3>
+          <p className={styles.emptySubtitle}>{t.sinResultadosSubtitulo}</p>
           <button className={styles.emptyBtn} onClick={clearFilters}>
-            {ctaVerTodas}
+            {ctaVerTodas ?? t.ctaVerTodas}
           </button>
         </div>
       ) : null}
@@ -265,7 +296,7 @@ export default function ListaRecetas({
             className={styles.loadMoreBtn}
             onClick={() => setVisible((v) => v + PAGE_SIZE)}
           >
-            {ctaCargarMas ?? "Cargar más recetas"}
+            {ctaCargarMas ?? t.ctaCargarMas}
           </button>
         </div>
       )}
