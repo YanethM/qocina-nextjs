@@ -14,9 +14,23 @@ import {
   COOKIE_MAX_AGE,
   type SiteCode,
 } from "@/lib/constants";
+import { useLocale } from "@/hooks/useLocale";
 import styles from "./CountryModal.module.css";
 
 const VALID = new Set<string>(VALID_SITE_CODES);
+
+const translations = {
+  es: {
+    ariaLabel: "Selecciona tu país",
+    titulo: "¿Desde dónde nos visitas?",
+    subtitulo: "Selecciona tu país para ver precios, productos y contenido personalizado para ti",
+  },
+  en: {
+    ariaLabel: "Select your country",
+    titulo: "Where are you visiting us from?",
+    subtitulo: "Select your country to see prices, products and content tailored to you",
+  },
+};
 
 const FLAG_IMAGES: Record<string, string> = {
   ar: "/images/web/modal/argentina.svg",
@@ -42,6 +56,8 @@ interface Props {
 
 export default function CountryModal({ forceVisible = false, open, onClose }: Props) {
   const router = useRouter();
+  const locale = useLocale();
+  const t = translations[locale];
   const isControlled = open !== undefined;
   const [visible, setVisible] = useState(false);
   const [sites, setSites] = useState<Site[]>([]);
@@ -129,7 +145,7 @@ export default function CountryModal({ forceVisible = false, open, onClose }: Pr
   if (!isVisible) return null;
 
   return (
-    <div className={styles.overlay} role="dialog" aria-modal="true" aria-label="Selecciona tu país">
+    <div className={styles.overlay} role="dialog" aria-modal="true" aria-label={t.ariaLabel}>
       <div className={styles.modal}>
         <div className={styles.logo}>
           <Image
@@ -141,10 +157,10 @@ export default function CountryModal({ forceVisible = false, open, onClose }: Pr
           />
         </div>
 
-        <h2 className={styles.title}>¿Desde dónde nos visitas?</h2>
+        <h2 className={styles.title}>{t.titulo}</h2>
 
         <p className={styles.subtitle}>
-          Selecciona tu país para ver precios, productos y contenido personalizado para ti
+          {t.subtitulo}
         </p>
 
         {loading ? (

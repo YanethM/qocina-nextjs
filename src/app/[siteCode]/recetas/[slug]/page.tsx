@@ -37,6 +37,6 @@ export default async function RecetaDetailPage({ params }: Props) {
     return notFound();
   }
 
-  return <RecetaDetail receta={receta} />;
+  return <RecetaDetail receta={receta} locale={locale} />;
 }
 

@@ -30,6 +30,12 @@ const translations = {
     checkoutBtn: "Continuar con el pago",
     addSuggested: "Añade a tu carrito",
     addBtn: "Añadir al carrito",
+    reducir: "Reducir",
+    aumentar: "Aumentar",
+    eliminarProducto: "Eliminar producto",
+    anterior: "Anterior",
+    siguiente: "Siguiente",
+    irAlProducto: "Ir al producto",
   },
   en: {
     steps: ["Cart", "Shipping", "Payment", "Confirmation"],
@@ -48,6 +54,12 @@ const translations = {
     checkoutBtn: "Proceed to checkout",
     addSuggested: "Add to your cart",
     addBtn: "Add to cart",
+    reducir: "Decrease",
+    aumentar: "Increase",
+    eliminarProducto: "Remove product",
+    anterior: "Previous",
+    siguiente: "Next",
+    irAlProducto: "Go to product",
   },
 };
 
@@ -279,7 +291,7 @@ export default function CarritoPage({ initialPacks }: Props) {
                       <button
                         className={styles.cantidadBtn}
                         onClick={() => updateCantidad(item.id, item.cantidad - 1)}
-                        aria-label="Reducir"
+                        aria-label={t.reducir}
                       >
                         <Image src="/images/web/shopping/minus.svg" alt="-" width={24} height={24} />
                       </button>
@@ -287,7 +299,7 @@ export default function CarritoPage({ initialPacks }: Props) {
                       <button
                         className={styles.cantidadBtn}
                         onClick={() => updateCantidad(item.id, item.cantidad + 1)}
-                        aria-label="Aumentar"
+                        aria-label={t.aumentar}
                       >
                         <Image src="/images/web/shopping/plus.svg" alt="+" width={24} height={24} />
                       </button>
@@ -295,7 +307,7 @@ export default function CarritoPage({ initialPacks }: Props) {
                     <button
                       className={styles.removeBtn}
                       onClick={() => removeItem(item.id)}
-                      aria-label="Eliminar producto"
+                      aria-label={t.eliminarProducto}
                     >
                       <Image src="/images/web/shopping/trash.svg" alt="Eliminar" width={16} height={18} />
                     </button>
@@ -377,7 +389,7 @@ export default function CarritoPage({ initialPacks }: Props) {
                   className={`${styles.arrowBtn} ${styles.arrowBtnLeft}`}
                   onClick={() => setCarouselIdx((i) => Math.max(0, i - 1))}
                   disabled={carouselIdx === 0}
-                  aria-label="Anterior"
+                  aria-label={t.anterior}
                 >
                   <Image src="/images/web/shopping/left_arrow.svg" alt="←" width={48} height={48} />
                 </button>
@@ -446,7 +458,7 @@ export default function CarritoPage({ initialPacks }: Props) {
                   className={`${styles.arrowBtn} ${styles.arrowBtnRight}`}
                   onClick={() => setCarouselIdx((i) => Math.min(sugeridos.length - VISIBLE, i + 1))}
                   disabled={carouselIdx + VISIBLE >= sugeridos.length}
-                  aria-label="Siguiente"
+                  aria-label={t.siguiente}
                 >
                   <Image src="/images/web/shopping/right_arrow.svg" alt="→" width={48} height={48} />
                 </button>
@@ -462,7 +474,7 @@ export default function CarritoPage({ initialPacks }: Props) {
                     onClick={() =>
                       setCarouselIdx(Math.min(Math.max(0, idx - activeCardIdx), sugeridos.length - VISIBLE))
                     }
-                    aria-label={`Ir al producto ${idx + 1}`}
+                    aria-label={`${t.irAlProducto} ${idx + 1}`}
                   />
                 ))}
               </div>

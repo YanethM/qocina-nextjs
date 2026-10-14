@@ -11,6 +11,11 @@ import { getRecetaBySlug, getReceta } from "@/lib/api";
 import CountryModal from "@/components/CountryModal/CountryModal";
 import styles from "./Header.module.css";
 
+const A11Y = {
+  es: { changeCountry: "Cambiar país", cart: "Carrito de compras", closeMenu: "Cerrar menú", openMenu: "Abrir menú" },
+  en: { changeCountry: "Change country", cart: "Shopping cart", closeMenu: "Close menu", openMenu: "Open menu" },
+};
+
 const NAV_PATHS = [
   { path: "", label: { es: "Inicio", en: "Home" } },
   { path: "/quienes-somos", label: { es: "Nosotros", en: "About us" } },
@@ -32,7 +37,9 @@ export default function Header() {
   const siteCode = useSiteCode();
 
   const base = siteCode ? `/${siteCode}` : "";
-  const navLinks = NAV_PATHS.map((n) => ({ href: `${base}${n.path}`, label: n.label[locale as "es" | "en"] ?? n.label.es, path: n.path }));
+  const localeKey = locale === "en" ? "en" : "es";
+  const navLinks = NAV_PATHS.map((n) => ({ href: `${base}${n.path}`, label: n.label[localeKey], path: n.path }));
+  const a11y = A11Y[localeKey];
 
   const closeMenu = () => setMenuOpen(false);
 
@@ -108,7 +115,7 @@ export default function Header() {
               <button
                 className={styles.countryBtn}
                 onClick={() => setCountryModalOpen(true)}
-                aria-label="Cambiar país"
+                aria-label={a11y.changeCountry}
               >
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <circle cx="12" cy="12" r="10" />
@@ -137,7 +144,7 @@ export default function Header() {
               <div className={styles.cartIconWrapper}>
                 <Image
                   src="/images/web/header/shopping_white.svg"
-                  alt="Carrito de compras"
+                  alt={a11y.cart}
                   width={48}
                   height={48}
                   className={styles.cartIcon}
@@ -154,7 +161,7 @@ export default function Header() {
               <div className={styles.cartIconWrapper}>
                 <Image
                   src="/images/web/header/shopping_white.svg"
-                  alt="Carrito de compras"
+                  alt={a11y.cart}
                   width={40}
                   height={40}
                   className={styles.cartIcon}
@@ -167,7 +174,7 @@ export default function Header() {
             <button
               className={styles.hamburger}
               onClick={() => setMenuOpen(!menuOpen)}
-              aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
+              aria-label={menuOpen ? a11y.closeMenu : a11y.openMenu}
               aria-expanded={menuOpen}
             >
               <span className={`${styles.line} ${menuOpen ? styles.lineTop : ""}`} />
@@ -213,7 +220,7 @@ export default function Header() {
                 <button
                   className={styles.countryBtn}
                   onClick={() => { setCountryModalOpen(true); closeMenu(); }}
-                  aria-label="Cambiar país"
+                  aria-label={a11y.changeCountry}
                 >
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <circle cx="12" cy="12" r="10" />

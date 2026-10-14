@@ -25,12 +25,14 @@ const PAIS_PREFIJO: Record<string, string> = {
   ec: "+593",
 };
 
-const STRIPE_FALLBACK_GATEWAY: PaymentGateway = {
-  gateway: "stripe",
-  displayName: "Tarjeta de crédito/débito",
-  logoUrl: null,
-  displayOrder: 0,
-};
+function stripeFallbackGateway(displayName: string): PaymentGateway {
+  return {
+    gateway: "stripe",
+    displayName,
+    logoUrl: null,
+    displayOrder: 0,
+  };
+}
 
 type Nivel1Option = { regionCode: string; regionName: string };
 type Nivel2Option = { cityCode: string; cityName: string };
@@ -42,6 +44,7 @@ function normalizeLocale(value?: string | null): "es" | "en" {
 
 const COPY = {
   es: {
+    stripeFallbackName: "Tarjeta de crédito/débito",
     steps: ["Carrito", "Envío", "Pago", "Confirmación"],
     title: "Detalles de envío",
     section1: "1. Destino del envío",
@@ -97,6 +100,7 @@ const COPY = {
     unexpectedError: "Error inesperado. Intenta de nuevo.",
   },
   en: {
+    stripeFallbackName: "Credit/debit card",
     steps: ["Cart", "Shipping", "Payment", "Confirmation"],
     title: "Shipping Details",
     section1: "1. Shipping destination",
@@ -220,9 +224,10 @@ export default function EnvioPage() {
   useEffect(() => {
     if (!pais) return;
 
+    const fallback = stripeFallbackGateway(COPY[locale].stripeFallbackName);
     const useFallback = () => {
-      setGateways([STRIPE_FALLBACK_GATEWAY]);
-      setSelectedGateway(STRIPE_FALLBACK_GATEWAY.gateway);
+      setGateways([fallback]);
+      setSelectedGateway(fallback.gateway);
     };
 
     fetch(`/api/payment-gateways?siteCode=${pais}`)
@@ -237,7 +242,7 @@ export default function EnvioPage() {
         if (list.length === 1) setSelectedGateway(list[0].gateway);
       })
       .catch(useFallback);
-  }, [pais]);
+  }, [pais, locale]);
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => {

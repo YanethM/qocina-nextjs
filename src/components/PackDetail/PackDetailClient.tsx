@@ -10,8 +10,8 @@ import styles from "./PackDetailClient.module.css";
 import { formatPrice } from "@/lib/format";
 
 const translations = {
-  es: { addToCart: "Añadir al carrito" },
-  en: { addToCart: "Add to cart" },
+  es: { addToCart: "Añadir al carrito", comoSeUsa: "¿Cómo se usa este sofrito?" },
+  en: { addToCart: "Add to cart", comoSeUsa: "How do I use this sofrito?" },
 };
 
 interface Props {
@@ -197,7 +197,7 @@ export default function PackDetailClient({
             ? [
                 {
                   key: "uso",
-                  label: "¿Cómo se usa este sofrito?",
+                  label: t.comoSeUsa,
                   content: (
                     <div dangerouslySetInnerHTML={{ __html: descripcionLarga }} />
                   ),

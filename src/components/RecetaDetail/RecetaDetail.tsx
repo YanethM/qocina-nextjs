@@ -16,7 +16,31 @@ import styles from "./RecetaDetail.module.css";
 
 interface Props {
   receta: Receta;
+  locale?: string;
 }
+
+const translations = {
+  es: {
+    ingredientes: "INGREDIENTES",
+    opcional: "(opcional)",
+    productosQocina: "Productos Q'ocina",
+    porciones: "Porciones",
+    preparacion: "PREPARACIÓN",
+    preparacionUsando: "Preparación utilizando nuestra",
+    nivelReceta: "Esta receta tiene un nivel",
+    tiempoAprox: "Tiempo aproximado",
+  },
+  en: {
+    ingredientes: "INGREDIENTS",
+    opcional: "(optional)",
+    productosQocina: "Q'ocina products",
+    porciones: "Servings",
+    preparacion: "PREPARATION",
+    preparacionUsando: "Prepared using our",
+    nivelReceta: "This recipe has a",
+    tiempoAprox: "Approximate time",
+  },
+};
 
 function parsePorciones(porciones: string | number | null | undefined): number {
   if (porciones == null) return 0;
@@ -25,7 +49,8 @@ function parsePorciones(porciones: string | number | null | undefined): number {
   return match ? parseInt(match[0], 10) : 0;
 }
 
-export default function RecetaDetail({ receta }: Props) {
+export default function RecetaDetail({ receta, locale }: Props) {
+  const t = translations[locale === "en" ? "en" : "es"];
   const heroImage =
     receta.imagen_principal?.url ?? receta.imagen?.url ?? null;
 
@@ -50,7 +75,7 @@ export default function RecetaDetail({ receta }: Props) {
 
   const ingredientesSection = ingredientes.length > 0 && (
     <section className={styles.ingredientesOverWaves}>
-      <h2 className={styles.ingredientesTitle}>INGREDIENTES</h2>
+      <h2 className={styles.ingredientesTitle}>{t.ingredientes}</h2>
       <div className={styles.ingredientesBox}>
         <div className={styles.ingredientesColumns}>
           <ul className={styles.ingredientesCol}>
@@ -69,7 +94,7 @@ export default function RecetaDetail({ receta }: Props) {
                   <span className={styles.ingredienteText}>
                     {ing.cantidad} {ing.unidad} {ing.nombre}
                     {ing.es_opcional && (
-                      <span className={styles.opcionalWhite}> (opcional)</span>
+                      <span className={styles.opcionalWhite}> {t.opcional}</span>
                     )}
                   </span>
                 </li>
@@ -91,7 +116,7 @@ export default function RecetaDetail({ receta }: Props) {
                   <span className={styles.ingredienteText}>
                     {ing.cantidad} {ing.unidad} {ing.nombre}
                     {ing.es_opcional && (
-                      <span className={styles.opcionalWhite}> (opcional)</span>
+                      <span className={styles.opcionalWhite}> {t.opcional}</span>
                     )}
                   </span>
                 </li>
@@ -101,7 +126,7 @@ export default function RecetaDetail({ receta }: Props) {
         <div className={styles.ingredientesImgWrapper}>
           <Image
             src={ingredientesImg}
-            alt={receta.imagen_productos_qocina?.alternativeText || "Productos Q'ocina"}
+            alt={receta.imagen_productos_qocina?.alternativeText || t.productosQocina}
             width={300}
             height={260}
             className={styles.ingredientesImg}
@@ -132,7 +157,7 @@ export default function RecetaDetail({ receta }: Props) {
             {receta.porciones != null && (
               <div className={styles.porcionesHero}>
                 <span className={styles.porcionesLabel}>
-                  Porciones ({receta.porciones})
+                  {t.porciones} ({receta.porciones})
                 </span>
                 <div className={styles.porcionesIcons}>
                   {Array.from({ length: porcionesNum }).map((_, i) => (
@@ -174,7 +199,7 @@ export default function RecetaDetail({ receta }: Props) {
       <div className={styles.content}>
         {pasos.length > 0 && (
           <div className={styles.pasosSection}>
-            <h2 className={styles.preparacionTitle}>PREPARACIÓN</h2>
+            <h2 className={styles.preparacionTitle}>{t.preparacion}</h2>
             <div className={styles.preparacionLayout}>
               <div className={styles.preparacionSidebar}>
                 {receta.texto_base_utilizada && (
@@ -186,7 +211,7 @@ export default function RecetaDetail({ receta }: Props) {
                       height={40}
                       aria-hidden
                     />
-                    <span className={styles.sidebarLabel}>Preparación utilizando nuestra</span>
+                    <span className={styles.sidebarLabel}>{t.preparacionUsando}</span>
                     <span className={styles.sidebarValue}>{receta.texto_base_utilizada}</span>
                   </div>
                 )}
@@ -199,7 +224,7 @@ export default function RecetaDetail({ receta }: Props) {
                       height={40}
                       aria-hidden
                     />
-                    <span className={styles.sidebarLabel}>Esta receta tiene un nivel</span>
+                    <span className={styles.sidebarLabel}>{t.nivelReceta}</span>
                     <span className={styles.sidebarValue}>{receta.dificultad}</span>
                     <div className={styles.difficultyBar}>
                       <div
@@ -226,7 +251,7 @@ export default function RecetaDetail({ receta }: Props) {
                       height={40}
                       aria-hidden
                     />
-                    <span className={styles.sidebarLabel}>Tiempo aproximado</span>
+                    <span className={styles.sidebarLabel}>{t.tiempoAprox}</span>
                     <span className={styles.sidebarValue}>{totalTime} min</span>
                   </div>
                 )}

@@ -7,8 +7,8 @@ import { useLocale } from "@/hooks/useLocale";
 import styles from "./CartToast.module.css";
 
 const translations = {
-  es: { viewCart: "Ver carrito" },
-  en: { viewCart: "View cart" },
+  es: { viewCart: "Ver carrito", added: "¡Producto añadido!", close: "Cerrar" },
+  en: { viewCart: "View cart", added: "Product added!", close: "Close" },
 };
 
 export default function CartToast() {
@@ -22,7 +22,7 @@ export default function CartToast() {
       <div className={styles.content}>
         <span className={styles.check}>✓</span>
         <div className={styles.text}>
-          <p className={styles.title}>¡Producto añadido!</p>
+          <p className={styles.title}>{t.added}</p>
           <p className={styles.nombre}>{toastNombre}</p>
         </div>
       </div>
@@ -30,7 +30,7 @@ export default function CartToast() {
         <Link href={`/${siteCode}/carrito`} className={styles.verCarrito} onClick={dismissToast}>
           {t.viewCart}
         </Link>
-        <button className={styles.close} onClick={dismissToast} aria-label="Cerrar">
+        <button className={styles.close} onClick={dismissToast} aria-label={t.close}>
           ✕
         </button>
       </div>

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import type { CartItem } from "@/context/CartContext";
 import { useSiteCode } from "@/hooks/useSiteCode";
+import { useLocale } from "@/hooks/useLocale";
 import { getOrder } from "@/lib/api";
 import { formatPrice } from "@/lib/format";
 import type { Order } from "@/types";
@@ -13,15 +14,56 @@ import styles from "./page.module.css";
 
 const ACTIVE_STEP = 3;
 
-const STEPS = [
-  { img: "/images/web/shopping/carrito.svg", imgGreen: "/images/web/shopping/carrito_green.svg", label: "Carrito" },
-  { img: "/images/web/shopping/envio.svg", imgGreen: "/images/web/shopping/ubicacion_green.svg", label: "Envío" },
-  { img: "/images/web/shopping/pago.svg", imgGreen: "/images/web/shopping/seguridad_green.svg", label: "Pago" },
-  { img: "/images/web/shopping/confirmacion.svg", imgGreen: "/images/web/shopping/confirmacion_check.svg", label: "Confirmación" },
+const translations = {
+  es: {
+    steps: ["Carrito", "Envío", "Pago", "Confirmación"],
+    headerAlt: "Éxito",
+    headerTitle: "¡Gracias por elegir Q’ocina en Casa!",
+    successHeading: "Tu pedido se ha realizado con éxito.",
+    checkEmail: "Revisa tu correo electrónico para ver la confirmación de tu pedido.",
+    emailSent: "Enviamos los detalles de la confirmación a:",
+    orderDate: "Fecha del pedido:",
+    orderNumber: "Número de pedido:",
+    exploreRecetas: "Explorar recetas",
+    backToStore: "Volver a la tienda",
+    discoverTips: "Descubrir tips y novedades de Q’ocina",
+    resumen: "Resumen",
+    shipping: "Costo de envío",
+    taxes: "Impuestos",
+    total: "Total",
+    loading: "Cargando...",
+    dateLocale: "es-CO",
+  },
+  en: {
+    steps: ["Cart", "Shipping", "Payment", "Confirmation"],
+    headerAlt: "Success",
+    headerTitle: "Thank you for choosing Q’ocina en Casa!",
+    successHeading: "Your order has been placed successfully.",
+    checkEmail: "Check your email for your order confirmation.",
+    emailSent: "We sent your confirmation details to:",
+    orderDate: "Order date:",
+    orderNumber: "Order number:",
+    exploreRecetas: "Explore recipes",
+    backToStore: "Back to shop",
+    discoverTips: "Discover Q’ocina tips and news",
+    resumen: "Summary",
+    shipping: "Shipping cost",
+    taxes: "Taxes",
+    total: "Total",
+    loading: "Loading...",
+    dateLocale: "en-US",
+  },
+};
+
+const STEP_IMAGES = [
+  { img: "/images/web/shopping/carrito.svg", imgGreen: "/images/web/shopping/carrito_green.svg" },
+  { img: "/images/web/shopping/envio.svg", imgGreen: "/images/web/shopping/ubicacion_green.svg" },
+  { img: "/images/web/shopping/pago.svg", imgGreen: "/images/web/shopping/seguridad_green.svg" },
+  { img: "/images/web/shopping/confirmacion.svg", imgGreen: "/images/web/shopping/confirmacion_check.svg" },
 ];
 
-function formatDate(d: Date): string {
-  return d.toLocaleDateString("es-CO", {
+function formatDate(d: Date, dateLocale: string): string {
+  return d.toLocaleDateString(dateLocale, {
     day: "numeric",
     month: "long",
     year: "numeric",
@@ -32,6 +74,9 @@ function formatDate(d: Date): string {
 
 function SuccessContent() {
   const siteCode = useSiteCode();
+  const locale = useLocale();
+  const t = translations[locale];
+  const STEPS = STEP_IMAGES.map((img, i) => ({ ...img, label: t.steps[i] }));
   const { items, total, clearCart } = useCart();
   const cleared = useRef(false);
   const [snapshot, setSnapshot] = useState<CartItem[]>([]);
@@ -115,59 +160,59 @@ function SuccessContent() {
       <div className={styles.header}>
         <Image
           src="/images/web/success.svg"
-          alt="Éxito"
+          alt={t.headerAlt}
           width={64}
           height={64}
           className={styles.headerIcon}
         />
-        <h1 className={styles.headerTitle}>¡Gracias por elegir Q&rsquo;ocina en Casa!</h1>
+        <h1 className={styles.headerTitle}>{t.headerTitle}</h1>
       </div>
 
       <div className={styles.body}>
         <div className={styles.leftContent}>
-          <p className={styles.successHeading}>Tu pedido se ha realizado con éxito.</p>
+          <p className={styles.successHeading}>{t.successHeading}</p>
           <p className={styles.boldText}>
-            Revisa tu correo electrónico para ver la confirmación de tu pedido.
+            {t.checkEmail}
           </p>
           <div className={styles.checklist}>
             {finalEmail && (
               <div className={styles.checklistItem}>
                 <Image src="/images/web/recetas/recetas_detail/checkmark.svg" alt="" width={20} height={16} />
                 <p className={styles.infoText}>
-                  Enviamos los detalles de la confirmación a: <strong>{finalEmail}</strong>
+                  {t.emailSent} <strong>{finalEmail}</strong>
                 </p>
               </div>
             )}
             <div className={styles.checklistItem}>
               <Image src="/images/web/recetas/recetas_detail/checkmark.svg" alt="" width={20} height={16} />
               <p className={styles.infoText}>
-                Fecha del pedido: <strong>{formatDate(finalDate)}</strong>
+                {t.orderDate} <strong>{formatDate(finalDate, t.dateLocale)}</strong>
               </p>
             </div>
             {finalOrderNumber && (
               <div className={styles.checklistItem}>
                 <Image src="/images/web/recetas/recetas_detail/checkmark.svg" alt="" width={20} height={16} />
                 <p className={styles.infoText}>
-                  Número de pedido: <strong>{finalOrderNumber}</strong>
+                  {t.orderNumber} <strong>{finalOrderNumber}</strong>
                 </p>
               </div>
             )}
           </div>
           <div className={styles.actions}>
             <Link href={`/${siteCode}/recetas`} className={styles.btnSecondary}>
-              Explorar recetas
+              {t.exploreRecetas}
             </Link>
             <Link href={`/${siteCode}/productos`} className={styles.btnPrimary}>
-              Volver a la tienda
+              {t.backToStore}
             </Link>
             <Link href={`/${siteCode}/blog-y-noticias`} className={styles.btnOutline}>
-              Descubrir tips y novedades de Q&rsquo;ocina
+              {t.discoverTips}
             </Link>
           </div>
         </div>
 
         <aside className={styles.sidebar}>
-          <h2 className={styles.sidebarTitle}>Resumen</h2>
+          <h2 className={styles.sidebarTitle}>{t.resumen}</h2>
           <div className={styles.summaryList}>
             {summaryItems.map((item) => (
               <div key={item.id} className={styles.summaryItem}>
@@ -194,15 +239,15 @@ function SuccessContent() {
           </div>
           <hr className={styles.divider} />
           <div className={styles.summaryRow}>
-            <span>Costo de envío</span>
+            <span>{t.shipping}</span>
             <span>{formatPrice(finalShipping, finalMoneda)}</span>
           </div>
           <div className={styles.summaryRow}>
-            <span>Impuestos</span>
+            <span>{t.taxes}</span>
             <span>{formatPrice(finalTax, finalMoneda)}</span>
           </div>
           <div className={styles.totalRow}>
-            <span className={styles.totalLabel}>Total</span>
+            <span className={styles.totalLabel}>{t.total}</span>
             <span className={styles.totalValue}>{formatPrice(finalTotal, finalMoneda)}</span>
           </div>
         </aside>
@@ -211,9 +256,16 @@ function SuccessContent() {
   );
 }
 
+function LoadingFallback() {
+  const locale = useLocale();
+  return (
+    <div style={{ padding: "80px", textAlign: "center" }}>{translations[locale].loading}</div>
+  );
+}
+
 export default function CheckoutSuccessPage() {
   return (
-    <Suspense fallback={<div style={{ padding: "80px", textAlign: "center" }}>Cargando...</div>}>
+    <Suspense fallback={<LoadingFallback />}>
       <SuccessContent />
     </Suspense>
   );
